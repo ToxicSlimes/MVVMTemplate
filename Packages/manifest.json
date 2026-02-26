@@ -2,12 +2,10 @@
   "dependencies": {
     "com.annulusgames.lit-motion": "https://github.com/AnnulusGames/LitMotion.git?path=src/LitMotion/Assets/LitMotion",
     "com.codewriter.triinspector": "https://github.com/codewriter-packages/Tri-Inspector.git",
-    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#beta",
     "com.cysharp.r3": "https://github.com/Cysharp/R3.git?path=src/R3.Unity/Assets/R3.Unity",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.gustavopsantos.reflex": "https://github.com/gustavopsantos/reflex.git?path=/Assets/Reflex/#13.0.3",
-    "com.ivanmurzak.unity.mcp": "0.47.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "2.7.6",
     "com.unity.ai.navigation": "2.0.9",

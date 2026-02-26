@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f4f1002f9764af88f4ab21c6289b7b, type: 3}
+  m_Name: BaseElementSettings
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::EndlessAdventure.Editor.PrefabBuilderSystem.Generator.BaseElementSettings
+  text:
+    preferredHeight: 24
+    fontSize: 14
+  image:
+    width: 100
+    height: 100
+  icon:
+    size: 24
+  spacer:
+    height: 16
+  divider:
+    thickness: 1
+  button:
+    width: 120
+    height: 40
+    fontSize: 16
+    defaultLabel: Button
+  toggle:
+    size: 24
+    checkmarkPadding: 4
+  slider:
+    width: 200
+    height: 30
+    handleSize: 20
+    handleAreaOffset: 5
+    trackOffset: 5
+    defaultValue: 0.5
+  inputField:
+    width: 200
+    height: 40
+    fontSize: 14
+    padding: 12
+    placeholder: Enter text...
+    textAreaVerticalOffset: 8
+  dropdown:
+    width: 200
+    height: 40
+    fontSize: 14
+    itemHeight: 32
+    templateHeight: 150
+  scrollbar:
+    width: 12
+    handlePadding: 2
+  progressBar:
+    height: 20
+    defaultValue: 0.7
+  tabButton:
+    minWidth: 80
+    height: 40
+    fontSize: 14
+    indicatorHeight: 3
+  radioButton:
+    radioSize: 20
+    innerRatio: 0.6
+    spacing: 10
+  stepper:
+    buttonSize: 32
+    valueWidth: 60
+    fontSize: 16
+  horizontalLayout:
+    spacing: 8
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  verticalLayout:
+    spacing: 8
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  grid:
+    cellWidth: 100
+    cellHeight: 100
+    spacingX: 8
+    spacingY: 8
+  scrollView:
+    width: 300
+    height: 400
+    scrollSensitivity: 20
+  card:
+    padding: 16
+    borderWidth: 1
+  panel:
+    headerHeight: 40
+    contentPadding: 16
+    contentSpacing: 8
+  modal:
+    width: 500
+    height: 400
+    headerHeight: 50
+    footerHeight: 60
+    closeButtonSize: 36
+  tabBar:
+    height: 44
+    spacing: 4
+    padding: 8
+  accordion:
+    headerHeight: 44
+    contentPadding: 16
+    contentSpacing: 8
+  healthBar:
+    height: 24
+    fontSize: 14
+    defaultValue: 1
+    fillColor: {r: 0.9, g: 0.22, b: 0.21, a: 1}
+    backgroundColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+    textColor: {r: 1, g: 1, b: 1, a: 1}
+  badge:
+    size: 36
+    fontSize: 12
+    backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    textColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    outlineColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  avatar:
+    size: 64
+    borderWidth: 2
+    backgroundColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+    borderColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
