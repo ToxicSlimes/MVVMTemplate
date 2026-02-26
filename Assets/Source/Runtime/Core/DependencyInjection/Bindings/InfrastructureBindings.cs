@@ -103,8 +103,6 @@ public static class InfrastructureBindings
     builder.AddSingleton(_ => ResolveEditorOverride<IFileDialogService>(new FileDialogService(), "Core.Editor.Services.Platform.EditorFileDialogService"));
     builder.AddSingleton<IFileSystemService>(_ => new FileSystemService());
     builder.AddSingleton(_ => ResolveEditorOverride<IDialogService>(new DialogService(), "Core.Editor.Services.Platform.EditorDialogService"));
-    builder.AddSingleton<IResourceService>(_ => new ResourceService());
-
     var cacheConfig = new CacheConfig
     {
       DefaultTtl = System.TimeSpan.FromMinutes(30),
