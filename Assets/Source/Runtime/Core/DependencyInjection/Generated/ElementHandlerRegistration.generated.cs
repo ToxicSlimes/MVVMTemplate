@@ -1,8 +1,13 @@
 // AUTO-GENERATED
+using Core.Infrastructure.Mediator.Registration;
+
 namespace Core.DependencyInjection.Generated
 {
     public static partial class ElementHandlerRegistration
     {
-        public static void Register(global::Reflex.Core.ContainerBuilder builder) { }
+        public static MediatorBuilder RegisterElementHandlers(this MediatorBuilder builder)
+        {
+            return builder;
+        }
     }
 }

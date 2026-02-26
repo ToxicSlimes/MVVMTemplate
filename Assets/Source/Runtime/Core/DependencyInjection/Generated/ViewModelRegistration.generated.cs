@@ -1,8 +1,13 @@
 // AUTO-GENERATED — run Tools/MVVM/ViewModelScanner to populate
+using Reflex.Core;
+
 namespace Core.DependencyInjection.Generated
 {
     public static partial class ViewModelRegistration
     {
-        public static void Register(global::Reflex.Core.ContainerBuilder builder) { }
+        public static ContainerBuilder RegisterViewModels(this ContainerBuilder builder)
+        {
+            return builder;
+        }
     }
 }
