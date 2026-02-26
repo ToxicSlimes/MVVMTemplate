@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c27f18966af4cb08f80b275f247cfd, type: 3}
+  m_Name: MenuSelectionViewMapping
+  m_EditorClassIdentifier: Assembly-CSharp::Core.Views.MenuSelection.MenuSelectionViewMapping
+  ViewPrefab:
+    m_AssetGUID: efbbe906867a34f4181cc42d575993fa
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

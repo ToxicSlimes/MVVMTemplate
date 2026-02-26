@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7e0125ca8334b8daf0e955cd25b0c6, type: 3}
+  m_Name: HealingPanelViewMapping
+  m_EditorClassIdentifier: Assembly-CSharp::Core.Views.HealingPanel.HealingPanelViewMapping
+  ViewPrefab:
+    m_AssetGUID: 8c44a4c4fcac442c48d8632d4340bb57
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

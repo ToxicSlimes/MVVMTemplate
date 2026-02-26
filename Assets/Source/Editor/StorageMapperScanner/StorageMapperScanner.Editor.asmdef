@@ -1,0 +1,20 @@
+{
+    "name": "StorageMapperScanner.Editor",
+    "rootNamespace": "Core.Editor.StorageMapperScanner",
+    "references": [
+        "GUID:44a786eb803ad4bbb9e1aaefa5b1c394",
+        "GUID:0bf93224da45a47a2b1bef848214b27f",
+        "GUID:bcea71e9df9d040f4bbf671696609a19"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

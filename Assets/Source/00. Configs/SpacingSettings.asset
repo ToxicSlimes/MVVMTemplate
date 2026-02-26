@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed86a6964e274fce8f4b4f109b51b75, type: 3}
+  m_Name: SpacingSettings
+  m_EditorClassIdentifier: Core.Configs::Core.Configs.DesignSystem.SpacingSettings
+  xs: 4
+  sm: 8
+  md: 16
+  lg: 24
+  xl: 32
+  xxl: 48
+  xxxl: 64
+  cardPaddingDesktop: 32
+  cardPaddingMobile: 20
+  buttonPaddingHorizontal: 24
+  buttonPaddingVertical: 12
+  inputPaddingHorizontal: 16
+  inputPaddingVertical: 12
+  messagePaddingHorizontal: 16
+  messagePaddingVertical: 12
+  messageSpacing: 12
+  borderRadiusSmall: 8
+  borderRadiusMedium: 12
+  borderRadiusLarge: 16
+  borderRadiusXLarge: 24
+  containerMaxWidth: 1920
+  containerPaddingDesktop: 32
+  containerPaddingMobile: 16
+  gridGutter: 24

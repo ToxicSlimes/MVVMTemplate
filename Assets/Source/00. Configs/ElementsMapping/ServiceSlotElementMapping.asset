@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16495d492275249428dd9ab9b2204452, type: 3}
+  m_Name: ServiceSlotElementMapping
+  m_EditorClassIdentifier: Assembly-CSharp::Source.Runtime.Core.MVVM.Config.Generated.ServiceSlotElementMapping
+  ElementPrefab:
+    m_AssetGUID: aef3aedce80914b9291b6d7f50d1513a
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

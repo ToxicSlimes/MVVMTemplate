@@ -1,0 +1,23 @@
+{
+    "name": "ViewModelScanner.Editor",
+    "rootNamespace": "Core.Editor.ViewModelScanner",
+    "references": [
+        "GUID:44a786eb803ad4bbb9e1aaefa5b1c394",
+        "GUID:0bf93224da45a47a2b1bef848214b27f",
+        "GUID:bcea71e9df9d040f4bbf671696609a19",
+        "GUID:0e1ab8e461580410ba69f6a8448b65b7",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:dc47925d1a5fa2946bdd37746b2b5d48"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

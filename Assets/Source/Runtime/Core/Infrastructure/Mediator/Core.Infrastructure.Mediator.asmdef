@@ -1,0 +1,18 @@
+{
+    "name": "Core.Infrastructure.Mediator",
+    "rootNamespace": "Core.Infrastructure.Mediator",
+    "references": [
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:1530a967b84cfb44dbdd5e8a1989764f",
+        "GUID:5c01796d064528144a599661eaab93a6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

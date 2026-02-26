@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b3856132cdd48b18875a19ad5d8eff, type: 3}
+  m_Name: AudioConfig
+  m_EditorClassIdentifier: Core.Configs::Core.Configs.Services.AudioConfig
+  audioMixer: {fileID: 24100000, guid: 273917960a3fe45feaa78965cf41c5db, type: 2}
+  soundConfig: {fileID: 11400000, guid: 2c19129ef7a4441b5993e1d2acc25b73, type: 2}
+  mixerGroupConfig: {fileID: 11400000, guid: ea676943e5691484fbcaa4c6d4eca11e, type: 2}
+  audioSourcePrefab: {fileID: 8206912401434216867, guid: ea34d3b0238d74319a03e43414c6d231, type: 3}
