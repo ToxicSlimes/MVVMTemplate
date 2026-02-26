@@ -2,10 +2,6 @@
 using UnityEditor;
 using UnityEngine;
 using EndlessAdventure.Editor.PrefabBuilderSystem.Elements;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Builders.Chat;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Builders.MainView;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Builders.Elements;
-using EndlessAdventure.Editor.PrefabBuilderSystem.MainView;
 using System.IO;
 
 namespace EndlessAdventure.Editor.PrefabBuilderSystem.Generator
@@ -230,7 +226,6 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Generator
                     "Элементы чата со своими Builder Windows.\n" +
                     "Используй Open Builder для настройки параметров.",
                     MessageType.Info);
-                DrawBuilderWindowRow("ChatBubble", ElementPaths.Chat.ChatBubble, typeof(ChatBubblePrefabBuilderWindow));
                 EditorGUI.indentLevel--;
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
@@ -248,24 +243,12 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Generator
                     MessageType.Info);
                 
                 EditorGUILayout.LabelField("Core Elements (with wiring)", EditorStyles.boldLabel);
-                DrawElementRow("HeroSlot", ElementPaths.MainView.HeroSlot, MainViewStructureBuilder.GenerateHeroSlot, MainViewStructureBuilder.WireHeroSlot);
-                DrawElementRow("StatRow", ElementPaths.MainView.StatRow, MainViewStructureBuilder.GenerateStatRow, MainViewStructureBuilder.WireStatRow);
-                DrawElementRow("ResourceItem", ElementPaths.MainView.ResourceItem, MainViewStructureBuilder.GenerateResourceItem, MainViewStructureBuilder.WireResourceItem);
                 
                 EditorGUILayout.Space(5);
                 EditorGUILayout.LabelField("Hero Elements (Builder Windows)", EditorStyles.boldLabel);
-                DrawBuilderWindowRow("HeroSlotDetailed", ElementPaths.MainView.HeroSlotDetailed, typeof(HeroSlotDetailedPrefabBuilderWindow));
-                DrawBuilderWindowRow("RelationshipSlot", ElementPaths.MainView.RelationshipSlot, typeof(RelationshipSlotPrefabBuilderWindow));
-                DrawBuilderWindowRow("AbilityCard", ElementPaths.MainView.AbilityCard, typeof(AbilityCardElementBuilderWindow));
-                DrawBuilderWindowRow("AttributeItem", ElementPaths.MainView.AttributeItem, typeof(AttributeItemPrefabBuilderWindow));
-                DrawBuilderWindowRow("ServiceSlot", ElementPaths.MainView.ServiceSlot, typeof(ServiceSlotPrefabBuilderWindow));
 
                 EditorGUILayout.Space(5);
                 EditorGUILayout.LabelField("Composite Panels", EditorStyles.boldLabel);
-                DrawBuilderWindowRow("HeroesGridPanel", ElementPaths.MainView.HeroesGridPanel, typeof(HeroesGridPanelPrefabBuilderWindow));
-                DrawBuilderWindowRow("HeroDetailPanel", ElementPaths.MainView.HeroDetailPanel, typeof(HeroDetailPanelPrefabBuilderWindow));
-                DrawBuilderWindowRow("HealingPanel", ElementPaths.MainView.HealingPanel, typeof(HealingPanelPrefabBuilderWindow));
-                DrawBuilderWindowRow("TrainingPanel", ElementPaths.MainView.TrainingPanel, typeof(TrainingPanelPrefabBuilderWindow));
                 EditorGUI.indentLevel--;
             }
             EditorGUILayout.EndFoldoutHeaderGroup();

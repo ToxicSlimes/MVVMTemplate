@@ -8,6 +8,8 @@
 using Core.Application.Handlers.Views;
 using Core.Application.Requests.Views;
 using Core.Infrastructure.Mediator.Registration;
+using Core.MVVM.ViewModels.Settings;
+using Core.MVVM.Views.Settings;
 
 namespace Core.DependencyInjection.Generated
 {
@@ -15,6 +17,17 @@ namespace Core.DependencyInjection.Generated
     {
         public static MediatorBuilder RegisterViewHandlers(this MediatorBuilder builder)
         {
+            // Modal views
+            builder.AddHandler<
+                ShowViewRequest<SettingsView, SettingsViewModel>,
+                bool,
+                ShowViewRequestHandler<SettingsView, SettingsViewModel>>();
+
+            builder.AddHandler<
+                HideViewRequest<SettingsView, SettingsViewModel>,
+                bool,
+                HideViewRequestHandler<SettingsView, SettingsViewModel>>();
+
             return builder;
         }
     }
