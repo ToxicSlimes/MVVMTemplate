@@ -20,7 +20,7 @@ public class BootstrapState : GameStateBase<BootstrapState>, IEnterState
   {
     if (SceneManager.GetActiveScene().name != BootstrapSceneName)
     {
-      _logger.Info("[BootstrapState] Запуск сцены бутстрапа из {0}", SceneManager.GetActiveScene().name);
+      _logger.Info("[BootstrapState] Loading bootstrap scene from {0}", SceneManager.GetActiveScene().name);
 
       var bootstrapPayload = new SceneLoadPayload
       (
@@ -36,8 +36,8 @@ public class BootstrapState : GameStateBase<BootstrapState>, IEnterState
 
     _cache.CleanupAsync().Forget();
 
-    _logger.Info("[BootstrapState] Переход в LoginState");
-    StateMachine.Enter<LoginState>();
+    // TODO: Enter your first game state here, e.g.:
+    // StateMachine.Enter<MainMenuState>();
   }
 
   public override void Exit()
