@@ -2,6 +2,9 @@
 using UnityEditor;
 using UnityEngine;
 using Core.Editor.PrefabBuilderSystem.Elements;
+using Core.Editor.PrefabBuilderSystem.Builders.MainMenu;
+using Core.Editor.PrefabBuilderSystem.Builders.Counter;
+using Core.Editor.PrefabBuilderSystem.Builders.Settings;
 using System.IO;
 
 namespace Core.Editor.PrefabBuilderSystem.Generator
@@ -233,22 +236,22 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
 
         private void DrawMainViewSection()
         {
-            _mainViewFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(_mainViewFoldout, "🦸 MainView Elements");
+            _mainViewFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(_mainViewFoldout, "🖼️ View Prefabs (Builder Windows)");
             if (_mainViewFoldout)
             {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.HelpBox(
-                    "Элементы с MVVM wiring.\n" +
-                    "Generate создаёт префаб + Runtime компонент + прокидывает ссылки.",
+                    "View префабы с MVVM wiring.\n" +
+                    "Open Builder → настрой параметры → BUILD → префаб со всеми SerializeField привязками.",
                     MessageType.Info);
-                
-                EditorGUILayout.LabelField("Core Elements (with wiring)", EditorStyles.boldLabel);
-                
-                EditorGUILayout.Space(5);
-                EditorGUILayout.LabelField("Hero Elements (Builder Windows)", EditorStyles.boldLabel);
 
-                EditorGUILayout.Space(5);
-                EditorGUILayout.LabelField("Composite Panels", EditorStyles.boldLabel);
+                DrawBuilderWindowRow("MainMenuView", "Assets/Prefabs/Views/MainMenuView.prefab",
+                    typeof(MainMenuViewBuilderWindow));
+                DrawBuilderWindowRow("CounterView", "Assets/Prefabs/Views/CounterView.prefab",
+                    typeof(CounterViewBuilderWindow));
+                DrawBuilderWindowRow("SettingsView", "Assets/Prefabs/Views/SettingsView.prefab",
+                    typeof(SettingsViewBuilderWindow));
+
                 EditorGUI.indentLevel--;
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
