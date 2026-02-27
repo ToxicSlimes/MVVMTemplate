@@ -7,28 +7,50 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
 {
-    public class SettingsViewBuilder : ViewBuilder<Core.MVVM.Views.Settings.SettingsView>
+    public class SettingsViewBuilder : ViewBuilder<MVVM.Views.Settings.SettingsView>
     {
         public SettingsViewBuilderSettings Settings { get; set; }
 
         protected override string PrefabPath => "Assets/Prefabs/Views/SettingsView.prefab";
 
         // Wiring refs
-        private GameObject _dimBackground, _closeButton, _modalWindow;
+        private Image _dimBackground;
+        private Button _closeButton;
+        private Image _modalWindow;
         private GameObject _tabAudio, _tabVideo, _tabDisplay, _tabControls, _tabGame;
-        private GameObject _audioContent, _videoContent, _displayContent, _controlsContent, _gameContent;
-        private GameObject _masterVolumeSlider, _masterVolumeValue, _musicVolumeSlider, _musicVolumeValue;
-        private GameObject _sfxVolumeSlider, _sfxVolumeValue, _voiceVolumeSlider, _voiceVolumeValue;
+        private VerticalLayoutGroup _audioContent;
+        private VerticalLayoutGroup _videoContent;
+        private VerticalLayoutGroup _displayContent;
+        private VerticalLayoutGroup _controlsContent;
+        private VerticalLayoutGroup _gameContent;
+        private Slider _masterVolumeSlider;
+        private TextMeshProUGUI _masterVolumeValue;
+        private Slider _musicVolumeSlider;
+        private TextMeshProUGUI _musicVolumeValue;
+        private Slider _sfxVolumeSlider;
+        private TextMeshProUGUI _sfxVolumeValue;
+        private Slider _voiceVolumeSlider;
+        private TextMeshProUGUI _voiceVolumeValue;
         private GameObject _muteAllToggle, _muteMusicToggle, _muteSfxToggle;
         private GameObject _resolutionDropdown, _qualityDropdown, _fullscreenToggle, _vsyncToggle, _showFpsToggle, _targetFpsDropdown;
-        private GameObject _brightnessSlider, _brightnessValue, _gammaSlider, _gammaValue;
-        private GameObject _uiScaleSlider, _uiScaleValue, _colorblindModeToggle, _colorblindTypeDropdown;
-        private GameObject _mouseSensitivitySlider, _mouseSensitivityValue, _invertYAxisToggle;
+        private Slider _brightnessSlider;
+        private TextMeshProUGUI _brightnessValue;
+        private Slider _gammaSlider;
+        private TextMeshProUGUI _gammaValue;
+        private Slider _uiScaleSlider;
+        private TextMeshProUGUI _uiScaleValue;
+        private GameObject _colorblindModeToggle, _colorblindTypeDropdown;
+        private Slider _mouseSensitivitySlider;
+        private TextMeshProUGUI _mouseSensitivityValue;
+        private GameObject _invertYAxisToggle;
         private GameObject _languageDropdown, _autoSaveToggle, _showTutorialsToggle, _screenShakeToggle, _matureContentToggle;
-        private GameObject _applyButton, _resetButton, _cancelButton;
+        private Button _applyButton;
+        private Button _resetButton;
+        private Button _cancelButton;
 
         protected override void BuildViewStructure()
         {
@@ -148,10 +170,10 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
             _screenShakeToggle = BuildToggleRow(_gameContent.transform, "ScreenShake", "Screen Shake");
             _matureContentToggle = BuildToggleRow(_gameContent.transform, "MatureContent", "Mature Content");
 
-            _videoContent.SetActive(false);
-            _displayContent.SetActive(false);
-            _controlsContent.SetActive(false);
-            _gameContent.SetActive(false);
+            _videoContent.gameObject.SetActive(false);
+            _displayContent.gameObject.SetActive(false);
+            _controlsContent.gameObject.SetActive(false);
+            _gameContent.gameObject.SetActive(false);
 
             // Footer
             var footer = new HorizontalLayoutBuilder("Footer")
@@ -194,7 +216,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
             return toggle.gameObject;
         }
 
-        private static GameObject BuildTabContent(Transform parent, string name, SettingsViewBuilderSettings s)
+        private static VerticalLayoutGroup BuildTabContent(Transform parent, string name, SettingsViewBuilderSettings s)
         {
             var content = new VerticalLayoutBuilder(name)
                 .WithSpacing(s.RowSpacing)
@@ -208,7 +230,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
             return content;
         }
 
-        private static (GameObject slider, GameObject valueText) BuildSliderRow(Transform parent, string id, string label, SettingsViewBuilderSettings s)
+        private static (Slider slider, TextMeshProUGUI valueText) BuildSliderRow(Transform parent, string id, string label, SettingsViewBuilderSettings s)
         {
             var row = new HorizontalLayoutBuilder(id + "Row")
                 .WithSpacing(10f)
@@ -275,7 +297,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
             return dropdown.gameObject;
         }
 
-        protected override void WireFields(Core.MVVM.Views.Settings.SettingsView view)
+        protected override void WireFields(MVVM.Views.Settings.SettingsView view)
         {
             var so = new SerializedObject(view);
 

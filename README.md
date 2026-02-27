@@ -275,6 +275,65 @@ Run all code generators: `Tools → MVVM → Scan & Generate` — done.
 | Prefab Builder | `Tools → UI Prefab Builder` | Visual prefab construction system |
 | View Stub Gen | `Tools → UI Prefab Builder → Generate View Stub` | Prefab → C# BindableView code |
 
+## Popup System
+
+Built-in popup/tooltip system with pooling, animations, and auto-positioning.
+
+### Quick Tooltip (no code)
+
+Add `PopupTrigger` component to any UI element:
+
+1. Create tooltip prefab via `Tools → UI Prefab Builder → Build Tooltip Popup`
+2. Add `PopupTrigger` component to your button/element
+3. Drag tooltip prefab into `Popup Prefab` field
+4. Set trigger type: Hover (tooltip) or Click (popover)
+
+### Code Tooltip
+
+```csharp
+// In your View's OnBind:
+var trigger = _myButton.gameObject.AddComponent<PopupTrigger>();
+trigger.SetTooltipData("Button Title", "Description text here");
+```
+
+### Custom Popup Data
+
+```csharp
+// 1. Define data class
+public class ItemTooltipData : IPopupData
+{
+    public string Name { get; set; }
+    public int Damage { get; set; }
+    public string Rarity { get; set; }
+}
+
+// 2. Create popup that uses it
+public class ItemTooltipPopup : PopupBase<ItemTooltipData>
+{
+    [SerializeField] private TMP_Text _nameText;
+    [SerializeField] private TMP_Text _damageText;
+
+    protected override void OnDataSet(ItemTooltipData data)
+    {
+        _nameText.text = data.Name;
+        _damageText.text = $"Damage: {data.Damage}";
+    }
+}
+
+// 3. Show via service
+await _popupService.ShowAsync<ItemTooltipPopup, ItemTooltipData>(
+    targetRect,
+    new ItemTooltipData { Name = "Sword", Damage = 42 });
+```
+
+### Popup Features
+
+- **Auto-positioning** — tooltips avoid screen edges
+- **Pooling** — popups are pooled for zero-allocation show/hide
+- **Animations** — fade + scale via LitMotion (customizable per popup)
+- **Stacking** — multiple popups, HideAll/HideTop support
+- **Events** — `PopupShown` / `PopupHidden` for tracking
+
 ## Troubleshooting
 
 **"Missing assembly reference"** → Wait for Package Manager to finish downloading (bottom-right progress bar).

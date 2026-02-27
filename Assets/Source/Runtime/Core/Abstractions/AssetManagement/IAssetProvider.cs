@@ -22,5 +22,7 @@ namespace Core.Abstractions.AssetManagement
         void ReleaseAllByLabel(string label);
         UniTask PreloadAsync<T>(string address) where T : class;
         UniTask PreloadAsync<T>(IEnumerable<string> addresses) where T : class;
+
+        IList<T> LoadAllSync<T>(string label) where T : class;
     }
 }

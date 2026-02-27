@@ -15,11 +15,11 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
         protected override string PrefabPath => "Assets/Prefabs/Views/CounterView.prefab";
 
-        private GameObject _counterText;
-        private GameObject _incrementsText;
-        private GameObject _incrementButton;
-        private GameObject _decrementButton;
-        private GameObject _resetButton;
+        private TextMeshProUGUI _counterText;
+        private TextMeshProUGUI _incrementsText;
+        private Button _incrementButton;
+        private Button _decrementButton;
+        private Button _resetButton;
 
         protected override void BuildViewStructure()
         {

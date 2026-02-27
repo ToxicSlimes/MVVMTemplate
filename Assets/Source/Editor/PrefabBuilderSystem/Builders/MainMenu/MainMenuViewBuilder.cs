@@ -15,9 +15,9 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
 
         protected override string PrefabPath => "Assets/Prefabs/Views/MainMenuView.prefab";
 
-        private GameObject _playButton;
-        private GameObject _settingsButton;
-        private GameObject _quitButton;
+        private Button _playButton;
+        private Button _settingsButton;
+        private Button _quitButton;
 
         protected override void BuildViewStructure()
         {

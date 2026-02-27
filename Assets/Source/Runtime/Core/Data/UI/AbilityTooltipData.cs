@@ -1,5 +1,9 @@
 namespace Core.Data.UI
 {
+    /// <summary>
+    /// TEMPLATE EXAMPLE: Custom popup data class.
+    /// Implement IPopupData to create your own typed popup data.
+    /// </summary>
     public class AbilityTooltipData : IPopupData
     {
         public string Name { get; set; }

@@ -5,6 +5,7 @@ using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.Builders.MainMenu;
 using Core.Editor.PrefabBuilderSystem.Builders.Counter;
 using Core.Editor.PrefabBuilderSystem.Builders.Settings;
+using Core.Editor.PrefabBuilderSystem.Builders.Tooltip;
 using System.IO;
 
 namespace Core.Editor.PrefabBuilderSystem.Generator
@@ -251,6 +252,12 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
                     typeof(CounterViewBuilderWindow));
                 DrawBuilderWindowRow("SettingsView", "Assets/Prefabs/Views/SettingsView.prefab",
                     typeof(SettingsViewBuilderWindow));
+
+                EditorGUILayout.Space(10);
+                EditorGUILayout.LabelField("Popups", EditorStyles.boldLabel);
+
+                DrawBuilderWindowRow("TooltipPopup", "Assets/Prefabs/Popups/TooltipPopup.prefab",
+                    typeof(TooltipViewBuilderWindow));
 
                 EditorGUI.indentLevel--;
             }
