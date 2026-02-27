@@ -50,8 +50,12 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
                 .NoCloseButton()
                 .Build(Root);
 
-            var content = modal.transform.Find("ModalWindow/Content");
-            if (content == null) content = modal.transform;
+            var content = modal.transform.Find("Window/Content");
+            if (content == null)
+            {
+                Debug.LogError("[ConfirmPopupBuilder] Could not find Window/Content in modal!");
+                content = modal.transform;
+            }
 
             // Title (override modal's built-in title for custom styling)
             _titleText = new TextBuilder("Title")

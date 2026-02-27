@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abad9a3f8d1384b478ca1c6771cde379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Core.Abstractions::Core.Abstractions.Popup.PopupTrigger
-  _popupPrefab: {fileID: 2447966673317677063, guid: 709e3491d2c05ac4c9fe54a144a7c390, type: 3}
+  _popupPrefab: {fileID: 3681119873476886062, guid: 709e3491d2c05ac4c9fe54a144a7c390, type: 3}
   _triggerType: 0
   _position: 0
   _offset: {x: 0, y: 0}
@@ -486,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abad9a3f8d1384b478ca1c6771cde379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Core.Abstractions::Core.Abstractions.Popup.PopupTrigger
-  _popupPrefab: {fileID: 2447966673317677063, guid: 709e3491d2c05ac4c9fe54a144a7c390, type: 3}
+  _popupPrefab: {fileID: 3681119873476886062, guid: 709e3491d2c05ac4c9fe54a144a7c390, type: 3}
   _triggerType: 0
   _position: 0
   _offset: {x: 0, y: 0}
@@ -871,6 +871,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CounterModal
       objectReference: {fileID: 0}
+    - target: {fileID: 4630229707301286144, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4780179539835972587, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -903,21 +907,65 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6952493877035111954, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294769400
+    - target: {fileID: 5139714408121193202, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6952493877035111954, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
+    - target: {fileID: 5139714408121193202, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.b
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139714408121193202, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.g
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139714408121193202, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.r
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173255772758176805, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.b
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173255772758176805, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.g
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173255772758176805, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.r
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539250006326198126, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539250006326198126, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539250006326198126, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.g
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539250006326198126, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_Color.r
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 8055438347238646516, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
       propertyPath: m_text
       value: Counter Demo
       objectReference: {fileID: 0}
     - target: {fileID: 8055438347238646516, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294769400
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055438347238646516, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055438347238646516, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8055438347238646516, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
       propertyPath: m_TextStyleHashCode
@@ -954,6 +1002,14 @@ PrefabInstance:
     - target: {fileID: 8356134395145041005, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9084478617820926974, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 9084478617820926974, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 350
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1130,7 +1186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abad9a3f8d1384b478ca1c6771cde379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Core.Abstractions::Core.Abstractions.Popup.PopupTrigger
-  _popupPrefab: {fileID: 4447529301308089553, guid: 98f620130b03fb64cb0d2ecbf91141d6, type: 3}
+  _popupPrefab: {fileID: 7945840174366881978, guid: 98f620130b03fb64cb0d2ecbf91141d6, type: 3}
   _triggerType: 1
   _position: 0
   _offset: {x: 0, y: 0}

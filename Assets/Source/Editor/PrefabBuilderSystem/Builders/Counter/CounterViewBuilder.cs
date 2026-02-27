@@ -42,7 +42,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .NoCloseButton()
                 .Build(Root);
 
-            var content = modal.transform.Find("ModalWindow/Content");
+            var content = modal.transform.Find("Window/Content");
             if (content == null) content = modal.transform;
 
             // Counter display
