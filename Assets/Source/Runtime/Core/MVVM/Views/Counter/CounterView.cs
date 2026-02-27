@@ -1,5 +1,6 @@
 using Core.Abstractions.MVVM.Views;
 using Core.Abstractions.Popup;
+using Core.Data.UI;
 using Core.MVVM.ViewModels.Counter;
 using R3;
 using TMPro;
@@ -14,8 +15,9 @@ namespace Core.MVVM.Views.Counter
     /// Key patterns demonstrated:
     /// 1. BindableView&lt;TViewModel&gt; — typed binding to a specific ViewModel
     /// 2. OnBind — subscribe to ViewModel properties and wire up buttons
-    /// 3. PopupTrigger — tooltip on hover (no Infrastructure dependency!)
-    /// 4. No business logic here — only UI binding
+    /// 3. PopupTrigger (Hover) — tooltip on hover for +/- buttons
+    /// 4. PopupTrigger (Click) — confirm popup on Reset button click
+    /// 5. No business logic here — only UI binding
     /// </summary>
     public class CounterView : BindableView<CounterViewModel>
     {
@@ -28,10 +30,12 @@ namespace Core.MVVM.Views.Counter
         [SerializeField] private Button _decrementButton;
         [SerializeField] private Button _resetButton;
 
-        [Header("Tooltips")]
+        [Header("Tooltips (Hover)")]
         [SerializeField] private PopupTrigger _incrementTooltip;
         [SerializeField] private PopupTrigger _decrementTooltip;
-        [SerializeField] private PopupTrigger _resetTooltip;
+
+        [Header("Confirm Popup (Click)")]
+        [SerializeField] private PopupTrigger _resetConfirm;
 
         protected override void OnBind(ref DisposableBag disposables)
         {
@@ -65,31 +69,40 @@ namespace Core.MVVM.Views.Counter
                     .AddTo(ref disposables);
             }
 
+            // Reset button — NO direct command execution!
+            // PopupTrigger (Click) shows ConfirmPopup → OnConfirm callback executes command
             if (_resetButton != null)
             {
-                _resetButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.ResetCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-
                 ViewModel.CounterValue
                     .Subscribe(_resetButton, static (v, btn) => btn.interactable = v != 0)
                     .AddTo(ref disposables);
             }
 
-            // TEMPLATE EXAMPLE: PopupTrigger tooltips — set data, hover does the rest
-            SetupTooltips();
+            SetupPopups();
         }
 
-        private void SetupTooltips()
+        private void SetupPopups()
         {
+            // TEMPLATE EXAMPLE: Hover tooltips — simple text
             if (_incrementTooltip != null)
                 _incrementTooltip.SetTooltipData("Increment", "Add 1 to the counter");
 
             if (_decrementTooltip != null)
                 _decrementTooltip.SetTooltipData("Decrement", "Subtract 1 from the counter");
 
-            if (_resetTooltip != null)
-                _resetTooltip.SetTooltipData("Reset", "Reset counter back to zero");
+            // TEMPLATE EXAMPLE: Click confirm popup — with callback
+            if (_resetConfirm != null)
+            {
+                var vm = ViewModel;
+                _resetConfirm.SetDataProvider(() => new ConfirmPopupData
+                {
+                    Title = "Reset Counter?",
+                    Message = $"Current value: {vm.CounterValue.Value}. This will reset to zero.",
+                    ConfirmText = "Reset",
+                    CancelText = "Keep",
+                    OnConfirm = () => vm.ResetCommand.Execute(Unit.Default)
+                });
+            }
         }
     }
 }

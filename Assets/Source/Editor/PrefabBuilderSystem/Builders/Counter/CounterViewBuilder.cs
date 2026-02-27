@@ -13,6 +13,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
     public class CounterViewBuilder : ViewBuilder<CounterView>
     {
         private const string TooltipPrefabPath = "Assets/Prefabs/Popups/TooltipPopup.prefab";
+        private const string ConfirmPrefabPath = "Assets/Prefabs/Popups/ConfirmPopup.prefab";
 
         public CounterViewBuilderSettings Settings { get; set; }
 
@@ -25,7 +26,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
         private Button _resetButton;
         private PopupTrigger _incrementTooltip;
         private PopupTrigger _decrementTooltip;
-        private PopupTrigger _resetTooltip;
+        private PopupTrigger _resetConfirm;
 
         protected override void BuildViewStructure()
         {
@@ -75,7 +76,10 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .WithPreferredSize(null, s.ButtonHeight)
                 .Build(content);
 
-            // Decrement
+            var tooltipPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(TooltipPrefabPath);
+            var confirmPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(ConfirmPrefabPath);
+
+            // Decrement (with hover tooltip)
             _decrementButton = new ButtonBuilder("DecrementButton")
                 .WithLabel("\u2212")
                 .WithLabelSize(s.ButtonFontSize)
@@ -83,8 +87,9 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .WithLabelColor(s.ButtonTextColor)
                 .WithPreferredSize(null, s.ButtonHeight)
                 .Build(buttonRow.transform);
+            _decrementTooltip = AddPopupTrigger(_decrementButton.gameObject, tooltipPrefab, PopupTriggerType.Hover);
 
-            // Reset
+            // Reset (with click confirm popup)
             _resetButton = new ButtonBuilder("ResetButton")
                 .WithLabel("Reset")
                 .WithLabelSize(s.ButtonFontSize)
@@ -92,8 +97,9 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .WithLabelColor(s.ButtonTextColor)
                 .WithPreferredSize(null, s.ButtonHeight)
                 .Build(buttonRow.transform);
+            _resetConfirm = AddPopupTrigger(_resetButton.gameObject, confirmPrefab, PopupTriggerType.Click);
 
-            // Increment
+            // Increment (with hover tooltip)
             _incrementButton = new ButtonBuilder("IncrementButton")
                 .WithLabel("+")
                 .WithLabelSize(s.ButtonFontSize)
@@ -101,27 +107,26 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .WithLabelColor(s.ButtonTextColor)
                 .WithPreferredSize(null, s.ButtonHeight)
                 .Build(buttonRow.transform);
-
-            // TEMPLATE EXAMPLE: Add PopupTrigger to buttons for hover tooltips
-            var tooltipPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(TooltipPrefabPath);
-            _incrementTooltip = AddPopupTrigger(_incrementButton.gameObject, tooltipPrefab);
-            _decrementTooltip = AddPopupTrigger(_decrementButton.gameObject, tooltipPrefab);
-            _resetTooltip = AddPopupTrigger(_resetButton.gameObject, tooltipPrefab);
+            _incrementTooltip = AddPopupTrigger(_incrementButton.gameObject, tooltipPrefab, PopupTriggerType.Hover);
         }
 
-        private static PopupTrigger AddPopupTrigger(GameObject go, GameObject tooltipPrefab)
+        private static PopupTrigger AddPopupTrigger(GameObject go, GameObject popupPrefab, PopupTriggerType triggerType)
         {
             var trigger = go.AddComponent<PopupTrigger>();
-            if (tooltipPrefab != null)
+            var so = new SerializedObject(trigger);
+
+            if (popupPrefab != null)
             {
-                var so = new SerializedObject(trigger);
                 var prefabProp = so.FindProperty("_popupPrefab");
                 if (prefabProp != null)
-                {
-                    prefabProp.objectReferenceValue = tooltipPrefab;
-                    so.ApplyModifiedPropertiesWithoutUndo();
-                }
+                    prefabProp.objectReferenceValue = popupPrefab;
             }
+
+            var triggerProp = so.FindProperty("_triggerType");
+            if (triggerProp != null)
+                triggerProp.enumValueIndex = (int)triggerType;
+
+            so.ApplyModifiedPropertiesWithoutUndo();
             return trigger;
         }
 
@@ -135,7 +140,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
             SerializationHelper.Wire(so, "_resetButton", _resetButton.GetComponent<Button>());
             SerializationHelper.Wire(so, "_incrementTooltip", _incrementTooltip);
             SerializationHelper.Wire(so, "_decrementTooltip", _decrementTooltip);
-            SerializationHelper.Wire(so, "_resetTooltip", _resetTooltip);
+            SerializationHelper.Wire(so, "_resetConfirm", _resetConfirm);
             so.ApplyModifiedPropertiesWithoutUndo();
         }
     }
