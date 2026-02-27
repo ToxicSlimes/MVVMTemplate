@@ -156,6 +156,7 @@ Demonstrates: Commands, Queries, Notifications, Handlers — the complete CQRS p
 | Model | `CounterModel` | Pure C#, events for ViewModel sync |
 | ViewModel | `CounterViewModel` | ReactiveProperty + ReactiveCommand + Mediator |
 | View | `CounterView` | TMP_Text + Buttons, conditional interactable |
+| Popup | `ConfirmPopup` | Reset shows "Are you sure?" confirmation dialog |
 
 ### Settings (modal view)
 

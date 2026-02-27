@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.Tooltip
 {
@@ -15,8 +16,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Tooltip
 
         protected override string PrefabPath => "Assets/Prefabs/Popups/TooltipPopup.prefab";
 
-        private GameObject _titleText;
-        private GameObject _descriptionText;
+        private TextMeshProUGUI _titleText;
+        private TextMeshProUGUI _descriptionText;
         private GameObject _descriptionContainer;
 
         protected override void BuildViewStructure()

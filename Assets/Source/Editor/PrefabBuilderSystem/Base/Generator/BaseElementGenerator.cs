@@ -6,6 +6,7 @@ using Core.Editor.PrefabBuilderSystem.Builders.MainMenu;
 using Core.Editor.PrefabBuilderSystem.Builders.Counter;
 using Core.Editor.PrefabBuilderSystem.Builders.Settings;
 using Core.Editor.PrefabBuilderSystem.Builders.Tooltip;
+using Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup;
 using System.IO;
 
 namespace Core.Editor.PrefabBuilderSystem.Generator
@@ -258,6 +259,8 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
 
                 DrawBuilderWindowRow("TooltipPopup", "Assets/Prefabs/Popups/TooltipPopup.prefab",
                     typeof(TooltipViewBuilderWindow));
+                DrawBuilderWindowRow("ConfirmPopup", "Assets/Prefabs/Popups/ConfirmPopup.prefab",
+                    typeof(ConfirmPopupBuilderWindow));
 
                 EditorGUI.indentLevel--;
             }
