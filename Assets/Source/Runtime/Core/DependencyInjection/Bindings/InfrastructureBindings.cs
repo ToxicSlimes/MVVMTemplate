@@ -31,7 +31,7 @@ using Core.DependencyInjection.Generated;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Publishing;
 using Core.Infrastructure.Mediator.Registration.Extensions;
-using Core.Infrastructure.Popup;
+using Core.Abstractions.Popup;
 using Core.Infrastructure.Services.Input;
 using Cysharp.Threading.Tasks;
 using Reflex.Core;

@@ -4,7 +4,7 @@ using Core.Abstractions.Popup;
 using Core.Infrastructure.Extensions;
 using UnityEngine;
 
-namespace Core.Infrastructure.Popup
+namespace Core.Abstractions.Popup
 {
     public class PopupPool : IPopupPool
     {

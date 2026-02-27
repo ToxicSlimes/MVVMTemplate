@@ -10,7 +10,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Infrastructure.Popup
+namespace Core.Abstractions.Popup
 {
     public class PopupService : IPopupService, IDisposable
     {
