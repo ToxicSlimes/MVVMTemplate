@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b87bf9d068458a40a83dec3c44cc36e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Core.MVVM::Core.MVVM.Views.Counter.CounterView
-  _canvasGroup: {fileID: 0}
+  _canvasGroup: {fileID: 8207028836834345697}
   _isPersistent: 0
   _counterText: {fileID: 3701724490344078707}
   _incrementsText: {fileID: 1857756541855307511}

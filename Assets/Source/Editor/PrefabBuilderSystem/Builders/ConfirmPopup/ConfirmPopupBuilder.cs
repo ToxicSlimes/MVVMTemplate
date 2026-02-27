@@ -16,6 +16,16 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
 
         protected override string PrefabPath => "Assets/Prefabs/Popups/ConfirmPopup.prefab";
 
+        protected override void SetupCanvas(GameObject go)
+        {
+            // Popups are children of PopupService's overlay canvas — no own Canvas needed
+            var rt = go.AddComponent<RectTransform>();
+            rt.localScale = Vector3.one;
+
+            var canvasGroup = go.AddComponent<CanvasGroup>();
+            Context.CanvasGroup = canvasGroup;
+        }
+
         private TextMeshProUGUI _titleText;
         private TextMeshProUGUI _messageText;
         private Button _confirmButton;

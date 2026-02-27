@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Core.MVVM::Core.MVVM.Views.Settings.SettingsView
   _canvasGroup: {fileID: 1751256020799002066}
-  _isPersistent: 0
+  _isPersistent: 1
   _dimBackground: {fileID: 1163987465153448871}
   _closeButton: {fileID: 6562059948318703661}
   _modalWindow: {fileID: 3863620910532320692}

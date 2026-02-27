@@ -16,6 +16,16 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Tooltip
 
         protected override string PrefabPath => "Assets/Prefabs/Popups/TooltipPopup.prefab";
 
+        protected override void SetupCanvas(GameObject go)
+        {
+            // Popups are children of PopupService's overlay canvas — no own Canvas needed
+            var rt = go.AddComponent<RectTransform>();
+            rt.localScale = Vector3.one;
+
+            var canvasGroup = go.AddComponent<CanvasGroup>();
+            Context.CanvasGroup = canvasGroup;
+        }
+
         private TextMeshProUGUI _titleText;
         private TextMeshProUGUI _descriptionText;
         private GameObject _descriptionContainer;
