@@ -16,14 +16,12 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
 
         protected override string PrefabPath => "Assets/Prefabs/Popups/ConfirmPopup.prefab";
 
+        protected override bool ValidateBeforeSave => false;
+
         protected override void SetupCanvas(GameObject go)
         {
-            // Popups are children of PopupService's overlay canvas
-            // Still need Canvas for validation, but set to Inherit (not Overlay)
-            var canvas = go.AddComponent<Canvas>();
-            Context.Canvas = canvas;
-
-            go.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+            // Popups are children of PopupService's overlay canvas — NO own Canvas
+            go.AddComponent<RectTransform>();
 
             var canvasGroup = go.AddComponent<CanvasGroup>();
             Context.CanvasGroup = canvasGroup;
