@@ -25,12 +25,14 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
 
             // Background
             new PanelBuilder("Background")
+                .FromPrefab()
                 .WithBackgroundColor(s.BgColor)
                 .WithAnchors(Vector2.zero, Vector2.one)
                 .Build(Root);
 
             // Center container
             var centerPanel = new VerticalLayoutBuilder("CenterPanel")
+                .FromPrefab()
                 .WithSpacing(s.ButtonSpacing)
                 .WithAlignment(TextAnchor.MiddleCenter)
                 .WithPadding((int)s.ContentPadding)
@@ -41,6 +43,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
 
             // Title
             new TextBuilder("Title")
+                .FromPrefab()
                 .WithText("MVVM Template")
                 .WithFontSize(s.TitleFontSize)
                 .WithColor(s.TitleColor)
@@ -51,6 +54,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
 
             // Subtitle
             new TextBuilder("Subtitle")
+                .FromPrefab()
                 .WithText("Clean Architecture Starter Kit")
                 .WithFontSize(s.SubtitleFontSize)
                 .WithColor(s.SubtitleColor)
@@ -60,11 +64,13 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
 
             // Spacer
             new SpacerBuilder("Spacer")
+                .FromPrefab()
                 .Height(20f)
                 .Build(centerPanel.transform);
 
             // Play Button
             _playButton = new ButtonBuilder("PlayButton")
+                .FromPrefab()
                 .WithLabel("Play")
                 .WithLabelSize(s.ButtonFontSize)
                 .WithBackgroundColor(s.ButtonColor)
@@ -74,6 +80,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
 
             // Settings Button
             _settingsButton = new ButtonBuilder("SettingsButton")
+                .FromPrefab()
                 .WithLabel("Settings")
                 .WithLabelSize(s.ButtonFontSize)
                 .WithVariant(ButtonVariant.Outline)
@@ -82,6 +89,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
 
             // Quit Button
             _quitButton = new ButtonBuilder("QuitButton")
+                .FromPrefab()
                 .WithLabel("Quit")
                 .WithLabelSize(s.ButtonFontSize)
                 .Ghost()

@@ -45,6 +45,23 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Atoms.Spacer;
 
+        protected override void ApplyCustomizations(GameObject instance, LayoutElement le)
+        {
+            if (le == null) le = instance.GetComponent<LayoutElement>() ?? instance.AddComponent<LayoutElement>();
+
+            if (_flexible)
+            {
+                if (_width.HasValue) le.flexibleWidth = 1;
+                if (_height.HasValue) le.flexibleHeight = 1;
+                if (!_width.HasValue && !_height.HasValue) le.flexibleHeight = 1;
+            }
+            else
+            {
+                if (_width.HasValue) le.preferredWidth = _width.Value;
+                if (_height.HasValue) le.preferredHeight = _height.Value;
+            }
+        }
+
         public override LayoutElement Build(Transform parent)
         {
             if (UsePrefabSource)

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a86e1718d3e6264db4de770f38f8b9d, type: 3}
+  m_Name: TooltipBuilderSettings
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.Builders.Tooltip.TooltipBuilderSettings
+  MaxWidth: 280
+  Padding: 12
+  Spacing: 4
+  TitleFontSize: 14
+  DescriptionFontSize: 12
+  BackgroundColor: {r: 0.12, g: 0.12, b: 0.14, a: 0.95}
+  TitleColor: {r: 1, g: 1, b: 1, a: 1}
+  DescriptionColor: {r: 0.7, g: 0.7, b: 0.75, a: 1}
+  BorderColor: {r: 0.3, g: 0.3, b: 0.35, a: 1}
+  BorderWidth: 1
+  CornerRadius: 6

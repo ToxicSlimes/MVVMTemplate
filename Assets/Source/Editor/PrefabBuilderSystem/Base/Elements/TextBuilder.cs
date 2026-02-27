@@ -203,6 +203,37 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Atoms.Text;
 
+        protected override void ApplyCustomizations(GameObject instance, TextMeshProUGUI tmp)
+        {
+            if (tmp == null) return;
+
+            if (!string.IsNullOrEmpty(_text)) tmp.text = _text;
+            tmp.color = _color;
+            tmp.alignment = _alignment;
+            tmp.richText = _richText;
+            tmp.overflowMode = _overflow;
+            tmp.lineSpacing = (_lineHeight - 1f) * 100f;
+            tmp.characterSpacing = _letterSpacing * 100f;
+
+            var style = FontStyles.Normal;
+            if (_bold) style |= FontStyles.Bold;
+            if (_italic) style |= FontStyles.Italic;
+            tmp.fontStyle = style;
+
+            if (_autoSize)
+            {
+                tmp.enableAutoSizing = true;
+                tmp.fontSizeMin = _autoSizeMin;
+                tmp.fontSizeMax = _autoSizeMax ?? _fontSize;
+            }
+            else
+            {
+                tmp.fontSize = _fontSize;
+            }
+
+            ApplyLayoutElement(instance);
+        }
+
         public override TextMeshProUGUI Build(Transform parent)
         {
             if (UsePrefabSource)

@@ -192,6 +192,42 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.Button;
 
+        protected override void ApplyCustomizations(GameObject instance, Button button)
+        {
+            if (button == null) return;
+
+            var bg = instance.GetComponent<Image>();
+            if (bg != null)
+            {
+                bg.color = _backgroundColor;
+                if (_backgroundSprite != null)
+                {
+                    bg.sprite = _backgroundSprite;
+                    bg.type = Image.Type.Sliced;
+                }
+            }
+
+            if (_colors.HasValue)
+                button.colors = _colors.Value;
+
+            if (_addOutline)
+            {
+                var outline = instance.GetComponent<Outline>() ?? instance.AddComponent<Outline>();
+                outline.effectColor = _outlineColor;
+                outline.effectDistance = _outlineDistance;
+            }
+
+            var label = instance.GetComponentInChildren<TextMeshProUGUI>();
+            if (label != null)
+            {
+                if (!string.IsNullOrEmpty(_label)) label.text = _label;
+                label.fontSize = _labelFontSize;
+                label.color = _labelColor;
+            }
+
+            ApplyLayoutElement(instance);
+        }
+
         public override Button Build(Transform parent)
         {
             if (UsePrefabSource)

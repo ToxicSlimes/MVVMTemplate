@@ -132,6 +132,34 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Containers.HorizontalLayout;
 
+        protected override void ApplyCustomizations(GameObject instance, HorizontalLayoutGroup hlg)
+        {
+            if (hlg == null) return;
+
+            if (_backgroundColor.HasValue)
+            {
+                var img = instance.GetComponent<Image>() ?? instance.AddComponent<Image>();
+                img.color = _backgroundColor.Value;
+            }
+
+            hlg.spacing = _spacing;
+            hlg.childAlignment = _alignment;
+            hlg.padding = _padding;
+            hlg.childControlWidth = _controlWidth;
+            hlg.childControlHeight = _controlHeight;
+            hlg.childForceExpandWidth = _forceExpandWidth;
+            hlg.childForceExpandHeight = _forceExpandHeight;
+
+            if (_addContentSizeFitter)
+            {
+                var csf = instance.GetComponent<ContentSizeFitter>() ?? instance.AddComponent<ContentSizeFitter>();
+                csf.horizontalFit = _horizontalFit;
+                csf.verticalFit = _verticalFit;
+            }
+
+            ApplyLayoutElement(instance);
+        }
+
         public override HorizontalLayoutGroup Build(Transform parent)
         {
             if (UsePrefabSource)
@@ -293,6 +321,34 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         }
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Containers.VerticalLayout;
+
+        protected override void ApplyCustomizations(GameObject instance, VerticalLayoutGroup vlg)
+        {
+            if (vlg == null) return;
+
+            if (_backgroundColor.HasValue)
+            {
+                var img = instance.GetComponent<Image>() ?? instance.AddComponent<Image>();
+                img.color = _backgroundColor.Value;
+            }
+
+            vlg.spacing = _spacing;
+            vlg.childAlignment = _alignment;
+            vlg.padding = _padding;
+            vlg.childControlWidth = _controlWidth;
+            vlg.childControlHeight = _controlHeight;
+            vlg.childForceExpandWidth = _forceExpandWidth;
+            vlg.childForceExpandHeight = _forceExpandHeight;
+
+            if (_addContentSizeFitter)
+            {
+                var csf = instance.GetComponent<ContentSizeFitter>() ?? instance.AddComponent<ContentSizeFitter>();
+                csf.horizontalFit = _horizontalFit;
+                csf.verticalFit = _verticalFit;
+            }
+
+            ApplyLayoutElement(instance);
+        }
 
         public override VerticalLayoutGroup Build(Transform parent)
         {
