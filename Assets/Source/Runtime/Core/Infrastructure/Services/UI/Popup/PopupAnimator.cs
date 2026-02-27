@@ -6,7 +6,7 @@ using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
 
-namespace Core.Abstractions.Popup
+namespace Core.Infrastructure.Popup
 {
     /// <summary>
     /// Fluent API wrapper around LitMotion for popup animations.

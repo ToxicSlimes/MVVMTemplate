@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Abstractions.Popup.Implementations
+namespace Core.Infrastructure.Popup.Implementations
 {
     /// <summary>
     /// TEMPLATE EXAMPLE: A confirmation dialog popup.

@@ -1,10 +1,7 @@
 using System;
 using Core.Abstractions.MVVM.Models.Counter;
 using Core.Abstractions.MVVM.ViewModels;
-using Core.Abstractions.Popup;
-using Core.Abstractions.Popup.Implementations;
 using Core.Application.Commands.Counter;
-using Core.Data.UI;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Attributes;
 using Cysharp.Threading.Tasks;
@@ -28,7 +25,6 @@ namespace Core.MVVM.ViewModels.Counter
     {
         private readonly ICounterModel _model;
         private readonly IMediator _mediator;
-        private readonly IPopupService _popupService;
 
         // Reactive properties — View auto-subscribes to these
         public ReactiveProperty<int> CounterValue { get; }
@@ -40,11 +36,10 @@ namespace Core.MVVM.ViewModels.Counter
         public ReactiveCommand<Unit> DecrementCommand { get; set; }
         public ReactiveCommand<Unit> ResetCommand { get; set; }
 
-        public CounterViewModel(ICounterModel model, IMediator mediator, IPopupService popupService = null)
+        public CounterViewModel(ICounterModel model, IMediator mediator)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _popupService = popupService;
 
             CounterValue = new ReactiveProperty<int>(_model.Value);
             TotalIncrements = new ReactiveProperty<int>(_model.TotalIncrements);
@@ -56,7 +51,6 @@ namespace Core.MVVM.ViewModels.Counter
 
         private void SetupModelSubscriptions()
         {
-            // Model → ViewModel: when model changes, update reactive properties
             _model.ValueChanged += OnModelValueChanged;
         }
 
@@ -79,7 +73,6 @@ namespace Core.MVVM.ViewModels.Counter
             DisplayText.Value = FormatDisplay(newValue);
         }
 
-        // ViewModel → Model: send commands through Mediator (CQRS pattern)
         private async UniTaskVoid OnIncrement()
         {
             await _mediator.Send(new IncrementCounterCommand(1));
@@ -92,23 +85,6 @@ namespace Core.MVVM.ViewModels.Counter
 
         private async UniTaskVoid OnReset()
         {
-            if (_popupService != null)
-            {
-                var confirmed = false;
-                await _popupService.ShowAsync<ConfirmPopup, ConfirmPopupData>(
-                    null,
-                    new ConfirmPopupData
-                    {
-                        Title = "Reset Counter?",
-                        Message = $"Current value: {_model.Value}. This will reset to zero.",
-                        ConfirmText = "Reset",
-                        CancelText = "Keep",
-                        OnConfirm = () => confirmed = true
-                    });
-
-                if (!confirmed) return;
-            }
-
             await _mediator.Send(new ResetCounterCommand());
         }
 

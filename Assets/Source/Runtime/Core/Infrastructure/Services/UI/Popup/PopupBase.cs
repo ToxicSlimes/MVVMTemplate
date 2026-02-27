@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using LitMotion;
 using UnityEngine;
 
-namespace Core.Abstractions.Popup
+namespace Core.Infrastructure.Popup
 {
     [RequireComponent(typeof(CanvasGroup))]
     public abstract class PopupBase : MonoBehaviour, IPopup

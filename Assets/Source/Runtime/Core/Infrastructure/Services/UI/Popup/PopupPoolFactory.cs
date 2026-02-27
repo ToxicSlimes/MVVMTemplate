@@ -1,7 +1,7 @@
 using Core.Abstractions.Popup;
 using UnityEngine;
 
-namespace Core.Abstractions.Popup
+namespace Core.Infrastructure.Popup
 {
     public class PopupPoolFactory : IPopupPoolFactory
     {
