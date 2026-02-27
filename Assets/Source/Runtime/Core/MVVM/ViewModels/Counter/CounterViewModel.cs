@@ -10,31 +10,26 @@ using UnityEngine;
 
 namespace Core.MVVM.ViewModels.Counter
 {
-    /// <summary>
-    /// TEMPLATE EXAMPLE: ViewModel — the bridge between Model and View.
-    /// 
-    /// Key patterns demonstrated:
-    /// 1. ReactiveProperty — View subscribes to changes automatically
-    /// 2. ReactiveCommand — View binds buttons to commands
-    /// 3. Model → ViewModel sync via events
-    /// 4. ViewModel → Model sync via Mediator Commands (CQRS)
-    /// 5. Proper disposal chain
-    /// </summary>
     [GenerateViewCommands]
     public class CounterViewModel : DisposableObject
     {
         private readonly ICounterModel _model;
         private readonly IMediator _mediator;
 
-        // Reactive properties — View auto-subscribes to these
+        // Counter
         public ReactiveProperty<int> CounterValue { get; }
         public ReactiveProperty<int> TotalIncrements { get; }
         public ReactiveProperty<string> DisplayText { get; }
 
-        // Commands — View binds buttons to these
+        // Mode toggle
+        public ReactiveProperty<bool> IsGalleryMode { get; }
+        public ReactiveProperty<string> ToggleButtonText { get; }
+
+        // Commands
         public ReactiveCommand<Unit> IncrementCommand { get; set; }
         public ReactiveCommand<Unit> DecrementCommand { get; set; }
         public ReactiveCommand<Unit> ResetCommand { get; set; }
+        public ReactiveCommand<Unit> ToggleGalleryCommand { get; set; }
 
         public CounterViewModel(ICounterModel model, IMediator mediator)
         {
@@ -44,6 +39,8 @@ namespace Core.MVVM.ViewModels.Counter
             CounterValue = new ReactiveProperty<int>(_model.Value);
             TotalIncrements = new ReactiveProperty<int>(_model.TotalIncrements);
             DisplayText = new ReactiveProperty<string>(FormatDisplay(_model.Value));
+            IsGalleryMode = new ReactiveProperty<bool>(false);
+            ToggleButtonText = new ReactiveProperty<string>("Show Elements");
 
             SetupModelSubscriptions();
             SetupCommands();
@@ -64,6 +61,13 @@ namespace Core.MVVM.ViewModels.Counter
 
             ResetCommand = new ReactiveCommand<Unit>(_ => OnReset().Forget());
             ResetCommand.AddTo(ref Disposables);
+
+            ToggleGalleryCommand = new ReactiveCommand<Unit>(_ =>
+            {
+                IsGalleryMode.Value = !IsGalleryMode.Value;
+                ToggleButtonText.Value = IsGalleryMode.Value ? "Show Counter" : "Show Elements";
+            });
+            ToggleGalleryCommand.AddTo(ref Disposables);
         }
 
         private void OnModelValueChanged(int oldValue, int newValue)

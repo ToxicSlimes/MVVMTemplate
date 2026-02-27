@@ -1,7 +1,9 @@
 using Core.Abstractions.MVVM.Views;
 using Core.Abstractions.Popup;
+using Core.Data.Domain.Models.Elements.Samples;
 using Core.Data.UI;
 using Core.MVVM.ViewModels.Counter;
+using Core.Presentation.Elements.Samples;
 using R3;
 using TMPro;
 using UnityEngine;
@@ -10,14 +12,14 @@ using UnityEngine.UI;
 namespace Core.MVVM.Views.Counter
 {
     /// <summary>
-    /// TEMPLATE EXAMPLE: View — the UI layer.
+    /// TEMPLATE EXAMPLE: View with two modes — Counter Demo and Element Gallery.
     /// 
-    /// Key patterns demonstrated:
-    /// 1. BindableView&lt;TViewModel&gt; — typed binding to a specific ViewModel
-    /// 2. OnBind — subscribe to ViewModel properties and wire up buttons
-    /// 3. PopupTrigger (Hover) — tooltip on hover for +/- buttons
-    /// 4. PopupTrigger (Click) — confirm popup on Reset button click
-    /// 5. No business logic here — only UI binding
+    /// Demonstrates:
+    /// 1. ReactiveProperty binding (ViewModel → View)
+    /// 2. ReactiveCommand binding (View → ViewModel)
+    /// 3. PopupTrigger (Hover tooltips + Click confirm)
+    /// 4. BindableElement usage with sample data
+    /// 5. Panel switching driven by ViewModel state
     /// </summary>
     public class CounterView : BindableView<CounterViewModel>
     {
@@ -29,6 +31,12 @@ namespace Core.MVVM.Views.Counter
         [SerializeField] private Button _incrementButton;
         [SerializeField] private Button _decrementButton;
         [SerializeField] private Button _resetButton;
+        [SerializeField] private Button _toggleGalleryButton;
+        [SerializeField] private TMP_Text _toggleButtonLabel;
+
+        [Header("Panels")]
+        [SerializeField] private GameObject _counterPanel;
+        [SerializeField] private GameObject _galleryPanel;
 
         [Header("Tooltips (Hover)")]
         [SerializeField] private PopupTrigger _incrementTooltip;
@@ -37,9 +45,15 @@ namespace Core.MVVM.Views.Counter
         [Header("Confirm Popup (Click)")]
         [SerializeField] private PopupTrigger _resetConfirm;
 
+        [Header("Gallery Elements")]
+        [SerializeField] private TextCardElement _sampleCard;
+        [SerializeField] private StatBarElement _sampleStatBar;
+        [SerializeField] private ActionListItemElement _sampleActionItem;
+
         protected override void OnBind(ref DisposableBag disposables)
         {
-            // ViewModel → View: reactive property changes update UI
+            // === COUNTER MODE ===
+
             if (_counterText != null)
             {
                 ViewModel.DisplayText
@@ -54,7 +68,6 @@ namespace Core.MVVM.Views.Counter
                     .AddTo(ref disposables);
             }
 
-            // View → ViewModel: button clicks invoke commands
             if (_incrementButton != null)
             {
                 _incrementButton.OnClickAsObservable()
@@ -69,8 +82,6 @@ namespace Core.MVVM.Views.Counter
                     .AddTo(ref disposables);
             }
 
-            // Reset button — NO direct command execution!
-            // PopupTrigger (Click) shows ConfirmPopup → OnConfirm callback executes command
             if (_resetButton != null)
             {
                 ViewModel.CounterValue
@@ -78,19 +89,43 @@ namespace Core.MVVM.Views.Counter
                     .AddTo(ref disposables);
             }
 
+            // === MODE TOGGLE ===
+
+            if (_toggleGalleryButton != null)
+            {
+                _toggleGalleryButton.OnClickAsObservable()
+                    .Subscribe(ViewModel.ToggleGalleryCommand, static (_, cmd) => cmd.Execute(Unit.Default))
+                    .AddTo(ref disposables);
+            }
+
+            if (_toggleButtonLabel != null)
+            {
+                ViewModel.ToggleButtonText
+                    .Subscribe(_toggleButtonLabel, static (text, tmp) => tmp.text = text)
+                    .AddTo(ref disposables);
+            }
+
+            // Panel switching
+            ViewModel.IsGalleryMode
+                .Subscribe(this, static (isGallery, self) =>
+                {
+                    if (self._counterPanel != null) self._counterPanel.SetActive(!isGallery);
+                    if (self._galleryPanel != null) self._galleryPanel.SetActive(isGallery);
+                })
+                .AddTo(ref disposables);
+
             SetupPopups();
+            SetupGalleryElements();
         }
 
         private void SetupPopups()
         {
-            // TEMPLATE EXAMPLE: Hover tooltips — simple text
             if (_incrementTooltip != null)
                 _incrementTooltip.SetTooltipData("Increment", "Add 1 to the counter");
 
             if (_decrementTooltip != null)
                 _decrementTooltip.SetTooltipData("Decrement", "Subtract 1 from the counter");
 
-            // TEMPLATE EXAMPLE: Click confirm popup — with callback
             if (_resetConfirm != null)
             {
                 var vm = ViewModel;
@@ -102,6 +137,44 @@ namespace Core.MVVM.Views.Counter
                     CancelText = "Keep",
                     OnConfirm = () => vm.ResetCommand.Execute(Unit.Default)
                 });
+            }
+        }
+
+        private void SetupGalleryElements()
+        {
+            // TEMPLATE EXAMPLE: BindableElement usage with sample data
+            if (_sampleCard != null)
+            {
+                _sampleCard.Bind(new TextCardData
+                {
+                    Id = "sample-card",
+                    Title = "TextCard Element",
+                    Description = "A simple card with title, description, and optional icon. Great for lists, inventories, or info panels."
+                });
+            }
+
+            if (_sampleStatBar != null)
+            {
+                _sampleStatBar.Bind(new StatBarData
+                {
+                    Id = "sample-stat",
+                    Label = "Health",
+                    CurrentValue = 75f,
+                    MaxValue = 100f
+                });
+            }
+
+            if (_sampleActionItem != null)
+            {
+                _sampleActionItem.Bind(new ActionListItemData
+                {
+                    Id = "sample-action",
+                    Title = "Action Item",
+                    Subtitle = "Tap the button to trigger an action",
+                    ActionLabel = "Execute",
+                    IsActionEnabled = true
+                });
+                _sampleActionItem.OnAction = data => Debug.Log($"[Gallery] Action triggered: {data.Title}");
             }
         }
     }
