@@ -25,17 +25,16 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
         {
             var s = Settings;
 
-            // Modal with dim background, header, content, footer
+            // Modal
             var modal = new ModalBuilder("CounterModal")
                 .WithTitle("Counter Demo")
                 .WithSize(s.ModalWidth, s.ModalHeight)
                 .WithDimColor(s.BgDimColor)
                 .WithBackgroundColor(s.ModalBgColor)
                 .WithHeaderColor(s.HeaderColor)
-                .WithShowCloseButton(false)
+                .NoCloseButton()
                 .Build(Root);
 
-            // Find content area inside modal
             var content = modal.transform.Find("ModalWindow/Content");
             if (content == null) content = modal.transform;
 
@@ -44,10 +43,9 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .WithText("Count: 0")
                 .WithFontSize(s.CounterFontSize)
                 .WithColor(s.CounterTextColor)
-                .WithBold()
-                .WithAlignment(TextAlignmentOptions.Center)
-                .WithAutoSize(false)
-                .WithPreferredHeight(100f)
+                .Bold()
+                .Centered()
+                .WithPreferredSize(null, 100f)
                 .Build(content);
 
             // Total increments
@@ -55,50 +53,47 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .WithText("Total actions: 0")
                 .WithFontSize(s.IncrementsFontSize)
                 .WithColor(s.IncrementsTextColor)
-                .WithAlignment(TextAlignmentOptions.Center)
-                .WithAutoSize(false)
-                .WithPreferredHeight(30f)
+                .Centered()
+                .WithPreferredSize(null, 30f)
                 .Build(content);
 
             // Spacer
             new SpacerBuilder("Spacer")
-                .WithHeight(15f)
+                .Height(15f)
                 .Build(content);
 
             // Button row
             var buttonRow = new HorizontalLayoutBuilder("ButtonRow")
                 .WithSpacing(s.ButtonSpacing)
                 .WithAlignment(TextAnchor.MiddleCenter)
-                .WithControlChildSize(true, true)
-                .WithForceExpand(true, false)
-                .WithPreferredHeight(s.ButtonHeight)
+                .WithPreferredSize(null, s.ButtonHeight)
                 .Build(content);
 
             // Decrement
             _decrementButton = new ButtonBuilder("DecrementButton")
-                .WithLabel("−")
-                .WithLabelFontSize(s.ButtonFontSize)
+                .WithLabel("\u2212")
+                .WithLabelSize(s.ButtonFontSize)
                 .WithBackgroundColor(s.DecrementButtonColor)
                 .WithLabelColor(s.ButtonTextColor)
-                .WithPreferredHeight(s.ButtonHeight)
+                .WithPreferredSize(null, s.ButtonHeight)
                 .Build(buttonRow.transform);
 
             // Reset
             _resetButton = new ButtonBuilder("ResetButton")
                 .WithLabel("Reset")
-                .WithLabelFontSize(s.ButtonFontSize)
+                .WithLabelSize(s.ButtonFontSize)
                 .WithBackgroundColor(s.ResetButtonColor)
                 .WithLabelColor(s.ButtonTextColor)
-                .WithPreferredHeight(s.ButtonHeight)
+                .WithPreferredSize(null, s.ButtonHeight)
                 .Build(buttonRow.transform);
 
             // Increment
             _incrementButton = new ButtonBuilder("IncrementButton")
                 .WithLabel("+")
-                .WithLabelFontSize(s.ButtonFontSize)
+                .WithLabelSize(s.ButtonFontSize)
                 .WithBackgroundColor(s.IncrementButtonColor)
                 .WithLabelColor(s.ButtonTextColor)
-                .WithPreferredHeight(s.ButtonHeight)
+                .WithPreferredSize(null, s.ButtonHeight)
                 .Build(buttonRow.transform);
         }
 
