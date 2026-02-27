@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using Core.Abstractions.Popup;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.MVVM.Views.Counter;
@@ -11,6 +12,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 {
     public class CounterViewBuilder : ViewBuilder<CounterView>
     {
+        private const string TooltipPrefabPath = "Assets/Prefabs/Popups/TooltipPopup.prefab";
+
         public CounterViewBuilderSettings Settings { get; set; }
 
         protected override string PrefabPath => "Assets/Prefabs/Views/CounterView.prefab";
@@ -20,6 +23,9 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
         private Button _incrementButton;
         private Button _decrementButton;
         private Button _resetButton;
+        private PopupTrigger _incrementTooltip;
+        private PopupTrigger _decrementTooltip;
+        private PopupTrigger _resetTooltip;
 
         protected override void BuildViewStructure()
         {
@@ -95,6 +101,28 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .WithLabelColor(s.ButtonTextColor)
                 .WithPreferredSize(null, s.ButtonHeight)
                 .Build(buttonRow.transform);
+
+            // TEMPLATE EXAMPLE: Add PopupTrigger to buttons for hover tooltips
+            var tooltipPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(TooltipPrefabPath);
+            _incrementTooltip = AddPopupTrigger(_incrementButton.gameObject, tooltipPrefab);
+            _decrementTooltip = AddPopupTrigger(_decrementButton.gameObject, tooltipPrefab);
+            _resetTooltip = AddPopupTrigger(_resetButton.gameObject, tooltipPrefab);
+        }
+
+        private static PopupTrigger AddPopupTrigger(GameObject go, GameObject tooltipPrefab)
+        {
+            var trigger = go.AddComponent<PopupTrigger>();
+            if (tooltipPrefab != null)
+            {
+                var so = new SerializedObject(trigger);
+                var prefabProp = so.FindProperty("_popupPrefab");
+                if (prefabProp != null)
+                {
+                    prefabProp.objectReferenceValue = tooltipPrefab;
+                    so.ApplyModifiedPropertiesWithoutUndo();
+                }
+            }
+            return trigger;
         }
 
         protected override void WireFields(CounterView view)
@@ -105,6 +133,9 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
             SerializationHelper.Wire(so, "_incrementButton", _incrementButton.GetComponent<Button>());
             SerializationHelper.Wire(so, "_decrementButton", _decrementButton.GetComponent<Button>());
             SerializationHelper.Wire(so, "_resetButton", _resetButton.GetComponent<Button>());
+            SerializationHelper.Wire(so, "_incrementTooltip", _incrementTooltip);
+            SerializationHelper.Wire(so, "_decrementTooltip", _decrementTooltip);
+            SerializationHelper.Wire(so, "_resetTooltip", _resetTooltip);
             so.ApplyModifiedPropertiesWithoutUndo();
         }
     }
