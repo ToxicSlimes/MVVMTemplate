@@ -113,6 +113,11 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
         protected override void WireFields(Infrastructure.Popup.Implementations.ConfirmPopup view)
         {
             var so = new SerializedObject(view);
+
+            // PopupBase fields
+            SerializationHelper.Wire(so, "_canvasGroup", view.GetComponent<CanvasGroup>());
+            SerializationHelper.Wire(so, "_contentRoot", view.GetComponent<RectTransform>());
+
             SerializationHelper.Wire(so, "_titleText", _titleText.GetComponentInChildren<TextMeshProUGUI>());
             SerializationHelper.Wire(so, "_messageText", _messageText.GetComponentInChildren<TextMeshProUGUI>());
             SerializationHelper.Wire(so, "_confirmButton", _confirmButton.GetComponent<Button>());
