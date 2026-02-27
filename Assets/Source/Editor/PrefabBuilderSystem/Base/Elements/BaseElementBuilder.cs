@@ -205,7 +205,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         protected bool ShouldUsePrefab()
         {
             if (_noPrefab) return false;
-            if (ShouldUsePrefab()) return true;
+            if (UsePrefabSource) return true;
 
             var defaultPath = GetDefaultPrefabPath();
             if (string.IsNullOrEmpty(defaultPath)) return false;
