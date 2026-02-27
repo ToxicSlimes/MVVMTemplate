@@ -1,5 +1,7 @@
 using Core.Abstractions.MVVM.Elements;
+using Core.Abstractions.Popup;
 using Core.Data.Domain.Models.Elements.Samples;
+using Core.Data.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +25,11 @@ namespace Core.Presentation.Elements.Samples
 
             if (_iconImage != null && data.Icon != null)
                 _iconImage.sprite = data.Icon;
+        }
+
+        protected override IPopupData GetPopupData(TextCardData data)
+        {
+            return new TooltipData(data.Title, data.Description);
         }
 
         protected override void OnUnbind()

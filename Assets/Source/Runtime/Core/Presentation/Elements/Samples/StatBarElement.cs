@@ -1,5 +1,7 @@
 using Core.Abstractions.MVVM.Elements;
+using Core.Abstractions.Popup;
 using Core.Data.Domain.Models.Elements.Samples;
+using Core.Data.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +39,14 @@ namespace Core.Presentation.Elements.Samples
 
             if (_fillImage != null && data.MaxValue > 0f)
                 _fillImage.fillAmount = data.CurrentValue / data.MaxValue;
+        }
+
+        protected override IPopupData GetPopupData(StatBarData data)
+        {
+            var valueText = !string.IsNullOrEmpty(data.FormattedValue)
+                ? data.FormattedValue
+                : $"{data.CurrentValue:F0}/{data.MaxValue:F0}";
+            return new TooltipData(data.Label, valueText);
         }
 
         protected override void OnUnbind()
