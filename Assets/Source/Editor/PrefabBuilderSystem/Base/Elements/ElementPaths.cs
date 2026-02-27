@@ -92,6 +92,14 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             public const string TrainingPanel = Dir + "/TrainingPanel.prefab";
         }
 
+        public static class Samples
+        {
+            private const string Dir = Base + "/Samples";
+            public const string TextCard = Dir + "/TextCard.prefab";
+            public const string StatBar = Dir + "/StatBar.prefab";
+            public const string ActionListItem = Dir + "/ActionListItem.prefab";
+        }
+
         public static class GameUI
         {
             private const string Dir = Base + "/GameUI";

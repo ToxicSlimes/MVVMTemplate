@@ -7,6 +7,7 @@ using Core.Editor.PrefabBuilderSystem.Builders.Counter;
 using Core.Editor.PrefabBuilderSystem.Builders.Settings;
 using Core.Editor.PrefabBuilderSystem.Builders.Tooltip;
 using Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup;
+using Core.Editor.PrefabBuilderSystem.Builders.Elements;
 using System.IO;
 
 namespace Core.Editor.PrefabBuilderSystem.Generator
@@ -22,6 +23,7 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private bool _gameUIFoldout = true;
         private bool _chatFoldout = true;
         private bool _mainViewFoldout = true;
+        private bool _samplesFoldout = true;
         private bool _settingsFoldout = true;
         
         private BaseElementSettings _settings;
@@ -98,6 +100,8 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
             DrawContainersSection();
             EditorGUILayout.Space(10);
             DrawGameUISection();
+            EditorGUILayout.Space(10);
+            DrawSampleElementsSection();
             EditorGUILayout.Space(10);
             DrawChatSection();
             EditorGUILayout.Space(10);
@@ -216,6 +220,37 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
                 DrawElementRow("HealthBar", ElementPaths.GameUI.HealthBar, GenerateHealthBar);
                 DrawElementRow("Badge", ElementPaths.GameUI.Badge, GenerateBadge);
                 DrawElementRow("Avatar", ElementPaths.GameUI.Avatar, GenerateAvatar);
+                EditorGUI.indentLevel--;
+            }
+            EditorGUILayout.EndFoldoutHeaderGroup();
+        }
+
+        private void DrawSampleElementsSection()
+        {
+            _samplesFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(_samplesFoldout, "📋 Sample BindableElements");
+            if (_samplesFoldout)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.HelpBox(
+                    "BindableElement<TData> примеры для Element Gallery.\n" +
+                    "Собираются из базовых префабов (Card, Text, Button, ProgressBar).\n" +
+                    "Включают: _clickButton, _selectionIndicator, _popupTrigger + custom fields.",
+                    MessageType.Info);
+
+                DrawElementRow("TextCard", ElementPaths.Samples.TextCard, SampleElementBuilders.BuildTextCard);
+                DrawElementRow("StatBar", ElementPaths.Samples.StatBar, SampleElementBuilders.BuildStatBar);
+                DrawElementRow("ActionListItem", ElementPaths.Samples.ActionListItem, SampleElementBuilders.BuildActionListItem);
+
+                EditorGUILayout.Space(4);
+                EditorGUILayout.BeginHorizontal();
+                GUI.backgroundColor = new Color(0.3f, 0.7f, 0.9f);
+                if (GUILayout.Button("Build All Samples", GUILayout.Height(28)))
+                {
+                    SampleElementBuilders.BuildAll();
+                }
+                GUI.backgroundColor = Color.white;
+                EditorGUILayout.EndHorizontal();
+
                 EditorGUI.indentLevel--;
             }
             EditorGUILayout.EndFoldoutHeaderGroup();

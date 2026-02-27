@@ -37,8 +37,22 @@ namespace Core.DependencyInjection.Generated
                 TextCardElement,
                 CreateElementHandler<TextCardElement, TextCardData>>();
 
+            builder.AddHandler<
+                ReconcileElementsCommand<ActionListItemElement, ActionListItemData>,
+                Nothing,
+                ReconcileElementsHandler<ActionListItemElement, ActionListItemData>>();
+
+            builder.AddHandler<
+                ReconcileElementsCommand<StatBarElement, StatBarData>,
+                Nothing,
+                ReconcileElementsHandler<StatBarElement, StatBarData>>();
+
+            builder.AddHandler<
+                ReconcileElementsCommand<TextCardElement, TextCardData>,
+                Nothing,
+                ReconcileElementsHandler<TextCardElement, TextCardData>>();
+
             return builder;
         }
     }
 }
-
