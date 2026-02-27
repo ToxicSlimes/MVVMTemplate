@@ -1,11 +1,14 @@
-using Core.Abstractions.MVVM.Elements;
+using System.Collections.Generic;
 using Core.Abstractions.MVVM.Views;
 using Core.Abstractions.Popup;
-using Core.Data.Domain.Models.Elements;
+using Core.Application.Commands.Elements;
 using Core.Data.Domain.Models.Elements.Samples;
 using Core.Data.UI;
+using Core.Infrastructure.Mediator.Abstractions;
 using Core.MVVM.ViewModels.Counter;
+using Core.MVVM.Elements.Samples;
 using R3;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,11 +22,13 @@ namespace Core.MVVM.Views.Counter
     /// 1. ReactiveProperty binding (ViewModel → View)
     /// 2. ReactiveCommand binding (View → ViewModel)
     /// 3. PopupTrigger (Hover tooltips + Click confirm)
-    /// 4. BindableElement usage with sample data (via IBindableElement interface)
+    /// 4. ReconcileElementsCommand — dynamic element list management via CQRS
     /// 5. Panel switching driven by ViewModel state
     /// </summary>
     public class CounterView : BindableView<CounterViewModel>
     {
+        [Inject] private IMediator _mediator;
+
         [Header("Display")]
         [SerializeField] private TMP_Text _counterText;
         [SerializeField] private TMP_Text _incrementsText;
@@ -46,15 +51,22 @@ namespace Core.MVVM.Views.Counter
         [Header("Confirm Popup (Click)")]
         [SerializeField] private PopupTrigger _resetConfirm;
 
-        [Header("Gallery Elements")]
-        [SerializeField] private GameObject _sampleCard;
-        [SerializeField] private GameObject _sampleStatBar;
-        [SerializeField] private GameObject _sampleActionItem;
+        [Header("Gallery Containers")]
+        [SerializeField] private Transform _textCardsContainer;
+        [SerializeField] private Transform _statBarsContainer;
+        [SerializeField] private Transform _actionItemsContainer;
+
+        private bool _galleryPopulated;
 
         protected override void OnBind(ref DisposableBag disposables)
         {
-            // === COUNTER MODE ===
+            BindCounterMode(ref disposables);
+            BindModeToggle(ref disposables);
+            SetupPopups();
+        }
 
+        private void BindCounterMode(ref DisposableBag disposables)
+        {
             if (_counterText != null)
             {
                 ViewModel.DisplayText
@@ -89,9 +101,10 @@ namespace Core.MVVM.Views.Counter
                     .Subscribe(_resetButton, static (v, btn) => btn.interactable = v != 0)
                     .AddTo(ref disposables);
             }
+        }
 
-            // === MODE TOGGLE ===
-
+        private void BindModeToggle(ref DisposableBag disposables)
+        {
             if (_toggleGalleryButton != null)
             {
                 _toggleGalleryButton.OnClickAsObservable()
@@ -111,11 +124,14 @@ namespace Core.MVVM.Views.Counter
                 {
                     if (self._counterPanel != null) self._counterPanel.SetActive(!isGallery);
                     if (self._galleryPanel != null) self._galleryPanel.SetActive(isGallery);
+
+                    if (isGallery && !self._galleryPopulated)
+                    {
+                        self._galleryPopulated = true;
+                        self.PopulateGallery();
+                    }
                 })
                 .AddTo(ref disposables);
-
-            SetupPopups();
-            SetupGalleryElements();
         }
 
         private void SetupPopups()
@@ -140,41 +156,56 @@ namespace Core.MVVM.Views.Counter
             }
         }
 
-        private void SetupGalleryElements()
+        /// <summary>
+        /// Populates the Element Gallery using ReconcileElementsCommand — the same CQRS pattern
+        /// used in production views (e.g. HeroDetailPanel abilities, inventory grids).
+        /// 
+        /// UIElementService resolves prefabs via ElementConfig → Addressables,
+        /// instantiates them into containers, and calls Bind() with the data.
+        /// </summary>
+        private void PopulateGallery()
         {
-            // TEMPLATE EXAMPLE: Bind sample elements via IBindableElement interface
-            // View uses GameObject refs + GetComponent — no direct Presentation dependency
-
-            BindElement(_sampleCard, new TextCardData
+            // TextCard elements — cards with title, description, icon
+            var textCards = new List<TextCardData>
             {
-                Id = "sample-card",
-                Title = "TextCard Element",
-                Description = "A card with title, description, and optional icon."
-            });
+                new() { Id = "card-1", Title = "Welcome Card", Description = "This is a TextCardElement — displays a title, description, and optional icon." },
+                new() { Id = "card-2", Title = "Architecture", Description = "Built with BindableElement<TData> base class. Data flows via ReconcileElementsCommand." },
+                new() { Id = "card-3", Title = "Popup Support", Description = "Each element can provide GetPopupData() for automatic tooltip via PopupTrigger." }
+            };
 
-            BindElement(_sampleStatBar, new StatBarData
-            {
-                Id = "sample-stat",
-                Label = "Health",
-                CurrentValue = 75f,
-                MaxValue = 100f
-            });
+            _mediator.Send(new ReconcileElementsCommand<TextCardElement, TextCardData>(
+                _textCardsContainer,
+                textCards));
 
-            BindElement(_sampleActionItem, new ActionListItemData
+            // StatBar elements — progress bars with label and value
+            var statBars = new List<StatBarData>
             {
-                Id = "sample-action",
-                Title = "Action Item",
-                Subtitle = "Tap the button to trigger an action",
-                ActionLabel = "Execute",
-                IsActionEnabled = true
-            });
+                new() { Id = "stat-hp", Label = "Health", CurrentValue = 75f, MaxValue = 100f },
+                new() { Id = "stat-mp", Label = "Mana", CurrentValue = 30f, MaxValue = 80f },
+                new() { Id = "stat-xp", Label = "Experience", CurrentValue = 450f, MaxValue = 1000f, FormattedValue = "450/1000 XP" }
+            };
+
+            _mediator.Send(new ReconcileElementsCommand<StatBarElement, StatBarData>(
+                _statBarsContainer,
+                statBars));
+
+            // ActionListItem elements — list items with action buttons
+            var actionItems = new List<ActionListItemData>
+            {
+                new() { Id = "action-1", Title = "Equip Sword", Subtitle = "+12 Attack Power", ActionLabel = "Equip", IsActionEnabled = true },
+                new() { Id = "action-2", Title = "Use Potion", Subtitle = "Restore 50 HP", ActionLabel = "Use", IsActionEnabled = true },
+                new() { Id = "action-3", Title = "Locked Skill", Subtitle = "Requires Level 10", ActionLabel = "Locked", IsActionEnabled = false }
+            };
+
+            _mediator.Send(new ReconcileElementsCommand<ActionListItemElement, ActionListItemData>(
+                _actionItemsContainer,
+                actionItems,
+                OnActionItemClicked));
         }
 
-        private static void BindElement<TData>(GameObject go, TData data) where TData : struct, IElementData
+        private static void OnActionItemClicked(ActionListItemData data)
         {
-            if (go == null) return;
-            var element = go.GetComponent<IBindableElement<TData>>();
-            element?.Bind(data);
+            Debug.Log($"[CounterView] Action clicked: {data.Title} ({data.ActionLabel})");
         }
     }
 }

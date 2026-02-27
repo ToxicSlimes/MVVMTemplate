@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
-using Core.Presentation.Elements.Samples;
+using Core.MVVM.Elements.Samples;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -234,3 +234,4 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Elements
     }
 }
 #endif
+

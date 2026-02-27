@@ -3,7 +3,6 @@ using Core.Abstractions.Popup;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.MVVM.Views.Counter;
-using Core.Presentation.Elements.Samples;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,11 +34,11 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
         private Button _toggleButton;
         private TextMeshProUGUI _toggleLabel;
 
-        // Gallery panel refs
+        // Gallery panel + containers
         private GameObject _galleryPanel;
-        private TextCardElement _sampleCard;
-        private StatBarElement _sampleStatBar;
-        private ActionListItemElement _sampleActionItem;
+        private Transform _textCardsContainer;
+        private Transform _statBarsContainer;
+        private Transform _actionItemsContainer;
 
         protected override void BuildViewStructure()
         {
@@ -130,6 +129,11 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
             _incrementTooltip = AddPopupTrigger(_incrementButton.gameObject, tooltipPrefab, PopupTriggerType.Hover);
 
             // === GALLERY PANEL (hidden by default) ===
+            BuildGalleryPanel(content);
+        }
+
+        private void BuildGalleryPanel(Transform content)
+        {
             var galleryVlg = new VerticalLayoutBuilder("GalleryPanel")
                 .WithSpacing(10f)
                 .WithPadding(10)
@@ -147,42 +151,54 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
                 .Build(_galleryPanel.transform);
 
             new TextBuilder("GalleryDescription")
-                .WithText("Sample elements bound with test data. Hover for tooltips.")
+                .WithText("Elements created via ReconcileElementsCommand at runtime.\nHover for tooltips. Click action buttons for callbacks.")
                 .WithFontSize(12f)
                 .Centered()
                 .WithColor(new Color(0.7f, 0.7f, 0.7f))
-                .WithPreferredSize(null, 20f)
+                .WithPreferredSize(null, 30f)
                 .Build(_galleryPanel.transform);
 
-            new SpacerBuilder("GallerySpacer").Height(5f).Build(_galleryPanel.transform);
+            // --- TextCards section ---
+            new TextBuilder("TextCardsLabel")
+                .WithText("TextCardElement")
+                .WithFontSize(14f)
+                .Bold()
+                .WithColor(new Color(0.5f, 0.8f, 1f))
+                .WithPreferredSize(null, 22f)
+                .Build(_galleryPanel.transform);
 
-            // Spawn sample elements from prefabs
-            const string elementsDir = "Assets/Prefabs/Elements/Samples";
+            var textCardsVlg = new VerticalLayoutBuilder("TextCardsContainer")
+                .WithSpacing(4f)
+                .Build(_galleryPanel.transform);
+            _textCardsContainer = textCardsVlg.transform;
 
-            var cardPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{elementsDir}/TextCard.prefab");
-            var statPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{elementsDir}/StatBar.prefab");
-            var actionPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{elementsDir}/ActionListItem.prefab");
+            // --- StatBars section ---
+            new TextBuilder("StatBarsLabel")
+                .WithText("StatBarElement")
+                .WithFontSize(14f)
+                .Bold()
+                .WithColor(new Color(0.5f, 1f, 0.6f))
+                .WithPreferredSize(null, 22f)
+                .Build(_galleryPanel.transform);
 
-            if (cardPrefab != null)
-            {
-                var cardGo = SpawnPrefab(cardPrefab, _galleryPanel.transform, "SampleCard");
-                _sampleCard = cardGo.GetComponent<TextCardElement>();
-            }
-            else Debug.LogWarning("[CounterViewBuilder] TextCard.prefab not found! Run Tools → UI Prefab Builder → Build Sample Elements first.");
+            var statBarsVlg = new VerticalLayoutBuilder("StatBarsContainer")
+                .WithSpacing(4f)
+                .Build(_galleryPanel.transform);
+            _statBarsContainer = statBarsVlg.transform;
 
-            if (statPrefab != null)
-            {
-                var statGo = SpawnPrefab(statPrefab, _galleryPanel.transform, "SampleStatBar");
-                _sampleStatBar = statGo.GetComponent<StatBarElement>();
-            }
-            else Debug.LogWarning("[CounterViewBuilder] StatBar.prefab not found!");
+            // --- ActionListItems section ---
+            new TextBuilder("ActionItemsLabel")
+                .WithText("ActionListItemElement")
+                .WithFontSize(14f)
+                .Bold()
+                .WithColor(new Color(1f, 0.7f, 0.4f))
+                .WithPreferredSize(null, 22f)
+                .Build(_galleryPanel.transform);
 
-            if (actionPrefab != null)
-            {
-                var actionGo = SpawnPrefab(actionPrefab, _galleryPanel.transform, "SampleActionItem");
-                _sampleActionItem = actionGo.GetComponent<ActionListItemElement>();
-            }
-            else Debug.LogWarning("[CounterViewBuilder] ActionListItem.prefab not found!");
+            var actionItemsVlg = new VerticalLayoutBuilder("ActionItemsContainer")
+                .WithSpacing(4f)
+                .Build(_galleryPanel.transform);
+            _actionItemsContainer = actionItemsVlg.transform;
         }
 
         private static PopupTrigger AddPopupTrigger(GameObject go, GameObject popupPrefab, PopupTriggerType triggerType)
@@ -210,11 +226,11 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
             var so = new SerializedObject(view);
 
             // Counter
-            SerializationHelper.Wire(so, "_counterText", _counterText.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_incrementsText", _incrementsText.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_incrementButton", _incrementButton.GetComponent<Button>());
-            SerializationHelper.Wire(so, "_decrementButton", _decrementButton.GetComponent<Button>());
-            SerializationHelper.Wire(so, "_resetButton", _resetButton.GetComponent<Button>());
+            SerializationHelper.Wire(so, "_counterText", _counterText);
+            SerializationHelper.Wire(so, "_incrementsText", _incrementsText);
+            SerializationHelper.Wire(so, "_incrementButton", _incrementButton);
+            SerializationHelper.Wire(so, "_decrementButton", _decrementButton);
+            SerializationHelper.Wire(so, "_resetButton", _resetButton);
 
             // Toggle
             SerializationHelper.Wire(so, "_toggleGalleryButton", _toggleButton);
@@ -229,10 +245,10 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
             SerializationHelper.Wire(so, "_decrementTooltip", _decrementTooltip);
             SerializationHelper.Wire(so, "_resetConfirm", _resetConfirm);
 
-            // Gallery elements (as GameObjects — View uses GetComponent<IBindableElement>)
-            SerializationHelper.Wire(so, "_sampleCard", _sampleCard != null ? _sampleCard.gameObject : null);
-            SerializationHelper.Wire(so, "_sampleStatBar", _sampleStatBar != null ? _sampleStatBar.gameObject : null);
-            SerializationHelper.Wire(so, "_sampleActionItem", _sampleActionItem != null ? _sampleActionItem.gameObject : null);
+            // Gallery containers (elements spawned at runtime via ReconcileElementsCommand)
+            SerializationHelper.Wire(so, "_textCardsContainer", _textCardsContainer);
+            SerializationHelper.Wire(so, "_statBarsContainer", _statBarsContainer);
+            SerializationHelper.Wire(so, "_actionItemsContainer", _actionItemsContainer);
 
             so.ApplyModifiedPropertiesWithoutUndo();
         }

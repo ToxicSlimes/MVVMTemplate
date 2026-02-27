@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Presentation.Elements.Samples
+namespace Core.MVVM.Elements.Samples
 {
     public class ActionListItemElement : BindableElement<ActionListItemData>
     {
@@ -79,3 +79,4 @@ namespace Core.Presentation.Elements.Samples
         }
     }
 }
+

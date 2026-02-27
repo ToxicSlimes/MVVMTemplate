@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Presentation.Elements.Samples
+namespace Core.MVVM.Elements.Samples
 {
     public class TextCardElement : BindableElement<TextCardData>
     {
@@ -44,3 +44,4 @@ namespace Core.Presentation.Elements.Samples
         }
     }
 }
+

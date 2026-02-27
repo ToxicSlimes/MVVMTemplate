@@ -9,7 +9,7 @@ namespace Core.Abstractions.MVVM.Elements
         void Unbind();
     }
 
-    public interface IBindableElement<TData> : IBindableElement
+    public interface IBindableElement<in TData> : IBindableElement
         where TData : struct
     {
         void Bind(TData data);

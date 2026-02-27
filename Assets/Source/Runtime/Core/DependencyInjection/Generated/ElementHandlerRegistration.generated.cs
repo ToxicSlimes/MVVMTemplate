@@ -11,7 +11,7 @@ using Core.Data.Domain.Models.Elements;
 using Core.Data.Domain.Models.Elements.Samples;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Registration;
-using Core.Presentation.Elements.Samples;
+using Core.MVVM.Elements.Samples;
 
 namespace Core.DependencyInjection.Generated
 {
@@ -41,3 +41,4 @@ namespace Core.DependencyInjection.Generated
         }
     }
 }
+

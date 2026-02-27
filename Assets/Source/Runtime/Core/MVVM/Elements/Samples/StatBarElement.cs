@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Presentation.Elements.Samples
+namespace Core.MVVM.Elements.Samples
 {
     public class StatBarElement : BindableElement<StatBarData>
     {
@@ -64,3 +64,4 @@ namespace Core.Presentation.Elements.Samples
         }
     }
 }
+

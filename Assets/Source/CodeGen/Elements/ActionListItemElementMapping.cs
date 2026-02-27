@@ -4,12 +4,13 @@
 // </auto-generated>
 
 using Core.Infrastructure.MVVM.Config;
-using Core.Presentation.Elements.Samples;
+using Core.MVVM.Elements.Samples;
 using Core.Data.Domain.Models.Elements.Samples;
 
-namespace Source.Runtime.Core.MVVM.Config.Generated
+namespace Core.MVVM.Config.Generated
 {
     public class ActionListItemElementMapping : ElementMappingBase<ActionListItemElement, ActionListItemData>
     {
     }
 }
+
