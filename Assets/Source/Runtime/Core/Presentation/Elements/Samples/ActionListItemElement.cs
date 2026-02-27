@@ -1,7 +1,6 @@
 using System;
 using Core.Abstractions.MVVM.Elements;
 using Core.Data.Domain.Models.Elements.Samples;
-using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,11 +30,7 @@ namespace Core.Presentation.Elements.Samples
             base.Awake();
 
             if (_actionButton != null)
-            {
-                _actionButton.OnClickAsObservable()
-                    .Subscribe(this, static (_, self) => self.HandleAction())
-                    .AddTo(ref Disposables);
-            }
+                _actionButton.onClick.AddListener(HandleAction);
         }
 
         private void HandleAction()
@@ -72,6 +67,12 @@ namespace Core.Presentation.Elements.Samples
 
             if (_actionButton != null)
                 _actionButton.interactable = false;
+        }
+
+        private void OnDestroy()
+        {
+            if (_actionButton != null)
+                _actionButton.onClick.RemoveListener(HandleAction);
         }
     }
 }
