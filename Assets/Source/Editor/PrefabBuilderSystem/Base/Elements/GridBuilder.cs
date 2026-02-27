@@ -134,9 +134,31 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Containers.GridLayout;
 
+        protected override void ApplyCustomizations(GameObject instance, GridLayoutGroup grid)
+        {
+            if (grid == null) return;
+            grid.cellSize = _cellSize;
+            grid.spacing = _spacing;
+            grid.padding = _padding;
+            grid.startCorner = _startCorner;
+            grid.startAxis = _startAxis;
+            grid.childAlignment = _childAlignment;
+            grid.constraint = _constraint;
+            grid.constraintCount = _constraintCount;
+
+            if (_backgroundColor.HasValue)
+            {
+                var img = instance.GetComponent<Image>() ?? instance.AddComponent<Image>();
+                img.color = _backgroundColor.Value;
+                if (_backgroundSprite != null) { img.sprite = _backgroundSprite; img.type = Image.Type.Sliced; }
+            }
+
+            ApplyLayoutElement(instance);
+        }
+
         public override GridLayoutGroup Build(Transform parent)
         {
-            if (UsePrefabSource)
+            if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
             
             var rt = CreateRectTransform(parent);

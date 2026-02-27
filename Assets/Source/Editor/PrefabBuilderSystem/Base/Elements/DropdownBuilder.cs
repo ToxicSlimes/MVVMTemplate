@@ -110,9 +110,29 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.Dropdown;
 
+        protected override void ApplyCustomizations(GameObject instance, TMP_Dropdown dropdown)
+        {
+            if (dropdown == null) return;
+
+            dropdown.ClearOptions();
+            if (_options.Count > 0) dropdown.AddOptions(_options);
+            dropdown.value = _value;
+
+            var bg = instance.GetComponent<Image>();
+            if (bg != null) bg.color = _backgroundColor;
+
+            if (dropdown.captionText != null)
+            {
+                dropdown.captionText.fontSize = _fontSize;
+                dropdown.captionText.color = _textColor;
+            }
+
+            ApplyLayoutElement(instance);
+        }
+
         public override TMP_Dropdown Build(Transform parent)
         {
-            if (UsePrefabSource)
+            if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
             
             var rt = CreateRectTransform(parent);

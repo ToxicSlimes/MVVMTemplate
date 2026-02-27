@@ -40,7 +40,6 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
             // Counter display
             _counterText = new TextBuilder("CounterText")
-                .FromPrefab()
                 .WithText("Count: 0")
                 .WithFontSize(s.CounterFontSize)
                 .WithColor(s.CounterTextColor)
@@ -51,7 +50,6 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
             // Total increments
             _incrementsText = new TextBuilder("IncrementsText")
-                .FromPrefab()
                 .WithText("Total actions: 0")
                 .WithFontSize(s.IncrementsFontSize)
                 .WithColor(s.IncrementsTextColor)
@@ -61,13 +59,11 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
             // Spacer
             new SpacerBuilder("Spacer")
-                .FromPrefab()
                 .Height(15f)
                 .Build(content);
 
             // Button row
             var buttonRow = new HorizontalLayoutBuilder("ButtonRow")
-                .FromPrefab()
                 .WithSpacing(s.ButtonSpacing)
                 .WithAlignment(TextAnchor.MiddleCenter)
                 .WithPreferredSize(null, s.ButtonHeight)
@@ -75,7 +71,6 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
             // Decrement
             _decrementButton = new ButtonBuilder("DecrementButton")
-                .FromPrefab()
                 .WithLabel("\u2212")
                 .WithLabelSize(s.ButtonFontSize)
                 .WithBackgroundColor(s.DecrementButtonColor)
@@ -85,7 +80,6 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
             // Reset
             _resetButton = new ButtonBuilder("ResetButton")
-                .FromPrefab()
                 .WithLabel("Reset")
                 .WithLabelSize(s.ButtonFontSize)
                 .WithBackgroundColor(s.ResetButtonColor)
@@ -95,7 +89,6 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
             // Increment
             _incrementButton = new ButtonBuilder("IncrementButton")
-                .FromPrefab()
                 .WithLabel("+")
                 .WithLabelSize(s.ButtonFontSize)
                 .WithBackgroundColor(s.IncrementButtonColor)

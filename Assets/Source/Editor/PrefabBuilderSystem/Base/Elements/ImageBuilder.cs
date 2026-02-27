@@ -122,9 +122,19 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Atoms.Image;
 
+        protected override void ApplyCustomizations(GameObject instance, Image image)
+        {
+            if (image == null) return;
+            image.color = _color;
+            if (_sprite != null) { image.sprite = _sprite; image.type = _imageType; }
+            image.preserveAspect = _preserveAspect;
+            image.raycastTarget = _raycastTarget;
+            ApplyLayoutElement(instance);
+        }
+
         public override Image Build(Transform parent)
         {
-            if (UsePrefabSource)
+            if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
             
             var rt = CreateRectTransform(parent);

@@ -21,6 +21,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         
         protected string PrefabSourcePath { get; set; }
         protected bool UsePrefabSource { get; set; }
+        private bool _noPrefab;
 
         protected float? PreferredWidth { get; set; }
         protected float? PreferredHeight { get; set; }
@@ -184,25 +185,81 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             return (TSelf)this;
         }
 
+        /// <summary>
+        /// Explicitly disable prefab-based building. Element will be created from scratch.
+        /// </summary>
+        public TSelf NoPrefab()
+        {
+            _noPrefab = true;
+            UsePrefabSource = false;
+            return (TSelf)this;
+        }
+
         protected virtual string GetDefaultPrefabPath() => null;
+
+        /// <summary>
+        /// Returns true if this builder should use prefab instantiation.
+        /// Auto-resolves: if GetDefaultPrefabPath() returns a valid path and prefab exists, uses it.
+        /// Override with FromPrefab() to force, NoPrefab() to disable.
+        /// </summary>
+        protected bool ShouldUsePrefab()
+        {
+            if (_noPrefab) return false;
+            if (ShouldUsePrefab()) return true;
+
+            var defaultPath = GetDefaultPrefabPath();
+            if (string.IsNullOrEmpty(defaultPath)) return false;
+
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(defaultPath);
+            if (prefab == null) return false;
+
+            // Auto-resolve: prefab exists, use it
+            PrefabSourcePath = defaultPath;
+            return true;
+        }
 
         public TComponent BuildFromPrefab(Transform parent)
         {
-            if (string.IsNullOrEmpty(PrefabSourcePath))
+            var path = PrefabSourcePath;
+            if (string.IsNullOrEmpty(path))
+                path = GetDefaultPrefabPath();
+
+            if (string.IsNullOrEmpty(path))
             {
                 Debug.LogError($"[{GetType().Name}] Prefab path not set. Use FromPrefab(path) or override GetDefaultPrefabPath()");
                 return null;
             }
 
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabSourcePath);
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             if (prefab == null)
             {
-                Debug.LogError($"[{GetType().Name}] Prefab not found at: {PrefabSourcePath}");
+                Debug.LogError($"[{GetType().Name}] Prefab not found at: {path}");
                 return null;
             }
 
             var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
             instance.name = Name;
+
+            var rt = instance.GetComponent<RectTransform>();
+            if (rt != null)
+            {
+                if (Stretch)
+                {
+                    rt.anchorMin = Vector2.zero;
+                    rt.anchorMax = Vector2.one;
+                    rt.offsetMin = Vector2.zero;
+                    rt.offsetMax = Vector2.zero;
+                }
+                else if (AnchorMin != new Vector2(0.5f, 0.5f) || AnchorMax != new Vector2(0.5f, 0.5f)
+                         || AnchoredPosition != Vector2.zero || Size != Vector2.zero)
+                {
+                    rt.anchorMin = AnchorMin;
+                    rt.anchorMax = AnchorMax;
+                    rt.pivot = Pivot;
+                    rt.anchoredPosition = AnchoredPosition;
+                    if (Size != Vector2.zero) rt.sizeDelta = Size;
+                }
+            }
 
             var component = instance.GetComponent<TComponent>();
             if (component == null)

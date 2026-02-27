@@ -230,7 +230,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         public override Button Build(Transform parent)
         {
-            if (UsePrefabSource)
+            if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
             
             var rt = CreateRectTransform(parent);

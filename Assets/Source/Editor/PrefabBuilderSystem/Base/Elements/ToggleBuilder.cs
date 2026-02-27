@@ -95,9 +95,48 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.Toggle;
 
+        protected override void ApplyCustomizations(GameObject instance, Toggle toggle)
+        {
+            if (toggle == null) return;
+
+            toggle.isOn = _isOn;
+
+            var bg = instance.transform.Find("Background");
+            if (bg != null)
+            {
+                var bgImg = bg.GetComponent<Image>();
+                if (bgImg != null)
+                {
+                    bgImg.color = _backgroundColor;
+                    if (_backgroundSprite != null) { bgImg.sprite = _backgroundSprite; bgImg.type = Image.Type.Sliced; }
+                }
+
+                var checkmark = bg.Find("Checkmark");
+                if (checkmark != null)
+                {
+                    var cmImg = checkmark.GetComponent<Image>();
+                    if (cmImg != null)
+                    {
+                        cmImg.color = _checkmarkColor;
+                        if (_checkmarkSprite != null) cmImg.sprite = _checkmarkSprite;
+                    }
+                }
+            }
+
+            var label = instance.GetComponentInChildren<TextMeshProUGUI>();
+            if (label != null && !string.IsNullOrEmpty(_label))
+            {
+                label.text = _label;
+                label.fontSize = _labelFontSize;
+                label.color = _labelColor;
+            }
+
+            ApplyLayoutElement(instance);
+        }
+
         public override Toggle Build(Transform parent)
         {
-            if (UsePrefabSource)
+            if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
             
             var rt = CreateRectTransform(parent);

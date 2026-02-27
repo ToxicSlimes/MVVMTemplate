@@ -165,9 +165,38 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.InputField;
 
+        protected override void ApplyCustomizations(GameObject instance, TMP_InputField input)
+        {
+            if (input == null) return;
+            input.text = _text;
+            input.contentType = _contentType;
+            input.characterLimit = _characterLimit;
+            input.lineType = _lineType;
+            input.selectionColor = _selectionColor;
+            input.caretColor = _caretColor;
+
+            if (input.textComponent != null)
+            {
+                input.textComponent.fontSize = _fontSize;
+                input.textComponent.color = _textColor;
+            }
+
+            var placeholder = input.placeholder as TextMeshProUGUI;
+            if (placeholder != null)
+            {
+                placeholder.text = _placeholder;
+                placeholder.color = _placeholderColor;
+            }
+
+            var bg = instance.GetComponent<Image>();
+            if (bg != null) bg.color = _backgroundColor;
+
+            ApplyLayoutElement(instance);
+        }
+
         public override TMP_InputField Build(Transform parent)
         {
-            if (UsePrefabSource)
+            if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
             
             var rt = CreateRectTransform(parent);

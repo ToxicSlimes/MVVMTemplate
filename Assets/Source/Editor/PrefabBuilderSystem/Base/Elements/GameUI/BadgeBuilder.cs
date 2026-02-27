@@ -112,7 +112,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements.GameUI
 
         public override Image Build(Transform parent)
         {
-            if (UsePrefabSource)
+            if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
 
             WithPreferredSize(_size, _size);

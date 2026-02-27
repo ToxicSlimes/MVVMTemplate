@@ -124,9 +124,41 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.Slider;
 
+        protected override void ApplyCustomizations(GameObject instance, Slider slider)
+        {
+            if (slider == null) return;
+
+            slider.minValue = _minValue;
+            slider.maxValue = _maxValue;
+            slider.value = _value;
+            slider.wholeNumbers = _wholeNumbers;
+            if (_vertical) slider.direction = Slider.Direction.BottomToTop;
+
+            var bg = instance.transform.Find("Background");
+            if (bg != null)
+            {
+                var bgImg = bg.GetComponent<Image>();
+                if (bgImg != null) bgImg.color = _backgroundColor;
+            }
+
+            if (slider.fillRect != null)
+            {
+                var fillImg = slider.fillRect.GetComponent<Image>();
+                if (fillImg != null) fillImg.color = _fillColor;
+            }
+
+            if (slider.handleRect != null)
+            {
+                var handleImg = slider.handleRect.GetComponent<Image>();
+                if (handleImg != null) handleImg.color = _handleColor;
+            }
+
+            ApplyLayoutElement(instance);
+        }
+
         public override Slider Build(Transform parent)
         {
-            if (UsePrefabSource)
+            if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
             
             var rt = CreateRectTransform(parent);
