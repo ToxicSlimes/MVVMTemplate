@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace EndlessAdventure.Editor.Utils
+namespace Core.Editor.Utils
 {
     public static class DropdownCanvasFixer
     {

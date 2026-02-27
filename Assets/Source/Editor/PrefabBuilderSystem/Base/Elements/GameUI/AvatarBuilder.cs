@@ -1,9 +1,9 @@
 #if UNITY_EDITOR
-using EndlessAdventure.Editor.PrefabBuilderSystem.Theming;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements.GameUI
+namespace Core.Editor.PrefabBuilderSystem.Elements.GameUI
 {
     public class AvatarBuilder : BaseElementBuilder<AvatarBuilder, Image>
     {

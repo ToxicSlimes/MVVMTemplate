@@ -1,14 +1,14 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Elements;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Theming;
+using Core.Editor.PrefabBuilderSystem.Elements;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Templates
+namespace Core.Editor.PrefabBuilderSystem.Templates
 {
     public class TemplateBuilder
     {

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Core
+namespace Core.Editor.PrefabBuilderSystem.Core
 {
     public static class SerializationHelper
     {

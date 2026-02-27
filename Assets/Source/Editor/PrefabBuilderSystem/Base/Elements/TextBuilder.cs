@@ -1,11 +1,11 @@
 #if UNITY_EDITOR
 using Core.Configs.DesignSystem;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Conventions;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Theming;
+using Core.Editor.PrefabBuilderSystem.Conventions;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using UnityEngine;
 using TMPro;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements
+namespace Core.Editor.PrefabBuilderSystem.Elements
 {
     public class TextBuilder : BaseElementBuilder<TextBuilder, TextMeshProUGUI>
     {

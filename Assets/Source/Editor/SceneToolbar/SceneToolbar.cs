@@ -1,673 +1,431 @@
 #if UNITY_EDITOR
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEditor.Toolbars;
 using UnityEngine;
-using UnityEngine.UIElements;
-using System.Reflection;
-using System.Linq;
-using System.IO;
-using System.Collections.Generic;
-using System;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
-[InitializeOnLoad]
 public static class SceneToolbar
 {
-    private const float SPositionOffset = 180f;
-    private const float SDropdownBoxHeight = 20f;
-    
-    private static string[] s_sceneNames = Array.Empty<string>();
-    private static int s_selectedIndex;
-    private static int s_addSceneIndex = 0;
-    private static string s_lastActiveScene = "";
-    private static VisualElement s_toolbarUI;
-    private static string s_soloScenePath = "";
+    private const string KAllScenesToggle = "SceneToolbar/AllScenesToggle";
+    private const string KSceneSwitcher = "SceneToolbar/SceneSwitcher";
+    private const string KAdditiveSelector = "SceneToolbar/AdditiveSelector";
+    private const string KAdditiveAddBtn = "SceneToolbar/AdditiveAdd";
+    private const string KScenesManager = "SceneToolbar/ScenesManager";
 
-    private static string SoloScenePath
-    {
-        get => EditorPrefs.GetString("SceneSwitcher_SoloScene", "");
-        set
-        {
-            s_soloScenePath = value;
-            EditorPrefs.SetString("SceneSwitcher_SoloScene", value);
-        }
-    }
+    // ─────────────────────────────────────────────────────────
+    // 1. "All Scenes" Toggle
+    // ─────────────────────────────────────────────────────────
 
-    private static bool FetchAllScenes
+    [MainToolbarElement(KAllScenesToggle, defaultDockPosition = MainToolbarDockPosition.Left)]
+    static IEnumerable<MainToolbarElement> CreateAllScenesToggle()
     {
-        get => EditorPrefs.GetBool("SceneSwitcher_FetchAllScenes", false);
-        set => EditorPrefs.SetBool("SceneSwitcher_FetchAllScenes", value);
-    }
-
-    private static List<string> GetAddedScenes()
-    {
-        var scenesJson = EditorPrefs.GetString("SceneSwitcher_AddedScenes", "[]");
-        if (string.IsNullOrEmpty(scenesJson) || scenesJson == "[]")
-            return new List<string>();
-        return JsonUtility.FromJson<SceneList>(scenesJson).Scenes ?? new List<string>();
-    }
-
-    private static void SaveAddedScenes(List<string> scenes)
-    {
-        var list = new SceneList { Scenes = scenes };
-        EditorPrefs.SetString("SceneSwitcher_AddedScenes", JsonUtility.ToJson(list));
-    }
-
-    [Serializable]
-    private class SceneList
-    {
-        [FormerlySerializedAs("scenes")] public List<string> Scenes;
-    }
-
-    static SceneToolbar()
-    {
-        s_soloScenePath = SoloScenePath;
-        RefreshSceneList();
-        SelectCurrentScene();
-        EditorBuildSettings.sceneListChanged += RefreshSceneList;
-        EditorApplication.projectChanged += RefreshSceneList;
-        EditorSceneManager.activeSceneChangedInEditMode += (prev, current) => UpdateSceneSelection();
-        EditorApplication.playModeStateChanged += OnPlayModeChanged;
-        EditorApplication.delayCall += AddToolbarUI;
-    }
-
-    private static void AddToolbarUI()
-    {
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-            return;
-        var toolbarType = typeof(Editor).Assembly.GetType("UnityEditor.Toolbar");
-        if (toolbarType == null) return;
-        var toolbars = Resources.FindObjectsOfTypeAll(toolbarType);
-        if (toolbars.Length == 0) return;
-        var toolbar = toolbars[0];
-        var rootField = toolbarType.GetField("m_Root", BindingFlags.NonPublic | BindingFlags.Instance);
-        if (rootField == null) return;
-        var root = rootField.GetValue(toolbar) as VisualElement;
-        var leftContainer = root?.Q("ToolbarZoneLeftAlign");
-        if (leftContainer == null) return;
-        if (s_toolbarUI != null)
-            leftContainer.Remove(s_toolbarUI);
-        s_toolbarUI = new IMGUIContainer(OnGUI);
-        s_toolbarUI.style.marginLeft = SPositionOffset;
-        leftContainer.Add(s_toolbarUI);
-    }
-
-    private static void OnGUI()
-    {
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-            return;
-        CheckAndRefreshScenes();
-        if (s_selectedIndex >= s_sceneNames.Length)
-            s_selectedIndex = 0;
-        if (s_addSceneIndex >= s_sceneNames.Length)
-            s_addSceneIndex = 0;
-        var isPlaying = EditorApplication.isPlaying;
-        GUILayout.BeginHorizontal();
-        EditorGUI.BeginDisabledGroup(isPlaying);
-        var newFetchAllScenes = GUILayout.Toggle(FetchAllScenes, "All Scenes", "Button", GUILayout.Height(SDropdownBoxHeight));
-        if (newFetchAllScenes != FetchAllScenes)
-        {
-            FetchAllScenes = newFetchAllScenes;
-            RefreshSceneList();
-            SelectCurrentScene();
-        }
-        EditorGUI.EndDisabledGroup();
-        EditorGUI.BeginDisabledGroup(isPlaying);
-        var popupStyle = new GUIStyle(EditorStyles.popup)
-        {
-            fixedHeight = SDropdownBoxHeight
-        };
-        var newIndex = EditorGUILayout.Popup(s_selectedIndex, s_sceneNames, popupStyle, GUILayout.Width(150), GUILayout.Height(SDropdownBoxHeight));
-        if (newIndex != s_selectedIndex)
-        {
-            s_selectedIndex = newIndex;
-            LoadScene(s_sceneNames[s_selectedIndex]);
-        }
-        EditorGUI.EndDisabledGroup();
-        EditorGUI.BeginDisabledGroup(isPlaying);
-        var newAddIndex = EditorGUILayout.Popup(s_addSceneIndex, s_sceneNames, popupStyle, GUILayout.Width(150), GUILayout.Height(SDropdownBoxHeight));
-        if (newAddIndex != s_addSceneIndex)
-        {
-            s_addSceneIndex = newAddIndex;
-        }
-        if (GUILayout.Button("+", GUILayout.Width(25), GUILayout.Height(SDropdownBoxHeight)))
-        {
-            AddSceneAdditive(s_sceneNames[s_addSceneIndex]);
-        }
-        EditorGUI.EndDisabledGroup();
-        var addedScenes = GetAddedScenes();
-        var allScenes = GetLoadedScenes();
-        var scenesDict = new Dictionary<string, UnityEngine.SceneManagement.Scene>();
-        foreach (var scene in allScenes)
-        {
-            if (scene.IsValid() && !string.IsNullOrEmpty(scene.path))
+        yield return new MainToolbarToggle(
+            new MainToolbarContent("All Scenes", "Toggle between Build Settings scenes and all project scenes"),
+            SceneToolbarPrefs.FetchAllScenes,
+            isOn =>
             {
-                scenesDict[scene.path] = scene;
-                if (!addedScenes.Contains(scene.path))
+                SceneToolbarPrefs.FetchAllScenes = isOn;
+                MainToolbar.Refresh(KSceneSwitcher);
+                MainToolbar.Refresh(KAdditiveSelector);
+            });
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // 2. Scene Switcher Dropdown (switch active scene)
+    // ─────────────────────────────────────────────────────────
+
+    [MainToolbarElement(KSceneSwitcher, defaultDockPosition = MainToolbarDockPosition.Left)]
+    static IEnumerable<MainToolbarElement> CreateSceneSwitcher()
+    {
+        var scenes = GetSceneList();
+        var activeScenePath = SceneManager.GetActiveScene().path;
+
+        yield return new MainToolbarDropdown(
+            new MainToolbarContent(GetActiveSceneName(), "Switch active scene"),
+            rect =>
+            {
+                var menu = new GenericMenu();
+                foreach (var scenePath in scenes)
                 {
-                    addedScenes.Add(scene.path);
+                    var name = Path.GetFileNameWithoutExtension(scenePath);
+                    var isActive = scenePath == activeScenePath;
+                    var label = isActive ? $"★ {name}" : name;
+                    var path = scenePath;
+
+                    menu.AddItem(new GUIContent(label), isActive, () =>
+                    {
+                        if (!isActive) LoadScene(path);
+                        RefreshAll();
+                    });
                 }
-            }
+
+                if (scenes.Length == 0)
+                    menu.AddDisabledItem(new GUIContent("No scenes found"));
+
+                menu.DropDown(rect);
+            });
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // 3. Additive Scene Selector Dropdown (pick scene to add)
+    // ─────────────────────────────────────────────────────────
+
+    [MainToolbarElement(KAdditiveSelector, defaultDockPosition = MainToolbarDockPosition.Left)]
+    static IEnumerable<MainToolbarElement> CreateAdditiveSelector()
+    {
+        var scenes = GetSceneList();
+        var loadedPaths = GetLoadedScenePaths();
+
+        yield return new MainToolbarDropdown(
+            new MainToolbarContent("Add Scene", "Select scene to load additively"),
+            rect =>
+            {
+                var menu = new GenericMenu();
+                foreach (var scenePath in scenes)
+                {
+                    var name = Path.GetFileNameWithoutExtension(scenePath);
+                    var isLoaded = loadedPaths.Contains(scenePath);
+                    var label = isLoaded ? $"✓ {name}" : name;
+                    var path = scenePath;
+
+                    menu.AddItem(new GUIContent(label), isLoaded, () =>
+                    {
+                        if (!isLoaded)
+                        {
+                            LoadSceneAdditive(path);
+                            TrackScene(path);
+                        }
+                        RefreshAll();
+                    });
+                }
+
+                if (scenes.Length == 0)
+                    menu.AddDisabledItem(new GUIContent("No scenes found"));
+
+                menu.DropDown(rect);
+            });
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // 4. "+" Button (quick-add selected scene)
+    // ─────────────────────────────────────────────────────────
+
+    [MainToolbarElement(KAdditiveAddBtn, defaultDockPosition = MainToolbarDockPosition.Left)]
+    static IEnumerable<MainToolbarElement> CreateAdditiveAddButton()
+    {
+        yield return new MainToolbarButton(
+            new MainToolbarContent("+", "Load last selected scene additively"),
+            () =>
+            {
+                var lastPath = SceneToolbarPrefs.LastAdditiveScenePath;
+                if (!string.IsNullOrEmpty(lastPath) && File.Exists(lastPath))
+                {
+                    LoadSceneAdditive(lastPath);
+                    TrackScene(lastPath);
+                    RefreshAll();
+                }
+            });
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // 5. Scenes Manager Dropdown (manage loaded additive scenes)
+    // ─────────────────────────────────────────────────────────
+
+    [MainToolbarElement(KScenesManager, defaultDockPosition = MainToolbarDockPosition.Left)]
+    static IEnumerable<MainToolbarElement> CreateScenesManager()
+    {
+        yield return new MainToolbarDropdown(
+            new MainToolbarContent(GetScenesLabel(), "Manage loaded scenes"),
+            ShowScenesManagerMenu);
+    }
+
+    static void ShowScenesManagerMenu(Rect buttonRect)
+    {
+        var menu = new GenericMenu();
+        var loadedPaths = GetLoadedScenePaths();
+        var addedScenes = SceneToolbarPrefs.GetAddedScenes();
+
+        // Merge loaded scenes into tracking list
+        var merged = false;
+        foreach (var path in loadedPaths.Where(p => !addedScenes.Contains(p)))
+        {
+            addedScenes.Add(path);
+            merged = true;
         }
-        SaveAddedScenes(addedScenes);
+        if (merged) SceneToolbarPrefs.SaveAddedScenes(addedScenes);
         addedScenes = addedScenes.Where(File.Exists).ToList();
-        if (addedScenes.Count is > 0 and > 0)
+
+        if (addedScenes.Count == 0)
         {
-            EditorGUI.BeginDisabledGroup(isPlaying);
-            var displayText = "Scenes (" + addedScenes.Count + ")";
-            var activeCount = addedScenes.Count(p => scenesDict.ContainsKey(p) && scenesDict[p].IsValid() && scenesDict[p].isLoaded);
-            if (activeCount > 0)
+            menu.AddDisabledItem(new GUIContent("No scenes tracked"));
+            menu.DropDown(buttonRect);
+            return;
+        }
+
+        // Bulk actions
+        var unloadedCount = addedScenes.Count(p => !loadedPaths.Contains(p));
+        var loadedCount = addedScenes.Count(p => loadedPaths.Contains(p));
+
+        if (unloadedCount > 0)
+            menu.AddItem(new GUIContent($"Load All ({unloadedCount})"), false, () => { LoadAllScenes(addedScenes); RefreshAll(); });
+        if (loadedCount > 0)
+            menu.AddItem(new GUIContent($"Unload All ({loadedCount})"), false, () => { UnloadAllScenes(addedScenes); RefreshAll(); });
+        if (unloadedCount > 0 || loadedCount > 0)
+            menu.AddSeparator("");
+
+        // Per-scene items
+        var activeScenePath = SceneManager.GetActiveScene().path;
+        var soloPath = SceneToolbarPrefs.SoloScenePath;
+
+        foreach (var scenePath in addedScenes)
+        {
+            var name = Path.GetFileNameWithoutExtension(scenePath);
+            var isLoaded = loadedPaths.Contains(scenePath);
+            var isActive = scenePath == activeScenePath;
+            var isSolo = scenePath == soloPath;
+
+            var prefix = isActive ? "★ " : isSolo ? "● " : isLoaded ? "✓ " : "  ";
+            var menuPath = $"{prefix}{name}/";
+            var path = scenePath;
+
+            if (isLoaded)
             {
-                displayText = $"Scenes ({activeCount}/{addedScenes.Count})";
+                menu.AddItem(new GUIContent($"{menuPath}Unload"), false, () => { UnloadScene(path); RefreshAll(); });
+                if (!isActive)
+                    menu.AddItem(new GUIContent($"{menuPath}Set Active"), false, () => { SetActiveScene(path); RefreshAll(); });
             }
-            var buttonRect = GUILayoutUtility.GetRect(new GUIContent(displayText), popupStyle, GUILayout.Width(150), GUILayout.Height(SDropdownBoxHeight));
-            if (GUI.Button(buttonRect, displayText, popupStyle))
+            else
             {
-                ShowAddedScenesMenu(addedScenes, scenesDict, buttonRect);
+                menu.AddItem(new GUIContent($"{menuPath}Load"), false, () => { LoadSceneAdditive(path); RefreshAll(); });
             }
-            EditorGUI.EndDisabledGroup();
+
+            menu.AddSeparator(menuPath);
+            menu.AddItem(new GUIContent($"{menuPath}Solo"), isSolo, () => { ToggleSolo(path); RefreshAll(); });
+            menu.AddSeparator(menuPath);
+            menu.AddItem(new GUIContent($"{menuPath}Remove from List"), false, () => { RemoveFromList(path); RefreshAll(); });
         }
-        GUILayout.EndHorizontal();
+
+        menu.DropDown(buttonRect);
     }
 
-    private static void AddSceneAdditive(string sceneName)
+    // ─────────────────────────────────────────────────────────
+    // Helpers
+    // ─────────────────────────────────────────────────────────
+
+    static void RefreshAll()
     {
-        if (string.IsNullOrEmpty(sceneName))
-            return;
-
-        var cleanSceneName = sceneName;
-        if (cleanSceneName.EndsWith(" (not in build index)"))
-        {
-            cleanSceneName = cleanSceneName.Replace(" (not in build index)", "");
-        }
-
-        string scenePath = null;
-        if (FetchAllScenes)
-        {
-            scenePath = Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories)
-                .FirstOrDefault(path => Path.GetFileNameWithoutExtension(path) == cleanSceneName);
-        }
-        else
-        {
-            var buildScene = EditorBuildSettings.scenes
-                .FirstOrDefault(scene => scene.enabled && Path.GetFileNameWithoutExtension(scene.path) == cleanSceneName);
-            if (buildScene?.path != null && File.Exists(buildScene.path))
-                scenePath = buildScene.path;
-        }
-
-        if (string.IsNullOrEmpty(scenePath))
-        {
-            scenePath = Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories)
-                .FirstOrDefault(path => Path.GetFileNameWithoutExtension(path) == cleanSceneName);
-        }
-
-        if (string.IsNullOrEmpty(scenePath) || !File.Exists(scenePath))
-        {
-            Debug.LogWarning($"<color=orange>Scene Switcher:</color> Scene \"{cleanSceneName}\" could not be found.");
-            return;
-        }
-
-        for (var i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
-        {
-            var loadedScene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-            if (loadedScene.path != scenePath || !loadedScene.isLoaded)
-                continue;
-            Debug.LogWarning($"<color=orange>Scene Switcher:</color> Scene \"{cleanSceneName}\" is already loaded.");
-            return;
-        }
-
-        try
-        {
-            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
-            if (!scene.IsValid())
-                return;
-            var addedScenes = GetAddedScenes();
-            if (addedScenes.Contains(scenePath))
-                return;
-            addedScenes.Add(scenePath);
-            SaveAddedScenes(addedScenes);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed to add scene: {e.Message}");
-        }
+        MainToolbar.Refresh(KAllScenesToggle);
+        MainToolbar.Refresh(KSceneSwitcher);
+        MainToolbar.Refresh(KAdditiveSelector);
+        MainToolbar.Refresh(KScenesManager);
     }
 
-    private static void RefreshSceneList()
+    static string GetActiveSceneName()
     {
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-            return;
-        if (FetchAllScenes)
-        {
-            s_sceneNames = Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories)
-                .Select(Path.GetFileNameWithoutExtension)
+        var name = Path.GetFileNameWithoutExtension(SceneManager.GetActiveScene().path);
+        return string.IsNullOrEmpty(name) ? "Untitled" : name;
+    }
+
+    static string GetScenesLabel()
+    {
+        var loaded = GetLoadedScenePaths();
+        var added = SceneToolbarPrefs.GetAddedScenes().Where(File.Exists).ToList();
+        if (added.Count == 0) return "Scenes (0)";
+        var activeCount = added.Count(p => loaded.Contains(p));
+        return activeCount > 0 ? $"Scenes ({activeCount}/{added.Count})" : $"Scenes ({added.Count})";
+    }
+
+    static string[] GetSceneList()
+    {
+        return SceneToolbarPrefs.FetchAllScenes
+            ? Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories)
+            : EditorBuildSettings.scenes
+                .Where(s => s.enabled && File.Exists(s.path))
+                .Select(s => s.path)
                 .ToArray();
-        }
-        else
-        {
-            var validScenes = EditorBuildSettings.scenes
-                .Where(scene => scene.enabled && File.Exists(scene.path))
-                .Select(scene => Path.GetFileNameWithoutExtension(scene.path))
-                .ToArray();
-            var missingScenes = EditorBuildSettings.scenes
-                .Where(s => s.enabled && !File.Exists(s.path))
-                .Select(s => Path.GetFileNameWithoutExtension(s.path))
-                .ToArray();
-            if (missingScenes.Length > 0)
-            {
-                Debug.LogWarning(
-                    $"<color=orange>Scene Switcher:</color> Ignored {missingScenes.Length} missing scene(s) still listed in Build Settings:\n{string.Join(", ", missingScenes)}");
-            }
-            s_sceneNames = validScenes;
-        }
-        SelectCurrentScene();
-        s_toolbarUI?.MarkDirtyRepaint();
     }
 
-    private static void CheckAndRefreshScenes()
+    static HashSet<string> GetLoadedScenePaths()
     {
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-            return;
-        var currentScenes = FetchAllScenes
-            ? Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories).Select(Path.GetFileNameWithoutExtension).ToArray()
-            : EditorBuildSettings.scenes.Where(scene => scene.enabled).Select(scene => Path.GetFileNameWithoutExtension(scene.path)).ToArray();
-        var currentHash = string.Join(",", currentScenes);
-        var lastHash = string.Join(",", s_sceneNames);
-        if (currentHash == lastHash)
-            return;
-        s_sceneNames = currentScenes;
-        SelectCurrentScene();
+        var paths = new HashSet<string>();
+        for (var i = 0; i < SceneManager.sceneCount; i++)
+        {
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.IsValid() && !string.IsNullOrEmpty(scene.path))
+                paths.Add(scene.path);
+        }
+        return paths;
     }
 
-    private static void SelectCurrentScene()
+    static void TrackScene(string path)
     {
-        var currentScene = Path.GetFileNameWithoutExtension(EditorSceneManager.GetActiveScene().path);
-        var index = Array.IndexOf(s_sceneNames, currentScene);
-        if (index != -1)
+        SceneToolbarPrefs.LastAdditiveScenePath = path;
+        var added = SceneToolbarPrefs.GetAddedScenes();
+        if (!added.Contains(path))
         {
-            s_selectedIndex = index;
-            s_lastActiveScene = currentScene;
-        }
-        else
-        {
-            var notInBuildName = currentScene + " (not in build index)";
-            s_sceneNames = new[] { notInBuildName }.Concat(s_sceneNames).ToArray();
-            s_selectedIndex = 0;
-            s_lastActiveScene = currentScene;
+            added.Add(path);
+            SceneToolbarPrefs.SaveAddedScenes(added);
         }
     }
 
-    private static void UpdateSceneSelection()
+    static void LoadScene(string scenePath)
     {
-        var currentScene = Path.GetFileNameWithoutExtension(EditorSceneManager.GetActiveScene().path);
-        if (currentScene != s_lastActiveScene)
-        {
-            s_lastActiveScene = currentScene;
-            s_sceneNames = s_sceneNames.Where(name => !name.EndsWith(" (not in build index)")).ToArray();
-            SelectCurrentScene();
-        }
-    }
-
-    private static void LoadScene(string sceneName)
-    {
-        string scenePath = null;
-        if (FetchAllScenes)
-        {
-            scenePath = Directory.GetFiles("Assets", "*.unity", SearchOption.AllDirectories).FirstOrDefault(path => Path.GetFileNameWithoutExtension(path) == sceneName);
-        }
-        else
-        {
-            var buildScene = EditorBuildSettings.scenes.FirstOrDefault(scene => scene.enabled && Path.GetFileNameWithoutExtension(scene.path) == sceneName);
-            if (buildScene.path != null && File.Exists(buildScene.path))
-                scenePath = buildScene.path;
-        }
-        if (string.IsNullOrEmpty(scenePath) || !File.Exists(scenePath))
-        {
-            Debug.LogWarning(
-                $"<color=orange>Scene Switcher:</color> Scene \"{sceneName}\" could not be found or has been deleted.\nPlease remove it from Build Settings or re-add the file.");
-            return;
-        }
+        if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+        if (string.IsNullOrEmpty(scenePath) || !File.Exists(scenePath)) return;
         if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-        {
             EditorSceneManager.OpenScene(scenePath);
-        }
     }
 
-    private static void OnPlayModeChanged(PlayModeStateChange state)
+    static void LoadSceneAdditive(string path)
     {
-        if (state is PlayModeStateChange.EnteredPlayMode or PlayModeStateChange.ExitingPlayMode)
+        if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+        if (string.IsNullOrEmpty(path) || !File.Exists(path)) return;
+
+        for (var i = 0; i < SceneManager.sceneCount; i++)
         {
-            EditorApplication.delayCall += () => AddToolbarUI();
+            var s = SceneManager.GetSceneAt(i);
+            if (s.path == path && s.isLoaded) return;
         }
+
+        try { EditorSceneManager.OpenScene(path, OpenSceneMode.Additive); }
+        catch (Exception e) { Debug.LogError($"[SceneToolbar] Failed to load scene: {e.Message}"); }
     }
 
-    private static List<UnityEngine.SceneManagement.Scene> GetLoadedScenes()
+    static void UnloadScene(string scenePath)
     {
-        var scenes = new List<UnityEngine.SceneManagement.Scene>();
-        for (var i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+        for (var i = 0; i < SceneManager.sceneCount; i++)
         {
-            var scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-            if (scene.IsValid())
-            {
-                scenes.Add(scene);
-            }
-        }
-        return scenes;
-    }
-
-    private static void UnloadScene(string scenePath)
-    {
-        var allScenes = GetLoadedScenes();
-        foreach (var scene in allScenes)
-        {
-            if (scene.IsValid() && scene.path == scenePath && scene.isLoaded)
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.path == scenePath && scene.isLoaded)
             {
                 if (EditorSceneManager.SaveModifiedScenesIfUserWantsTo(new[] { scene }))
-                {
                     EditorSceneManager.CloseScene(scene, false);
-                }
                 break;
             }
         }
-        s_toolbarUI?.MarkDirtyRepaint();
     }
 
-    private static void LoadSceneAdditive(string scenePath)
+    static void SetActiveScene(string scenePath)
     {
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-            return;
-        if (string.IsNullOrEmpty(scenePath) || !File.Exists(scenePath))
-            return;
-        for (var i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+        for (var i = 0; i < SceneManager.sceneCount; i++)
         {
-            var loadedScene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-            if (loadedScene.path == scenePath && loadedScene.isLoaded)
-            {
-                return;
-            }
-        }
-        try
-        {
-            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
-            if (scene.IsValid())
-            {
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed to load scene: {e.Message}");
-        }
-        s_toolbarUI?.MarkDirtyRepaint();
-    }
-
-    private static void SetActiveScene(string scenePath)
-    {
-        var allScenes = GetLoadedScenes();
-        foreach (var scene in allScenes)
-        {
-            if (scene.IsValid() && scene.path == scenePath && scene.isLoaded)
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.path == scenePath && scene.isLoaded)
             {
                 EditorSceneManager.SetActiveScene(scene);
                 break;
             }
         }
-        s_toolbarUI?.MarkDirtyRepaint();
     }
 
-    private static void ToggleSolo(string scenePath)
+    static void ToggleSolo(string scenePath)
     {
-        if (s_soloScenePath == scenePath)
+        if (SceneToolbarPrefs.SoloScenePath == scenePath)
         {
-            SoloScenePath = "";
-            s_soloScenePath = "";
-        }
-        else
-        {
-            SoloScenePath = scenePath;
-            s_soloScenePath = scenePath;
-            ApplySoloMode();
-        }
-        s_toolbarUI?.MarkDirtyRepaint();
-    }
-
-    private static void ApplySoloMode()
-    {
-        if (string.IsNullOrEmpty(s_soloScenePath))
+            SceneToolbarPrefs.SoloScenePath = "";
             return;
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-            return;
-        var allScenes = GetLoadedScenes();
-        var scenesToUnload = new List<UnityEngine.SceneManagement.Scene>();
-        foreach (var scene in allScenes)
-        {
-            if (scene.IsValid() && scene.path != s_soloScenePath && scene.isLoaded)
-            {
-                scenesToUnload.Add(scene);
-            }
         }
-        if (scenesToUnload.Count > 0)
-        {
-            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                foreach (var scene in scenesToUnload)
-                {
-                    if (EditorSceneManager.SaveModifiedScenesIfUserWantsTo(new[] { scene }))
-                    {
-                        EditorSceneManager.CloseScene(scene, false);
-                    }
-                }
-                var remainingScenes = GetLoadedScenes();
-                foreach (var scene in remainingScenes)
-                {
-                    if (scene.IsValid() && scene.path == s_soloScenePath && scene.isLoaded)
-                    {
-                        EditorSceneManager.SetActiveScene(scene);
-                        break;
-                    }
-                }
-            }
-        }
-    }
 
-    private static void RemoveFromList(string scenePath)
-    {
-        if (s_soloScenePath == scenePath)
+        SceneToolbarPrefs.SoloScenePath = scenePath;
+        if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+
+        for (var i = SceneManager.sceneCount - 1; i >= 0; i--)
         {
-            SoloScenePath = "";
-            s_soloScenePath = "";
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.IsValid() && scene.path != scenePath && scene.isLoaded)
+                EditorSceneManager.CloseScene(scene, false);
         }
-        for (var i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+
+        for (var i = 0; i < SceneManager.sceneCount; i++)
         {
-            var scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-            if (scene.IsValid() && scene.path == scenePath)
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.path == scenePath && scene.isLoaded)
             {
-                if (scene.isLoaded)
-                {
-                    if (EditorSceneManager.SaveModifiedScenesIfUserWantsTo(new[] { scene }))
-                    {
-                        EditorSceneManager.CloseScene(scene, true);
-                    }
-                }
-                else
-                {
-                    EditorSceneManager.CloseScene(scene, true);
-                }
+                EditorSceneManager.SetActiveScene(scene);
                 break;
             }
         }
-        var addedScenes = GetAddedScenes();
-        addedScenes.Remove(scenePath);
-        SaveAddedScenes(addedScenes);
-        s_toolbarUI?.MarkDirtyRepaint();
     }
 
-    private static void DeleteSceneFile(string scenePath)
+    static void RemoveFromList(string scenePath)
     {
-        if (!File.Exists(scenePath))
-            return;
-        if (!EditorUtility.DisplayDialog("Delete Scene", $"Are you sure you want to delete scene file?\n\n{scenePath}\n\nThis action cannot be undone!", "Delete", "Cancel"))
-            return;
-        var allScenes = GetLoadedScenes();
-        foreach (var scene in allScenes)
+        if (SceneToolbarPrefs.SoloScenePath == scenePath)
+            SceneToolbarPrefs.SoloScenePath = "";
+
+        UnloadScene(scenePath);
+
+        var added = SceneToolbarPrefs.GetAddedScenes();
+        added.Remove(scenePath);
+        SceneToolbarPrefs.SaveAddedScenes(added);
+    }
+
+    static void LoadAllScenes(List<string> scenes)
+    {
+        foreach (var path in scenes) LoadSceneAdditive(path);
+    }
+
+    static void UnloadAllScenes(List<string> scenes)
+    {
+        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+        var soloPath = SceneToolbarPrefs.SoloScenePath;
+        for (var i = SceneManager.sceneCount - 1; i >= 0; i--)
         {
-            if (scene.IsValid() && scene.path == scenePath)
-            {
-                if (scene.isLoaded)
-                {
-                    if (!EditorSceneManager.SaveModifiedScenesIfUserWantsTo(new[] { scene }))
-                        return;
-                    EditorSceneManager.CloseScene(scene, true);
-                }
-                break;
-            }
-        }
-        try
-        {
-            File.Delete(scenePath);
-            var metaPath = scenePath + ".meta";
-            if (File.Exists(metaPath))
-            {
-                File.Delete(metaPath);
-            }
-            AssetDatabase.Refresh();
-            RemoveFromList(scenePath);
-            Debug.Log($"<color=green>Scene Switcher:</color> Scene file deleted: {scenePath}");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed to delete scene file: {e.Message}");
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.IsValid() && scene.isLoaded && scenes.Contains(scene.path) && scene.path != soloPath)
+                EditorSceneManager.CloseScene(scene, false);
         }
     }
 
-    private static void LoadAllScenes(List<string> addedScenes)
-    {
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-            return;
-        foreach (var scenePath in addedScenes)
-        {
-            if (string.IsNullOrEmpty(scenePath) || !File.Exists(scenePath))
-                continue;
-            var alreadyLoaded = false;
-            for (var i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
-            {
-                var loadedScene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-                if (loadedScene.path == scenePath && loadedScene.isLoaded)
-                {
-                    alreadyLoaded = true;
-                    break;
-                }
-            }
-            if (!alreadyLoaded)
-            {
-                try
-                {
-                    var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
-                    if (scene.IsValid())
-                    {
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"Failed to load scene: {e.Message}");
-                }
-            }
-        }
-        s_toolbarUI?.MarkDirtyRepaint();
-    }
+    // ─────────────────────────────────────────────────────────
+    // Prefs
+    // ─────────────────────────────────────────────────────────
 
-    private static void UnloadAllScenes(List<string> addedScenes)
+    static class SceneToolbarPrefs
     {
-        var allScenes = GetLoadedScenes();
-        var scenesToUnload = new List<UnityEngine.SceneManagement.Scene>();
-        foreach (var scene in allScenes)
+        public static bool FetchAllScenes
         {
-            if (scene.IsValid() && scene.isLoaded && scene.path != s_soloScenePath && addedScenes.Contains(scene.path))
-            {
-                scenesToUnload.Add(scene);
-            }
+            get => EditorPrefs.GetBool("SceneSwitcher_FetchAllScenes", false);
+            set => EditorPrefs.SetBool("SceneSwitcher_FetchAllScenes", value);
         }
-        if (scenesToUnload.Count > 0)
-        {
-            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            {
-                foreach (var scene in scenesToUnload)
-                {
-                    if (EditorSceneManager.SaveModifiedScenesIfUserWantsTo(new[] { scene }))
-                    {
-                        EditorSceneManager.CloseScene(scene, false);
-                    }
-                }
-            }
-        }
-        s_toolbarUI?.MarkDirtyRepaint();
-    }
 
-    private static void ShowAddedScenesMenu(List<string> addedScenes, Dictionary<string, UnityEngine.SceneManagement.Scene> scenesDict, Rect position)
-    {
-        var menu = new GenericMenu();
-        var unloadedCount = 0;
-        var loadedCount = 0;
-        foreach (var scenePath in addedScenes)
+        public static string SoloScenePath
         {
-            if (!File.Exists(scenePath))
-                continue;
-            var sceneExists = scenesDict.ContainsKey(scenePath);
-            var isLoaded = sceneExists && scenesDict[scenePath].isLoaded;
-            if (!isLoaded)
-            {
-                unloadedCount++;
-            }
-            else if (isLoaded && scenePath != s_soloScenePath)
-            {
-                loadedCount++;
-            }
+            get => EditorPrefs.GetString("SceneSwitcher_SoloScene", "");
+            set => EditorPrefs.SetString("SceneSwitcher_SoloScene", value);
         }
-        if (unloadedCount > 0)
+
+        public static string LastAdditiveScenePath
         {
-            menu.AddItem(new GUIContent($"Load All ({unloadedCount})"), false, () => LoadAllScenes(addedScenes));
-            menu.AddSeparator("");
+            get => EditorPrefs.GetString("SceneSwitcher_LastAdditive", "");
+            set => EditorPrefs.SetString("SceneSwitcher_LastAdditive", value);
         }
-        if (loadedCount > 0)
+
+        public static List<string> GetAddedScenes()
         {
-            menu.AddItem(new GUIContent($"Unload All ({loadedCount})"), false, () => UnloadAllScenes(addedScenes));
-            menu.AddSeparator("");
+            var json = EditorPrefs.GetString("SceneSwitcher_AddedScenes", "[]");
+            if (string.IsNullOrEmpty(json) || json == "[]")
+                return new List<string>();
+            return JsonUtility.FromJson<SceneList>(json).Scenes ?? new List<string>();
         }
-        foreach (var scenePath in addedScenes)
+
+        public static void SaveAddedScenes(List<string> scenes)
         {
-            if (!File.Exists(scenePath))
-                continue;
-            var sceneName = Path.GetFileNameWithoutExtension(scenePath);
-            var sceneExists = scenesDict.ContainsKey(scenePath);
-            var isLoaded = sceneExists && scenesDict[scenePath].isLoaded;
-            var scene = sceneExists ? scenesDict[scenePath] : default;
-            var isActive = scene.IsValid() && scene == EditorSceneManager.GetActiveScene();
-            var isSolo = scenePath == s_soloScenePath;
-            var displayName = sceneName;
-            if (isActive) displayName = "★ " + displayName;
-            else if (isSolo) displayName = "● " + displayName;
-            else if (isLoaded) displayName = "✓ " + displayName;
-            var menuPath = displayName + "/";
-            if (isLoaded)
-            {
-                menu.AddItem(new GUIContent(menuPath + "Unload"), false, () => UnloadScene(scenePath));
-                if (!isActive)
-                {
-                    menu.AddItem(new GUIContent(menuPath + "Set Active"), false, () => SetActiveScene(scenePath));
-                }
-            }
-            else
-            {
-                menu.AddItem(new GUIContent(menuPath + "Load"), false, () => LoadSceneAdditive(scenePath));
-            }
-            menu.AddSeparator(menuPath);
-            menu.AddItem(new GUIContent(menuPath + "Solo"), isSolo, () => ToggleSolo(scenePath));
-            menu.AddSeparator(menuPath);
-            menu.AddItem(new GUIContent(menuPath + "Remove from List"), false, () => RemoveFromList(scenePath));
-            menu.AddItem(new GUIContent(menuPath + "Delete Scene File"), false, () => DeleteSceneFile(scenePath));
+            EditorPrefs.SetString("SceneSwitcher_AddedScenes",
+                JsonUtility.ToJson(new SceneList { Scenes = scenes }));
         }
-        menu.DropDown(position);
+
+        [Serializable]
+        class SceneList
+        {
+            [FormerlySerializedAs("scenes")] public List<string> Scenes;
+        }
     }
 }
-
 #endif
-

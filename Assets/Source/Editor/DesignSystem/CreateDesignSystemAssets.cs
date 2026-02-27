@@ -4,7 +4,7 @@ using TMPro;
 using System.IO;
 using Core.Configs.DesignSystem;
 
-namespace EndlessAdventure.Editor.DesignSystem
+namespace Core.Editor.DesignSystem
 {
     public class CreateDesignSystemAssets : EditorWindow
     {
@@ -277,11 +277,6 @@ namespace EndlessAdventure.Editor.DesignSystem
             settings.durationMedium = 0.3f;
             settings.durationSlow = 0.5f;
 
-            settings.menuSelectionChatUsesIndigo = true;
-            settings.menuSelectionImageGenUsesPink = true;
-            settings.chatViewUserMessagesUseGradient = true;
-            settings.imageGenImageMaxHeight = 400f;
-            settings.imageGenMessageBubbleWidth = 600f;
 
             if (existing == null)
             {

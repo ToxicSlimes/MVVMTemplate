@@ -220,7 +220,7 @@ namespace Core.MVVM.ViewModels.Settings
             ToggleCommand = new ReactiveCommand<Unit>(_ => Toggle());
             ToggleCommand.AddTo(ref Disposables);
 
-            CloseCommand = new ReactiveCommand<Unit>(_ => Close());
+            CloseCommand = new ReactiveCommand<Unit>(_ => Close().Forget());
             CloseCommand.AddTo(ref Disposables);
 
             ApplyCommand = new ReactiveCommand<Unit>(_ => Apply());
@@ -229,7 +229,7 @@ namespace Core.MVVM.ViewModels.Settings
             ResetCommand = new ReactiveCommand<Unit>(_ => ResetToDefaults());
             ResetCommand.AddTo(ref Disposables);
 
-            CancelCommand = new ReactiveCommand<Unit>(_ => Cancel());
+            CancelCommand = new ReactiveCommand<Unit>(_ => Cancel().Forget());
             CancelCommand.AddTo(ref Disposables);
 
             SelectTabCommand = new ReactiveCommand<SettingsTab>(SelectTab);

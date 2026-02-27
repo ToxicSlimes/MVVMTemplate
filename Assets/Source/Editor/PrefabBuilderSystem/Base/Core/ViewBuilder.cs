@@ -3,10 +3,10 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Elements;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Validation;
+using Core.Editor.PrefabBuilderSystem.Elements;
+using Core.Editor.PrefabBuilderSystem.Validation;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Core
+namespace Core.Editor.PrefabBuilderSystem.Core
 {
     public abstract class ViewBuilder
     {

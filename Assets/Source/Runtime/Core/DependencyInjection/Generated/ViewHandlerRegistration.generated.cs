@@ -8,7 +8,9 @@
 using Core.Application.Handlers.Views;
 using Core.Application.Requests.Views;
 using Core.Infrastructure.Mediator.Registration;
+using Core.MVVM.ViewModels.Counter;
 using Core.MVVM.ViewModels.Settings;
+using Core.MVVM.Views.Counter;
 using Core.MVVM.Views.Settings;
 
 namespace Core.DependencyInjection.Generated
@@ -18,6 +20,16 @@ namespace Core.DependencyInjection.Generated
         public static MediatorBuilder RegisterViewHandlers(this MediatorBuilder builder)
         {
             // Modal views
+            builder.AddHandler<
+                ShowViewRequest<CounterView, CounterViewModel>,
+                bool,
+                ShowViewRequestHandler<CounterView, CounterViewModel>>();
+
+            builder.AddHandler<
+                HideViewRequest<CounterView, CounterViewModel>,
+                bool,
+                HideViewRequestHandler<CounterView, CounterViewModel>>();
+
             builder.AddHandler<
                 ShowViewRequest<SettingsView, SettingsViewModel>,
                 bool,

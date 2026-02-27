@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Core.Configs.DesignSystem
 {
-    [CreateAssetMenu(fileName = "TypographySettings", menuName = "EndlessAdventure/Design System/Typography Settings")]
+    [CreateAssetMenu(fileName = "TypographySettings", menuName = "MVVM/Design System/Typography Settings")]
     public class TypographySettings : ConfigBase
     {
         [Serializable]

@@ -2,10 +2,10 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Theming;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using System.IO;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements
+namespace Core.Editor.PrefabBuilderSystem.Elements
 {
     public class ScrollViewResult
     {

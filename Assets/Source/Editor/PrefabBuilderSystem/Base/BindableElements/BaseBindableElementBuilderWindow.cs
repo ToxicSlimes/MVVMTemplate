@@ -1,11 +1,11 @@
 #if UNITY_EDITOR
 using Core.Abstractions.MVVM.Elements;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Settings;
+using Core.Editor.PrefabBuilderSystem.Settings;
 using Core.Data.Domain.Models.Elements;
 using UnityEditor;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.BindableElements
+namespace Core.Editor.PrefabBuilderSystem.BindableElements
 {
     public abstract class BaseBindableElementBuilderWindow<TBuilder, TElement, TData> : EditorWindow
         where TBuilder : BaseBindableElementBuilder<TElement, TData>, new()
@@ -121,7 +121,7 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.BindableElements
                 var path = EditorUtility.OpenFilePanel("Load Preset", "Assets", "asset");
                 if (!string.IsNullOrEmpty(path))
                 {
-                    path = "Assets" + path.Substring(Application.dataPath.Length);
+                    path = "Assets" + path.Substring(UnityEngine.Application.dataPath.Length);
                     var preset = AssetDatabase.LoadAssetAtPath<TSettings>(path);
                     if (preset != null)
                     {

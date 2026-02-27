@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Theming
+namespace Core.Editor.PrefabBuilderSystem.Theming
 {
     public enum SpacingSize
     {

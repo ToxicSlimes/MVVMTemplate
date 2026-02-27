@@ -1,10 +1,10 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Theming;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Templates
+namespace Core.Editor.PrefabBuilderSystem.Templates
 {
     public enum UIElementType
     {

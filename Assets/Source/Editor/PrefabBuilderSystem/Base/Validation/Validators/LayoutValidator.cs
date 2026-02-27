@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Core;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Validation;
+using Core.Editor.PrefabBuilderSystem.Core;
+using Core.Editor.PrefabBuilderSystem.Validation;
 using UnityEngine;
 using UnityEngine.UI;
 

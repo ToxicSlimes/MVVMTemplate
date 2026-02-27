@@ -5,19 +5,26 @@
 
 #pragma warning disable
 
+using Core.Abstractions.Navigation;
 using Core.Abstractions.Services.Platform;
 using Core.Application.Commands.Common;
+using Core.Application.Commands.Counter;
 using Core.Application.Commands.Platform;
 using Core.Application.Commands.Settings;
 using Core.Application.Handlers.Common;
+using Core.Application.Handlers.Counter;
 using Core.Application.Handlers.Platform;
 using Core.Application.Handlers.Settings;
 using Core.Application.Queries.Common;
+using Core.Application.Queries.Counter;
 using Core.Application.Queries.Platform;
 using Core.Application.Queries.Settings;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Registration;
+using Core.MVVM.ViewModels.Counter;
+using Core.MVVM.ViewModels.MainMenu;
 using Core.MVVM.ViewModels.Settings;
+using Core.Presentation.Handlers;
 
 namespace Core.DependencyInjection.Generated
 {
@@ -29,12 +36,20 @@ namespace Core.DependencyInjection.Generated
             builder.AddHandler<ConfirmDialogQuery, bool, ConfirmDialogHandler>();
             builder.AddHandler<CopyToClipboardCommand, Nothing, CopyToClipboardHandler>();
             builder.AddHandler<GetAudioStateQuery, AudioState, GetAudioStateHandler>();
+            builder.AddHandler<GetCounterQuery, CounterState, GetCounterHandler>();
+            builder.AddHandler<IncrementCounterCommand, Nothing, IncrementCounterHandler>();
+            builder.AddHandler<NavigateCommand<MainMenuNavigation>, Nothing, MainMenuNavigationHandler>();
             builder.AddHandler<OpenImageFileQuery, FileDialogResult, OpenImageFileHandler>();
             builder.AddHandler<ResetAudioCommand, Nothing, ResetAudioHandler>();
+            builder.AddHandler<ResetCounterCommand, Nothing, ResetCounterHandler>();
             builder.AddHandler<SetAudioMuteCommand, Nothing, SetAudioMuteHandler>();
             builder.AddHandler<SetAudioVolumeCommand, Nothing, SetAudioVolumeHandler>();
 
             // Generic View Handlers (from [GenerateViewCommands] attribute)
+            builder.AddHandler<ShowViewCommand<CounterViewModel>, bool, ShowViewHandler<CounterViewModel>>();
+            builder.AddHandler<HideViewCommand<CounterViewModel>, bool, HideViewHandler<CounterViewModel>>();
+            builder.AddHandler<ShowViewCommand<MainMenuViewModel>, bool, ShowViewHandler<MainMenuViewModel>>();
+            builder.AddHandler<HideViewCommand<MainMenuViewModel>, bool, HideViewHandler<MainMenuViewModel>>();
             builder.AddHandler<ShowViewCommand<SettingsViewModel>, bool, ShowViewHandler<SettingsViewModel>>();
             builder.AddHandler<HideViewCommand<SettingsViewModel>, bool, HideViewHandler<SettingsViewModel>>();
 

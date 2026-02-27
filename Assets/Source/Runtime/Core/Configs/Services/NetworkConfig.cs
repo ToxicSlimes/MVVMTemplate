@@ -12,7 +12,7 @@ namespace Core.Configs.Services
         Prod = 2
     }
 
-    [CreateAssetMenu(fileName = "NetworkConfig", menuName = "EndlessAdventure/Network Config")]
+    [CreateAssetMenu(fileName = "NetworkConfig", menuName = "MVVM/Network Config")]
     public class NetworkConfig : ServiceConfigBase
     {
         #region URLs

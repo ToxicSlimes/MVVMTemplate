@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a67ca96114b4a1583f652f3fc07af9, type: 3}
+  m_Name: DesignSystemSettings
+  m_EditorClassIdentifier: Core.Configs::Core.Configs.DesignSystem.DesignSystemSettings
+  colors: {fileID: 11400000, guid: 4fd9d15353648374aab5e284b8be5db4, type: 2}
+  typography: {fileID: 11400000, guid: fb23268f811239b40b3c46f30cd1a041, type: 2}
+  spacing: {fileID: 11400000, guid: 960b7f5e8256bf34d8e2ada22fd3ea09, type: 2}
+  durationFast: 0.15
+  durationMedium: 0.3
+  durationSlow: 0.5
+  menuSelectionChatUsesIndigo: 1
+  menuSelectionImageGenUsesPink: 1
+  chatViewUserMessagesUseGradient: 1
+  imageGenImageMaxHeight: 400
+  imageGenMessageBubbleWidth: 600

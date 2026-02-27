@@ -137,19 +137,33 @@ namespace Core.Editor.ViewHandlerScanner
 
         private static Type FindTypeByName(string typeName)
         {
+            Type fallback = null;
+
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (assembly.IsDynamic) continue;
                 if (IsTestAssembly(assembly)) continue;
 
+                var asmName = assembly.GetName().Name;
+
                 foreach (var type in GetLoadableTypes(assembly))
                 {
-                    if (type.Name == typeName)
+                    if (type.Name != typeName) continue;
+
+                    if (IsProjectAssembly(asmName))
                         return type;
+
+                    fallback ??= type;
                 }
             }
 
-            return null;
+            return fallback;
+        }
+
+        private static bool IsProjectAssembly(string assemblyName)
+        {
+            return assemblyName.StartsWith("Assembly-CSharp", StringComparison.Ordinal) ||
+                   assemblyName.StartsWith("Core.", StringComparison.Ordinal);
         }
 
         private static IEnumerable<Type> GetLoadableTypes(System.Reflection.Assembly assembly)

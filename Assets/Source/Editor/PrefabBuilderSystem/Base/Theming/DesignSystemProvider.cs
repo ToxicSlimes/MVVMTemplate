@@ -3,7 +3,7 @@ using Core.Configs.DesignSystem;
 using UnityEditor;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Theming
+namespace Core.Editor.PrefabBuilderSystem.Theming
 {
     public static class DesignSystemProvider
     {

@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Generator
+namespace Core.Editor.PrefabBuilderSystem.Generator
 {
     [CreateAssetMenu(fileName = "BaseElementSettings", menuName = "PrefabBuilder/Base Element Settings")]
     public class BaseElementSettings : ScriptableObject

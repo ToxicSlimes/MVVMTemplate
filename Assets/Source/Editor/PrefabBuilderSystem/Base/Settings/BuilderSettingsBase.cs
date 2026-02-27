@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Settings
+namespace Core.Editor.PrefabBuilderSystem.Settings
 {
     public abstract class BuilderSettingsBase : ScriptableObject
     {

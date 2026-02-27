@@ -1,10 +1,10 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Theming;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using UnityEditor;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Templates
+namespace Core.Editor.PrefabBuilderSystem.Templates
 {
     public static class TemplateLibrary
     {

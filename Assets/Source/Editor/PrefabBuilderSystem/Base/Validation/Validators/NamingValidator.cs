@@ -1,13 +1,13 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Conventions;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Core;
+using Core.Editor.PrefabBuilderSystem.Conventions;
+using Core.Editor.PrefabBuilderSystem.Core;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Validation
+namespace Core.Editor.PrefabBuilderSystem.Validation
 {
     public class NamingValidator : BaseUIValidator
     {

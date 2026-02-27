@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Elements;
+using Core.Editor.PrefabBuilderSystem.Elements;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements.Composites
+namespace Core.Editor.PrefabBuilderSystem.Elements.Composites
 {
     public class SliderRowBuilder
     {

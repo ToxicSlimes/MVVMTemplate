@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements
+namespace Core.Editor.PrefabBuilderSystem.Elements
 {
     public interface IElementBuilder<out TComponent> where TComponent : Component
     {

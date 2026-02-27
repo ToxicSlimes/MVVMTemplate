@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Conventions;
+using Core.Editor.PrefabBuilderSystem.Conventions;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Tools
+namespace Core.Editor.PrefabBuilderSystem.Tools
 {
     public class ViewStubGenerator : EditorWindow
     {
@@ -70,9 +70,9 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Tools
                 var path = EditorUtility.OpenFolderPanel("Select Output Folder", _outputPath, "");
                 if (!string.IsNullOrEmpty(path))
                 {
-                    if (path.StartsWith(Application.dataPath))
+                    if (path.StartsWith(UnityEngine.Application.dataPath))
                     {
-                        _outputPath = "Assets" + path.Substring(Application.dataPath.Length);
+                        _outputPath = "Assets" + path.Substring(UnityEngine.Application.dataPath.Length);
                     }
                 }
             }

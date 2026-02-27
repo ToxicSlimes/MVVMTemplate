@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Core;
+using Core.Editor.PrefabBuilderSystem.Core;
 using Editor.PrefabBuilderSystem.Base.Validation.Validators;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Validation
+namespace Core.Editor.PrefabBuilderSystem.Validation
 {
     public enum ValidationSeverity
     {

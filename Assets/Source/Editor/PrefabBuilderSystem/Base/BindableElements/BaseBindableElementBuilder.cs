@@ -2,14 +2,14 @@
 using System.IO;
 using Core.Abstractions.MVVM.Elements;
 using Core.Infrastructure.MVVM.Config;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Core;
+using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Abstractions.Popup;
 using Core.Data.Domain.Models.Elements;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.BindableElements
+namespace Core.Editor.PrefabBuilderSystem.BindableElements
 {
     public abstract class BaseBindableElementBuilder<TElement, TData>
         where TElement : BindableElement<TData>

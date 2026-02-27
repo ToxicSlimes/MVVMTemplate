@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using System;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Attributes
+namespace Core.Editor.PrefabBuilderSystem.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class HubEntryAttribute : Attribute

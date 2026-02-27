@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Configs.DesignSystem
 {
-    [CreateAssetMenu(fileName = "DesignSystemSettings", menuName = "EndlessAdventure/Design System/Design System Settings")]
+    [CreateAssetMenu(fileName = "DesignSystemSettings", menuName = "MVVM/Design System/Design System Settings")]
     public class DesignSystemSettings : ServiceConfigBase
     {
         #region Design System Components
@@ -43,23 +43,11 @@ namespace Core.Configs.DesignSystem
 
         #region View-Specific Settings
 
-        [Title("🖼️ View-Specific Settings")]
-        [Tooltip("MenuSelectionView: Chat Button использует Indigo accent")]
-        public bool menuSelectionChatUsesIndigo = true;
-
-        [Tooltip("MenuSelectionView: ImageGen Button использует Pink accent")]
-        public bool menuSelectionImageGenUsesPink = true;
-
-        [Tooltip("ChatView: User messages используют gradient")]
-        public bool chatViewUserMessagesUseGradient = true;
-
-        [Tooltip("ImageGenView: Image max height")]
-        [Range(200f, 1000f)]
-        public float imageGenImageMaxHeight = 400f;
-
-        [Tooltip("ImageGenView: Message bubble width")]
-        [Range(300f, 1200f)]
-        public float imageGenMessageBubbleWidth = 600f;
+        // TEMPLATE: Add your view-specific design settings here.
+        // Example:
+        // [Title("🖼️ View-Specific Settings")]
+        // [Tooltip("MainMenu: Play button uses accent color")]
+        // public bool mainMenuPlayUsesAccent = true;
 
         #endregion
 

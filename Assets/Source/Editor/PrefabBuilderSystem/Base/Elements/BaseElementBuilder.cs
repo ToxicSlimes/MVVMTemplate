@@ -1,11 +1,11 @@
 #if UNITY_EDITOR
-using EndlessAdventure.Editor.PrefabBuilderSystem.Conventions;
+using Core.Editor.PrefabBuilderSystem.Conventions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements
+namespace Core.Editor.PrefabBuilderSystem.Elements
 {
     public abstract class BaseElementBuilder<TSelf, TComponent> : IElementBuilder<TComponent>
         where TSelf : BaseElementBuilder<TSelf, TComponent>

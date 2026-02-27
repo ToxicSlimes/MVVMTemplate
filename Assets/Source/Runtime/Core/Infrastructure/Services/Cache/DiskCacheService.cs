@@ -20,7 +20,7 @@ namespace Core.Infrastructure.Services.Cache
         private readonly byte[] _encryptionKey;
 
         private const string CacheFileExtension = ".cache";
-        private const string EncryptionSalt = "EndlessAdventure_Cache_Salt_v1";
+        private const string EncryptionSalt = "MVVM_Cache_Salt_v1";
 
         public DiskCacheService(ILogger logger, CacheConfig config, string cacheDirectory = null)
         {

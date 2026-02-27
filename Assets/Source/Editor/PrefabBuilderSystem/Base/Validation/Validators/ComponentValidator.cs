@@ -1,11 +1,11 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Core;
+using Core.Editor.PrefabBuilderSystem.Core;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Validation
+namespace Core.Editor.PrefabBuilderSystem.Validation
 {
     public class ComponentValidator : BaseUIValidator
     {

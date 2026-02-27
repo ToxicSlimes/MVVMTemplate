@@ -1,7 +1,17 @@
-// Template: Add your navigation handlers here following this pattern:
-// public class MyViewNavigationHandler : NavigateHandlerBase<MyView, MyViewModel> { }
-// Each handler maps a NavigateCommand<TView> to show that view.
+using Core.Abstractions.Navigation;
+using Core.Abstractions.StateMachines;
+
 namespace Core.Presentation.Handlers
 {
-    // Placeholder — add your game-specific navigation handlers here
+    public class MainMenuNavigationHandler : NavigateHandlerBase<MainMenuNavigation, MainMenuState>
+    {
+        public MainMenuNavigationHandler(IGameStateMachine stateMachine) : base(stateMachine) { }
+    }
+
+    // TEMPLATE: Add more navigation handlers as you add states.
+    // Example:
+    // public class GameNavigationHandler : NavigateHandlerBase<GameNavigation, GameplayState>
+    // {
+    //     public GameNavigationHandler(IGameStateMachine stateMachine) : base(stateMachine) { }
+    // }
 }

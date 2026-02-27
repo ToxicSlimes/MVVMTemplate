@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Templates
+namespace Core.Editor.PrefabBuilderSystem.Templates
 {
     [CreateAssetMenu(fileName = "NewUITemplate", menuName = "PrefabBuilder/UI Template")]
     public class UITemplate : ScriptableObject

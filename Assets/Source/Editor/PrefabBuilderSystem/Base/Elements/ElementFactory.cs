@@ -1,8 +1,8 @@
 #if UNITY_EDITOR
-using EndlessAdventure.Editor.PrefabBuilderSystem.Elements.Composites;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Elements.GameUI;
+using Core.Editor.PrefabBuilderSystem.Elements.Composites;
+using Core.Editor.PrefabBuilderSystem.Elements.GameUI;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements
+namespace Core.Editor.PrefabBuilderSystem.Elements
 {
     public static class UI
     {

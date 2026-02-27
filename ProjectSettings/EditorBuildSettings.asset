@@ -6,17 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BootstrapScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Source/Assets/Scenes/BootstrapScene.unity
+    guid: 944f598b69f41441a903e7491a704675
   - enabled: 1
-    path: Assets/Scenes/NetworkSandboxScene.unity
-    guid: 70f5b8d7623d747a5bdadb14e489c9e7
-  - enabled: 1
-    path: Assets/Scenes/LoginScene.unity
-    guid: e163653fe213147bd800cc43c3c0f478
-  - enabled: 1
-    path: Assets/Scenes/ChatScene.unity
-    guid: 3246a94a317f94d90a76a57dbcf111dc
+    path: Assets/Source/Assets/Scenes/GameplayScene.unity
+    guid: 4de1b38d790e95c43be2f3d32d791dd0
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 649234de504154ac2b1d35e422e1759f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

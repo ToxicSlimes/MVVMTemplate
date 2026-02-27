@@ -31,13 +31,14 @@ public class DataPreloadState : GameStateBase<DataPreloadState>, IEnterState
       await _dataPreloadService.PreloadDataAsync(cancellationToken: CancellationToken.None);
       _logger.Info("[DataPreloadState] Data preloaded successfully");
       
-      // TODO: Replace with your actual next state transition
-      // Example: StateMachine.Enter<YourMainMenuState>();
+      StateMachine.Enter<MainMenuState>();
     }
     catch (System.Exception ex)
     {
       _logger.Error(ex, "[DataPreloadState] Failed to preload data");
-      // TODO: Handle error - show error screen or retry
+      // TEMPLATE: Handle error — show error screen or retry
+      // Fallback: go to main menu anyway
+      StateMachine.Enter<MainMenuState>();
     }
   }
 

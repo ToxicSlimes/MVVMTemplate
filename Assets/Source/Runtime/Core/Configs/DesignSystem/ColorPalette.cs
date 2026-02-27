@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Configs.DesignSystem
 {
-    [CreateAssetMenu(fileName = "ColorPalette", menuName = "EndlessAdventure/Design System/Color Palette")]
+    [CreateAssetMenu(fileName = "ColorPalette", menuName = "MVVM/Design System/Color Palette")]
     public class ColorPalette : ConfigBase
     {
         #region Background Colors

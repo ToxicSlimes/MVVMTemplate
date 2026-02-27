@@ -1,10 +1,10 @@
 #if UNITY_EDITOR
-using EndlessAdventure.Editor.PrefabBuilderSystem.Theming;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements.GameUI
+namespace Core.Editor.PrefabBuilderSystem.Elements.GameUI
 {
     public class BadgeBuilder : BaseElementBuilder<BadgeBuilder, Image>
     {

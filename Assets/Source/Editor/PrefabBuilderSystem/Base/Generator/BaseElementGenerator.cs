@@ -1,10 +1,10 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Elements;
+using Core.Editor.PrefabBuilderSystem.Elements;
 using System.IO;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Generator
+namespace Core.Editor.PrefabBuilderSystem.Generator
 {
     public class BaseElementGenerator : EditorWindow
     {

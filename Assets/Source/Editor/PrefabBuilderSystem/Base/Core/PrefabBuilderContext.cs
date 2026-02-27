@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Conventions;
+using Core.Editor.PrefabBuilderSystem.Conventions;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Core
+namespace Core.Editor.PrefabBuilderSystem.Core
 {
     public class PrefabBuilderContext
     {

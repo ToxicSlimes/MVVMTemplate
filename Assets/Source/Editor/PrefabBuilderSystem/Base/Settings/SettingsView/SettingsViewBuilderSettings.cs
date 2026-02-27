@@ -1,8 +1,8 @@
 #if UNITY_EDITOR
 using UnityEngine;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Settings;
+using Core.Editor.PrefabBuilderSystem.Settings;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.SettingsView
+namespace Core.Editor.PrefabBuilderSystem.SettingsView
 {
     [CreateAssetMenu(fileName = "SettingsViewBuilderSettings", menuName = "PrefabBuilder/Settings/SettingsView")]
     public class SettingsViewBuilderSettings : BuilderSettingsBase

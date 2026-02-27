@@ -1,10 +1,10 @@
 #if UNITY_EDITOR
-using EndlessAdventure.Editor.PrefabBuilderSystem.Conventions;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Theming;
+using Core.Editor.PrefabBuilderSystem.Conventions;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements
+namespace Core.Editor.PrefabBuilderSystem.Elements
 {
     public class CardBuilder : BaseElementBuilder<CardBuilder, Image>
     {

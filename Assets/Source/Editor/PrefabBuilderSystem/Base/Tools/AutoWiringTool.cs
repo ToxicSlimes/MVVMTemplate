@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Conventions;
+using Core.Editor.PrefabBuilderSystem.Conventions;
 using UnityEditor;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Tools
+namespace Core.Editor.PrefabBuilderSystem.Tools
 {
     public class AutoWiringTool : EditorWindow
     {

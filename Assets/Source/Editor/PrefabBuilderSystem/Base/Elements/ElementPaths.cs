@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Elements
+namespace Core.Editor.PrefabBuilderSystem.Elements
 {
     public static class ElementPaths
     {

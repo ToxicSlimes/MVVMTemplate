@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Extensions
+namespace Core.Editor.PrefabBuilderSystem.Extensions
 {
     public enum AnchorPreset
     {

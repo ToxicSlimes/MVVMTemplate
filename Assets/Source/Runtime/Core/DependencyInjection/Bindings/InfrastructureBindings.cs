@@ -27,7 +27,6 @@ using Core.Infrastructure.Services.Cache;
 using Core.Data.Domain.Models.Cache;
 using Core.Abstractions.Popup;
 using Core.Abstractions.Services.Input;
-using Core.DependencyInjection.Bindings;
 using Core.DependencyInjection.Generated;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Publishing;

@@ -36,8 +36,7 @@ public class BootstrapState : GameStateBase<BootstrapState>, IEnterState
 
     _cache.CleanupAsync().Forget();
 
-    // TODO: Enter your first game state here, e.g.:
-    // StateMachine.Enter<MainMenuState>();
+    StateMachine.Enter<DataPreloadState>();
   }
 
   public override void Exit()

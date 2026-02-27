@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Templates
+namespace Core.Editor.PrefabBuilderSystem.Templates
 {
     public class TemplateBuilderWindow : EditorWindow
     {
@@ -205,9 +205,9 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Templates
                             var folder = EditorUtility.SaveFolderPanel("Select Output Folder", _outputPath, "");
                             if (!string.IsNullOrEmpty(folder))
                             {
-                                if (folder.StartsWith(Application.dataPath))
+                                if (folder.StartsWith(UnityEngine.Application.dataPath))
                                 {
-                                    _outputPath = "Assets" + folder.Substring(Application.dataPath.Length) + "/";
+                                    _outputPath = "Assets" + folder.Substring(UnityEngine.Application.dataPath.Length) + "/";
                                 }
                             }
                         }

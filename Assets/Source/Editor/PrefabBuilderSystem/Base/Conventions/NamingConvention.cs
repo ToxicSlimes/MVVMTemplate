@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Conventions
+namespace Core.Editor.PrefabBuilderSystem.Conventions
 {
     public enum ValidationSeverity { Valid, Warning, Error }
 

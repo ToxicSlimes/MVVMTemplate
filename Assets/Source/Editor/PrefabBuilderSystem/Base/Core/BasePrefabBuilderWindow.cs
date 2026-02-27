@@ -1,10 +1,10 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Settings;
-using EndlessAdventure.Editor.PrefabBuilderSystem.Validation;
+using Core.Editor.PrefabBuilderSystem.Settings;
+using Core.Editor.PrefabBuilderSystem.Validation;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Core
+namespace Core.Editor.PrefabBuilderSystem.Core
 {
     public abstract class BasePrefabBuilderWindow<TBuilder> : EditorWindow
         where TBuilder : ViewBuilder, new()
@@ -102,7 +102,7 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Core
                 var path = EditorUtility.OpenFilePanel("Load Preset", "Assets", "asset");
                 if (!string.IsNullOrEmpty(path))
                 {
-                    path = "Assets" + path.Substring(Application.dataPath.Length);
+                    path = "Assets" + path.Substring(UnityEngine.Application.dataPath.Length);
                     var preset = AssetDatabase.LoadAssetAtPath<TSettings>(path);
                     if (preset != null)
                     {
@@ -266,7 +266,7 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Core
                 var path = EditorUtility.OpenFilePanel("Load Preset", "Assets", "asset");
                 if (!string.IsNullOrEmpty(path))
                 {
-                    path = "Assets" + path.Substring(Application.dataPath.Length);
+                    path = "Assets" + path.Substring(UnityEngine.Application.dataPath.Length);
                     var preset = AssetDatabase.LoadAssetAtPath<TSettings>(path);
                     if (preset != null)
                     {

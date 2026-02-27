@@ -5,7 +5,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace EndlessAdventure.Editor.PrefabBuilderSystem.Wizard
+namespace Core.Editor.PrefabBuilderSystem.Wizard
 {
     public class PrefabBuilderWizard : EditorWindow
     {
@@ -241,9 +241,9 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Wizard
 
             sb.AppendLine("#if UNITY_EDITOR");
             sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using EndlessAdventure.Editor.PrefabBuilderSystem.Settings;");
+            sb.AppendLine("using Core.Editor.PrefabBuilderSystem.Settings;");
             sb.AppendLine();
-            sb.AppendLine($"namespace EndlessAdventure.Editor.PrefabBuilderSystem.{_viewName}");
+            sb.AppendLine($"namespace Core.Editor.PrefabBuilderSystem.{_viewName}");
             sb.AppendLine("{");
             sb.AppendLine($"    [CreateAssetMenu(fileName = \"{_viewName}BuilderSettings\", menuName = \"PrefabBuilder/Settings/{_viewName}\")]");
             sb.AppendLine($"    public class {_viewName}BuilderSettings : BuilderSettingsBase");
@@ -283,10 +283,10 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Wizard
             sb.AppendLine("#if UNITY_EDITOR");
             sb.AppendLine("using UnityEngine;");
             sb.AppendLine("using UnityEngine.UI;");
-            sb.AppendLine("using EndlessAdventure.Editor.PrefabBuilderSystem.Core;");
-            sb.AppendLine("using EndlessAdventure.Editor.PrefabBuilderSystem.Attributes;");
+            sb.AppendLine("using Core.Editor.PrefabBuilderSystem.Core;");
+            sb.AppendLine("using Core.Editor.PrefabBuilderSystem.Attributes;");
             sb.AppendLine();
-            sb.AppendLine($"namespace EndlessAdventure.Editor.PrefabBuilderSystem.{_viewName}");
+            sb.AppendLine($"namespace Core.Editor.PrefabBuilderSystem.{_viewName}");
             sb.AppendLine("{");
             sb.AppendLine($"    [HubEntry(\"{_viewName}\", \"{EscapeString(_description)}\", \"{category}\", Order = 100)]");
             sb.AppendLine($"    [BuilderWindow(typeof({_viewName}PrefabBuilderWindow))]");
@@ -356,9 +356,9 @@ namespace EndlessAdventure.Editor.PrefabBuilderSystem.Wizard
             sb.AppendLine("#if UNITY_EDITOR");
             sb.AppendLine("using UnityEditor;");
             sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using EndlessAdventure.Editor.PrefabBuilderSystem.Core;");
+            sb.AppendLine("using Core.Editor.PrefabBuilderSystem.Core;");
             sb.AppendLine();
-            sb.AppendLine($"namespace EndlessAdventure.Editor.PrefabBuilderSystem.{_viewName}");
+            sb.AppendLine($"namespace Core.Editor.PrefabBuilderSystem.{_viewName}");
             sb.AppendLine("{");
             sb.AppendLine($"    public class {_viewName}PrefabBuilderWindow : BasePrefabBuilderWindow<{_viewName}StructureBuilder>");
             sb.AppendLine("    {");

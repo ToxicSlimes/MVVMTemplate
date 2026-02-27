@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Configs.DesignSystem
 {
-    [CreateAssetMenu(fileName = "SpacingSettings", menuName = "EndlessAdventure/Design System/Spacing Settings")]
+    [CreateAssetMenu(fileName = "SpacingSettings", menuName = "MVVM/Design System/Spacing Settings")]
     public class SpacingSettings : ConfigBase
     {
         #region Spacing Scale
