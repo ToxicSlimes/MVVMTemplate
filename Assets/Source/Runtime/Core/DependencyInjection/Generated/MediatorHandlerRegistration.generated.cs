@@ -9,10 +9,12 @@ using Core.Abstractions.Navigation;
 using Core.Abstractions.Services.Platform;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Counter;
+using Core.Application.Commands.Elements;
 using Core.Application.Commands.Platform;
 using Core.Application.Commands.Settings;
 using Core.Application.Handlers.Common;
 using Core.Application.Handlers.Counter;
+using Core.Application.Handlers.Elements;
 using Core.Application.Handlers.Platform;
 using Core.Application.Handlers.Settings;
 using Core.Application.Queries.Common;
@@ -33,8 +35,10 @@ namespace Core.DependencyInjection.Generated
         public static MediatorBuilder RegisterAllHandlers(this MediatorBuilder builder)
         {
             // Request Handlers
+            builder.AddHandler<ClearContainerCommand, Nothing, ClearContainerHandler>();
             builder.AddHandler<ConfirmDialogQuery, bool, ConfirmDialogHandler>();
             builder.AddHandler<CopyToClipboardCommand, Nothing, CopyToClipboardHandler>();
+            builder.AddHandler<DestroyElementCommand, Nothing, DestroyElementHandler>();
             builder.AddHandler<GetAudioStateQuery, AudioState, GetAudioStateHandler>();
             builder.AddHandler<GetCounterQuery, CounterState, GetCounterHandler>();
             builder.AddHandler<IncrementCounterCommand, Nothing, IncrementCounterHandler>();

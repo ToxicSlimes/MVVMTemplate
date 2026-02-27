@@ -260,13 +260,86 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override void ApplyCustomizations(GameObject instance, Image component)
         {
+            // Root = dim background, stretch to fill parent
+            var rootRt = instance.GetComponent<RectTransform>();
+            if (rootRt != null)
+            {
+                rootRt.anchorMin = Vector2.zero;
+                rootRt.anchorMax = Vector2.one;
+                rootRt.offsetMin = Vector2.zero;
+                rootRt.offsetMax = Vector2.zero;
+            }
+
             component.color = _dimColor;
 
-            var title = instance.transform.Find("Window/Header/Title")?.GetComponent<TextMeshProUGUI>();
-            if (title != null && !string.IsNullOrEmpty(_title))
+            if (_closeOnDimClick && instance.GetComponent<Button>() == null)
             {
-                title.text = _title;
+                var btn = instance.AddComponent<Button>();
+                btn.transition = Selectable.Transition.None;
             }
+
+            // Window = centered modal
+            var window = instance.transform.Find("Window");
+            if (window != null)
+            {
+                var windowRt = window.GetComponent<RectTransform>();
+                if (windowRt != null)
+                {
+                    windowRt.anchorMin = new Vector2(0.5f, 0.5f);
+                    windowRt.anchorMax = new Vector2(0.5f, 0.5f);
+                    windowRt.pivot = new Vector2(0.5f, 0.5f);
+                    windowRt.anchoredPosition = Vector2.zero;
+                    windowRt.sizeDelta = new Vector2(_width, _height);
+                }
+
+                var windowBg = window.GetComponent<Image>();
+                if (windowBg != null)
+                    windowBg.color = _backgroundColor;
+            }
+
+            // Header
+            var header = instance.transform.Find("Window/Header");
+            if (header != null)
+            {
+                var headerBg = header.GetComponent<Image>();
+                if (headerBg != null) headerBg.color = _headerColor;
+
+                var headerLe = header.GetComponent<LayoutElement>();
+                if (headerLe != null) headerLe.preferredHeight = _headerHeight;
+            }
+
+            var title = instance.transform.Find("Window/Header/Title")?.GetComponent<TextMeshProUGUI>();
+            if (title != null)
+            {
+                if (!string.IsNullOrEmpty(_title)) title.text = _title;
+                title.color = _titleColor;
+            }
+
+            // Content
+            var content = instance.transform.Find("Window/Content");
+            if (content != null)
+            {
+                var vlg = content.GetComponent<VerticalLayoutGroup>();
+                if (vlg != null) vlg.padding = _contentPadding;
+            }
+
+            // Footer
+            var footer = instance.transform.Find("Window/Footer");
+            if (footer != null)
+            {
+                var footerBg = footer.GetComponent<Image>();
+                if (footerBg != null) footerBg.color = _footerColor;
+
+                var footerLe = footer.GetComponent<LayoutElement>();
+                if (footerLe != null) footerLe.preferredHeight = _footerHeight;
+
+                footer.gameObject.SetActive(_footerHeight > 0);
+            }
+
+            // Close button
+            var closeBtn = instance.transform.Find("Window/Header/CloseButton");
+            if (closeBtn != null)
+                closeBtn.gameObject.SetActive(_showCloseButton);
         }
     }
 }
