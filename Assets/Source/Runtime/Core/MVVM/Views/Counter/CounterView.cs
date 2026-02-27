@@ -1,9 +1,10 @@
+using Core.Abstractions.MVVM.Elements;
 using Core.Abstractions.MVVM.Views;
 using Core.Abstractions.Popup;
+using Core.Data.Domain.Models.Elements;
 using Core.Data.Domain.Models.Elements.Samples;
 using Core.Data.UI;
 using Core.MVVM.ViewModels.Counter;
-using Core.Presentation.Elements.Samples;
 using R3;
 using TMPro;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Core.MVVM.Views.Counter
     /// 1. ReactiveProperty binding (ViewModel → View)
     /// 2. ReactiveCommand binding (View → ViewModel)
     /// 3. PopupTrigger (Hover tooltips + Click confirm)
-    /// 4. BindableElement usage with sample data
+    /// 4. BindableElement usage with sample data (via IBindableElement interface)
     /// 5. Panel switching driven by ViewModel state
     /// </summary>
     public class CounterView : BindableView<CounterViewModel>
@@ -46,9 +47,9 @@ namespace Core.MVVM.Views.Counter
         [SerializeField] private PopupTrigger _resetConfirm;
 
         [Header("Gallery Elements")]
-        [SerializeField] private TextCardElement _sampleCard;
-        [SerializeField] private StatBarElement _sampleStatBar;
-        [SerializeField] private ActionListItemElement _sampleActionItem;
+        [SerializeField] private GameObject _sampleCard;
+        [SerializeField] private GameObject _sampleStatBar;
+        [SerializeField] private GameObject _sampleActionItem;
 
         protected override void OnBind(ref DisposableBag disposables)
         {
@@ -105,7 +106,6 @@ namespace Core.MVVM.Views.Counter
                     .AddTo(ref disposables);
             }
 
-            // Panel switching
             ViewModel.IsGalleryMode
                 .Subscribe(this, static (isGallery, self) =>
                 {
@@ -142,40 +142,39 @@ namespace Core.MVVM.Views.Counter
 
         private void SetupGalleryElements()
         {
-            // TEMPLATE EXAMPLE: BindableElement usage with sample data
-            if (_sampleCard != null)
-            {
-                _sampleCard.Bind(new TextCardData
-                {
-                    Id = "sample-card",
-                    Title = "TextCard Element",
-                    Description = "A simple card with title, description, and optional icon. Great for lists, inventories, or info panels."
-                });
-            }
+            // TEMPLATE EXAMPLE: Bind sample elements via IBindableElement interface
+            // View uses GameObject refs + GetComponent — no direct Presentation dependency
 
-            if (_sampleStatBar != null)
+            BindElement(_sampleCard, new TextCardData
             {
-                _sampleStatBar.Bind(new StatBarData
-                {
-                    Id = "sample-stat",
-                    Label = "Health",
-                    CurrentValue = 75f,
-                    MaxValue = 100f
-                });
-            }
+                Id = "sample-card",
+                Title = "TextCard Element",
+                Description = "A card with title, description, and optional icon."
+            });
 
-            if (_sampleActionItem != null)
+            BindElement(_sampleStatBar, new StatBarData
             {
-                _sampleActionItem.Bind(new ActionListItemData
-                {
-                    Id = "sample-action",
-                    Title = "Action Item",
-                    Subtitle = "Tap the button to trigger an action",
-                    ActionLabel = "Execute",
-                    IsActionEnabled = true
-                });
-                _sampleActionItem.OnAction = data => Debug.Log($"[Gallery] Action triggered: {data.Title}");
-            }
+                Id = "sample-stat",
+                Label = "Health",
+                CurrentValue = 75f,
+                MaxValue = 100f
+            });
+
+            BindElement(_sampleActionItem, new ActionListItemData
+            {
+                Id = "sample-action",
+                Title = "Action Item",
+                Subtitle = "Tap the button to trigger an action",
+                ActionLabel = "Execute",
+                IsActionEnabled = true
+            });
+        }
+
+        private static void BindElement<TData>(GameObject go, TData data) where TData : struct, IElementData
+        {
+            if (go == null) return;
+            var element = go.GetComponent<IBindableElement<TData>>();
+            element?.Bind(data);
         }
     }
 }

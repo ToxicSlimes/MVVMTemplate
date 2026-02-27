@@ -229,10 +229,10 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
             SerializationHelper.Wire(so, "_decrementTooltip", _decrementTooltip);
             SerializationHelper.Wire(so, "_resetConfirm", _resetConfirm);
 
-            // Gallery elements
-            SerializationHelper.Wire(so, "_sampleCard", _sampleCard);
-            SerializationHelper.Wire(so, "_sampleStatBar", _sampleStatBar);
-            SerializationHelper.Wire(so, "_sampleActionItem", _sampleActionItem);
+            // Gallery elements (as GameObjects — View uses GetComponent<IBindableElement>)
+            SerializationHelper.Wire(so, "_sampleCard", _sampleCard != null ? _sampleCard.gameObject : null);
+            SerializationHelper.Wire(so, "_sampleStatBar", _sampleStatBar != null ? _sampleStatBar.gameObject : null);
+            SerializationHelper.Wire(so, "_sampleActionItem", _sampleActionItem != null ? _sampleActionItem.gameObject : null);
 
             so.ApplyModifiedPropertiesWithoutUndo();
         }
