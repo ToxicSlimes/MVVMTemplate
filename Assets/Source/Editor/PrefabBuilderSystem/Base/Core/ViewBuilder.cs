@@ -113,6 +113,18 @@ namespace Core.Editor.PrefabBuilderSystem.Core
 
             var canvasGroup = go.AddComponent<CanvasGroup>();
             Context.CanvasGroup = canvasGroup;
+
+            // Ensure RectTransform is properly initialized
+            var rt = go.GetComponent<RectTransform>();
+            if (rt != null)
+            {
+                rt.localScale = Vector3.one;
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.zero;
+                rt.pivot = new Vector2(0.5f, 0.5f);
+            }
         }
 
         protected RectTransform Root => Context.Root.GetComponent<RectTransform>() 
