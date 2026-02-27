@@ -18,12 +18,19 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
 
         protected override void SetupCanvas(GameObject go)
         {
-            // Popups are children of PopupService's overlay canvas — no own Canvas needed
-            var rt = go.AddComponent<RectTransform>();
-            rt.localScale = Vector3.one;
+            // Popups are children of PopupService's overlay canvas
+            // Still need Canvas for validation, but set to Inherit (not Overlay)
+            var canvas = go.AddComponent<Canvas>();
+            Context.Canvas = canvas;
+
+            go.AddComponent<UnityEngine.UI.GraphicRaycaster>();
 
             var canvasGroup = go.AddComponent<CanvasGroup>();
             Context.CanvasGroup = canvasGroup;
+
+            var rt = go.GetComponent<RectTransform>();
+            if (rt != null)
+                rt.localScale = Vector3.one;
         }
 
         private TextMeshProUGUI _titleText;
@@ -98,8 +105,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
                 .WithPreferredSize(null, s.ButtonHeight)
                 .Build(buttonRow.transform);
 
-            // CanvasGroup for fade animation
-            Root.AddComponent<CanvasGroup>();
+            // CanvasGroup already added in SetupCanvas
         }
 
         protected override void WireFields(Infrastructure.Popup.Implementations.ConfirmPopup view)

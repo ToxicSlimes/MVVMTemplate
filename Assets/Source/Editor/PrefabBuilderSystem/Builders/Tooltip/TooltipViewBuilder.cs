@@ -18,12 +18,18 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Tooltip
 
         protected override void SetupCanvas(GameObject go)
         {
-            // Popups are children of PopupService's overlay canvas — no own Canvas needed
-            var rt = go.AddComponent<RectTransform>();
-            rt.localScale = Vector3.one;
+            // Popups are children of PopupService's overlay canvas
+            var canvas = go.AddComponent<Canvas>();
+            Context.Canvas = canvas;
+
+            go.AddComponent<UnityEngine.UI.GraphicRaycaster>();
 
             var canvasGroup = go.AddComponent<CanvasGroup>();
             Context.CanvasGroup = canvasGroup;
+
+            var rt = go.GetComponent<RectTransform>();
+            if (rt != null)
+                rt.localScale = Vector3.one;
         }
 
         private TextMeshProUGUI _titleText;
@@ -82,8 +88,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Tooltip
             var rootLayout = Root.AddComponent<LayoutElement>();
             rootLayout.preferredWidth = s.MaxWidth;
 
-            // CanvasGroup for fade
-            Root.AddComponent<CanvasGroup>();
+            // CanvasGroup already added in SetupCanvas
         }
 
         protected override void WireFields(TooltipPopup view)
