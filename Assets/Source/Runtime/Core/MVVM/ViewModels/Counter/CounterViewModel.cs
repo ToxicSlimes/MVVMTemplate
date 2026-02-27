@@ -1,12 +1,9 @@
 using System;
 using Core.Abstractions.MVVM.Models.Counter;
 using Core.Abstractions.MVVM.ViewModels;
-using Core.Abstractions.Popup;
 using Core.Application.Commands.Counter;
-using Core.Data.UI;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Attributes;
-using Core.Infrastructure.Popup.Implementations;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
@@ -28,8 +25,6 @@ namespace Core.MVVM.ViewModels.Counter
     {
         private readonly ICounterModel _model;
         private readonly IMediator _mediator;
-        private readonly IPopupService _popupService;
-
         // Reactive properties — View auto-subscribes to these
         public ReactiveProperty<int> CounterValue { get; }
         public ReactiveProperty<int> TotalIncrements { get; }
@@ -40,11 +35,10 @@ namespace Core.MVVM.ViewModels.Counter
         public ReactiveCommand<Unit> DecrementCommand { get; set; }
         public ReactiveCommand<Unit> ResetCommand { get; set; }
 
-        public CounterViewModel(ICounterModel model, IMediator mediator, IPopupService popupService)
+        public CounterViewModel(ICounterModel model, IMediator mediator)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _popupService = popupService;
 
             CounterValue = new ReactiveProperty<int>(_model.Value);
             TotalIncrements = new ReactiveProperty<int>(_model.TotalIncrements);
@@ -92,24 +86,6 @@ namespace Core.MVVM.ViewModels.Counter
 
         private async UniTaskVoid OnReset()
         {
-            // TEMPLATE EXAMPLE: Show confirm popup before destructive action
-            if (_popupService != null)
-            {
-                var confirmed = false;
-                await _popupService.ShowAsync<ConfirmPopup, ConfirmPopupData>(
-                    null,
-                    new ConfirmPopupData
-                    {
-                        Title = "Reset Counter?",
-                        Message = $"Current value: {_model.Value}. This will reset to zero.",
-                        ConfirmText = "Reset",
-                        CancelText = "Keep",
-                        OnConfirm = () => confirmed = true
-                    });
-
-                if (!confirmed) return;
-            }
-
             await _mediator.Send(new ResetCounterCommand());
         }
 

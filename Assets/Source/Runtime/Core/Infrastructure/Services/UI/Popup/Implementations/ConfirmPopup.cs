@@ -1,5 +1,6 @@
 using LitMotion;
 using Core.Data.UI;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -93,8 +94,9 @@ namespace Core.Infrastructure.Popup.Implementations
                 .Scale(1f, 0.9f, 0.15f, Ease.InQuad);
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             if (_confirmButton != null) _confirmButton.onClick.RemoveListener(OnConfirmClicked);
             if (_cancelButton != null) _cancelButton.onClick.RemoveListener(OnCancelClicked);
         }
