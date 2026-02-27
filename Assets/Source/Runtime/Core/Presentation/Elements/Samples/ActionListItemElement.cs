@@ -59,6 +59,7 @@ namespace Core.Presentation.Elements.Samples
 
         protected override void OnUnbind()
         {
+            base.OnUnbind();
             if (_titleText != null)
                 _titleText.text = string.Empty;
 
@@ -69,8 +70,10 @@ namespace Core.Presentation.Elements.Samples
                 _actionButton.interactable = false;
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
+            
             if (_actionButton != null)
                 _actionButton.onClick.RemoveListener(HandleAction);
         }

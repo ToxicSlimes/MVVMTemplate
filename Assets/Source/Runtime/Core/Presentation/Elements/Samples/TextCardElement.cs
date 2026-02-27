@@ -34,6 +34,8 @@ namespace Core.Presentation.Elements.Samples
 
         protected override void OnUnbind()
         {
+            base.OnUnbind();
+            
             if (_titleText != null)
                 _titleText.text = string.Empty;
 

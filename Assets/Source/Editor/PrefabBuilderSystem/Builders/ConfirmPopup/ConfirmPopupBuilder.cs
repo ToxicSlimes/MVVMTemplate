@@ -6,19 +6,20 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
 {
-    public class ConfirmPopupBuilder : ViewBuilder<Core.Infrastructure.Popup.Implementations.ConfirmPopup>
+    public class ConfirmPopupBuilder : ViewBuilder<Infrastructure.Popup.Implementations.ConfirmPopup>
     {
         public ConfirmPopupBuilderSettings Settings { get; set; }
 
         protected override string PrefabPath => "Assets/Prefabs/Popups/ConfirmPopup.prefab";
 
-        private GameObject _titleText;
-        private GameObject _messageText;
-        private GameObject _confirmButton;
-        private GameObject _cancelButton;
+        private TextMeshProUGUI _titleText;
+        private TextMeshProUGUI _messageText;
+        private Button _confirmButton;
+        private Button _cancelButton;
 
         protected override void BuildViewStructure()
         {
@@ -91,7 +92,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
             Root.AddComponent<CanvasGroup>();
         }
 
-        protected override void WireFields(Core.Infrastructure.Popup.Implementations.ConfirmPopup view)
+        protected override void WireFields(Infrastructure.Popup.Implementations.ConfirmPopup view)
         {
             var so = new SerializedObject(view);
             SerializationHelper.Wire(so, "_titleText", _titleText.GetComponentInChildren<TextMeshProUGUI>());
