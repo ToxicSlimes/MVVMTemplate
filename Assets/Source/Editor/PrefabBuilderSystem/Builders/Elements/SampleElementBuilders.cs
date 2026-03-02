@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using Core.Abstractions.Popup;
+using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.MVVM.Elements.Samples;
 using UnityEditor;
