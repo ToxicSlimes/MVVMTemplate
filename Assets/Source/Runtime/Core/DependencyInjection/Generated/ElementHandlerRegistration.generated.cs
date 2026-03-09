@@ -11,6 +11,7 @@ using Core.Data.Domain.Models.Elements;
 using Core.Data.Domain.Models.Elements.Samples;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Registration;
+using Core.MVVM.Elements;
 using Core.MVVM.Elements.Samples;
 
 namespace Core.DependencyInjection.Generated
@@ -21,6 +22,11 @@ namespace Core.DependencyInjection.Generated
         {
             builder.AddHandler<DestroyElementCommand, Nothing, DestroyElementHandler>();
             builder.AddHandler<ClearContainerCommand, Nothing, ClearContainerHandler>();
+
+            builder.AddHandler<
+                CreateElementCommand<InventoryItemElement, InventoryItemData>,
+                InventoryItemElement,
+                CreateElementHandler<InventoryItemElement, InventoryItemData>>();
 
             builder.AddHandler<
                 CreateElementCommand<ActionListItemElement, ActionListItemData>,
@@ -36,6 +42,11 @@ namespace Core.DependencyInjection.Generated
                 CreateElementCommand<TextCardElement, TextCardData>,
                 TextCardElement,
                 CreateElementHandler<TextCardElement, TextCardData>>();
+
+            builder.AddHandler<
+                ReconcileElementsCommand<InventoryItemElement, InventoryItemData>,
+                Nothing,
+                ReconcileElementsHandler<InventoryItemElement, InventoryItemData>>();
 
             builder.AddHandler<
                 ReconcileElementsCommand<ActionListItemElement, ActionListItemData>,

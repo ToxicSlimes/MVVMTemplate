@@ -1,6 +1,8 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.Infrastructure.UI;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -18,7 +20,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         IconButton
     }
 
-    public class ButtonBuilder : BaseElementBuilder<ButtonBuilder, Button>
+    public class ButtonBuilder : BaseElementBuilder<ButtonBuilder, BaseButton>
     {
         protected override string NamingPrefix => NamingConvention.Button;
         
@@ -192,9 +194,23 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.Button;
 
-        protected override void ApplyCustomizations(GameObject instance, Button button)
+        protected override void ApplyCustomizations(GameObject instance, BaseButton button)
         {
+            if (button == null)
+            {
+                var native = instance.GetComponent<Button>();
+                if (native != null)
+                {
+                    UnityEditorInternal.ComponentUtility.CopyComponent(native);
+                    Object.DestroyImmediate(native);
+                    button = instance.AddComponent<BaseButton>();
+                    UnityEditorInternal.ComponentUtility.PasteComponentValues(button);
+                }
+            }
             if (button == null) return;
+
+            if (button.targetGraphic == null)
+                button.targetGraphic = instance.GetComponent<Graphic>();
 
             var bg = instance.GetComponent<Image>();
             if (bg != null)
@@ -225,10 +241,15 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 label.color = _labelColor;
             }
 
+            if (instance.GetComponent<CanvasGroup>() == null)
+                instance.AddComponent<CanvasGroup>();
+            var bcb = instance.GetComponent<BaseControlBehaviour>() ?? instance.AddComponent<BaseControlBehaviour>();
+            ControlDefaults.ApplyTo(bcb);
+
             ApplyLayoutElement(instance);
         }
 
-        public override Button Build(Transform parent)
+        public override BaseButton Build(Transform parent)
         {
             if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
@@ -244,7 +265,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 bg.type = Image.Type.Sliced;
             }
 
-            var button = go.AddComponent<Button>();
+            var button = go.AddComponent<BaseButton>();
             button.targetGraphic = bg;
 
             if (_colors.HasValue)
@@ -263,6 +284,9 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             {
                 BuildContent(go.transform);
             }
+
+            go.AddComponent<CanvasGroup>();
+            ControlDefaults.ApplyTo(go.AddComponent<BaseControlBehaviour>());
 
             ApplyLayoutElement(go);
 

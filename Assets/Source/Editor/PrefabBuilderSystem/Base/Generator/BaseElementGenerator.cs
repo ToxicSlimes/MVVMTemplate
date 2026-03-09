@@ -8,6 +8,7 @@ using Core.Editor.PrefabBuilderSystem.Builders.Settings;
 using Core.Editor.PrefabBuilderSystem.Builders.Tooltip;
 using Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup;
 using Core.Editor.PrefabBuilderSystem.Builders.Elements;
+using Core.Editor.PrefabBuilderSystem.Builders.Inventory;
 using System.IO;
 
 namespace Core.Editor.PrefabBuilderSystem.Generator
@@ -240,6 +241,7 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
                 DrawElementRow("TextCard", ElementPaths.Samples.TextCard, SampleElementBuilders.BuildTextCard);
                 DrawElementRow("StatBar", ElementPaths.Samples.StatBar, SampleElementBuilders.BuildStatBar);
                 DrawElementRow("ActionListItem", ElementPaths.Samples.ActionListItem, SampleElementBuilders.BuildActionListItem);
+                DrawElementRow("InventoryItem", ElementPaths.Samples.InventoryItem, SampleElementBuilders.BuildInventoryItem);
 
                 EditorGUILayout.Space(4);
                 EditorGUILayout.BeginHorizontal();
@@ -288,6 +290,8 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
                     typeof(CounterViewBuilderWindow));
                 DrawBuilderWindowRow("SettingsView", "Assets/Prefabs/Views/SettingsView.prefab",
                     typeof(SettingsViewBuilderWindow));
+                DrawBuilderWindowRow("InventoryView", "Assets/Prefabs/Views/InventoryView.prefab",
+                    typeof(InventoryViewBuilderWindow));
 
                 EditorGUILayout.Space(10);
                 EditorGUILayout.LabelField("Popups", EditorStyles.boldLabel);
@@ -522,59 +526,59 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateText()
         {
             var s = _settings.text;
-            UI.Text("Text").Body().WithFontSize(s.fontSize).WithPreferredSize(null, s.preferredHeight)
+            Elements.UI.Text("Text").Body().WithFontSize(s.fontSize).WithPreferredSize(null, s.preferredHeight)
                 .SaveAsPrefab(ElementPaths.Atoms.Text);
         }
 
         private void GenerateImage()
         {
             var s = _settings.image;
-            UI.Image("Image").WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Atoms.Image);
+            Elements.UI.Image("Image").WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Atoms.Image);
         }
 
         private void GenerateRawImage()
         {
             var s = _settings.image;
-            UI.RawImage("RawImage").WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Atoms.RawImage);
+            Elements.UI.RawImage("RawImage").WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Atoms.RawImage);
         }
 
         private void GenerateIcon()
         {
             var s = _settings.icon;
-            UI.Icon("Icon").WithSize(s.size).SaveAsPrefab(ElementPaths.Atoms.Icon);
+            Elements.UI.Icon("Icon").WithSize(s.size).SaveAsPrefab(ElementPaths.Atoms.Icon);
         }
 
         private void GenerateSpacer()
         {
             var s = _settings.spacer;
-            UI.Spacer("Spacer").Height(s.height).SaveAsPrefab(ElementPaths.Atoms.Spacer);
+            Elements.UI.Spacer("Spacer").Height(s.height).SaveAsPrefab(ElementPaths.Atoms.Spacer);
         }
 
         private void GenerateDivider()
         {
             var s = _settings.divider;
-            UI.Divider("Divider").Themed().WithThickness(s.thickness).SaveAsPrefab(ElementPaths.Atoms.Divider);
+            Elements.UI.Divider("Divider").Themed().WithThickness(s.thickness).SaveAsPrefab(ElementPaths.Atoms.Divider);
         }
 
         // === INTERACTIVE ===
         private void GenerateButton()
         {
             var s = _settings.button;
-            UI.Button("Button").Primary().WithLabel(s.defaultLabel).WithLabelSize(s.fontSize)
+            Elements.UI.Button("Button").Primary().WithLabel(s.defaultLabel).WithLabelSize(s.fontSize)
                 .WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Interactive.Button);
         }
 
         private void GenerateToggle()
         {
             var s = _settings.toggle;
-            UI.Toggle("Toggle").Themed().WithToggleSize(s.size)
+            Elements.UI.Toggle("Toggle").Themed().WithToggleSize(s.size)
                 .WithPreferredSize(s.size, s.size).SaveAsPrefab(ElementPaths.Interactive.Toggle);
         }
 
         private void GenerateSlider()
         {
             var s = _settings.slider;
-            UI.Slider("Slider").Themed()
+            Elements.UI.Slider("Slider").Themed()
                 .WithHeight(s.height).WithHandleSize(s.handleSize).WithValue(s.defaultValue)
                 .WithTrackOffset(s.trackOffset).WithHandleAreaOffset(s.handleAreaOffset)
                 .WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Interactive.Slider);
@@ -583,7 +587,7 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateInputField()
         {
             var s = _settings.inputField;
-            UI.InputField("InputField").Themed()
+            Elements.UI.InputField("InputField").Themed()
                 .WithPlaceholder(s.placeholder).WithFontSize(s.fontSize)
                 .WithPadding(s.padding, s.textAreaVerticalOffset)
                 .WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Interactive.InputField);
@@ -592,28 +596,28 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateDropdown()
         {
             var s = _settings.dropdown;
-            UI.Dropdown("Dropdown").Themed().WithFontSize(s.fontSize)
+            Elements.UI.Dropdown("Dropdown").Themed().WithFontSize(s.fontSize)
                 .WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Interactive.Dropdown);
         }
 
         private void GenerateScrollbar()
         {
             var s = _settings.scrollbar;
-            UI.Scrollbar("Scrollbar").Vertical().Themed().WithSize(s.width)
+            Elements.UI.Scrollbar("Scrollbar").Vertical().Themed().WithSize(s.width)
                 .SaveAsPrefab(ElementPaths.Interactive.Scrollbar);
         }
 
         private void GenerateProgressBar()
         {
             var s = _settings.progressBar;
-            UI.ProgressBar("ProgressBar").Themed().WithValue(s.defaultValue).WithHeight(s.height)
+            Elements.UI.ProgressBar("ProgressBar").Themed().WithValue(s.defaultValue).WithHeight(s.height)
                 .SaveAsPrefab(ElementPaths.Interactive.ProgressBar);
         }
 
         private void GenerateTabButton()
         {
             var s = _settings.tabButton;
-            UI.TabButton("TabButton").Themed().WithLabel("Tab")
+            Elements.UI.TabButton("TabButton").Themed().WithLabel("Tab")
                 .WithMinWidth(s.minWidth).WithHeight(s.height).WithFontSize(s.fontSize)
                 .SaveAsPrefab(ElementPaths.Interactive.TabButton);
         }
@@ -621,14 +625,14 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateRadioButton()
         {
             var s = _settings.radioButton;
-            UI.RadioButton("RadioButton").Themed().WithLabel("Option").WithRadioSize(s.radioSize)
+            Elements.UI.RadioButton("RadioButton").Themed().WithLabel("Option").WithRadioSize(s.radioSize)
                 .SaveAsPrefab(ElementPaths.Interactive.RadioButton);
         }
 
         private void GenerateStepper()
         {
             var s = _settings.stepper;
-            UI.Stepper("Stepper").Themed().WithValue(0).WithRange(0, 100)
+            Elements.UI.Stepper("Stepper").Themed().WithValue(0).WithRange(0, 100)
                 .WithButtonSize(s.buttonSize).WithValueWidth(s.valueWidth).WithFontSize(s.fontSize)
                 .SaveAsPrefab(ElementPaths.Interactive.Stepper);
         }
@@ -637,7 +641,7 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateHorizontalLayout()
         {
             var s = _settings.horizontalLayout;
-            UI.HorizontalLayout("HorizontalLayout").WithSpacing(s.spacing)
+            Elements.UI.HorizontalLayout("HorizontalLayout").WithSpacing(s.spacing)
                 .WithPadding(s.paddingLeft, s.paddingRight, s.paddingTop, s.paddingBottom)
                 .SaveAsPrefab(ElementPaths.Containers.HorizontalLayout);
         }
@@ -645,7 +649,7 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateVerticalLayout()
         {
             var s = _settings.verticalLayout;
-            UI.VerticalLayout("VerticalLayout").WithSpacing(s.spacing)
+            Elements.UI.VerticalLayout("VerticalLayout").WithSpacing(s.spacing)
                 .WithPadding(s.paddingLeft, s.paddingRight, s.paddingTop, s.paddingBottom)
                 .SaveAsPrefab(ElementPaths.Containers.VerticalLayout);
         }
@@ -653,27 +657,27 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateGridLayout()
         {
             var s = _settings.grid;
-            UI.Grid("GridLayout").WithCellSize(s.cellWidth, s.cellHeight).WithSpacing(s.spacingX, s.spacingY)
+            Elements.UI.Grid("GridLayout").WithCellSize(s.cellWidth, s.cellHeight).WithSpacing(s.spacingX, s.spacingY)
                 .SaveAsPrefab(ElementPaths.Containers.GridLayout);
         }
 
         private void GenerateScrollView()
         {
             var s = _settings.scrollView;
-            UI.ScrollView("ScrollView").Themed().WithScrollSensitivity(s.scrollSensitivity)
+            Elements.UI.ScrollView("ScrollView").Themed().WithScrollSensitivity(s.scrollSensitivity)
                 .WithPreferredSize(s.width, s.height).SaveAsPrefab(ElementPaths.Containers.ScrollView);
         }
 
         private void GenerateCard()
         {
             var s = _settings.card;
-            UI.Card("Card").Themed().WithPadding(s.padding).SaveAsPrefab(ElementPaths.Containers.Card);
+            Elements.UI.Card("Card").Themed().WithPadding(s.padding).SaveAsPrefab(ElementPaths.Containers.Card);
         }
 
         private void GeneratePanel()
         {
             var s = _settings.panel;
-            UI.Panel("Panel").Themed().WithTitle("Panel")
+            Elements.UI.Panel("Panel").Themed().WithTitle("Panel")
                 .WithHeaderHeight(s.headerHeight).WithContentPadding(s.contentPadding).WithContentSpacing(s.contentSpacing)
                 .SaveAsPrefab(ElementPaths.Containers.Panel);
         }
@@ -681,21 +685,21 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateModal()
         {
             var s = _settings.modal;
-            UI.Modal("Modal").Themed().WithTitle("Modal").WithSize(s.width, s.height)
+            Elements.UI.Modal("Modal").Themed().WithTitle("Modal").WithSize(s.width, s.height)
                 .SaveAsPrefab(ElementPaths.Containers.Modal);
         }
 
         private void GenerateTabBar()
         {
             var s = _settings.tabBar;
-            UI.TabBar("TabBar").Themed().WithHeight(s.height).WithSpacing(s.spacing).WithPadding(s.padding)
+            Elements.UI.TabBar("TabBar").Themed().WithHeight(s.height).WithSpacing(s.spacing).WithPadding(s.padding)
                 .SaveAsPrefab(ElementPaths.Containers.TabBar);
         }
 
         private void GenerateAccordion()
         {
             var s = _settings.accordion;
-            UI.Accordion("Accordion").Themed().WithTitle("Section")
+            Elements.UI.Accordion("Accordion").Themed().WithTitle("Section")
                 .WithHeaderHeight(s.headerHeight).WithContentPadding(s.contentPadding).WithContentSpacing(s.contentSpacing)
                 .SaveAsPrefab(ElementPaths.Containers.Accordion);
         }
@@ -704,7 +708,7 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateHealthBar()
         {
             var s = _settings.healthBar;
-            UI.HealthBar("HealthBar")
+            Elements.UI.HealthBar("HealthBar")
                 .Health()
                 .WithHeight(s.height)
                 .WithFontSize(s.fontSize)
@@ -719,7 +723,7 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateBadge()
         {
             var s = _settings.badge;
-            UI.Badge("Badge")
+            Elements.UI.Badge("Badge")
                 .Level()
                 .WithSize(s.size)
                 .WithFontSize(s.fontSize)
@@ -733,7 +737,7 @@ namespace Core.Editor.PrefabBuilderSystem.Generator
         private void GenerateAvatar()
         {
             var s = _settings.avatar;
-            UI.Avatar("Avatar")
+            Elements.UI.Avatar("Avatar")
                 .WithSize(s.size)
                 .WithBorder(s.borderColor, s.borderWidth)
                 .WithBackgroundColor(s.backgroundColor)

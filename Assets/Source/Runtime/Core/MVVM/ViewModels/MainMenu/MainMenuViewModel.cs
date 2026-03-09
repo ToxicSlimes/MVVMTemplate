@@ -5,8 +5,10 @@ using Core.Application.Requests.Views;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Attributes;
 using Core.MVVM.ViewModels.Counter;
+using Core.MVVM.ViewModels.Inventory;
 using Core.MVVM.ViewModels.Settings;
 using Core.MVVM.Views.Counter;
+using Core.MVVM.Views.Inventory;
 using Core.MVVM.Views.Settings;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -23,6 +25,7 @@ namespace Core.MVVM.ViewModels.MainMenu
 
         public ReactiveCommand<Unit> PlayCommand { get; set; }
         public ReactiveCommand<Unit> SettingsCommand { get; set; }
+        public ReactiveCommand<Unit> InventoryCommand { get; set; }
         public ReactiveCommand<Unit> QuitCommand { get; set; }
 
         public MainMenuViewModel(IMainMenuModel model, IMediator mediator)
@@ -57,6 +60,9 @@ namespace Core.MVVM.ViewModels.MainMenu
             SettingsCommand = new ReactiveCommand<Unit>(_ => OnSettings().Forget());
             SettingsCommand.AddTo(ref Disposables);
 
+            InventoryCommand = new ReactiveCommand<Unit>(_ => OnInventory().Forget());
+            InventoryCommand.AddTo(ref Disposables);
+
             QuitCommand = new ReactiveCommand<Unit>(_ => OnQuit());
             QuitCommand.AddTo(ref Disposables);
         }
@@ -74,6 +80,11 @@ namespace Core.MVVM.ViewModels.MainMenu
         private async UniTaskVoid OnSettings()
         {
             await _mediator.Send(new ShowViewRequest<SettingsView, SettingsViewModel>());
+        }
+
+        private async UniTaskVoid OnInventory()
+        {
+            await _mediator.Send(new ShowViewRequest<InventoryView, InventoryViewModel>());
         }
 
         private static void OnQuit()

@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -119,7 +120,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             var img = btnGo.AddComponent<Image>();
             img.color = _buttonColor;
 
-            btnGo.AddComponent<Button>().targetGraphic = img;
+            btnGo.AddComponent<BaseButton>().targetGraphic = img;
 
             var textGo = new GameObject("Text");
             textGo.transform.SetParent(btnGo.transform, false);

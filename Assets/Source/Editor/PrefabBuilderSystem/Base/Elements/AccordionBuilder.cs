@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -98,7 +99,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             var headerGo = BuildHeader(rt.transform);
             var contentGo = BuildContent(rt.transform);
 
-            var toggle = rt.gameObject.AddComponent<Toggle>();
+            var toggle = rt.gameObject.AddComponent<BaseToggle>();
             toggle.isOn = _startExpanded;
             toggle.targetGraphic = headerGo.GetComponent<Image>();
             toggle.graphic = contentGo.GetComponent<Image>();

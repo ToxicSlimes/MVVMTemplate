@@ -1,13 +1,15 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.Infrastructure.UI;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 namespace Core.Editor.PrefabBuilderSystem.Elements
 {
-    public class ToggleBuilder : BaseElementBuilder<ToggleBuilder, Toggle>
+    public class ToggleBuilder : BaseElementBuilder<ToggleBuilder, BaseToggle>
     {
         protected override string NamingPrefix => NamingConvention.Toggle;
         
@@ -95,8 +97,19 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.Toggle;
 
-        protected override void ApplyCustomizations(GameObject instance, Toggle toggle)
+        protected override void ApplyCustomizations(GameObject instance, BaseToggle toggle)
         {
+            if (toggle == null)
+            {
+                var native = instance.GetComponent<Toggle>();
+                if (native != null)
+                {
+                    UnityEditorInternal.ComponentUtility.CopyComponent(native);
+                    Object.DestroyImmediate(native);
+                    toggle = instance.AddComponent<BaseToggle>();
+                    UnityEditorInternal.ComponentUtility.PasteComponentValues(toggle);
+                }
+            }
             if (toggle == null) return;
 
             toggle.isOn = _isOn;
@@ -131,10 +144,15 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 label.color = _labelColor;
             }
 
+            if (instance.GetComponent<CanvasGroup>() == null)
+                instance.AddComponent<CanvasGroup>();
+            var bcb = instance.GetComponent<BaseControlBehaviour>() ?? instance.AddComponent<BaseControlBehaviour>();
+            ControlDefaults.ApplyTo(bcb);
+
             ApplyLayoutElement(instance);
         }
 
-        public override Toggle Build(Transform parent)
+        public override BaseToggle Build(Transform parent)
         {
             if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
@@ -179,7 +197,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             checkmarkImg.color = _checkmarkColor;
             checkmarkImg.sprite = _checkmarkSprite;
 
-            var toggle = go.AddComponent<Toggle>();
+            var toggle = go.AddComponent<BaseToggle>();
             toggle.targetGraphic = checkboxImg;
             toggle.graphic = checkmarkImg;
             toggle.isOn = _isOn;
@@ -199,6 +217,9 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 var labelLe = labelGo.AddComponent<LayoutElement>();
                 labelLe.flexibleWidth = 1;
             }
+
+            go.AddComponent<CanvasGroup>();
+            ControlDefaults.ApplyTo(go.AddComponent<BaseControlBehaviour>());
 
             ApplyLayoutElement(go);
 

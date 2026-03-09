@@ -7,6 +7,8 @@ using Core.Data.UI;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.MVVM.ViewModels.Counter;
 using Core.MVVM.Elements.Samples;
+using Core.UI.Binding;
+using Core.UI.Controls;
 using R3;
 using Reflex.Attributes;
 using TMPro;
@@ -15,30 +17,20 @@ using UnityEngine.UI;
 
 namespace Core.MVVM.Views.Counter
 {
-    /// <summary>
-    /// TEMPLATE EXAMPLE: View with two modes — Counter Demo and Element Gallery.
-    /// 
-    /// Demonstrates:
-    /// 1. ReactiveProperty binding (ViewModel → View)
-    /// 2. ReactiveCommand binding (View → ViewModel)
-    /// 3. PopupTrigger (Hover tooltips + Click confirm)
-    /// 4. ReconcileElementsCommand — dynamic element list management via CQRS
-    /// 5. Panel switching driven by ViewModel state
-    /// </summary>
     public class CounterView : BindableView<CounterViewModel>
     {
         [Inject] private IMediator _mediator;
 
         [Header("Display")]
-        [SerializeField] private TMP_Text _counterText;
+        [SerializeField] private BaseText _counterText;
         [SerializeField] private TMP_Text _incrementsText;
 
         [Header("Buttons")]
-        [SerializeField] private Button _incrementButton;
-        [SerializeField] private Button _decrementButton;
+        [SerializeField] private BaseButton _incrementButton;
+        [SerializeField] private BaseButton _decrementButton;
         [SerializeField] private Button _resetButton;
-        [SerializeField] private Button _toggleGalleryButton;
-        [SerializeField] private TMP_Text _toggleButtonLabel;
+        [SerializeField] private BaseButton _toggleGalleryButton;
+        [SerializeField] private BaseText _toggleButtonLabel;
 
         [Header("Panels")]
         [SerializeField] private GameObject _counterPanel;
@@ -68,11 +60,7 @@ namespace Core.MVVM.Views.Counter
         private void BindCounterMode(ref DisposableBag disposables)
         {
             if (_counterText != null)
-            {
-                ViewModel.DisplayText
-                    .Subscribe(_counterText, static (text, tmp) => tmp.text = text)
-                    .AddTo(ref disposables);
-            }
+                _counterText.BindTo(ViewModel.DisplayText, ref disposables);
 
             if (_incrementsText != null)
             {
@@ -82,18 +70,10 @@ namespace Core.MVVM.Views.Counter
             }
 
             if (_incrementButton != null)
-            {
-                _incrementButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.IncrementCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _incrementButton.BindTo(ViewModel.IncrementCommand, ref disposables);
 
             if (_decrementButton != null)
-            {
-                _decrementButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.DecrementCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _decrementButton.BindTo(ViewModel.DecrementCommand, ref disposables);
 
             if (_resetButton != null)
             {
@@ -106,18 +86,10 @@ namespace Core.MVVM.Views.Counter
         private void BindModeToggle(ref DisposableBag disposables)
         {
             if (_toggleGalleryButton != null)
-            {
-                _toggleGalleryButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.ToggleGalleryCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _toggleGalleryButton.BindTo(ViewModel.ToggleGalleryCommand, ref disposables);
 
             if (_toggleButtonLabel != null)
-            {
-                ViewModel.ToggleButtonText
-                    .Subscribe(_toggleButtonLabel, static (text, tmp) => tmp.text = text)
-                    .AddTo(ref disposables);
-            }
+                _toggleButtonLabel.BindTo(ViewModel.ToggleButtonText, ref disposables);
 
             ViewModel.IsGalleryMode
                 .Subscribe(this, static (isGallery, self) =>
@@ -156,16 +128,8 @@ namespace Core.MVVM.Views.Counter
             }
         }
 
-        /// <summary>
-        /// Populates the Element Gallery using ReconcileElementsCommand — the same CQRS pattern
-        /// used in production views (e.g. HeroDetailPanel abilities, inventory grids).
-        /// 
-        /// UIElementService resolves prefabs via ElementConfig → Addressables,
-        /// instantiates them into containers, and calls Bind() with the data.
-        /// </summary>
         private void PopulateGallery()
         {
-            // TextCard elements — cards with title, description, icon
             var textCards = new List<TextCardData>
             {
                 new() { Id = "card-1", Title = "Welcome Card", Description = "This is a TextCardElement — displays a title, description, and optional icon." },
@@ -177,7 +141,6 @@ namespace Core.MVVM.Views.Counter
                 _textCardsContainer,
                 textCards));
 
-            // StatBar elements — progress bars with label and value
             var statBars = new List<StatBarData>
             {
                 new() { Id = "stat-hp", Label = "Health", CurrentValue = 75f, MaxValue = 100f },
@@ -189,7 +152,6 @@ namespace Core.MVVM.Views.Counter
                 _statBarsContainer,
                 statBars));
 
-            // ActionListItem elements — list items with action buttons
             var actionItems = new List<ActionListItemData>
             {
                 new() { Id = "action-1", Title = "Equip Sword", Subtitle = "+12 Attack Power", ActionLabel = "Equip", IsActionEnabled = true },

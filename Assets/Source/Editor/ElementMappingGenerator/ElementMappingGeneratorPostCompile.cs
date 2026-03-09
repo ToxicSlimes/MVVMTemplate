@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Core.Infrastructure.MVVM.Config;
 using UnityEditor;
+using UnityEditor.AddressableAssets;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
@@ -74,41 +75,55 @@ namespace Core.Editor.ElementMappingGenerator
         private static void TryAutoAssignElementPrefab(ElementMappingBase mapping, string elementName)
         {
             if (mapping == null) return;
+            if (mapping.ElementPrefab != null && mapping.ElementPrefab.RuntimeKeyIsValid()) return;
 
-            // Ищем префаб в Assets/Prefabs/Elements
-            var searchFilter = $"{elementName} t:prefab";
-            var guids = AssetDatabase.FindAssets(searchFilter, new[] { "Assets/Prefabs/Elements" });
-            
-            if (guids == null || guids.Length == 0)
-            {
-                // Попробуем поискать по всему проекту
-                guids = AssetDatabase.FindAssets(searchFilter);
-            }
+            var prefabName = elementName.Replace("Element", "");
+            var guids = AssetDatabase.FindAssets($"t:Prefab {prefabName}", new[] { "Assets/Prefabs" });
 
-            if (guids == null || guids.Length != 1)
+            string matchGuid = null;
+            foreach (var g in guids)
             {
-                if (guids != null && guids.Length > 1)
+                var p = AssetDatabase.GUIDToAssetPath(g);
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(p);
+                if (prefab == null) continue;
+
+                if (prefab.name.Equals(prefabName, System.StringComparison.OrdinalIgnoreCase) ||
+                    prefab.name.Equals(elementName, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    Debug.LogWarning($"[ElementMappingGenerator] Found multiple prefabs for {elementName}, skipping auto-assign");
-                }
-                return;
-            }
-
-            var prefabPath = AssetDatabase.GUIDToAssetPath(guids[0]);
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-            
-            if (prefab != null)
-            {
-                var serializedObject = new SerializedObject(mapping);
-                var prefabProperty = serializedObject.FindProperty("_elementPrefab");
-                if (prefabProperty != null)
-                {
-                    prefabProperty.objectReferenceValue = prefab;
-                    serializedObject.ApplyModifiedProperties();
-                    AssetDatabase.SaveAssets();
-                    Debug.Log($"[ElementMappingGenerator] Auto-assigned prefab: {prefabPath}");
+                    if (prefab.GetComponent(mapping.ElementType) != null)
+                    {
+                        matchGuid = g;
+                        break;
+                    }
                 }
             }
+
+            if (matchGuid == null) return;
+
+            var matchPath = AssetDatabase.GUIDToAssetPath(matchGuid);
+            var settings = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings;
+            if (settings != null)
+            {
+                var entry = settings.FindAssetEntry(matchGuid);
+                if (entry == null)
+                {
+                    entry = settings.CreateOrMoveEntry(matchGuid, settings.DefaultGroup);
+                    entry.address = matchPath;
+                    EditorUtility.SetDirty(settings);
+                }
+            }
+
+            var so = new SerializedObject(mapping);
+            var guidProp = so.FindProperty("ElementPrefab.m_AssetGUID");
+            if (guidProp != null)
+            {
+                guidProp.stringValue = matchGuid;
+                so.ApplyModifiedProperties();
+            }
+
+            EditorUtility.SetDirty(mapping);
+            AssetDatabase.SaveAssets();
+            Debug.Log($"[ElementMappingGenerator] Auto-assigned prefab: {matchPath}");
         }
 
         private static void TryAddMappingToConfig(ElementMappingBase mapping)

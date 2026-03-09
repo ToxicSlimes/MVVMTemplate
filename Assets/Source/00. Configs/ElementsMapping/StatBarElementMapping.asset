@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StatBarElementMapping
   m_EditorClassIdentifier: Assembly-CSharp::Source.Runtime.Core.MVVM.Config.Generated.StatBarElementMapping
   ElementPrefab:
-    m_AssetGUID: 
+    m_AssetGUID: 968ea9c792aebfb47870e827c9301149
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

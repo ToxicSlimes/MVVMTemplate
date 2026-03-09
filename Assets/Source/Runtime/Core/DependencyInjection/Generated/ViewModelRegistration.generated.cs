@@ -6,14 +6,17 @@
 #pragma warning disable
 
 using Core.Abstractions.MVVM.Models.Counter;
+using Core.Abstractions.MVVM.Models.Inventory;
 using Core.Abstractions.MVVM.Models.MainMenu;
 using Core.Abstractions.MVVM.Models.Settings;
 using Core.Abstractions.Services;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.MVVM.Models.Counter;
+using Core.MVVM.Models.Inventory;
 using Core.MVVM.Models.MainMenu;
 using Core.MVVM.Models.Settings;
 using Core.MVVM.ViewModels.Counter;
+using Core.MVVM.ViewModels.Inventory;
 using Core.MVVM.ViewModels.MainMenu;
 using Core.MVVM.ViewModels.Settings;
 using Reflex.Core;
@@ -25,12 +28,16 @@ namespace Core.DependencyInjection.Generated
         public static ContainerBuilder RegisterViewModels(this ContainerBuilder builder)
         {
             builder.AddSingleton<ICounterModel>(_ => new CounterModel());
+            builder.AddSingleton<IInventoryModel>(_ => new InventoryModel());
             builder.AddSingleton<IMainMenuModel>(_ => new MainMenuModel());
             builder.AddSingleton<ISettingsModel>(container => new SettingsModel(
                 container.Resolve<IPrefsService>()));
 
             builder.AddSingleton(container => new CounterViewModel(
                 container.Resolve<ICounterModel>(),
+                container.Resolve<IMediator>()));
+            builder.AddSingleton(container => new InventoryViewModel(
+                container.Resolve<IInventoryModel>(),
                 container.Resolve<IMediator>()));
             builder.AddSingleton(container => new MainMenuViewModel(
                 container.Resolve<IMainMenuModel>(),

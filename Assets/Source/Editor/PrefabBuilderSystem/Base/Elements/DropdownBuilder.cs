@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.Infrastructure.UI;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 namespace Core.Editor.PrefabBuilderSystem.Elements
 {
-    public class DropdownBuilder : BaseElementBuilder<DropdownBuilder, TMP_Dropdown>
+    public class DropdownBuilder : BaseElementBuilder<DropdownBuilder, BaseDropdown>
     {
         protected override string NamingPrefix => NamingConvention.Dropdown;
         
@@ -110,9 +112,50 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.Dropdown;
 
-        protected override void ApplyCustomizations(GameObject instance, TMP_Dropdown dropdown)
+        protected override void ApplyCustomizations(GameObject instance, BaseDropdown dropdown)
         {
+            if (dropdown == null)
+            {
+                var native = instance.GetComponent<TMP_Dropdown>();
+                if (native != null)
+                {
+                    UnityEditorInternal.ComponentUtility.CopyComponent(native);
+                    Object.DestroyImmediate(native);
+                    dropdown = instance.AddComponent<BaseDropdown>();
+                    UnityEditorInternal.ComponentUtility.PasteComponentValues(dropdown);
+                }
+            }
             if (dropdown == null) return;
+
+            if (dropdown.template == null)
+            {
+                var tmpl = instance.transform.Find("Template");
+                if (tmpl != null) dropdown.template = tmpl as RectTransform;
+            }
+            if (dropdown.captionText == null)
+            {
+                var label = instance.transform.Find("Label");
+                if (label != null) dropdown.captionText = label.GetComponent<TMPro.TMP_Text>();
+            }
+            if (dropdown.captionImage == null)
+            {
+                var arrow = instance.transform.Find("Arrow");
+                if (arrow != null) dropdown.captionImage = arrow.GetComponent<Image>();
+            }
+            if (dropdown.itemText == null && dropdown.template != null)
+            {
+                var itemLabel = dropdown.template.Find("Viewport/Content/Item/Item Label");
+                if (itemLabel != null) dropdown.itemText = itemLabel.GetComponent<TMPro.TMP_Text>();
+            }
+            if (dropdown.itemImage == null && dropdown.template != null)
+            {
+                var itemBg = dropdown.template.Find("Viewport/Content/Item/Item Background");
+                if (itemBg != null) dropdown.itemImage = itemBg.GetComponent<Image>();
+            }
+            if (dropdown.targetGraphic == null)
+            {
+                dropdown.targetGraphic = instance.GetComponent<Graphic>();
+            }
 
             dropdown.ClearOptions();
             if (_options.Count > 0) dropdown.AddOptions(_options);
@@ -127,10 +170,15 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 dropdown.captionText.color = _textColor;
             }
 
+            if (instance.GetComponent<CanvasGroup>() == null)
+                instance.AddComponent<CanvasGroup>();
+            var bcb = instance.GetComponent<BaseControlBehaviour>() ?? instance.AddComponent<BaseControlBehaviour>();
+            ControlDefaults.ApplyTo(bcb);
+
             ApplyLayoutElement(instance);
         }
 
-        public override TMP_Dropdown Build(Transform parent)
+        public override BaseDropdown Build(Transform parent)
         {
             if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
@@ -235,7 +283,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             itemRt.anchorMax = new Vector2(1, 0.5f);
             itemRt.sizeDelta = new Vector2(0, _itemHeight);
 
-            var itemToggle = itemGo.AddComponent<Toggle>();
+            var itemToggle = itemGo.AddComponent<BaseToggle>();
 
             var itemBgGo = new GameObject("Item Background");
             itemBgGo.transform.SetParent(itemGo.transform, false);
@@ -279,7 +327,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
             templateGo.SetActive(false);
 
-            var dropdown = go.AddComponent<TMP_Dropdown>();
+            var dropdown = go.AddComponent<BaseDropdown>();
             dropdown.template = templateRt;
             dropdown.captionText = labelTmp;
             dropdown.itemText = itemLabelTmp;
@@ -291,6 +339,9 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 dropdown.AddOptions(_options);
             }
             dropdown.value = _value;
+
+            go.AddComponent<CanvasGroup>();
+            ControlDefaults.ApplyTo(go.AddComponent<BaseControlBehaviour>());
 
             ApplyLayoutElement(go);
 

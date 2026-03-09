@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -164,7 +165,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 arrowTmp.color = _titleColor;
                 arrowTmp.alignment = TextAlignmentOptions.Center;
 
-                headerGo.AddComponent<Button>().targetGraphic = headerBg;
+                headerGo.AddComponent<BaseButton>().targetGraphic = headerBg;
             }
         }
 

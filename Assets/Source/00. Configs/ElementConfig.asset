@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: ElementConfig
   m_EditorClassIdentifier: Core.Infrastructure::Core.Infrastructure.MVVM.Config.ElementConfig
   _mappings:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 11400000, guid: 0bae415006b9e584cae4a648f8c49b1c, type: 2}
   - {fileID: 11400000, guid: 08a9637538a0d054483ef0e2f8038c6c, type: 2}
   - {fileID: 11400000, guid: 906d463eaed82ab4d9d089c84e644779, type: 2}
+  - {fileID: 11400000, guid: acdb91ba6b7314640b0d987dff7bd5b7, type: 2}

@@ -1,3 +1,4 @@
+using Core.Abstractions.MVVM.Models.Inventory;
 using Core.Abstractions.Factories;
 using Core.Abstractions.StateMachines.States;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ using Core.Infrastructure.MVVM.Canvas;
 using Core.Infrastructure.MVVM.Config;
 using Core.Infrastructure.MVVM.Services;
 using Core.Infrastructure.Services.Logging;
+using Core.MVVM.Models.Inventory;
 using Core.Infrastructure.Services.Platform;
 using Core.Infrastructure.Services.Config;
 using Core.Infrastructure.Services.Cache;
@@ -33,9 +35,15 @@ using Core.Infrastructure.Mediator.Publishing;
 using Core.Infrastructure.Mediator.Registration.Extensions;
 using Core.Infrastructure.Services.Input;
 using Core.Infrastructure.Popup;
+using Core.Abstractions.UI;
+using Core.Infrastructure.UI.Navigation;
+using Core.Configs.DesignSystem;
+using Core.Infrastructure.UI.DragDrop;
+using Core.Infrastructure.UI.Services;
 using Cysharp.Threading.Tasks;
 using Reflex.Core;
 using Services;
+using Core.Abstractions.UI.DragDrop;
 using Core.MVVM.Hosts;
 using UnityEngine;
 using ILogger = Core.Abstractions.Services.ILogger;
@@ -45,6 +53,7 @@ public static class InfrastructureBindings
   public static ContainerBuilder AddCore(this ContainerBuilder builder)
   {
     builder.AddCoreStates();
+    builder.AddModels();
     builder.AddCoreServices();
     builder.AddInputServices();
     builder.AddPopupServices();
@@ -86,6 +95,12 @@ public static class InfrastructureBindings
       container.Resolve<IInputService>()
     ));
 
+    return builder;
+  }
+
+  private static ContainerBuilder AddModels(this ContainerBuilder builder)
+  {
+    builder.AddSingleton(typeof(InventoryModel), typeof(IInventoryModel));
     return builder;
   }
 
@@ -210,6 +225,18 @@ public static class InfrastructureBindings
       container.Resolve<ICanvasProvider>()
     ));
     builder.AddSingleton<IUIElementFactory>(container => new UIElementFactory(container));
+    var dragDropService = new DragDropService();
+    builder.AddSingleton<IDragDropService>(_ => dragDropService);
+    builder.AddSingleton(_ => dragDropService);
+    builder.AddSingleton<IUIControlService>(container =>
+    {
+      var configProvider = container.Resolve<IConfigProvider>();
+      var designSystem = configProvider.GetConfig<DesignSystemSettings>();
+      return new UIControlService(
+        container.Resolve<IAudioService>(),
+        container.Resolve<IMediator>(),
+        designSystem);
+    });
     builder.AddSingleton<IViewService>(container => new ViewService(
       container.Resolve<IViewFactory>(),
       container.Resolve<IViewAnimator>()
@@ -220,6 +247,8 @@ public static class InfrastructureBindings
       return new GameStateMachineFactory(states);
     });
     builder.AddSingleton(container => container.Resolve<IGameStateMachineFactory>().Create());
+    builder.AddSingleton<IUINavigationService>(container =>
+      new UINavigationService(container.Resolve<IInputService>()));
 
     return builder;
   }

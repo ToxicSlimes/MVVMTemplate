@@ -18,8 +18,3 @@ MonoBehaviour:
   durationFast: 0.15
   durationMedium: 0.3
   durationSlow: 0.5
-  menuSelectionChatUsesIndigo: 1
-  menuSelectionImageGenUsesPink: 1
-  chatViewUserMessagesUseGradient: 1
-  imageGenImageMaxHeight: 400
-  imageGenMessageBubbleWidth: 600

@@ -2,7 +2,6 @@ using System.Threading;
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Abstractions.MVVM.Views;
 using Cysharp.Threading.Tasks;
-using Core.Abstractions.MVVM.Views;
 
 namespace Core.MVVM.Hosts
 {

@@ -1,5 +1,7 @@
 using Core.Abstractions.MVVM.Views;
 using Core.MVVM.ViewModels.MainMenu;
+using Core.UI.Binding;
+using Core.UI.Controls;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
@@ -10,32 +12,24 @@ namespace Core.MVVM.Views.MainMenu
     public class MainMenuView : BindableView<MainMenuViewModel>
     {
         [Header("Buttons")]
-        [SerializeField] private Button _playButton;
-        [SerializeField] private Button _settingsButton;
-        [SerializeField] private Button _quitButton;
+        [SerializeField] private BaseButton _playButton;
+        [SerializeField] private BaseButton _settingsButton;
+        [SerializeField] private BaseButton _inventoryButton;
+        [SerializeField] private BaseButton _quitButton;
 
         protected override void OnBind(ref DisposableBag disposables)
         {
             if (_playButton != null)
-            {
-                _playButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.PlayCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _playButton.BindTo(ViewModel.PlayCommand, ref disposables);
 
             if (_settingsButton != null)
-            {
-                _settingsButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.SettingsCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _settingsButton.BindTo(ViewModel.SettingsCommand, ref disposables);
+
+            if (_inventoryButton != null)
+                _inventoryButton.BindTo(ViewModel.InventoryCommand, ref disposables);
 
             if (_quitButton != null)
-            {
-                _quitButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.QuitCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _quitButton.BindTo(ViewModel.QuitCommand, ref disposables);
         }
 
         public override async UniTask ShowAsync()

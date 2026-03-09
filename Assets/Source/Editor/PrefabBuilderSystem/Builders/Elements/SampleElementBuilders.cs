@@ -2,8 +2,10 @@
 using Core.Abstractions.Popup;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
+using Core.MVVM.Elements;
 using Core.MVVM.Elements.Samples;
 using UnityEditor;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -31,6 +33,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Elements
             BuildTextCard();
             BuildStatBar();
             BuildActionListItem();
+            BuildInventoryItem();
             AssetDatabase.Refresh();
             Debug.Log("<color=green>✓ All sample element prefabs created from base prefabs</color>");
         }
@@ -110,7 +113,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Elements
             descTmp.color = new Color(0.7f, 0.7f, 0.7f);
 
             // Click button on root
-            var clickButton = root.GetComponent<Button>() ?? root.AddComponent<Button>();
+            var clickButton = root.GetComponent<BaseButton>() ?? root.AddComponent<BaseButton>();
             clickButton.transition = Selectable.Transition.ColorTint;
 
             // Selection indicator + popup trigger
@@ -214,7 +217,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Elements
             var valueLe = EnsureLayoutElement(valueGo, null);
             valueLe.preferredWidth = 60f;
 
-            var clickButton = root.AddComponent<Button>();
+            var clickButton = root.AddComponent<BaseButton>();
             clickButton.transition = Selectable.Transition.ColorTint;
             var selectionGo = CreateSelectionIndicator(root.transform);
             var popupTrigger = AddPopupTrigger(root);
@@ -274,7 +277,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Elements
             bg.color = new Color(0.2f, 0.2f, 0.25f, 0.9f);
 
             // Root click button (for selection/IClickableElement)
-            var clickButton = root.AddComponent<Button>();
+            var clickButton = root.AddComponent<BaseButton>();
             clickButton.transition = Selectable.Transition.ColorTint;
 
             // Icon — from Image prefab
@@ -311,7 +314,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Elements
 
             // Action button — from Button prefab
             var actionBtnGo = SpawnOrCreate(ElementPaths.Interactive.Button, root.transform, "ActionButton");
-            var actionBtn = actionBtnGo.GetComponent<Button>();
+            var actionBtn = actionBtnGo.GetComponent<BaseButton>();
             var actionBtnLe = EnsureLayoutElement(actionBtnGo, null);
             actionBtnLe.preferredWidth = 80f;
             var btnLabel = actionBtnGo.GetComponentInChildren<TextMeshProUGUI>();
@@ -337,6 +340,108 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Elements
             so.ApplyModifiedPropertiesWithoutUndo();
 
             SavePrefab(root, ElementPaths.Samples.ActionListItem);
+        }
+
+        public static void BuildInventoryItem()
+        {
+            var cardPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(ElementPaths.Containers.Card);
+            GameObject root;
+
+            if (cardPrefab != null)
+            {
+                root = (GameObject)PrefabUtility.InstantiatePrefab(cardPrefab);
+                root.name = "InventoryItem";
+                PrefabUtility.UnpackPrefabInstance(root, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+
+                var existingLayout = root.GetComponent<LayoutGroup>();
+                if (existingLayout != null) Object.DestroyImmediate(existingLayout);
+
+                var vlg = root.AddComponent<VerticalLayoutGroup>();
+                vlg.padding = new RectOffset(4, 4, 4, 4);
+                vlg.spacing = 2f;
+                vlg.childAlignment = TextAnchor.UpperCenter;
+                vlg.childControlWidth = true;
+                vlg.childControlHeight = true;
+                vlg.childForceExpandWidth = true;
+                vlg.childForceExpandHeight = false;
+            }
+            else
+            {
+                root = CreateFallbackRoot("InventoryItem", 80f, 80f);
+                var vlg = root.AddComponent<VerticalLayoutGroup>();
+                vlg.padding = new RectOffset(4, 4, 4, 4);
+                vlg.spacing = 2f;
+                vlg.childAlignment = TextAnchor.UpperCenter;
+                vlg.childControlWidth = true;
+                vlg.childControlHeight = true;
+                vlg.childForceExpandWidth = true;
+                vlg.childForceExpandHeight = false;
+                Debug.LogWarning($"[SampleElements] Card prefab not found at {ElementPaths.Containers.Card}. Using fallback.");
+            }
+
+            var rootRt = root.GetComponent<RectTransform>();
+            rootRt.sizeDelta = new Vector2(80f, 80f);
+            EnsureLayoutElement(root, 80f);
+
+            // Rarity indicator — thin bar at top
+            var rarityGo = new GameObject("RarityIndicator");
+            rarityGo.transform.SetParent(root.transform, false);
+            var rarityRt = rarityGo.AddComponent<RectTransform>();
+            rarityRt.sizeDelta = new Vector2(0f, 3f);
+            var rarityImg = rarityGo.AddComponent<Image>();
+            rarityImg.color = new Color(0.8f, 0.8f, 0.8f);
+            var rarityLe = rarityGo.AddComponent<LayoutElement>();
+            rarityLe.preferredHeight = 3f;
+
+            // Category indicator — thin bar below rarity
+            var categoryGo = new GameObject("CategoryIndicator");
+            categoryGo.transform.SetParent(root.transform, false);
+            var categoryRt = categoryGo.AddComponent<RectTransform>();
+            categoryRt.sizeDelta = new Vector2(0f, 2f);
+            var categoryImg = categoryGo.AddComponent<Image>();
+            categoryImg.color = new Color(0.5f, 0.5f, 0.5f);
+            var categoryLe = categoryGo.AddComponent<LayoutElement>();
+            categoryLe.preferredHeight = 2f;
+
+            // Name text
+            var nameGo = SpawnOrCreate(ElementPaths.Atoms.Text, root.transform, "NameText");
+            var nameTmp = nameGo.GetComponent<TextMeshProUGUI>();
+            nameTmp.text = "Item";
+            nameTmp.fontSize = 11f;
+            nameTmp.fontStyle = FontStyles.Bold;
+            nameTmp.alignment = TextAlignmentOptions.Center;
+            nameTmp.textWrappingMode = TextWrappingModes.Normal;
+            nameTmp.overflowMode = TextOverflowModes.Ellipsis;
+            var nameLe = EnsureLayoutElement(nameGo, null);
+            nameLe.flexibleHeight = 1f;
+
+            // Quantity badge (bottom-right)
+            var quantityGo = SpawnOrCreate(ElementPaths.Atoms.Text, root.transform, "QuantityText");
+            var quantityTmp = quantityGo.GetComponent<TextMeshProUGUI>();
+            quantityTmp.text = "";
+            quantityTmp.fontSize = 10f;
+            quantityTmp.alignment = TextAlignmentOptions.BottomRight;
+            quantityTmp.color = new Color(1f, 0.9f, 0.4f);
+            var quantityLe = EnsureLayoutElement(quantityGo, null);
+            quantityLe.preferredHeight = 14f;
+
+            var clickButton = root.GetComponent<BaseButton>() ?? root.AddComponent<BaseButton>();
+            clickButton.transition = Selectable.Transition.ColorTint;
+            var selectionGo = CreateSelectionIndicator(root.transform);
+            var popupTrigger = AddPopupTrigger(root);
+
+            var element = root.AddComponent<InventoryItemElement>();
+            var so = new SerializedObject(element);
+            SerializationHelper.Wire(so, "_clickButton", clickButton);
+            SerializationHelper.Wire(so, "_selectionIndicator", selectionGo);
+            SerializationHelper.Wire(so, "_popupTrigger", popupTrigger);
+            SerializationHelper.Wire(so, "_nameText", nameTmp);
+            SerializationHelper.Wire(so, "_quantityText", quantityTmp);
+            SerializationHelper.Wire(so, "_rarityIndicator", rarityImg);
+            SerializationHelper.Wire(so, "_categoryIndicator", categoryImg);
+            so.ApplyModifiedPropertiesWithoutUndo();
+
+            SavePrefab(root, ElementPaths.Samples.InventoryItem);
         }
 
         // === Helpers ===

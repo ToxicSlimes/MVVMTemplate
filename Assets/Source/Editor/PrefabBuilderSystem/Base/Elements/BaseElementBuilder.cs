@@ -268,6 +268,10 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             }
 
             ApplyCustomizations(instance, component);
+
+            if (component == null)
+                component = instance.GetComponent<TComponent>();
+
             return component;
         }
 

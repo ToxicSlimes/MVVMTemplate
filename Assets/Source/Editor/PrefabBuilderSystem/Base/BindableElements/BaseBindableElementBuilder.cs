@@ -5,6 +5,7 @@ using Core.Infrastructure.MVVM.Config;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Abstractions.Popup;
 using Core.Data.Domain.Models.Elements;
+using Core.UI.Controls;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -159,13 +160,13 @@ namespace Core.Editor.PrefabBuilderSystem.BindableElements
             return component;
         }
 
-        protected Button CreateClickableBackground(Transform parent)
+        protected BaseButton CreateClickableBackground(Transform parent)
         {
             var bg = parent.gameObject.AddComponent<Image>();
             bg.color = new Color(0, 0, 0, 0.01f);
             bg.raycastTarget = true;
 
-            var button = parent.gameObject.AddComponent<Button>();
+            var button = parent.gameObject.AddComponent<BaseButton>();
             button.transition = Selectable.Transition.None;
 
             Context.Register("ClickButton", button);

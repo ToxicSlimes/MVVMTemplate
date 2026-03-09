@@ -1,12 +1,14 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.Infrastructure.UI;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Editor.PrefabBuilderSystem.Elements
 {
-    public class SliderBuilder : BaseElementBuilder<SliderBuilder, Slider>
+    public class SliderBuilder : BaseElementBuilder<SliderBuilder, BaseSlider>
     {
         protected override string NamingPrefix => NamingConvention.Slider;
         
@@ -124,8 +126,19 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.Slider;
 
-        protected override void ApplyCustomizations(GameObject instance, Slider slider)
+        protected override void ApplyCustomizations(GameObject instance, BaseSlider slider)
         {
+            if (slider == null)
+            {
+                var native = instance.GetComponent<Slider>();
+                if (native != null)
+                {
+                    UnityEditorInternal.ComponentUtility.CopyComponent(native);
+                    Object.DestroyImmediate(native);
+                    slider = instance.AddComponent<BaseSlider>();
+                    UnityEditorInternal.ComponentUtility.PasteComponentValues(slider);
+                }
+            }
             if (slider == null) return;
 
             slider.minValue = _minValue;
@@ -133,6 +146,29 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             slider.value = _value;
             slider.wholeNumbers = _wholeNumbers;
             if (_vertical) slider.direction = Slider.Direction.BottomToTop;
+
+            if (slider.fillRect == null)
+            {
+                var fillArea = instance.transform.Find("Fill Area");
+                if (fillArea != null)
+                {
+                    var fill = fillArea.Find("Fill");
+                    if (fill != null) slider.fillRect = fill as RectTransform;
+                }
+            }
+
+            if (slider.handleRect == null)
+            {
+                var handleArea = instance.transform.Find("Handle Slide Area");
+                if (handleArea != null)
+                {
+                    var handle = handleArea.Find("Handle");
+                    if (handle != null) slider.handleRect = handle as RectTransform;
+                }
+            }
+
+            if (slider.targetGraphic == null && slider.handleRect != null)
+                slider.targetGraphic = slider.handleRect.GetComponent<Graphic>();
 
             var bg = instance.transform.Find("Background");
             if (bg != null)
@@ -153,10 +189,15 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 if (handleImg != null) handleImg.color = _handleColor;
             }
 
+            if (instance.GetComponent<CanvasGroup>() == null)
+                instance.AddComponent<CanvasGroup>();
+            var bcb = instance.GetComponent<BaseControlBehaviour>() ?? instance.AddComponent<BaseControlBehaviour>();
+            ControlDefaults.ApplyTo(bcb);
+
             ApplyLayoutElement(instance);
         }
 
-        public override Slider Build(Transform parent)
+        public override BaseSlider Build(Transform parent)
         {
             if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
@@ -251,7 +292,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 handleImg.type = Image.Type.Sliced;
             }
 
-            var slider = go.AddComponent<Slider>();
+            var slider = go.AddComponent<BaseSlider>();
             slider.direction = _vertical ? Slider.Direction.BottomToTop : Slider.Direction.LeftToRight;
             slider.minValue = _minValue;
             slider.maxValue = _maxValue;
@@ -260,6 +301,9 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             slider.fillRect = fillRt;
             slider.handleRect = handleRt;
             slider.targetGraphic = handleImg;
+
+            go.AddComponent<CanvasGroup>();
+            ControlDefaults.ApplyTo(go.AddComponent<BaseControlBehaviour>());
 
             ApplyLayoutElement(go);
 

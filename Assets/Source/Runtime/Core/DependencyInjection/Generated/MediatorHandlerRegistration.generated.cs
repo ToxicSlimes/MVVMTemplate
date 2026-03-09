@@ -10,23 +10,31 @@ using Core.Abstractions.Services.Platform;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Counter;
 using Core.Application.Commands.Elements;
+using Core.Application.Commands.Inventory;
 using Core.Application.Commands.Platform;
 using Core.Application.Commands.Settings;
+using Core.Application.Commands.UI;
 using Core.Application.Handlers.Common;
 using Core.Application.Handlers.Counter;
 using Core.Application.Handlers.Elements;
+using Core.Application.Handlers.Inventory;
 using Core.Application.Handlers.Platform;
 using Core.Application.Handlers.Settings;
+using Core.Application.Handlers.UI;
 using Core.Application.Queries.Common;
 using Core.Application.Queries.Counter;
+using Core.Application.Queries.Inventory;
 using Core.Application.Queries.Platform;
 using Core.Application.Queries.Settings;
+using Core.Data.Domain.Models.Elements;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Registration;
 using Core.MVVM.ViewModels.Counter;
+using Core.MVVM.ViewModels.Inventory;
 using Core.MVVM.ViewModels.MainMenu;
 using Core.MVVM.ViewModels.Settings;
 using Core.Presentation.Handlers;
+using System.Collections.Generic;
 
 namespace Core.DependencyInjection.Generated
 {
@@ -35,23 +43,33 @@ namespace Core.DependencyInjection.Generated
         public static MediatorBuilder RegisterAllHandlers(this MediatorBuilder builder)
         {
             // Request Handlers
+            builder.AddHandler<AddItemCommand, Nothing, AddItemHandler>();
+            builder.AddHandler<ApplyThemeCommand, Nothing, ApplyThemeHandler>();
             builder.AddHandler<ClearContainerCommand, Nothing, ClearContainerHandler>();
             builder.AddHandler<ConfirmDialogQuery, bool, ConfirmDialogHandler>();
             builder.AddHandler<CopyToClipboardCommand, Nothing, CopyToClipboardHandler>();
             builder.AddHandler<DestroyElementCommand, Nothing, DestroyElementHandler>();
             builder.AddHandler<GetAudioStateQuery, AudioState, GetAudioStateHandler>();
             builder.AddHandler<GetCounterQuery, CounterState, GetCounterHandler>();
+            builder.AddHandler<GetInventoryQuery, List<InventoryItemData>, GetInventoryHandler>();
             builder.AddHandler<IncrementCounterCommand, Nothing, IncrementCounterHandler>();
+            builder.AddHandler<NavigateCommand<InventoryNavigation>, Nothing, InventoryNavigationHandler>();
             builder.AddHandler<NavigateCommand<MainMenuNavigation>, Nothing, MainMenuNavigationHandler>();
+            builder.AddHandler<MoveItemCommand, Nothing, MoveItemHandler>();
+            builder.AddHandler<NavigateBackCommand, Nothing, NavigateBackHandler>();
             builder.AddHandler<OpenImageFileQuery, FileDialogResult, OpenImageFileHandler>();
+            builder.AddHandler<RemoveItemCommand, Nothing, RemoveItemHandler>();
             builder.AddHandler<ResetAudioCommand, Nothing, ResetAudioHandler>();
             builder.AddHandler<ResetCounterCommand, Nothing, ResetCounterHandler>();
+            builder.AddHandler<SelectItemCommand, Nothing, SelectItemHandler>();
             builder.AddHandler<SetAudioMuteCommand, Nothing, SetAudioMuteHandler>();
             builder.AddHandler<SetAudioVolumeCommand, Nothing, SetAudioVolumeHandler>();
 
             // Generic View Handlers (from [GenerateViewCommands] attribute)
             builder.AddHandler<ShowViewCommand<CounterViewModel>, bool, ShowViewHandler<CounterViewModel>>();
             builder.AddHandler<HideViewCommand<CounterViewModel>, bool, HideViewHandler<CounterViewModel>>();
+            builder.AddHandler<ShowViewCommand<InventoryViewModel>, bool, ShowViewHandler<InventoryViewModel>>();
+            builder.AddHandler<HideViewCommand<InventoryViewModel>, bool, HideViewHandler<InventoryViewModel>>();
             builder.AddHandler<ShowViewCommand<MainMenuViewModel>, bool, ShowViewHandler<MainMenuViewModel>>();
             builder.AddHandler<HideViewCommand<MainMenuViewModel>, bool, HideViewHandler<MainMenuViewModel>>();
             builder.AddHandler<ShowViewCommand<SettingsViewModel>, bool, ShowViewHandler<SettingsViewModel>>();

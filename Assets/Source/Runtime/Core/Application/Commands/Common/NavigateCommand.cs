@@ -11,5 +11,6 @@ namespace Core.Application.Commands.Common
         public static NavigateCommand<MainMenuNavigation> ToMainMenu() => new();
         public static NavigateCommand<GameNavigation> ToGame() => new();
         public static NavigateCommand<SettingsNavigation> ToSettings() => new();
+        public static NavigateCommand<InventoryNavigation> ToInventory() => new();
     }
 }

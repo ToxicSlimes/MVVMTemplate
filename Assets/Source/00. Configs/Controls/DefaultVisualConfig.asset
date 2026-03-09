@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f53137111d8cce41b1c7473f5949958, type: 3}
+  m_Name: DefaultVisualConfig
+  m_EditorClassIdentifier: Core.Infrastructure::Core.Infrastructure.UI.States.ControlVisualConfig
+  NormalColor: {r: 1, g: 1, b: 1, a: 1}
+  NormalScale: 1
+  NormalAlpha: 1
+  HoveredColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  HoveredScale: 1.02
+  HoveredAlpha: 1
+  HoverTransitionDuration: 0.15
+  PressedColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  PressedScale: 0.96
+  PressedAlpha: 1
+  PressTransitionDuration: 0.1
+  SelectedColor: {r: 0.85, g: 0.85, b: 1, a: 1}
+  SelectedScale: 1
+  SelectedAlpha: 1
+  DisabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  DisabledScale: 1
+  DisabledAlpha: 0.5
+  ErrorColor: {r: 1, g: 0.3, b: 0.3, a: 1}
+  ErrorScale: 1
+  ErrorAlpha: 1
+  ErrorTransitionDuration: 0.2

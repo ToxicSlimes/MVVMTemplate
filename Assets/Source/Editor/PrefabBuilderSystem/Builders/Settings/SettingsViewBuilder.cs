@@ -4,6 +4,7 @@ using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.SettingsView;
 using Core.MVVM.Views.Settings;
 using UnityEditor;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -61,7 +62,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
                 .WithBackgroundColor(s.DimBackgroundColor)
                 .WithAnchors(Vector2.zero, Vector2.one)
                 .Build(Root);
-            _dimBackground.AddComponent<Button>();
+            _dimBackground.AddComponent<BaseButton>();
 
             // Modal
             _modalWindow = new PanelBuilder("ModalWindow")
@@ -301,15 +302,15 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
         {
             var so = new SerializedObject(view);
 
-            SerializationHelper.Wire(so, "_dimBackground", _dimBackground.GetComponent<Button>());
-            SerializationHelper.Wire(so, "_closeButton", _closeButton.GetComponent<Button>());
+            SerializationHelper.Wire(so, "_dimBackground", _dimBackground.GetComponent<BaseButton>());
+            SerializationHelper.Wire(so, "_closeButton", _closeButton.GetComponent<BaseButton>());
             SerializationHelper.Wire(so, "_modalWindow", _modalWindow);
 
-            SerializationHelper.Wire(so, "_tabAudio", _tabAudio.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_tabVideo", _tabVideo.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_tabDisplay", _tabDisplay.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_tabControls", _tabControls.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_tabGame", _tabGame.GetComponent<Toggle>());
+            SerializationHelper.Wire(so, "_tabAudio", _tabAudio.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_tabVideo", _tabVideo.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_tabDisplay", _tabDisplay.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_tabControls", _tabControls.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_tabGame", _tabGame.GetComponent<BaseToggle>());
 
             SerializationHelper.Wire(so, "_audioContent", _audioContent);
             SerializationHelper.Wire(so, "_videoContent", _videoContent);
@@ -317,47 +318,47 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
             SerializationHelper.Wire(so, "_controlsContent", _controlsContent);
             SerializationHelper.Wire(so, "_gameContent", _gameContent);
 
-            SerializationHelper.Wire(so, "_masterVolumeSlider", _masterVolumeSlider.GetComponent<Slider>());
+            SerializationHelper.Wire(so, "_masterVolumeSlider", _masterVolumeSlider.GetComponent<BaseSlider>());
             SerializationHelper.Wire(so, "_masterVolumeValue", _masterVolumeValue.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_musicVolumeSlider", _musicVolumeSlider.GetComponent<Slider>());
+            SerializationHelper.Wire(so, "_musicVolumeSlider", _musicVolumeSlider.GetComponent<BaseSlider>());
             SerializationHelper.Wire(so, "_musicVolumeValue", _musicVolumeValue.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_sfxVolumeSlider", _sfxVolumeSlider.GetComponent<Slider>());
+            SerializationHelper.Wire(so, "_sfxVolumeSlider", _sfxVolumeSlider.GetComponent<BaseSlider>());
             SerializationHelper.Wire(so, "_sfxVolumeValue", _sfxVolumeValue.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_voiceVolumeSlider", _voiceVolumeSlider.GetComponent<Slider>());
+            SerializationHelper.Wire(so, "_voiceVolumeSlider", _voiceVolumeSlider.GetComponent<BaseSlider>());
             SerializationHelper.Wire(so, "_voiceVolumeValue", _voiceVolumeValue.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_muteAllToggle", _muteAllToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_muteMusicToggle", _muteMusicToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_muteSfxToggle", _muteSfxToggle.GetComponent<Toggle>());
+            SerializationHelper.Wire(so, "_muteAllToggle", _muteAllToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_muteMusicToggle", _muteMusicToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_muteSfxToggle", _muteSfxToggle.GetComponent<BaseToggle>());
 
-            SerializationHelper.Wire(so, "_resolutionDropdown", _resolutionDropdown.GetComponent<TMP_Dropdown>());
-            SerializationHelper.Wire(so, "_qualityDropdown", _qualityDropdown.GetComponent<TMP_Dropdown>());
-            SerializationHelper.Wire(so, "_fullscreenToggle", _fullscreenToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_vsyncToggle", _vsyncToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_showFpsToggle", _showFpsToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_targetFpsDropdown", _targetFpsDropdown.GetComponent<TMP_Dropdown>());
+            SerializationHelper.Wire(so, "_resolutionDropdown", _resolutionDropdown.GetComponent<BaseDropdown>());
+            SerializationHelper.Wire(so, "_qualityDropdown", _qualityDropdown.GetComponent<BaseDropdown>());
+            SerializationHelper.Wire(so, "_fullscreenToggle", _fullscreenToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_vsyncToggle", _vsyncToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_showFpsToggle", _showFpsToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_targetFpsDropdown", _targetFpsDropdown.GetComponent<BaseDropdown>());
 
-            SerializationHelper.Wire(so, "_brightnessSlider", _brightnessSlider.GetComponent<Slider>());
+            SerializationHelper.Wire(so, "_brightnessSlider", _brightnessSlider.GetComponent<BaseSlider>());
             SerializationHelper.Wire(so, "_brightnessValue", _brightnessValue.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_gammaSlider", _gammaSlider.GetComponent<Slider>());
+            SerializationHelper.Wire(so, "_gammaSlider", _gammaSlider.GetComponent<BaseSlider>());
             SerializationHelper.Wire(so, "_gammaValue", _gammaValue.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_uiScaleSlider", _uiScaleSlider.GetComponent<Slider>());
+            SerializationHelper.Wire(so, "_uiScaleSlider", _uiScaleSlider.GetComponent<BaseSlider>());
             SerializationHelper.Wire(so, "_uiScaleValue", _uiScaleValue.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_colorblindModeToggle", _colorblindModeToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_colorblindTypeDropdown", _colorblindTypeDropdown.GetComponent<TMP_Dropdown>());
+            SerializationHelper.Wire(so, "_colorblindModeToggle", _colorblindModeToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_colorblindTypeDropdown", _colorblindTypeDropdown.GetComponent<BaseDropdown>());
 
-            SerializationHelper.Wire(so, "_mouseSensitivitySlider", _mouseSensitivitySlider.GetComponent<Slider>());
+            SerializationHelper.Wire(so, "_mouseSensitivitySlider", _mouseSensitivitySlider.GetComponent<BaseSlider>());
             SerializationHelper.Wire(so, "_mouseSensitivityValue", _mouseSensitivityValue.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_invertYAxisToggle", _invertYAxisToggle.GetComponent<Toggle>());
+            SerializationHelper.Wire(so, "_invertYAxisToggle", _invertYAxisToggle.GetComponent<BaseToggle>());
 
-            SerializationHelper.Wire(so, "_languageDropdown", _languageDropdown.GetComponent<TMP_Dropdown>());
-            SerializationHelper.Wire(so, "_autoSaveToggle", _autoSaveToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_showTutorialsToggle", _showTutorialsToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_screenShakeToggle", _screenShakeToggle.GetComponent<Toggle>());
-            SerializationHelper.Wire(so, "_matureContentToggle", _matureContentToggle.GetComponent<Toggle>());
+            SerializationHelper.Wire(so, "_languageDropdown", _languageDropdown.GetComponent<BaseDropdown>());
+            SerializationHelper.Wire(so, "_autoSaveToggle", _autoSaveToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_showTutorialsToggle", _showTutorialsToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_screenShakeToggle", _screenShakeToggle.GetComponent<BaseToggle>());
+            SerializationHelper.Wire(so, "_matureContentToggle", _matureContentToggle.GetComponent<BaseToggle>());
 
-            SerializationHelper.Wire(so, "_applyButton", _applyButton.GetComponent<Button>());
-            SerializationHelper.Wire(so, "_resetButton", _resetButton.GetComponent<Button>());
-            SerializationHelper.Wire(so, "_cancelButton", _cancelButton.GetComponent<Button>());
+            SerializationHelper.Wire(so, "_applyButton", _applyButton.GetComponent<BaseButton>());
+            SerializationHelper.Wire(so, "_resetButton", _resetButton.GetComponent<BaseButton>());
+            SerializationHelper.Wire(so, "_cancelButton", _cancelButton.GetComponent<BaseButton>());
 
             so.ApplyModifiedPropertiesWithoutUndo();
         }

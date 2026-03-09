@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ActionListItemElementMapping
   m_EditorClassIdentifier: Assembly-CSharp::Source.Runtime.Core.MVVM.Config.Generated.ActionListItemElementMapping
   ElementPrefab:
-    m_AssetGUID: 
+    m_AssetGUID: 88e8936858a635042b8becbd493897cc
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

@@ -7,6 +7,8 @@ using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Attributes;
 using Core.MVVM.ViewModels.Settings;
+using Core.UI.Binding;
+using Core.UI.Controls;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +20,8 @@ namespace Core.MVVM.Views.Settings
         public override bool IsPersistent => true;
 
         [Header("Modal")]
-        [SerializeField] private Button _dimBackground;
-        [SerializeField] private Button _closeButton;
+        [SerializeField] private BaseButton _dimBackground;
+        [SerializeField] private BaseButton _closeButton;
         [SerializeField] private GameObject _modalWindow;
 
         [Header("Tabs")]
@@ -37,52 +39,52 @@ namespace Core.MVVM.Views.Settings
         [SerializeField] private GameObject _gameContent;
 
         [Header("Audio Settings")]
-        [SerializeField] private Slider _masterVolumeSlider;
+        [SerializeField] private BaseSlider _masterVolumeSlider;
         [SerializeField] private TMP_Text _masterVolumeValue;
-        [SerializeField] private Slider _musicVolumeSlider;
+        [SerializeField] private BaseSlider _musicVolumeSlider;
         [SerializeField] private TMP_Text _musicVolumeValue;
-        [SerializeField] private Slider _sfxVolumeSlider;
+        [SerializeField] private BaseSlider _sfxVolumeSlider;
         [SerializeField] private TMP_Text _sfxVolumeValue;
-        [SerializeField] private Slider _voiceVolumeSlider;
+        [SerializeField] private BaseSlider _voiceVolumeSlider;
         [SerializeField] private TMP_Text _voiceVolumeValue;
-        [SerializeField] private Toggle _muteAllToggle;
-        [SerializeField] private Toggle _muteMusicToggle;
-        [SerializeField] private Toggle _muteSfxToggle;
+        [SerializeField] private BaseToggle _muteAllToggle;
+        [SerializeField] private BaseToggle _muteMusicToggle;
+        [SerializeField] private BaseToggle _muteSfxToggle;
 
         [Header("Video Settings")]
-        [SerializeField] private TMP_Dropdown _resolutionDropdown;
-        [SerializeField] private TMP_Dropdown _qualityDropdown;
-        [SerializeField] private Toggle _fullscreenToggle;
-        [SerializeField] private Toggle _vsyncToggle;
-        [SerializeField] private Toggle _showFpsToggle;
-        [SerializeField] private TMP_Dropdown _targetFpsDropdown;
+        [SerializeField] private BaseDropdown _resolutionDropdown;
+        [SerializeField] private BaseDropdown _qualityDropdown;
+        [SerializeField] private BaseToggle _fullscreenToggle;
+        [SerializeField] private BaseToggle _vsyncToggle;
+        [SerializeField] private BaseToggle _showFpsToggle;
+        [SerializeField] private BaseDropdown _targetFpsDropdown;
 
         [Header("Display Settings")]
-        [SerializeField] private Slider _brightnessSlider;
+        [SerializeField] private BaseSlider _brightnessSlider;
         [SerializeField] private TMP_Text _brightnessValue;
-        [SerializeField] private Slider _gammaSlider;
+        [SerializeField] private BaseSlider _gammaSlider;
         [SerializeField] private TMP_Text _gammaValue;
-        [SerializeField] private Slider _uiScaleSlider;
+        [SerializeField] private BaseSlider _uiScaleSlider;
         [SerializeField] private TMP_Text _uiScaleValue;
-        [SerializeField] private Toggle _colorblindModeToggle;
-        [SerializeField] private TMP_Dropdown _colorblindTypeDropdown;
+        [SerializeField] private BaseToggle _colorblindModeToggle;
+        [SerializeField] private BaseDropdown _colorblindTypeDropdown;
 
         [Header("Controls Settings")]
-        [SerializeField] private Slider _mouseSensitivitySlider;
+        [SerializeField] private BaseSlider _mouseSensitivitySlider;
         [SerializeField] private TMP_Text _mouseSensitivityValue;
-        [SerializeField] private Toggle _invertYAxisToggle;
+        [SerializeField] private BaseToggle _invertYAxisToggle;
 
         [Header("Game Settings")]
-        [SerializeField] private TMP_Dropdown _languageDropdown;
-        [SerializeField] private Toggle _autoSaveToggle;
-        [SerializeField] private Toggle _showTutorialsToggle;
-        [SerializeField] private Toggle _screenShakeToggle;
-        [SerializeField] private Toggle _matureContentToggle;
+        [SerializeField] private BaseDropdown _languageDropdown;
+        [SerializeField] private BaseToggle _autoSaveToggle;
+        [SerializeField] private BaseToggle _showTutorialsToggle;
+        [SerializeField] private BaseToggle _screenShakeToggle;
+        [SerializeField] private BaseToggle _matureContentToggle;
 
         [Header("Footer")]
-        [SerializeField] private Button _applyButton;
-        [SerializeField] private Button _resetButton;
-        [SerializeField] private Button _cancelButton;
+        [SerializeField] private BaseButton _applyButton;
+        [SerializeField] private BaseButton _resetButton;
+        [SerializeField] private BaseButton _cancelButton;
 
         [Header("Tab Visuals")]
         [SerializeField] private Color _tabNormalColor = new(0.25f, 0.25f, 0.3f, 1f);
@@ -160,18 +162,10 @@ namespace Core.MVVM.Views.Settings
         private void BindCloseButtons(ref DisposableBag disposables)
         {
             if (_dimBackground != null)
-            {
-                _dimBackground.OnClickAsObservable()
-                    .Subscribe(ViewModel.CloseCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _dimBackground.BindTo(ViewModel.CloseCommand, ref disposables);
 
             if (_closeButton != null)
-            {
-                _closeButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.CloseCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _closeButton.BindTo(ViewModel.CloseCommand, ref disposables);
         }
 
         private void BindTabs(ref DisposableBag disposables)
@@ -238,34 +232,26 @@ namespace Core.MVVM.Views.Settings
 
         private void BindAudioSettings(ref DisposableBag disposables)
         {
-            BindSlider(_masterVolumeSlider, _masterVolumeValue, ViewModel.MasterVolume, ref disposables);
-            BindSlider(_musicVolumeSlider, _musicVolumeValue, ViewModel.MusicVolume, ref disposables);
-            BindSlider(_sfxVolumeSlider, _sfxVolumeValue, ViewModel.SfxVolume, ref disposables);
-            BindSlider(_voiceVolumeSlider, _voiceVolumeValue, ViewModel.VoiceVolume, ref disposables);
+            _masterVolumeSlider.BindTo(ViewModel.MasterVolume, _masterVolumeValue, "{0:P0}", ref disposables);
+            _musicVolumeSlider.BindTo(ViewModel.MusicVolume, _musicVolumeValue, "{0:P0}", ref disposables);
+            _sfxVolumeSlider.BindTo(ViewModel.SfxVolume, _sfxVolumeValue, "{0:P0}", ref disposables);
+            _voiceVolumeSlider.BindTo(ViewModel.VoiceVolume, _voiceVolumeValue, "{0:P0}", ref disposables);
 
-            BindToggle(_muteAllToggle, ViewModel.IsMuteAll, ref disposables);
-            BindToggle(_muteMusicToggle, ViewModel.IsMuteMusic, ref disposables);
-            BindToggle(_muteSfxToggle, ViewModel.IsMuteSfx, ref disposables);
+            _muteAllToggle.BindTo(ViewModel.IsMuteAll, ref disposables);
+            _muteMusicToggle.BindTo(ViewModel.IsMuteMusic, ref disposables);
+            _muteSfxToggle.BindTo(ViewModel.IsMuteSfx, ref disposables);
         }
 
         private void BindVideoSettings(ref DisposableBag disposables)
         {
-            BindDropdown(_resolutionDropdown, ViewModel.ResolutionIndex, ref disposables);
+            _resolutionDropdown.BindTo(ViewModel.ResolutionIndex, ref disposables);
 
             if (_qualityDropdown != null)
-            {
-                ViewModel.Quality
-                    .Subscribe(_qualityDropdown, static (q, dd) => dd.value = (int)q)
-                    .AddTo(ref disposables);
+                _qualityDropdown.BindToEnum(ViewModel.Quality, ref disposables);
 
-                _qualityDropdown.onValueChanged.AsObservable()
-                    .Subscribe(ViewModel.Quality, static (v, prop) => prop.Value = (QualityPreset)v)
-                    .AddTo(ref disposables);
-            }
-
-            BindToggle(_fullscreenToggle, ViewModel.IsFullscreen, ref disposables);
-            BindToggle(_vsyncToggle, ViewModel.IsVSync, ref disposables);
-            BindToggle(_showFpsToggle, ViewModel.ShowFps, ref disposables);
+            _fullscreenToggle.BindTo(ViewModel.IsFullscreen, ref disposables);
+            _vsyncToggle.BindTo(ViewModel.IsVSync, ref disposables);
+            _showFpsToggle.BindTo(ViewModel.ShowFps, ref disposables);
 
             if (_targetFpsDropdown == null)
                 return;
@@ -302,59 +288,26 @@ namespace Core.MVVM.Views.Settings
 
         private void BindDisplaySettings(ref DisposableBag disposables)
         {
-            BindSlider(_brightnessSlider, _brightnessValue, ViewModel.Brightness, ref disposables);
+            _brightnessSlider.BindTo(ViewModel.Brightness, _brightnessValue, "{0:P0}", ref disposables);
 
             if (_gammaSlider != null)
             {
                 _gammaSlider.minValue = 0.5f;
                 _gammaSlider.maxValue = 2f;
-
-                ViewModel.Gamma
-                    .Subscribe((_gammaSlider, _gammaValue), static (v, state) =>
-                    {
-                        state._gammaSlider.value = v;
-                        if (state._gammaValue != null)
-                            state._gammaValue.text = v.ToString("F1");
-                    })
-                    .AddTo(ref disposables);
-
-                _gammaSlider.onValueChanged.AsObservable()
-                    .Subscribe(ViewModel.Gamma, static (v, prop) => prop.Value = v)
-                    .AddTo(ref disposables);
+                _gammaSlider.BindTo(ViewModel.Gamma, _gammaValue, "{0:F1}", ref disposables);
             }
 
             if (_uiScaleSlider != null)
             {
                 _uiScaleSlider.minValue = 0.75f;
                 _uiScaleSlider.maxValue = 1.5f;
-
-                ViewModel.UiScale
-                    .Subscribe((_uiScaleSlider, _uiScaleValue), static (v, state) =>
-                    {
-                        state._uiScaleSlider.value = v;
-                        if (state._uiScaleValue != null)
-                            state._uiScaleValue.text = $"{(int)(v * 100)}%";
-                    })
-                    .AddTo(ref disposables);
-
-                _uiScaleSlider.onValueChanged.AsObservable()
-                    .Subscribe(ViewModel.UiScale, static (v, prop) => prop.Value = v)
-                    .AddTo(ref disposables);
+                _uiScaleSlider.BindTo(ViewModel.UiScale, _uiScaleValue, "{0:P0}", ref disposables);
             }
 
-            BindToggle(_colorblindModeToggle, ViewModel.IsColorblindMode, ref disposables);
+            _colorblindModeToggle.BindTo(ViewModel.IsColorblindMode, ref disposables);
 
-            if (_colorblindTypeDropdown == null)
-                return;
-            {
-                ViewModel.ColorblindType
-                    .Subscribe(_colorblindTypeDropdown, static (t, dd) => dd.value = (int)t)
-                    .AddTo(ref disposables);
-
-                _colorblindTypeDropdown.onValueChanged.AsObservable()
-                    .Subscribe(ViewModel.ColorblindType, static (v, prop) => prop.Value = (ColorblindType)v)
-                    .AddTo(ref disposables);
-            }
+            if (_colorblindTypeDropdown != null)
+                _colorblindTypeDropdown.BindToEnum(ViewModel.ColorblindType, ref disposables);
         }
 
         private void BindControlsSettings(ref DisposableBag disposables)
@@ -363,109 +316,33 @@ namespace Core.MVVM.Views.Settings
             {
                 _mouseSensitivitySlider.minValue = 0.1f;
                 _mouseSensitivitySlider.maxValue = 10f;
-
-                ViewModel.MouseSensitivity
-                    .Subscribe((_mouseSensitivitySlider, _mouseSensitivityValue), static (v, state) =>
-                    {
-                        state._mouseSensitivitySlider.value = v;
-                        if (state._mouseSensitivityValue != null)
-                            state._mouseSensitivityValue.text = v.ToString("F1");
-                    })
-                    .AddTo(ref disposables);
-
-                _mouseSensitivitySlider.onValueChanged.AsObservable()
-                    .Subscribe(ViewModel.MouseSensitivity, static (v, prop) => prop.Value = v)
-                    .AddTo(ref disposables);
+                _mouseSensitivitySlider.BindTo(ViewModel.MouseSensitivity, _mouseSensitivityValue, "{0:F1}", ref disposables);
             }
 
-            BindToggle(_invertYAxisToggle, ViewModel.InvertYAxis, ref disposables);
+            _invertYAxisToggle.BindTo(ViewModel.InvertYAxis, ref disposables);
         }
 
         private void BindGameSettings(ref DisposableBag disposables)
         {
             if (_languageDropdown != null)
-            {
-                ViewModel.Language
-                    .Subscribe(_languageDropdown, static (lang, dd) => dd.value = (int)lang)
-                    .AddTo(ref disposables);
+                _languageDropdown.BindToEnum(ViewModel.Language, ref disposables);
 
-                _languageDropdown.onValueChanged.AsObservable()
-                    .Subscribe(ViewModel.Language, static (v, prop) => prop.Value = (GameLanguage)v)
-                    .AddTo(ref disposables);
-            }
-
-            BindToggle(_autoSaveToggle, ViewModel.IsAutoSave, ref disposables);
-            BindToggle(_showTutorialsToggle, ViewModel.ShowTutorials, ref disposables);
-            BindToggle(_screenShakeToggle, ViewModel.ScreenShake, ref disposables);
-            BindToggle(_matureContentToggle, ViewModel.MatureContent, ref disposables);
+            _autoSaveToggle.BindTo(ViewModel.IsAutoSave, ref disposables);
+            _showTutorialsToggle.BindTo(ViewModel.ShowTutorials, ref disposables);
+            _screenShakeToggle.BindTo(ViewModel.ScreenShake, ref disposables);
+            _matureContentToggle.BindTo(ViewModel.MatureContent, ref disposables);
         }
 
         private void BindFooterButtons(ref DisposableBag disposables)
         {
             if (_applyButton != null)
-            {
-                _applyButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.ApplyCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _applyButton.BindTo(ViewModel.ApplyCommand, ref disposables);
 
             if (_resetButton != null)
-            {
-                _resetButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.ResetCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
+                _resetButton.BindTo(ViewModel.ResetCommand, ref disposables);
 
             if (_cancelButton != null)
-            {
-                _cancelButton.OnClickAsObservable()
-                    .Subscribe(ViewModel.CancelCommand, static (_, cmd) => cmd.Execute(Unit.Default))
-                    .AddTo(ref disposables);
-            }
-        }
-
-        private static void BindSlider(Slider slider, TMP_Text valueText, ReactiveProperty<float> property, ref DisposableBag disposables)
-        {
-            if (slider == null) return;
-
-            property
-                .Subscribe((slider, valueText), static (v, state) =>
-                {
-                    state.slider.value = v;
-                    if (state.valueText != null)
-                        state.valueText.text = $"{(int)(v * 100)}%";
-                })
-                .AddTo(ref disposables);
-
-            slider.onValueChanged.AsObservable()
-                .Subscribe(property, static (v, prop) => prop.Value = v)
-                .AddTo(ref disposables);
-        }
-
-        private static void BindToggle(Toggle toggle, ReactiveProperty<bool> property, ref DisposableBag disposables)
-        {
-            if (toggle == null) return;
-
-            property
-                .Subscribe(toggle, static (v, t) => t.isOn = v)
-                .AddTo(ref disposables);
-
-            toggle.onValueChanged.AsObservable()
-                .Subscribe(property, static (v, prop) => prop.Value = v)
-                .AddTo(ref disposables);
-        }
-
-        private static void BindDropdown(TMP_Dropdown dropdown, ReactiveProperty<int> property, ref DisposableBag disposables)
-        {
-            if (dropdown == null) return;
-
-            property
-                .Subscribe(dropdown, static (v, dd) => dd.value = v)
-                .AddTo(ref disposables);
-
-            dropdown.onValueChanged.AsObservable()
-                .Subscribe(property, static (v, prop) => prop.Value = v)
-                .AddTo(ref disposables);
+                _cancelButton.BindTo(ViewModel.CancelCommand, ref disposables);
         }
 
         public override async UniTask ShowAsync()

@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -104,7 +105,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             var bg = rt.gameObject.AddComponent<Image>();
             bg.color = _normalColor;
 
-            var toggle = rt.gameObject.AddComponent<Toggle>();
+            var toggle = rt.gameObject.AddComponent<BaseToggle>();
             toggle.targetGraphic = bg;
             toggle.group = _group;
 

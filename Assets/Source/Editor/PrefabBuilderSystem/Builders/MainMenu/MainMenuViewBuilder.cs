@@ -4,6 +4,7 @@ using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.MainView;
 using Core.MVVM.Views.MainMenu;
 using UnityEditor;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
 
         private Button _playButton;
         private Button _settingsButton;
+        private Button _inventoryButton;
         private Button _quitButton;
 
         protected override void BuildViewStructure()
@@ -80,6 +82,14 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
                 .WithPreferredSize(null, s.ButtonHeight)
                 .Build(centerPanel.transform);
 
+            // Inventory Button
+            _inventoryButton = new ButtonBuilder("InventoryButton")
+                .WithLabel("Inventory")
+                .WithLabelSize(s.ButtonFontSize)
+                .WithVariant(ButtonVariant.Outline)
+                .WithPreferredSize(null, s.ButtonHeight)
+                .Build(centerPanel.transform);
+
             // Quit Button
             _quitButton = new ButtonBuilder("QuitButton")
                 .WithLabel("Quit")
@@ -92,9 +102,10 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
         protected override void WireFields(MainMenuView view)
         {
             var so = new SerializedObject(view);
-            SerializationHelper.Wire(so, "_playButton", _playButton.GetComponent<Button>());
-            SerializationHelper.Wire(so, "_settingsButton", _settingsButton.GetComponent<Button>());
-            SerializationHelper.Wire(so, "_quitButton", _quitButton.GetComponent<Button>());
+            SerializationHelper.Wire(so, "_playButton", _playButton.GetComponent<BaseButton>());
+            SerializationHelper.Wire(so, "_settingsButton", _settingsButton.GetComponent<BaseButton>());
+            SerializationHelper.Wire(so, "_inventoryButton", _inventoryButton.GetComponent<BaseButton>());
+            SerializationHelper.Wire(so, "_quitButton", _quitButton.GetComponent<BaseButton>());
             so.ApplyModifiedPropertiesWithoutUndo();
         }
     }

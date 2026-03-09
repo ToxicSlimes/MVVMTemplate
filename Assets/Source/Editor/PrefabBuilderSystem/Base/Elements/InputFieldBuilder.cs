@@ -1,13 +1,15 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.Infrastructure.UI;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 namespace Core.Editor.PrefabBuilderSystem.Elements
 {
-    public class InputFieldBuilder : BaseElementBuilder<InputFieldBuilder, TMP_InputField>
+    public class InputFieldBuilder : BaseElementBuilder<InputFieldBuilder, BaseInputField>
     {
         protected override string NamingPrefix => NamingConvention.Input;
         
@@ -165,9 +167,39 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Interactive.InputField;
 
-        protected override void ApplyCustomizations(GameObject instance, TMP_InputField input)
+        protected override void ApplyCustomizations(GameObject instance, BaseInputField input)
         {
+            if (input == null)
+            {
+                var native = instance.GetComponent<TMP_InputField>();
+                if (native != null)
+                {
+                    UnityEditorInternal.ComponentUtility.CopyComponent(native);
+                    Object.DestroyImmediate(native);
+                    input = instance.AddComponent<BaseInputField>();
+                    UnityEditorInternal.ComponentUtility.PasteComponentValues(input);
+                }
+            }
             if (input == null) return;
+
+            if (input.textViewport == null)
+            {
+                var viewport = instance.transform.Find("Text Area");
+                if (viewport != null) input.textViewport = viewport as RectTransform;
+            }
+            if (input.textComponent == null && input.textViewport != null)
+            {
+                var text = input.textViewport.Find("Text");
+                if (text != null) input.textComponent = text.GetComponent<TMPro.TMP_Text>();
+            }
+            if (input.placeholder == null && input.textViewport != null)
+            {
+                var ph = input.textViewport.Find("Placeholder");
+                if (ph != null) input.placeholder = ph.GetComponent<Graphic>();
+            }
+            if (input.targetGraphic == null)
+                input.targetGraphic = instance.GetComponent<Graphic>();
+
             input.text = _text;
             input.contentType = _contentType;
             input.characterLimit = _characterLimit;
@@ -191,10 +223,15 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             var bg = instance.GetComponent<Image>();
             if (bg != null) bg.color = _backgroundColor;
 
+            if (instance.GetComponent<CanvasGroup>() == null)
+                instance.AddComponent<CanvasGroup>();
+            var bcb = instance.GetComponent<BaseControlBehaviour>() ?? instance.AddComponent<BaseControlBehaviour>();
+            ControlDefaults.ApplyTo(bcb);
+
             ApplyLayoutElement(instance);
         }
 
-        public override TMP_InputField Build(Transform parent)
+        public override BaseInputField Build(Transform parent)
         {
             if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
@@ -253,7 +290,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             textTmp.color = _textColor;
             textTmp.alignment = TextAlignmentOptions.MidlineLeft;
 
-            var inputField = go.AddComponent<TMP_InputField>();
+            var inputField = go.AddComponent<BaseInputField>();
             inputField.textViewport = textAreaRt;
             inputField.textComponent = textTmp;
             inputField.placeholder = placeholderTmp;
@@ -264,6 +301,9 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             inputField.selectionColor = _selectionColor;
             inputField.caretColor = _caretColor;
             inputField.targetGraphic = bgImg;
+
+            go.AddComponent<CanvasGroup>();
+            ControlDefaults.ApplyTo(go.AddComponent<BaseControlBehaviour>());
 
             ApplyLayoutElement(go);
 

@@ -7,6 +7,7 @@ using System.Reflection;
 using Core.Infrastructure.MVVM.Config;
 using Core.Abstractions.MVVM.Elements;
 using UnityEditor;
+using UnityEditor.AddressableAssets;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -823,18 +824,12 @@ namespace Core.Editor.ElementMappingGenerator
 
             var mappings = config.GetAllMappings();
             var linkedCount = 0;
-            var searchFolders = new[]
-            {
-                "Assets/Prefabs/Elements/MainView",
-                "Assets/Prefabs/Elements/GameUI",
-                "Assets/Prefabs/Elements/Chat",
-                "Assets/Prefabs/Elements"
-            };
+            var searchFolders = new[] { "Assets/Prefabs" };
 
             foreach (var mapping in mappings)
             {
                 if (mapping == null) continue;
-                if (mapping.ElementPrefab != null) continue;
+                if (mapping.ElementPrefab != null && mapping.ElementPrefab.RuntimeKeyIsValid()) continue;
 
                 var elementName = mapping.ElementType.Name.Replace("Element", "");
                 var prefab = FindPrefabByName(elementName, searchFolders);
@@ -852,17 +847,41 @@ namespace Core.Editor.ElementMappingGenerator
                     continue;
                 }
 
+                var prefabPath = AssetDatabase.GetAssetPath(prefab);
+                var prefabGuid = AssetDatabase.AssetPathToGUID(prefabPath);
+
+                EnsureAddressable(prefabPath, prefabGuid);
+
                 var so = new SerializedObject(mapping);
-                so.FindProperty("_elementPrefab").objectReferenceValue = prefab;
-                so.ApplyModifiedProperties();
+                var guidProp = so.FindProperty("ElementPrefab.m_AssetGUID");
+                if (guidProp != null)
+                {
+                    guidProp.stringValue = prefabGuid;
+                    so.ApplyModifiedProperties();
+                }
+
                 EditorUtility.SetDirty(mapping);
                 linkedCount++;
 
-                Debug.Log($"<color=green>✓ Linked {mapping.name} → {prefab.name}</color>");
+                Debug.Log($"<color=green>✓ Linked {mapping.name} → {prefab.name} ({prefabPath})</color>");
             }
 
             AssetDatabase.SaveAssets();
             Debug.Log($"<color=cyan>Linked {linkedCount} prefabs to element mappings</color>");
+        }
+
+        private static void EnsureAddressable(string assetPath, string guid)
+        {
+            var settings = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings;
+            if (settings == null) return;
+
+            var entry = settings.FindAssetEntry(guid);
+            if (entry != null) return;
+
+            var group = settings.DefaultGroup;
+            entry = settings.CreateOrMoveEntry(guid, group);
+            entry.address = assetPath;
+            EditorUtility.SetDirty(settings);
         }
 
         private static GameObject FindPrefabByName(string name, string[] searchFolders)

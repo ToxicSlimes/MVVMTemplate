@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TextCardElementMapping
   m_EditorClassIdentifier: Assembly-CSharp::Source.Runtime.Core.MVVM.Config.Generated.TextCardElementMapping
   ElementPrefab:
-    m_AssetGUID: 
+    m_AssetGUID: e15be94960f80f843af2a168c10c6b9c
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

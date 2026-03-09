@@ -9,8 +9,10 @@ using Core.Application.Handlers.Views;
 using Core.Application.Requests.Views;
 using Core.Infrastructure.Mediator.Registration;
 using Core.MVVM.ViewModels.Counter;
+using Core.MVVM.ViewModels.Inventory;
 using Core.MVVM.ViewModels.Settings;
 using Core.MVVM.Views.Counter;
+using Core.MVVM.Views.Inventory;
 using Core.MVVM.Views.Settings;
 
 namespace Core.DependencyInjection.Generated
@@ -29,6 +31,16 @@ namespace Core.DependencyInjection.Generated
                 HideViewRequest<CounterView, CounterViewModel>,
                 bool,
                 HideViewRequestHandler<CounterView, CounterViewModel>>();
+
+            builder.AddHandler<
+                ShowViewRequest<InventoryView, InventoryViewModel>,
+                bool,
+                ShowViewRequestHandler<InventoryView, InventoryViewModel>>();
+
+            builder.AddHandler<
+                HideViewRequest<InventoryView, InventoryViewModel>,
+                bool,
+                HideViewRequestHandler<InventoryView, InventoryViewModel>>();
 
             builder.AddHandler<
                 ShowViewRequest<SettingsView, SettingsViewModel>,

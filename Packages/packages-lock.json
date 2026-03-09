@@ -11,6 +11,15 @@
       },
       "hash": "a174f0ace85831bc6790d497d2d683a64fc513dd"
     },
+    "com.annulusgames.lit-motion.animation": {
+      "version": "https://github.com/AnnulusGames/LitMotion.git?path=src/LitMotion/Assets/LitMotion.Animation",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.annulusgames.lit-motion": "2.0.0"
+      },
+      "hash": "a174f0ace85831bc6790d497d2d683a64fc513dd"
+    },
     "com.codewriter.triinspector": {
       "version": "https://github.com/codewriter-packages/Tri-Inspector.git",
       "depth": 0,

@@ -2,12 +2,14 @@
 using Core.Configs.DesignSystem;
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.Infrastructure.UI;
+using Core.UI.Controls;
 using UnityEngine;
 using TMPro;
 
 namespace Core.Editor.PrefabBuilderSystem.Elements
 {
-    public class TextBuilder : BaseElementBuilder<TextBuilder, TextMeshProUGUI>
+    public class TextBuilder : BaseElementBuilder<TextBuilder, BaseText>
     {
         protected override string NamingPrefix => NamingConvention.Text;
         
@@ -203,8 +205,19 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         protected override string GetDefaultPrefabPath() => ElementPaths.Atoms.Text;
 
-        protected override void ApplyCustomizations(GameObject instance, TextMeshProUGUI tmp)
+        protected override void ApplyCustomizations(GameObject instance, BaseText tmp)
         {
+            if (tmp == null)
+            {
+                var native = instance.GetComponent<TextMeshProUGUI>();
+                if (native != null)
+                {
+                    UnityEditorInternal.ComponentUtility.CopyComponent(native);
+                    Object.DestroyImmediate(native);
+                    tmp = instance.AddComponent<BaseText>();
+                    UnityEditorInternal.ComponentUtility.PasteComponentValues(tmp);
+                }
+            }
             if (tmp == null) return;
 
             if (!string.IsNullOrEmpty(_text)) tmp.text = _text;
@@ -231,16 +244,21 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 tmp.fontSize = _fontSize;
             }
 
+            if (instance.GetComponent<CanvasGroup>() == null)
+                instance.AddComponent<CanvasGroup>();
+            var bcb = instance.GetComponent<BaseControlBehaviour>() ?? instance.AddComponent<BaseControlBehaviour>();
+            ControlDefaults.ApplyTo(bcb);
+
             ApplyLayoutElement(instance);
         }
 
-        public override TextMeshProUGUI Build(Transform parent)
+        public override BaseText Build(Transform parent)
         {
             if (ShouldUsePrefab())
                 return BuildFromPrefab(parent);
             
             var rt = CreateRectTransform(parent);
-            var tmp = rt.gameObject.AddComponent<TextMeshProUGUI>();
+            var tmp = rt.gameObject.AddComponent<BaseText>();
 
             tmp.text = _text;
             tmp.color = _color;
@@ -270,6 +288,9 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             {
                 PreferredHeight = _fontSize + 6;
             }
+
+            rt.gameObject.AddComponent<CanvasGroup>();
+            ControlDefaults.ApplyTo(rt.gameObject.AddComponent<BaseControlBehaviour>());
 
             ApplyLayoutElement(rt.gameObject);
 

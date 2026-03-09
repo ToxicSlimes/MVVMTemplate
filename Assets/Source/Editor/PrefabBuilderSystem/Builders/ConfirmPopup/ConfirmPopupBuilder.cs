@@ -3,6 +3,7 @@ using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Infrastructure.Popup.Implementations;
 using UnityEditor;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -120,8 +121,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
 
             SerializationHelper.Wire(so, "_titleText", _titleText.GetComponentInChildren<TextMeshProUGUI>());
             SerializationHelper.Wire(so, "_messageText", _messageText.GetComponentInChildren<TextMeshProUGUI>());
-            SerializationHelper.Wire(so, "_confirmButton", _confirmButton.GetComponent<Button>());
-            SerializationHelper.Wire(so, "_cancelButton", _cancelButton.GetComponent<Button>());
+            SerializationHelper.Wire(so, "_confirmButton", _confirmButton.GetComponent<BaseButton>());
+            SerializationHelper.Wire(so, "_cancelButton", _cancelButton.GetComponent<BaseButton>());
 
             // Wire button label texts
             var confirmLabel = _confirmButton.GetComponentInChildren<TextMeshProUGUI>();

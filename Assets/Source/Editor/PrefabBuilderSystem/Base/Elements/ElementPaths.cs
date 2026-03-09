@@ -98,6 +98,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             public const string TextCard = Dir + "/TextCard.prefab";
             public const string StatBar = Dir + "/StatBar.prefab";
             public const string ActionListItem = Dir + "/ActionListItem.prefab";
+            public const string InventoryItem = Dir + "/InventoryItem.prefab";
         }
 
         public static class GameUI

@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
+using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -117,7 +118,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
             if (_closeOnDimClick)
             {
-                var dimBtn = rt.gameObject.AddComponent<Button>();
+                var dimBtn = rt.gameObject.AddComponent<BaseButton>();
                 dimBtn.transition = Selectable.Transition.None;
             }
 
@@ -200,7 +201,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 var closeBg = closeGo.AddComponent<Image>();
                 closeBg.color = new Color(1, 1, 1, 0.1f);
 
-                closeGo.AddComponent<Button>().targetGraphic = closeBg;
+                closeGo.AddComponent<BaseButton>().targetGraphic = closeBg;
 
                 var closeText = new GameObject("X");
                 closeText.transform.SetParent(closeGo.transform, false);
@@ -274,7 +275,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
             if (_closeOnDimClick && instance.GetComponent<Button>() == null)
             {
-                var btn = instance.AddComponent<Button>();
+                var btn = instance.AddComponent<BaseButton>();
                 btn.transition = Selectable.Transition.None;
             }
 

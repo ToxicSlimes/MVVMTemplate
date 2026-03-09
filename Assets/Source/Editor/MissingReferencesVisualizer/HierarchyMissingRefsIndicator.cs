@@ -24,7 +24,7 @@ namespace MissingReferencesVisualizer
         {
             if (!isEnabled) return;
 
-            GameObject go = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
+            GameObject go = EditorUtility.EntityIdToObject(instanceID) as GameObject;
             if (go == null) return;
 
             if (MissingReferencesScanner.HasMissingRefs(go))
