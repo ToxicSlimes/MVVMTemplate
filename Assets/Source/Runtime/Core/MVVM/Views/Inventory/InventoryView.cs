@@ -1,5 +1,5 @@
 using System;
-using Core.Abstractions.MVVM.Views;
+using Core.Infrastructure.MVVM.Animation;
 using Core.Application.Commands.Elements;
 using Core.Data.Domain.Enums;
 using Core.Data.Domain.Models.Elements;
@@ -16,7 +16,7 @@ using UnityEngine.UI;
 
 namespace Core.MVVM.Views.Inventory
 {
-    public class InventoryView : BindableView<InventoryViewModel>
+    public class InventoryView : AnimatedView<InventoryViewModel>
     {
         [Inject] private IMediator _mediator;
 
@@ -52,6 +52,10 @@ namespace Core.MVVM.Views.Inventory
             }
 
             BindFilterBar(ref disposables);
+
+            InventoryItemElement.ItemDroppedOnItem += OnItemReordered;
+            Disposable.Create(() => InventoryItemElement.ItemDroppedOnItem -= OnItemReordered)
+                .AddTo(ref disposables);
 
             ViewModel.FilteredItems
                 .Subscribe(this, static (items, self) =>
@@ -119,6 +123,16 @@ namespace Core.MVVM.Views.Inventory
         private void OnItemClicked(InventoryItemData data)
         {
             ViewModel.SelectItem(data.Id);
+        }
+
+        private void OnItemReordered(InventoryItemData source, InventoryItemData target)
+        {
+            var items = ViewModel.Items.Value;
+            var fromIndex = items.FindIndex(i => i.Id == source.Id);
+            var toIndex = items.FindIndex(i => i.Id == target.Id);
+
+            if (fromIndex >= 0 && toIndex >= 0)
+                ViewModel.MoveItem(fromIndex, toIndex);
         }
     }
 }

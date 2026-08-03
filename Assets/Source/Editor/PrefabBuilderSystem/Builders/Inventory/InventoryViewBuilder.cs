@@ -129,6 +129,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Inventory
                 .Build(detailButtonRow.transform);
 
             _detailPanel.SetActive(false);
+
+            AddPanelAnimator(modal.gameObject, 0, "Preset_PopupModal");
         }
 
         private void BuildFilterBar(Transform parent, InventoryViewBuilderSettings s)

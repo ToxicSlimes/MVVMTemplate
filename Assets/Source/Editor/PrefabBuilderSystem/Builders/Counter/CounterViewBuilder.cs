@@ -130,6 +130,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
             // === GALLERY PANEL (hidden by default) ===
             BuildGalleryPanel(content);
+
+            AddPanelAnimator(modal.gameObject, 0, "Preset_PopupModal");
         }
 
         private void BuildGalleryPanel(Transform content)

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ee3dd0bb8180144b4dedec96fab59e, type: 3}
+  m_Name: Preset_SlideLeft
+  m_EditorClassIdentifier: Core.Configs::Core.Infrastructure.MVVM.Animation.PanelTransitionPreset
+  _showTransition: 9
+  _showDuration: 0.3
+  _showDelay: 0
+  _showEase: 8
+  _hideTransition: 17
+  _hideDuration: 0.25
+  _hideDelay: 0
+  _hideEase: 7
+  _slideOffset: 0

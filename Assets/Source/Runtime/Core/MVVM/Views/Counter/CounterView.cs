@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Abstractions.MVVM.Views;
+using Core.Infrastructure.MVVM.Animation;
 using Core.Abstractions.Popup;
 using Core.Application.Commands.Elements;
 using Core.Data.Domain.Models.Elements.Samples;
@@ -17,7 +17,7 @@ using UnityEngine.UI;
 
 namespace Core.MVVM.Views.Counter
 {
-    public class CounterView : BindableView<CounterViewModel>
+    public class CounterView : AnimatedView<CounterViewModel>
     {
         [Inject] private IMediator _mediator;
 

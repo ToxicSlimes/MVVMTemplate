@@ -1,4 +1,4 @@
-using Core.Abstractions.MVVM.Views;
+using Core.Infrastructure.MVVM.Animation;
 using Core.MVVM.ViewModels.MainMenu;
 using Core.UI.Binding;
 using Core.UI.Controls;
@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Core.MVVM.Views.MainMenu
 {
-    public class MainMenuView : BindableView<MainMenuViewModel>
+    public class MainMenuView : AnimatedView<MainMenuViewModel>
     {
         [Header("Buttons")]
         [SerializeField] private BaseButton _playButton;

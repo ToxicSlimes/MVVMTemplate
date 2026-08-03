@@ -176,6 +176,9 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
             _controlsContent.gameObject.SetActive(false);
             _gameContent.gameObject.SetActive(false);
 
+            AddPanelAnimator(_dimBackground.gameObject, 0, "Preset_Fade");
+            AddPanelAnimator(_modalWindow.gameObject, 1, "Preset_FadeScaleBounce");
+
             // Footer
             var footer = new HorizontalLayoutBuilder("Footer")
                 .WithSpacing(10f)

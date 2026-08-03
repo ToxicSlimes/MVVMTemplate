@@ -97,6 +97,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
                 .Ghost()
                 .WithPreferredSize(null, s.ButtonHeight)
                 .Build(centerPanel.transform);
+
+            AddPanelAnimator(centerPanel.gameObject, 0, "Preset_FadeScaleBounce");
         }
 
         protected override void WireFields(MainMenuView view)

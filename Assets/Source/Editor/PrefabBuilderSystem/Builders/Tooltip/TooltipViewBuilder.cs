@@ -17,6 +17,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Tooltip
         protected override string PrefabPath => "Assets/Prefabs/Popups/TooltipPopup.prefab";
 
         protected override bool ValidateBeforeSave => false;
+        protected override bool UseAnimationOrchestrator => false;
 
         protected override void SetupCanvas(GameObject go)
         {

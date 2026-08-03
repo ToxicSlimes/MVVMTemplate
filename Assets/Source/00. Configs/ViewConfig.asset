@@ -13,21 +13,6 @@ MonoBehaviour:
   m_Name: ViewConfig
   m_EditorClassIdentifier: Core.Infrastructure::Core.Infrastructure.MVVM.Config.ViewConfig
   _mappings:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 11400000, guid: fddfc4e6041abce4083f8e1915bb38ba, type: 2}
   - {fileID: 11400000, guid: 7f46fdfc927e4ce4a9a48dc36ba7220c, type: 2}
   - {fileID: 11400000, guid: f7b8a551f31c6462f82654010aa85b8c, type: 2}

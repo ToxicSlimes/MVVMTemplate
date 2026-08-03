@@ -59,6 +59,41 @@
       "dependencies": {},
       "hash": "3d382e6e1d479380685887ef0c7a7a5492911b99"
     },
+    "com.photonengine.fusion-fsm": {
+      "version": "https://github.com/Photon-Server/Photon-UPM.git#fusion/v2/fusion-fsm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e01b77c9cb2688602371160cc343454fb94796c6"
+    },
+    "com.photonengine.fusion-inspector": {
+      "version": "https://github.com/Photon-Server/Photon-UPM.git#fusion/v2/fusion-inspector",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ebb2bb66cc245698b44b133e0016ec02d58f815d"
+    },
+    "com.photonengine.fusion-interest-management": {
+      "version": "https://github.com/Photon-Server/Photon-UPM.git#fusion/v2/fusion-interest-management",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c5a290d888a6ace5d45b48da215267c8c51123c1"
+    },
+    "com.photonengine.fusion-physics": {
+      "version": "https://github.com/Photon-Server/Photon-UPM.git#fusion/v2/fusion-physics",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "30751772c97828f4ab637904424dd677012e95ad"
+    },
+    "com.photonengine.fusion-simple-kcc": {
+      "version": "https://github.com/Photon-Server/Photon-UPM.git#fusion/v2/fusion-simple-kcc",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d90dc4eed907a467abf0597c90210aed57fcccff"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

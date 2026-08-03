@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Core.Abstractions.MVVM.Views;
+using Core.Infrastructure.MVVM.Animation;
 using Core.Abstractions.Services.Input;
 using Core.Data.Domain.Enums;
 using Cysharp.Threading.Tasks;
@@ -15,7 +15,7 @@ using UnityEngine.UI;
 
 namespace Core.MVVM.Views.Settings
 {
-    public class SettingsView : BindableView<SettingsViewModel>
+    public class SettingsView : AnimatedView<SettingsViewModel>
     {
         public override bool IsPersistent => true;
 

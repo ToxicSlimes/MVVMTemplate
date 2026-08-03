@@ -18,6 +18,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.ConfirmPopup
         protected override string PrefabPath => "Assets/Prefabs/Popups/ConfirmPopup.prefab";
 
         protected override bool ValidateBeforeSave => false;
+        protected override bool UseAnimationOrchestrator => false;
 
         protected override void SetupCanvas(GameObject go)
         {

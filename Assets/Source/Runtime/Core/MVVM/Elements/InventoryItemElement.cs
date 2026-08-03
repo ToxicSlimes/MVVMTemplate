@@ -1,3 +1,4 @@
+using System;
 using Core.Abstractions.MVVM.Elements;
 using Core.Abstractions.Popup;
 using Core.Abstractions.UI.DragDrop;
@@ -21,10 +22,23 @@ namespace Core.MVVM.Elements
         [SerializeField] private Image _rarityIndicator;
         [SerializeField] private Image _categoryIndicator;
 
+        public static event Action<InventoryItemData, InventoryItemData> ItemDroppedOnItem;
+
         protected override void OnBind(InventoryItemData data)
         {
             _dragDropService?.SetupDraggable(gameObject, () => CurrentData);
+            _dragDropService?.SetupDropZone(gameObject, OnDropReceived, CanAcceptDrop);
 
+            UpdateVisuals(data);
+        }
+
+        protected override void OnRefresh(InventoryItemData oldData, InventoryItemData newData)
+        {
+            UpdateVisuals(newData);
+        }
+
+        private void UpdateVisuals(InventoryItemData data)
+        {
             if (_nameText != null)
                 _nameText.text = data.Name;
 
@@ -52,6 +66,17 @@ namespace Core.MVVM.Elements
 
             if (_quantityText != null)
                 _quantityText.text = string.Empty;
+        }
+
+        private bool CanAcceptDrop(object data)
+        {
+            return data is InventoryItemData item && item.Id != CurrentData.Id;
+        }
+
+        private void OnDropReceived(object data)
+        {
+            if (data is InventoryItemData sourceData)
+                ItemDroppedOnItem?.Invoke(sourceData, CurrentData);
         }
 
         private static Color GetRarityColor(ItemRarity rarity) => rarity switch

@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System.IO;
+using Core.Infrastructure.MVVM.Animation;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,7 @@ namespace Core.Editor.PrefabBuilderSystem.Core
             };
 
             SetupCanvas(Context.Root);
+            SetupAnimationOrchestrator();
             BuildStructure();
 
             if (ValidateBeforeSave && UIValidationSystem.Instance.ValidateBeforeBuild)
@@ -129,6 +131,35 @@ namespace Core.Editor.PrefabBuilderSystem.Core
 
         protected RectTransform Root => Context.Root.GetComponent<RectTransform>() 
             ?? Context.Root.AddComponent<RectTransform>();
+
+        protected virtual bool UseAnimationOrchestrator => true;
+
+        protected void SetupAnimationOrchestrator()
+        {
+            if (!UseAnimationOrchestrator) return;
+            Context.Root.AddComponent<ViewAnimationOrchestrator>();
+        }
+
+        protected static PanelAnimator AddPanelAnimator(GameObject go, int order, string presetName = null)
+        {
+            if (go.GetComponent<CanvasGroup>() == null)
+                go.AddComponent<CanvasGroup>();
+
+            var animator = go.AddComponent<PanelAnimator>();
+            var so = new SerializedObject(animator);
+            so.FindProperty("_order").intValue = order;
+
+            if (!string.IsNullOrEmpty(presetName))
+            {
+                var preset = AssetDatabase.LoadAssetAtPath<PanelTransitionPreset>(
+                    $"Assets/Source/00. Configs/Animation/{presetName}.asset");
+                if (preset != null)
+                    so.FindProperty("_preset").objectReferenceValue = preset;
+            }
+
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return animator;
+        }
 
         protected static void EnsureDirectoryExists(string path)
         {
