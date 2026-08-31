@@ -13,3 +13,5 @@
 *.user
 *.userprefs
 .DS_Store
+/docs
+/rpi
