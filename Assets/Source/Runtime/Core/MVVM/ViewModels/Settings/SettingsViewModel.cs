@@ -14,7 +14,7 @@ using Core.MVVM.Views.Settings;
 namespace Core.MVVM.ViewModels.Settings
 {
     [GenerateViewCommands]
-    public class SettingsViewModel : DisposableObject
+    public class SettingsViewModel : DisposableObject, IVisibilityAware
     {
         private readonly ISettingsModel _model;
         private readonly IMediator _mediator;

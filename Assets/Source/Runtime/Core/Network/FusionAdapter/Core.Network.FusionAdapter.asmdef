@@ -1,0 +1,38 @@
+{
+    "name": "Core.Network.FusionAdapter",
+    "rootNamespace": "Core.Network.FusionAdapter",
+    "references": [
+        "GUID:a1b2c3d4e5f60718293a4b5c6d7e8f90",
+        "GUID:1baf1ffff1031e948b3b228ab3453251",
+        "GUID:1530a967b84cfb44dbdd5e8a1989764f",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:bcea71e9df9d040f4bbf671696609a19",
+        "GUID:92b20ed6554ee4597a42c090a1cbbae4",
+        "GUID:25c802232b4d7400eaf3066d3e800e38",
+        "GUID:a10ff188cbfd201409863c062b118e1d",
+        "GUID:a0c20a7650acc0649a3b3cd69c81a937",
+        "GUID:831409e8f9d13b5479a3baef9822ad34",
+        "GUID:6478cfb0c7c17da49b75218eea376967",
+        "GUID:0bf93224da45a47a2b1bef848214b27f",
+        "GUID:3b570a5146f9d4f0fa107ed4559471a3",
+        "GUID:3aa1866a824b5472da50fe142777d95f",
+        "GUID:8187a248641c846be8d9a8daebf60b54"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "R3.dll",
+        "Newtonsoft.Json.dll",
+        "Fusion.Runtime.dll",
+        "Fusion.Realtime.dll",
+        "Fusion.Common.dll",
+        "Fusion.Log.dll",
+        "Fusion.Sockets.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

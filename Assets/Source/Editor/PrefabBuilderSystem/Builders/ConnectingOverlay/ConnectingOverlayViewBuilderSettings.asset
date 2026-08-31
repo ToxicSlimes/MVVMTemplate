@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405b0df1ae4aed344800bb34555d566a, type: 3}
+  m_Name: ConnectingOverlayViewBuilderSettings
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.Builders.ConnectingOverlay.ConnectingOverlayViewBuilderSettings
+  DimAlpha: 0.78
+  WindowWidth: 600
+  WindowHeight: 328
+  WindowPadding: 40
+  WindowBorderWidth: 1
+  TitleFontSize: 24
+  TitleHeight: 32
+  StatusTopSpacing: 12
+  StatusHeight: 22
+  ProgressTopSpacing: 32
+  ProgressBarHeight: 8
+  CancelButtonHeight: 56
+  CancelButtonFontSize: 16

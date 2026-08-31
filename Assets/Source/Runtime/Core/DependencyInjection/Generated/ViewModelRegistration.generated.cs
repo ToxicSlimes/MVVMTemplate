@@ -7,17 +7,24 @@
 
 using Core.Abstractions.MVVM.Models.Counter;
 using Core.Abstractions.MVVM.Models.Inventory;
+using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Abstractions.MVVM.Models.MainMenu;
 using Core.Abstractions.MVVM.Models.Settings;
 using Core.Abstractions.Services;
+using Core.Abstractions.Services.Input;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.MVVM.Models.Counter;
 using Core.MVVM.Models.Inventory;
+using Core.MVVM.Models.Lobby;
 using Core.MVVM.Models.MainMenu;
 using Core.MVVM.Models.Settings;
+using Core.MVVM.ViewModels.ConnectingOverlay;
 using Core.MVVM.ViewModels.Counter;
 using Core.MVVM.ViewModels.Inventory;
+using Core.MVVM.ViewModels.LobbyRoom;
 using Core.MVVM.ViewModels.MainMenu;
+using Core.MVVM.ViewModels.Matchmaking;
+using Core.MVVM.ViewModels.Pause;
 using Core.MVVM.ViewModels.Settings;
 using Reflex.Core;
 
@@ -29,19 +36,32 @@ namespace Core.DependencyInjection.Generated
         {
             builder.AddSingleton<ICounterModel>(_ => new CounterModel());
             builder.AddSingleton<IInventoryModel>(_ => new InventoryModel());
+            builder.AddSingleton<ILobbyModel>(_ => new LobbyModel());
             builder.AddSingleton<IMainMenuModel>(_ => new MainMenuModel());
             builder.AddSingleton<ISettingsModel>(container => new SettingsModel(
                 container.Resolve<IPrefsService>()));
 
+            builder.AddSingleton(container => new ConnectingOverlayViewModel(
+                container.Resolve<ILobbyModel>(),
+                container.Resolve<IMediator>()));
             builder.AddSingleton(container => new CounterViewModel(
                 container.Resolve<ICounterModel>(),
                 container.Resolve<IMediator>()));
             builder.AddSingleton(container => new InventoryViewModel(
                 container.Resolve<IInventoryModel>(),
                 container.Resolve<IMediator>()));
+            builder.AddSingleton(container => new LobbyRoomViewModel(
+                container.Resolve<ILobbyModel>(),
+                container.Resolve<IMediator>()));
             builder.AddSingleton(container => new MainMenuViewModel(
                 container.Resolve<IMainMenuModel>(),
                 container.Resolve<IMediator>()));
+            builder.AddSingleton(container => new MatchmakingViewModel(
+                container.Resolve<ILobbyModel>(),
+                container.Resolve<IMediator>()));
+            builder.AddSingleton(container => new PauseViewModel(
+                container.Resolve<IMediator>(),
+                container.Resolve<IInputService>()));
             builder.AddSingleton(container => new SettingsViewModel(
                 container.Resolve<ISettingsModel>(),
                 container.Resolve<IMediator>()));

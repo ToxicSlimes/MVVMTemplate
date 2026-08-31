@@ -33,6 +33,8 @@ namespace Core.Abstractions.Services.Input
         Vector2 LookVector { get; }
         Vector2 MouseScreenPosition { get; }
         bool IsAttackPressed { get; }
+        bool IsInteractPressed { get; }
+        bool IsMenuPressed { get; }
         bool IsJumpPressed { get; }
         bool IsSprintPressed { get; }
     }

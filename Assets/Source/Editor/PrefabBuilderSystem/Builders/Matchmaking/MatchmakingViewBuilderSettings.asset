@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565e23bfc5d64f8d820b79e9298ea6ab, type: 3}
+  m_Name: MatchmakingViewBuilderSettings
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.Builders.Matchmaking.MatchmakingViewBuilderSettings
+  SideMargin: 80
+  HeaderTopOffset: 56
+  HeaderHeight: 56
+  BackButtonSize: 56
+  TitleWidth: 300
+  CallsignLabelWidth: 120
+  NicknameInputWidth: 380
+  NicknameInputHeight: 52
+  CardsTopOffset: 160
+  CardWidth: 408
+  CardHeight: 300
+  CardBorderWidth: 1
+  CardTitleHeight: 32
+  CardHintHeight: 72
+  CardButtonHeight: 60
+  CodeInputWidth: 344
+  CodeInputHeight: 72
+  SessionsLeft: 944
+  SessionsWidth: 896
+  SessionsTopOffset: 160
+  SessionsPanelHeight: 720
+  SessionsHeaderHeight: 34
+  SessionsLabelWidth: 200
+  RefreshButtonWidth: 120
+  RefreshButtonHeight: 34
+  DividerTopGap: 6
+  DividerThickness: 1
+  DividerBottomGap: 15
+  ScrollHeight: 664
+  RowHeight: 64
+  RowSpacing: 8
+  RowSidePadding: 20
+  RowInfoWidth: 320
+  RowJoinButtonWidth: 92
+  RowJoinButtonHeight: 36
+  StatusBottomOffset: 56
+  StatusWidth: 600
+  StatusHeight: 32
+  BackButtonFontSize: 28
+  TitleFontSize: 32
+  NicknameFontSize: 18
+  CardTitleFontSize: 24
+  CardButtonFontSize: 20
+  CodeInputFontSize: 34
+  RefreshButtonFontSize: 14
+  RowFontSize: 22
+  RowButtonFontSize: 14
+  NicknameCharacterLimit: 16
+  CodeCharacterLimit: 6
