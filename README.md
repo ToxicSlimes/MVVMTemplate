@@ -12,6 +12,52 @@ Ready-to-use foundation for any Unity project — just add your game logic on to
 4. Run code generators: `Tools → MVVM → Scan & Generate` (all scanners)
 5. Open `BootstrapScene` → Press Play
 
+## Install as a Git submodule
+
+Any Unity project can embed this repo and pin it to an exact commit. Git stores the SHA in the parent index (a gitlink); updating the template is a checkout plus a parent commit.
+
+### Add
+
+From the root of the host Unity project:
+
+```bash
+git submodule add https://github.com/ToxicSlimes/MVVMTemplate.git Packages/com.toxicslimes.mvvm-template
+git commit -m "Add MVVM template submodule"
+```
+
+`package.json` at the module root makes Unity treat the folder as an embedded package. Copy git URL packages from this repo's `Packages/manifest.json` into the host manifest (R3, UniTask, Reflex, LitMotion, Fusion addons) so the host resolves the same dependencies.
+
+### Pin or change commit
+
+```bash
+cd Packages/com.toxicslimes.mvvm-template
+git fetch
+git checkout <commit-sha>
+cd ../..
+git add Packages/com.toxicslimes.mvvm-template
+git commit -m "Pin MVVM template to <commit-sha>"
+```
+
+### Update to the latest tracked branch
+
+```bash
+git submodule update --remote Packages/com.toxicslimes.mvvm-template
+git add Packages/com.toxicslimes.mvvm-template
+git commit -m "Bump MVVM template"
+```
+
+### Clone a host that already has the submodule
+
+```bash
+git clone --recurse-submodules <host-repo-url>
+```
+
+Or after a plain clone:
+
+```bash
+git submodule update --init --recursive
+```
+
 ## Stack
 
 | Package | Purpose |
@@ -23,6 +69,7 @@ Ready-to-use foundation for any Unity project — just add your game logic on to
 | **TriInspector** | Custom inspector attributes |
 | **Addressables** | Asset loading & management |
 | **InputSystem** | New Input System |
+| **Photon Fusion 2** | Multiplayer (isolated behind `Core.Network.Abstractions`) |
 
 ## Architecture
 
@@ -138,8 +185,8 @@ Demonstrates: View ↔ ViewModel binding, button commands, state machine navigat
 | Layer | File |
 |-------|------|
 | Model | `MainMenuModel` — visibility state |
-| ViewModel | `MainMenuViewModel` — Play, Settings, Quit commands |
-| View | `MainMenuView` — 3 buttons bound via `OnClickAsObservable()` |
+| ViewModel | `MainMenuViewModel` — Play, Quit commands |
+| View | `MainMenuView` — Play and Quit bound via `OnClickAsObservable()` |
 | State | `MainMenuState` — shows MainMenuView via ViewService |
 
 ### Counter (full CQRS cycle)
@@ -168,7 +215,7 @@ Demonstrates: Complex modal with tabs, sliders, toggles, audio integration.
 
 Photon Fusion 2 is isolated behind `Core.Network.Abstractions`. The Fusion adapter is the only assembly that references Fusion types.
 
-Play on the Main Menu opens Matchmaking. Create or join a room, ready up, add lobby bots, start a match. The session FSM goes Lobby → Countdown → Playing → Ended. Playing loads `GameplayScene` (empty arena + spawn points) and does not spawn player bodies or apply win rules — a game hooks `FinishMatch` and `PlayerAvatarSpawner`.
+Play on the Main Menu opens Matchmaking. Create or join a room, ready up, add lobby bots, start a match. The session FSM goes Lobby → Countdown → Playing → Ended. Playing loads `GameplayScene` (empty arena + spawn points) and does not spawn player bodies or apply win rules — a game calls `GameSessionMachine.FinishMatch` and registers its own spawn handlers plus `FusionInputSource.Register`.
 
 | Layer | File |
 |-------|------|
@@ -177,7 +224,7 @@ Play on the Main Menu opens Matchmaking. Create or join a room, ready up, add lo
 | Session | `GameSessionMachine`, `NetworkPlayer`, `BotRoster` |
 | UI | Matchmaking, LobbyRoom, ConnectingOverlay, Pause |
 
-Rebuild network prefabs with `Tools → Network → Build Network Prefabs`. Rebuild the empty gameplay scene with `Tools → Network → Build Gameplay Scene`. Photon FusionMenu is unused.
+Rebuild network prefabs with `Tools → Network → Build Network Prefabs`. Photon FusionMenu is unused.
 
 ### Utility AI
 
