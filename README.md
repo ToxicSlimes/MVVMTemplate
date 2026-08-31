@@ -12,50 +12,59 @@ Ready-to-use foundation for any Unity project — just add your game logic on to
 4. Run code generators: `Tools → MVVM → Scan & Generate` (all scanners)
 5. Open `BootstrapScene` → Press Play
 
-## Install as a Git submodule
+## Use as a Git submodule
 
-Any Unity project can embed this repo and pin it to an exact commit. Git stores the SHA in the parent index (a gitlink); updating the template is a checkout plus a parent commit.
+This repo is a full Unity project. Downstream games pin **this repository** to a commit and import `Assets/Source` as a UPM package so scripts compile under `Packages/`.
 
-### Add
-
-From the root of the host Unity project:
+In the host Unity project:
 
 ```bash
-git submodule add https://github.com/ToxicSlimes/MVVMTemplate.git Packages/com.toxicslimes.mvvm-template
-git commit -m "Add MVVM template submodule"
+git submodule add https://github.com/ToxicSlimes/MVVMTemplate.git Packages/MVVMTemplate
 ```
 
-`package.json` at the module root makes Unity treat the folder as an embedded package. Copy git URL packages from this repo's `Packages/manifest.json` into the host manifest (R3, UniTask, Reflex, LitMotion, Fusion addons) so the host resolves the same dependencies.
+The host records the submodule SHA. That is the pinned commit.
 
-### Pin or change commit
+Add a local file dependency in `Packages/manifest.json` (copy the git package URLs from this repo's `Packages/manifest.json` as well — R3, UniTask, Reflex, LitMotion, TriInspector, Fusion):
 
-```bash
-cd Packages/com.toxicslimes.mvvm-template
-git fetch
-git checkout <commit-sha>
-cd ../..
-git add Packages/com.toxicslimes.mvvm-template
-git commit -m "Pin MVVM template to <commit-sha>"
+```json
+{
+  "dependencies": {
+    "com.toxicslimes.mvvm-template": "file:MVVMTemplate/Assets/Source"
+  }
+}
 ```
 
-### Update to the latest tracked branch
+Update to a newer commit:
 
 ```bash
-git submodule update --remote Packages/com.toxicslimes.mvvm-template
-git add Packages/com.toxicslimes.mvvm-template
+git fetch origin
+git -C Packages/MVVMTemplate checkout <commit-sha>
+git add Packages/MVVMTemplate
 git commit -m "Bump MVVM template"
 ```
 
-### Clone a host that already has the submodule
+Or track the submodule remote branch:
 
 ```bash
-git clone --recurse-submodules <host-repo-url>
+git submodule update --remote Packages/MVVMTemplate
+git add Packages/MVVMTemplate
+git commit -m "Bump MVVM template"
 ```
 
-Or after a plain clone:
+After clone of a host that already has the submodule:
 
 ```bash
 git submodule update --init --recursive
+```
+
+Do not place this repo under the host `Assets/` folder. Unity would import a nested project (`ProjectSettings`, Photon, TMP samples). `Packages/MVVMTemplate` plus the `file:` entry keeps one compilation of `Assets/Source`.
+
+Prefabs, Addressables, and scenes stay in this project. Copy or Addressable-link what a game needs, or keep developing by opening this repo as a Unity project.
+
+Without a submodule, Package Manager can pin the same commit via git URL:
+
+```json
+"com.toxicslimes.mvvm-template": "https://github.com/ToxicSlimes/MVVMTemplate.git?path=Assets/Source#<commit-sha>"
 ```
 
 ## Stack
