@@ -1,32 +1,31 @@
 using System;
-using Core.Infrastructure.MVVM.Animation;
 using Core.Application.Commands.Elements;
 using Core.Data.Domain.Enums;
 using Core.Data.Domain.Models.Elements;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.MVVM.Elements;
 using Core.MVVM.ViewModels.Inventory;
-using Core.UI.Binding;
 using Core.UI.Controls;
 using R3;
 using Reflex.Attributes;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.MVVM.Views.Inventory
 {
-    public class InventoryView : AnimatedView<InventoryViewModel>
+    public class InventoryView : PanelView<InventoryViewModel>
     {
+        private const string ItemCountFormat = "Items: {0}";
+
         [Inject] private IMediator _mediator;
 
         [Header("Header")]
         [SerializeField] private BaseButton _backButton;
-        [SerializeField] private TMP_Text _itemCountText;
+        [SerializeField] private BaseText _itemCountText;
 
         [Header("Filter Bar")]
         [SerializeField] private Transform _filterBarContainer;
-        [SerializeField] private Button[] _filterButtons;
+        [SerializeField] private BaseButton[] _filterButtons;
 
         [Header("Items")]
         [SerializeField] private Transform _itemsContainer;
@@ -39,20 +38,22 @@ namespace Core.MVVM.Views.Inventory
 
         private static readonly ItemCategory[] FilterCategories = (ItemCategory[])Enum.GetValues(typeof(ItemCategory));
 
-        protected override void OnBind(ref DisposableBag disposables)
+        protected override void BindPanel(ref DisposableBag disposables)
         {
-            if (_backButton != null)
-                _backButton.BindTo(ViewModel.BackCommand, ref disposables);
-
-            if (_itemCountText != null)
-            {
-                ViewModel.ItemCount
-                    .Subscribe(_itemCountText, static (count, tmp) => tmp.text = $"Items: {count}")
-                    .AddTo(ref disposables);
-            }
+            Bind(_backButton, ViewModel.BackCommand, ref disposables);
+            Bind(_itemCountText, ViewModel.ItemCount, ItemCountFormat, ref disposables);
 
             BindFilterBar(ref disposables);
+            BindItems(ref disposables);
 
+            BindActive(_detailPanel, ViewModel.HasSelection, ref disposables);
+            Bind(_selectedNameText, ViewModel.SelectedItemName, ref disposables);
+            Bind(_selectedDescriptionText, ViewModel.SelectedItemDescription, ref disposables);
+            Bind(_removeButton, ViewModel.RemoveSelectedCommand, ref disposables);
+        }
+
+        private void BindItems(ref DisposableBag disposables)
+        {
             InventoryItemElement.ItemDroppedOnItem += OnItemReordered;
             Disposable.Create(() => InventoryItemElement.ItemDroppedOnItem -= OnItemReordered)
                 .AddTo(ref disposables);
@@ -66,23 +67,6 @@ namespace Core.MVVM.Views.Inventory
                         self.OnItemClicked));
                 })
                 .AddTo(ref disposables);
-
-            if (_detailPanel != null)
-            {
-                ViewModel.HasSelection
-                    .Subscribe(_detailPanel, static (has, panel) => panel.SetActive(has))
-                    .AddTo(ref disposables);
-            }
-
-            if (_selectedNameText != null)
-                _selectedNameText.BindTo(ViewModel.SelectedItemName, ref disposables);
-
-            if (_selectedDescriptionText != null)
-                _selectedDescriptionText.BindTo(ViewModel.SelectedItemDescription, ref disposables);
-
-            if (_removeButton != null)
-                _removeButton.BindTo(ViewModel.RemoveSelectedCommand, ref disposables);
-
         }
 
         private void BindFilterBar(ref DisposableBag disposables)

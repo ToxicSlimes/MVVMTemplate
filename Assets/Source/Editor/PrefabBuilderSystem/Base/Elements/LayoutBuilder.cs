@@ -114,19 +114,19 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         public HorizontalLayoutBuilder DeepSpace()
         {
-            _backgroundColor = DesignSystemProvider.Colors?.deepSpace ?? new Color(0.039f, 0.059f, 0.118f);
+            _backgroundColor = DesignSystemProvider.Colors?.deepSpace ?? new Color(0.024f, 0.043f, 0.102f);
             return this;
         }
 
         public HorizontalLayoutBuilder DarkSurface()
         {
-            _backgroundColor = DesignSystemProvider.Colors?.darkSurface ?? new Color(0.082f, 0.106f, 0.176f);
+            _backgroundColor = DesignSystemProvider.Colors?.darkSurface ?? new Color(0.051f, 0.090f, 0.188f);
             return this;
         }
 
         public HorizontalLayoutBuilder CardBackground()
         {
-            _backgroundColor = DesignSystemProvider.Colors?.cardBackground ?? new Color(0.118f, 0.161f, 0.365f, 0.4f);
+            _backgroundColor = DesignSystemProvider.Colors?.cardBackground ?? new Color(0.086f, 0.149f, 0.290f, 0.4f);
             return this;
         }
 
@@ -304,19 +304,19 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         public VerticalLayoutBuilder DeepSpace()
         {
-            _backgroundColor = DesignSystemProvider.Colors?.deepSpace ?? new Color(0.039f, 0.059f, 0.118f);
+            _backgroundColor = DesignSystemProvider.Colors?.deepSpace ?? new Color(0.024f, 0.043f, 0.102f);
             return this;
         }
 
         public VerticalLayoutBuilder DarkSurface()
         {
-            _backgroundColor = DesignSystemProvider.Colors?.darkSurface ?? new Color(0.082f, 0.106f, 0.176f);
+            _backgroundColor = DesignSystemProvider.Colors?.darkSurface ?? new Color(0.051f, 0.090f, 0.188f);
             return this;
         }
 
         public VerticalLayoutBuilder CardBackground()
         {
-            _backgroundColor = DesignSystemProvider.Colors?.cardBackground ?? new Color(0.118f, 0.161f, 0.365f, 0.4f);
+            _backgroundColor = DesignSystemProvider.Colors?.cardBackground ?? new Color(0.086f, 0.149f, 0.290f, 0.4f);
             return this;
         }
 

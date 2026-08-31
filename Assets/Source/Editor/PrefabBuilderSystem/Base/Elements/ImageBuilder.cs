@@ -62,31 +62,31 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         public ImageBuilder DeepSpace()
         {
-            _color = DesignSystemProvider.Colors?.deepSpace ?? new Color(0.039f, 0.059f, 0.118f);
+            _color = DesignSystemProvider.Colors?.deepSpace ?? new Color(0.024f, 0.043f, 0.102f);
             return this;
         }
 
         public ImageBuilder DarkSurface()
         {
-            _color = DesignSystemProvider.Colors?.darkSurface ?? new Color(0.082f, 0.106f, 0.176f);
+            _color = DesignSystemProvider.Colors?.darkSurface ?? new Color(0.051f, 0.090f, 0.188f);
             return this;
         }
 
         public ImageBuilder ElevatedSurface()
         {
-            _color = DesignSystemProvider.Colors?.elevatedSurface ?? new Color(0.118f, 0.161f, 0.365f, 0.8f);
+            _color = DesignSystemProvider.Colors?.elevatedSurface ?? new Color(0.086f, 0.149f, 0.290f, 0.8f);
             return this;
         }
 
         public ImageBuilder Card()
         {
-            _color = DesignSystemProvider.Colors?.cardBackground ?? new Color(0.118f, 0.161f, 0.365f, 0.4f);
+            _color = DesignSystemProvider.Colors?.cardBackground ?? new Color(0.086f, 0.149f, 0.290f, 0.4f);
             return this;
         }
 
         public ImageBuilder InputBackground()
         {
-            _color = DesignSystemProvider.Colors?.inputBackground ?? new Color(0.118f, 0.161f, 0.365f, 0.6f);
+            _color = DesignSystemProvider.Colors?.inputBackground ?? new Color(0.086f, 0.149f, 0.290f, 0.6f);
             return this;
         }
 
@@ -98,7 +98,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         public ImageBuilder AIBubble()
         {
-            _color = DesignSystemProvider.Colors?.aiBubble ?? new Color(0.118f, 0.161f, 0.365f, 0.95f);
+            _color = DesignSystemProvider.Colors?.aiBubble ?? new Color(0.086f, 0.149f, 0.290f, 0.95f);
             return this;
         }
 
@@ -110,7 +110,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         public ImageBuilder Indigo()
         {
-            _color = DesignSystemProvider.Colors?.indigo ?? new Color(0.388f, 0.4f, 0.945f);
+            _color = DesignSystemProvider.Colors?.indigo ?? new Color(0.184f, 0.816f, 0.451f);
             return this;
         }
 

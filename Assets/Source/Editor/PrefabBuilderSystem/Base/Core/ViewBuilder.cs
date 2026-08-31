@@ -27,7 +27,7 @@ namespace Core.Editor.PrefabBuilderSystem.Core
 
             Context = new PrefabBuilderContext
             {
-                Root = new GameObject(Path.GetFileNameWithoutExtension(PrefabPath))
+                Root = CreateRoot()
             };
 
             SetupCanvas(Context.Root);
@@ -84,8 +84,10 @@ namespace Core.Editor.PrefabBuilderSystem.Core
         {
             Context = new PrefabBuilderContext
             {
-                Root = new GameObject(Path.GetFileNameWithoutExtension(PrefabPath) + "_Validation")
+                Root = CreateRoot()
             };
+
+            Context.Root.name += "_Validation";
 
             SetupCanvas(Context.Root);
             BuildStructure();
@@ -98,23 +100,39 @@ namespace Core.Editor.PrefabBuilderSystem.Core
 
         protected abstract void BuildStructure();
 
+        /// <summary>
+        /// Creates the object the prefab is saved from. Override to start from an existing prefab:
+        /// saving an instance of one turns the result into a Prefab Variant.
+        /// </summary>
+        protected virtual GameObject CreateRoot()
+        {
+            return new GameObject(Path.GetFileNameWithoutExtension(PrefabPath));
+        }
+
+        /// <summary>
+        /// Null coalescing must not be used here: a missing component comes back as a fake null
+        /// that satisfies '??' and then throws on first access.
+        /// </summary>
+        private static T GetOrAdd<T>(GameObject go) where T : Component
+        {
+            var component = go.GetComponent<T>();
+            return component != null ? component : go.AddComponent<T>();
+        }
+
         protected virtual void SetupCanvas(GameObject go)
         {
-            var canvas = go.AddComponent<Canvas>();
+            var canvas = GetOrAdd<Canvas>(go);
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             Context.Canvas = canvas;
 
-            var scaler = go.AddComponent<CanvasScaler>();
+            var scaler = GetOrAdd<CanvasScaler>(go);
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = ReferenceResolution;
             scaler.matchWidthOrHeight = MatchWidthOrHeight;
             Context.CanvasScaler = scaler;
 
-            var raycaster = go.AddComponent<GraphicRaycaster>();
-            Context.Raycaster = raycaster;
-
-            var canvasGroup = go.AddComponent<CanvasGroup>();
-            Context.CanvasGroup = canvasGroup;
+            Context.Raycaster = GetOrAdd<GraphicRaycaster>(go);
+            Context.CanvasGroup = GetOrAdd<CanvasGroup>(go);
 
             // Ensure RectTransform is properly initialized
             var rt = go.GetComponent<RectTransform>();
@@ -137,6 +155,8 @@ namespace Core.Editor.PrefabBuilderSystem.Core
         protected void SetupAnimationOrchestrator()
         {
             if (!UseAnimationOrchestrator) return;
+            if (Context.Root.GetComponent<ViewAnimationOrchestrator>() != null) return;
+
             Context.Root.AddComponent<ViewAnimationOrchestrator>();
         }
 

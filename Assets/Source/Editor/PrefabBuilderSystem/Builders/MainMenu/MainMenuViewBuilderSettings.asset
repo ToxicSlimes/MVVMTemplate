@@ -9,20 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff84333bf482641e0ba6f0d82a252727, type: 3}
+  m_Script: {fileID: 11500000, guid: 181d1e1a68c4f7641a373308a8b01978, type: 3}
   m_Name: MainMenuViewBuilderSettings
-  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.MainView.MainViewBuilderSettings
-  ContentPadding: 40
-  ButtonSpacing: 20
-  ButtonWidth: 300
-  ButtonHeight: 60
-  TitleFontSize: 48
-  SubtitleFontSize: 18
-  ButtonFontSize: 24
-  BgColor: {r: 0.12, g: 0.12, b: 0.14, a: 1}
-  PanelColor: {r: 0.16, g: 0.16, b: 0.18, a: 1}
-  TitleColor: {r: 1, g: 1, b: 1, a: 1}
-  SubtitleColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
-  ButtonColor: {r: 0.24, g: 0.47, b: 0.96, a: 1}
-  ButtonTextColor: {r: 1, g: 1, b: 1, a: 1}
-  ButtonHoverColor: {r: 0.34, g: 0.57, b: 1, a: 1}
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.Builders.MainMenu.MainMenuViewBuilderSettings
+  TitleBlockAnchorMin: {x: 0, y: 0.58}
+  TitleBlockAnchorMax: {x: 1, y: 0.84}
+  TitleHeight: 140
+  SubtitleHeight: 36
+  MenuBlockAnchorMin: {x: 0, y: 0.1}
+  MenuBlockAnchorMax: {x: 1, y: 0.57}
+  ButtonWidth: 400
+  PlayButtonHeight: 72
+  MenuButtonHeight: 60
+  FooterHeight: 40
+  FooterSideMargin: 48
+  FooterBottomMargin: 32
+  FooterLabelWidth: 320
+  TitleFontSize: 112
+  PlayButtonFontSize: 28
+  MenuButtonFontSize: 22

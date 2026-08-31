@@ -53,42 +53,42 @@ namespace Core.Editor.DesignSystem
 
             var palette = existing != null ? existing : ScriptableObject.CreateInstance<ColorPalette>();
 
-            palette.deepSpace = new Color(0.039f, 0.059f, 0.118f, 1f);
-            palette.darkSurface = new Color(0.082f, 0.106f, 0.176f, 1f);
-            palette.elevatedSurface = new Color(0.118f, 0.161f, 0.365f, 0.8f);
+            palette.deepSpace = new Color(0.024f, 0.043f, 0.102f, 1f);
+            palette.darkSurface = new Color(0.051f, 0.090f, 0.188f, 1f);
+            palette.elevatedSurface = new Color(0.086f, 0.149f, 0.290f, 0.8f);
 
-            palette.indigo = new Color(0.388f, 0.4f, 0.945f, 1f);
-            palette.pink = new Color(0.925f, 0.282f, 0.6f, 1f);
-            palette.purple = new Color(0.545f, 0.361f, 0.965f, 1f);
-            palette.cyan = new Color(0.024f, 0.714f, 0.831f, 1f);
+            palette.indigo = new Color(0.184f, 0.816f, 0.451f, 1f);
+            palette.pink = new Color(1f, 0.541f, 0.239f, 1f);
+            palette.purple = new Color(1f, 0.827f, 0.306f, 1f);
+            palette.cyan = new Color(0.478f, 0.925f, 0.863f, 1f);
 
             palette.textPrimary = new Color(0.973f, 0.980f, 0.988f, 1f);
-            palette.textSecondary = new Color(0.580f, 0.639f, 0.722f, 1f);
-            palette.textTertiary = new Color(0.392f, 0.455f, 0.545f, 1f);
-            palette.textDisabled = new Color(0.278f, 0.333f, 0.412f, 1f);
+            palette.textSecondary = new Color(0.639f, 0.706f, 0.800f, 1f);
+            palette.textTertiary = new Color(0.482f, 0.553f, 0.659f, 1f);
+            palette.textDisabled = new Color(0.369f, 0.439f, 0.549f, 1f);
 
-            palette.userBubbleStart = new Color(0.4f, 0.494f, 0.918f, 0.95f);
-            palette.userBubbleEnd = new Color(0.463f, 0.294f, 0.635f, 0.95f);
-            palette.aiBubble = new Color(0.118f, 0.161f, 0.365f, 0.95f);
-            palette.aiBubbleBorder = new Color(0.580f, 0.639f, 0.722f, 0.1f);
-            palette.errorBubble = new Color(0.937f, 0.267f, 0.267f, 0.15f);
-            palette.errorText = new Color(0.988f, 0.647f, 0.647f, 1f);
-            palette.errorBorder = new Color(0.937f, 0.267f, 0.267f, 0.3f);
+            palette.userBubbleStart = new Color(0.059f, 0.361f, 0.259f, 0.95f);
+            palette.userBubbleEnd = new Color(0.055f, 0.353f, 0.400f, 0.95f);
+            palette.aiBubble = new Color(0.078f, 0.125f, 0.231f, 0.95f);
+            palette.aiBubbleBorder = new Color(0.639f, 0.706f, 0.800f, 0.1f);
+            palette.errorBubble = new Color(0.902f, 0.224f, 0.275f, 0.18f);
+            palette.errorText = new Color(1f, 0.361f, 0.361f, 1f);
+            palette.errorBorder = new Color(0.902f, 0.224f, 0.275f, 0.45f);
 
-            palette.cardBackground = new Color(0.118f, 0.161f, 0.365f, 0.4f);
-            palette.cardBorder = new Color(0.580f, 0.639f, 0.722f, 0.1f);
-            palette.cardHoverBackground = new Color(0.118f, 0.161f, 0.365f, 0.6f);
-            palette.cardHoverBorder = new Color(0.580f, 0.639f, 0.722f, 0.2f);
+            palette.cardBackground = new Color(0.086f, 0.149f, 0.290f, 0.4f);
+            palette.cardBorder = new Color(0.639f, 0.706f, 0.800f, 0.12f);
+            palette.cardHoverBackground = new Color(0.086f, 0.149f, 0.290f, 0.6f);
+            palette.cardHoverBorder = new Color(0.184f, 0.816f, 0.451f, 0.3f);
 
-            palette.primaryButtonGradientStart = new Color(0.388f, 0.4f, 0.945f, 1f);
-            palette.primaryButtonGradientEnd = new Color(0.545f, 0.361f, 0.965f, 1f);
-            palette.secondaryButtonBackground = new Color(0.118f, 0.161f, 0.365f, 0.4f);
-            palette.iconButtonBackground = new Color(0.118f, 0.161f, 0.365f, 0.6f);
+            palette.primaryButtonGradientStart = new Color(0.047f, 0.478f, 0.294f, 1f);
+            palette.primaryButtonGradientEnd = new Color(0.043f, 0.431f, 0.455f, 1f);
+            palette.secondaryButtonBackground = new Color(0.086f, 0.149f, 0.290f, 0.5f);
+            palette.iconButtonBackground = new Color(0.086f, 0.149f, 0.290f, 0.65f);
 
-            palette.inputBackground = new Color(0.118f, 0.161f, 0.365f, 0.6f);
-            palette.inputBorder = new Color(0.580f, 0.639f, 0.722f, 0.1f);
-            palette.inputFocusBorder = new Color(0.388f, 0.4f, 0.945f, 1f);
-            palette.inputPlaceholder = new Color(0.392f, 0.455f, 0.545f, 1f);
+            palette.inputBackground = new Color(0.078f, 0.125f, 0.231f, 0.65f);
+            palette.inputBorder = new Color(0.639f, 0.706f, 0.800f, 0.12f);
+            palette.inputFocusBorder = new Color(0.184f, 0.816f, 0.451f, 1f);
+            palette.inputPlaceholder = new Color(0.482f, 0.553f, 0.659f, 1f);
 
             if (existing == null)
             {

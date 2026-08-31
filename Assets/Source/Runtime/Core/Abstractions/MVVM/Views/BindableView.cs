@@ -46,11 +46,13 @@ namespace Core.Abstractions.MVVM.Views
 
     protected abstract void OnBind(ref DisposableBag disposables);
 
+    /// <summary>
+    /// Вьюмодель здесь не освобождается: её создаёт и держит контейнер, а вьюха только
+    /// подписывается. Освободи её тут — и повторный показ экрана получит уже мёртвый синглтон.
+    /// </summary>
     public virtual void Unbind()
     {
-        var currentViewModel = _viewModel.Value;
         _viewModel.Value = null;
-        currentViewModel?.Dispose();
         _disposables.Dispose();
         _disposables = new DisposableBag();
     }

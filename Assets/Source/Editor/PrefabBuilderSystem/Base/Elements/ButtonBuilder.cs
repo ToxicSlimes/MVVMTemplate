@@ -104,11 +104,11 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             switch (variant)
             {
                 case ButtonVariant.Primary:
-                    _backgroundColor = colors?.primaryButtonGradientStart ?? new Color(0.388f, 0.4f, 0.945f, 1f);
+                    _backgroundColor = colors?.primaryButtonGradientStart ?? new Color(0.184f, 0.816f, 0.451f, 1f);
                     _labelColor = colors?.textPrimary ?? Color.white;
                     break;
                 case ButtonVariant.Secondary:
-                    _backgroundColor = colors?.secondaryButtonBackground ?? new Color(0.118f, 0.161f, 0.365f, 0.4f);
+                    _backgroundColor = colors?.secondaryButtonBackground ?? new Color(0.086f, 0.149f, 0.290f, 0.4f);
                     _labelColor = colors?.textPrimary ?? Color.white;
                     break;
                 case ButtonVariant.Outline:
@@ -127,7 +127,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                     _outlineColor = colors?.errorBorder ?? new Color(0.937f, 0.267f, 0.267f, 0.3f);
                     break;
                 case ButtonVariant.IconButton:
-                    _backgroundColor = colors?.iconButtonBackground ?? new Color(0.118f, 0.161f, 0.365f, 0.6f);
+                    _backgroundColor = colors?.iconButtonBackground ?? new Color(0.086f, 0.149f, 0.290f, 0.6f);
                     _labelColor = colors?.textPrimary ?? Color.white;
                     break;
             }
@@ -137,7 +137,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         public ButtonBuilder Primary()
         {
             var colors = DesignSystemProvider.Colors;
-            _backgroundColor = colors?.primaryButtonGradientStart ?? new Color(0.388f, 0.4f, 0.945f, 1f);
+            _backgroundColor = colors?.primaryButtonGradientStart ?? new Color(0.184f, 0.816f, 0.451f, 1f);
             _labelColor = colors?.textPrimary ?? Color.white;
             return this;
         }
@@ -145,7 +145,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         public ButtonBuilder Secondary()
         {
             var colors = DesignSystemProvider.Colors;
-            _backgroundColor = colors?.secondaryButtonBackground ?? new Color(0.118f, 0.161f, 0.365f, 0.4f);
+            _backgroundColor = colors?.secondaryButtonBackground ?? new Color(0.086f, 0.149f, 0.290f, 0.4f);
             _labelColor = colors?.textPrimary ?? Color.white;
             return this;
         }
@@ -171,7 +171,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         public ButtonBuilder IconButton()
         {
             var colors = DesignSystemProvider.Colors;
-            _backgroundColor = colors?.iconButtonBackground ?? new Color(0.118f, 0.161f, 0.365f, 0.6f);
+            _backgroundColor = colors?.iconButtonBackground ?? new Color(0.086f, 0.149f, 0.290f, 0.6f);
             _labelColor = colors?.textPrimary ?? Color.white;
             return this;
         }
@@ -179,7 +179,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         public ButtonBuilder Indigo()
         {
             var colors = DesignSystemProvider.Colors;
-            _backgroundColor = colors?.indigo ?? new Color(0.388f, 0.4f, 0.945f, 1f);
+            _backgroundColor = colors?.indigo ?? new Color(0.184f, 0.816f, 0.451f, 1f);
             _labelColor = colors?.textPrimary ?? Color.white;
             return this;
         }
@@ -233,10 +233,11 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 outline.effectDistance = _outlineDistance;
             }
 
-            var label = instance.GetComponentInChildren<TextMeshProUGUI>();
+            var label = UpgradeLabel(instance);
             if (label != null)
             {
                 if (!string.IsNullOrEmpty(_label)) label.text = _label;
+                label.enableAutoSizing = false;
                 label.fontSize = _labelFontSize;
                 label.color = _labelColor;
             }
@@ -247,6 +248,27 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             ControlDefaults.ApplyTo(bcb);
 
             ApplyLayoutElement(instance);
+        }
+
+        /// <summary>
+        /// Replaces a plain TextMeshProUGUI label with BaseText so the label stays bindable
+        /// when the button comes from a prefab.
+        /// </summary>
+        private static TextMeshProUGUI UpgradeLabel(GameObject instance)
+        {
+            var label = instance.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (label == null || label is BaseText)
+                return label;
+
+            var host = label.gameObject;
+            UnityEditorInternal.ComponentUtility.CopyComponent(label);
+            Object.DestroyImmediate(label);
+
+            var upgraded = host.AddComponent<BaseText>();
+            UnityEditorInternal.ComponentUtility.PasteComponentValues(upgraded);
+
+            return upgraded;
         }
 
         public override BaseButton Build(Transform parent)

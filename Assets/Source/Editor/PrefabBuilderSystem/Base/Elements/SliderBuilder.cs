@@ -119,7 +119,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         {
             var colors = DesignSystemProvider.Colors;
             _backgroundColor = colors?.darkSurface ?? new Color(0.2f, 0.2f, 0.2f, 1f);
-            _fillColor = colors?.indigo ?? new Color(0.388f, 0.4f, 0.945f, 1f);
+            _fillColor = colors?.indigo ?? new Color(0.184f, 0.816f, 0.451f, 1f);
             _handleColor = colors?.textPrimary ?? Color.white;
             return this;
         }

@@ -6,7 +6,6 @@ namespace Core.Infrastructure.Mediator.Abstractions
     public readonly struct Nothing : IEquatable<Nothing>, IComparable<Nothing>
     {
         public static readonly Nothing Value = new();
-        public static readonly UniTask<Nothing> Task = UniTask.FromResult(Value);
 
         public override int GetHashCode() => 0;
 

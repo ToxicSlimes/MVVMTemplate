@@ -1,5 +1,7 @@
 #if UNITY_EDITOR
+using Core.Configs.DesignSystem;
 using Core.Editor.PrefabBuilderSystem.Settings;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using UnityEngine;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
@@ -20,15 +22,34 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
         public float TitleFontSize = 24f;
 
         [Header("Colors")]
-        public Color BgDimColor = new(0f, 0f, 0f, 0.7f);
-        public Color ModalBgColor = new(0.14f, 0.14f, 0.16f, 1f);
-        public Color HeaderColor = new(0.18f, 0.18f, 0.20f, 1f);
-        public Color CounterTextColor = new(1f, 1f, 1f, 1f);
-        public Color IncrementsTextColor = new(0.5f, 0.5f, 0.55f, 1f);
-        public Color IncrementButtonColor = new(0.24f, 0.47f, 0.96f, 1f);
-        public Color DecrementButtonColor = new(0.96f, 0.47f, 0.24f, 1f);
-        public Color ResetButtonColor = new(0.4f, 0.4f, 0.45f, 1f);
-        public Color ButtonTextColor = new(1f, 1f, 1f, 1f);
+        public Color BgDimColor = new(0.024f, 0.043f, 0.102f, 0.7f);
+        public Color ModalBgColor = new(0.051f, 0.090f, 0.188f, 1f);
+        public Color HeaderColor = new(0.086f, 0.149f, 0.290f, 0.8f);
+        public Color CounterTextColor = new(0.973f, 0.980f, 0.988f, 1f);
+        public Color IncrementsTextColor = new(0.482f, 0.553f, 0.659f, 1f);
+        public Color IncrementButtonColor = new(0.184f, 0.816f, 0.451f, 1f);
+        public Color DecrementButtonColor = new(1f, 0.541f, 0.239f, 1f);
+        public Color ResetButtonColor = new(0.086f, 0.149f, 0.290f, 0.4f);
+        public Color ButtonTextColor = new(0.973f, 0.980f, 0.988f, 1f);
+
+        /// <summary>
+        /// Палитра проекта. Цвета этих экранов раньше стояли числами и темы не знали вовсе —
+        /// после перекраски интерфейса они остались бы серыми от прежнего проекта.
+        /// </summary>
+        private static ColorPalette Palette => DesignSystemProvider.Colors;
+
+        /// <summary>
+        /// Затемнение под модальным окном. Берётся от фона ночи, а не чёрным: чистый чёрный на
+        /// тёмно-синих панелях читается дырой, а не тенью.
+        /// </summary>
+        private static Color Dim(float alpha)
+        {
+            var color = Palette.deepSpace;
+            color.a = alpha;
+
+            return color;
+        }
+
 
         public override void ResetToDefaults()
         {
@@ -40,15 +61,15 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
             IncrementsFontSize = 16f;
             ButtonFontSize = 20f;
             TitleFontSize = 24f;
-            BgDimColor = new Color(0f, 0f, 0f, 0.7f);
-            ModalBgColor = new Color(0.14f, 0.14f, 0.16f, 1f);
-            HeaderColor = new Color(0.18f, 0.18f, 0.20f, 1f);
-            CounterTextColor = new Color(1f, 1f, 1f, 1f);
-            IncrementsTextColor = new Color(0.5f, 0.5f, 0.55f, 1f);
-            IncrementButtonColor = new Color(0.24f, 0.47f, 0.96f, 1f);
-            DecrementButtonColor = new Color(0.96f, 0.47f, 0.24f, 1f);
-            ResetButtonColor = new Color(0.4f, 0.4f, 0.45f, 1f);
-            ButtonTextColor = new Color(1f, 1f, 1f, 1f);
+            BgDimColor = Dim(0.7f);
+            ModalBgColor = Palette.darkSurface;
+            HeaderColor = Palette.elevatedSurface;
+            CounterTextColor = Palette.textPrimary;
+            IncrementsTextColor = Palette.textTertiary;
+            IncrementButtonColor = Palette.indigo;
+            DecrementButtonColor = Palette.pink;
+            ResetButtonColor = Palette.cardBackground;
+            ButtonTextColor = Palette.textPrimary;
         }
     }
 }

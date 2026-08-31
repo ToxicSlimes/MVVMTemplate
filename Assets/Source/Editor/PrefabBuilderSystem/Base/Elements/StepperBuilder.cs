@@ -19,7 +19,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         private float _buttonSize = 32f;
         private float _valueWidth = 60f;
         private float _fontSize = 16f;
-        private Color _buttonColor = new(0.388f, 0.4f, 0.945f, 1f);
+        private Color _buttonColor = new(0.184f, 0.816f, 0.451f, 1f);
         private Color _valueColor = new(0.15f, 0.15f, 0.2f, 1f);
         private Color _textColor = Color.white;
 
@@ -72,7 +72,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         public StepperBuilder Themed()
         {
             var colors = DesignSystemProvider.Colors;
-            _buttonColor = colors?.primaryButtonGradientStart ?? new Color(0.388f, 0.4f, 0.945f, 1f);
+            _buttonColor = colors?.primaryButtonGradientStart ?? new Color(0.184f, 0.816f, 0.451f, 1f);
             _valueColor = colors?.inputBackground ?? new Color(0.15f, 0.15f, 0.2f, 1f);
             _textColor = colors?.textPrimary ?? Color.white;
             return this;

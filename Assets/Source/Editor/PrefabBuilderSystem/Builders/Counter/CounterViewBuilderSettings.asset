@@ -20,12 +20,12 @@ MonoBehaviour:
   IncrementsFontSize: 16
   ButtonFontSize: 20
   TitleFontSize: 24
-  BgDimColor: {r: 0, g: 0, b: 0, a: 0.7}
-  ModalBgColor: {r: 0.14, g: 0.14, b: 0.16, a: 1}
-  HeaderColor: {r: 0.18, g: 0.18, b: 0.2, a: 1}
-  CounterTextColor: {r: 1, g: 1, b: 1, a: 1}
-  IncrementsTextColor: {r: 0.5, g: 0.5, b: 0.55, a: 1}
-  IncrementButtonColor: {r: 0.24, g: 0.47, b: 0.96, a: 1}
-  DecrementButtonColor: {r: 0.96, g: 0.47, b: 0.24, a: 1}
-  ResetButtonColor: {r: 0.4, g: 0.4, b: 0.45, a: 1}
-  ButtonTextColor: {r: 1, g: 1, b: 1, a: 1}
+  BgDimColor: {r: 0.024, g: 0.043, b: 0.102, a: 0.7}
+  ModalBgColor: {r: 0.051, g: 0.09, b: 0.188, a: 1}
+  HeaderColor: {r: 0.086, g: 0.149, b: 0.29, a: 0.8}
+  CounterTextColor: {r: 0.973, g: 0.98, b: 0.988, a: 1}
+  IncrementsTextColor: {r: 0.482, g: 0.553, b: 0.659, a: 1}
+  IncrementButtonColor: {r: 0.184, g: 0.816, b: 0.451, a: 1}
+  DecrementButtonColor: {r: 1, g: 0.541, b: 0.239, a: 1}
+  ResetButtonColor: {r: 0.086, g: 0.149, b: 0.29, a: 0.4}
+  ButtonTextColor: {r: 0.973, g: 0.98, b: 0.988, a: 1}

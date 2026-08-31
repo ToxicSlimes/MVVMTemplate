@@ -1,5 +1,7 @@
 #if UNITY_EDITOR
+using Core.Configs.DesignSystem;
 using Core.Editor.PrefabBuilderSystem.Settings;
+using Core.Editor.PrefabBuilderSystem.Theming;
 using UnityEngine;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.Inventory
@@ -20,8 +22,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Inventory
         public float FilterButtonHeight = 28f;
         public float FilterBarSpacing = 4f;
         public float FilterBarHeight = 36f;
-        public Color FilterActiveColor = new(0.3f, 0.6f, 1f, 1f);
-        public Color FilterInactiveColor = new(0.25f, 0.25f, 0.3f, 1f);
+        public Color FilterActiveColor = new(0.184f, 0.816f, 0.451f, 1f);
+        public Color FilterInactiveColor = new(0.086f, 0.149f, 0.290f, 0.4f);
         public float FilterFontSize = 11f;
 
         [Header("Typography")]
@@ -31,13 +33,32 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Inventory
         public float DetailDescFontSize = 13f;
 
         [Header("Colors")]
-        public Color BgDimColor = new(0f, 0f, 0f, 0.7f);
-        public Color ModalBgColor = new(0.14f, 0.14f, 0.16f, 1f);
-        public Color HeaderColor = new(0.18f, 0.18f, 0.20f, 1f);
-        public Color DetailPanelColor = new(0.16f, 0.16f, 0.19f, 1f);
-        public Color RemoveButtonColor = new(0.85f, 0.25f, 0.25f, 1f);
-        public Color BackButtonColor = new(0.3f, 0.3f, 0.35f, 1f);
-        public Color ItemCountColor = new(0.6f, 0.6f, 0.65f, 1f);
+        public Color BgDimColor = new(0.024f, 0.043f, 0.102f, 0.7f);
+        public Color ModalBgColor = new(0.051f, 0.090f, 0.188f, 1f);
+        public Color HeaderColor = new(0.086f, 0.149f, 0.290f, 0.8f);
+        public Color DetailPanelColor = new(0.086f, 0.149f, 0.290f, 0.4f);
+        public Color RemoveButtonColor = new(0.902f, 0.224f, 0.275f, 0.45f);
+        public Color BackButtonColor = new(0.086f, 0.149f, 0.290f, 0.4f);
+        public Color ItemCountColor = new(0.482f, 0.553f, 0.659f, 1f);
+
+        /// <summary>
+        /// Палитра проекта. Цвета этих экранов раньше стояли числами и темы не знали вовсе —
+        /// после перекраски интерфейса они остались бы серыми от прежнего проекта.
+        /// </summary>
+        private static ColorPalette Palette => DesignSystemProvider.Colors;
+
+        /// <summary>
+        /// Затемнение под модальным окном. Берётся от фона ночи, а не чёрным: чистый чёрный на
+        /// тёмно-синих панелях читается дырой, а не тенью.
+        /// </summary>
+        private static Color Dim(float alpha)
+        {
+            var color = Palette.deepSpace;
+            color.a = alpha;
+
+            return color;
+        }
+
 
         public override void ResetToDefaults()
         {
@@ -51,20 +72,20 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Inventory
             FilterButtonHeight = 28f;
             FilterBarSpacing = 4f;
             FilterBarHeight = 36f;
-            FilterActiveColor = new Color(0.3f, 0.6f, 1f, 1f);
-            FilterInactiveColor = new Color(0.25f, 0.25f, 0.3f, 1f);
+            FilterActiveColor = Palette.indigo;
+            FilterInactiveColor = Palette.cardBackground;
             FilterFontSize = 11f;
             HeaderFontSize = 20f;
             ItemCountFontSize = 14f;
             DetailNameFontSize = 18f;
             DetailDescFontSize = 13f;
-            BgDimColor = new Color(0f, 0f, 0f, 0.7f);
-            ModalBgColor = new Color(0.14f, 0.14f, 0.16f, 1f);
-            HeaderColor = new Color(0.18f, 0.18f, 0.20f, 1f);
-            DetailPanelColor = new Color(0.16f, 0.16f, 0.19f, 1f);
-            RemoveButtonColor = new Color(0.85f, 0.25f, 0.25f, 1f);
-            BackButtonColor = new Color(0.3f, 0.3f, 0.35f, 1f);
-            ItemCountColor = new Color(0.6f, 0.6f, 0.65f, 1f);
+            BgDimColor = Dim(0.7f);
+            ModalBgColor = Palette.darkSurface;
+            HeaderColor = Palette.elevatedSurface;
+            DetailPanelColor = Palette.cardBackground;
+            RemoveButtonColor = Palette.errorBorder;
+            BackButtonColor = Palette.cardBackground;
+            ItemCountColor = Palette.textTertiary;
         }
     }
 }

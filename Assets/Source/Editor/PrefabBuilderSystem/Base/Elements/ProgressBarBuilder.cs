@@ -12,7 +12,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
         private float _value = 1f;
         private Color _backgroundColor = new(0.2f, 0.2f, 0.2f, 0.8f);
-        private Color _fillColor = new(0.388f, 0.4f, 0.945f, 1f);
+        private Color _fillColor = new(0.184f, 0.816f, 0.451f, 1f);
         private float _height = 20f;
         private bool _showText;
         private string _textFormat = "{0:P0}";
@@ -54,7 +54,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         {
             var colors = DesignSystemProvider.Colors;
             _backgroundColor = colors?.darkSurface ?? new Color(0.2f, 0.2f, 0.2f, 0.8f);
-            _fillColor = colors?.indigo ?? new Color(0.388f, 0.4f, 0.945f, 1f);
+            _fillColor = colors?.indigo ?? new Color(0.184f, 0.816f, 0.451f, 1f);
             return this;
         }
 
@@ -140,6 +140,14 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 fill.color = _fillColor;
                 var fillRt = fill.GetComponent<RectTransform>();
                 fillRt.anchorMax = new Vector2(_value, 1f);
+            }
+
+            var layoutElement = instance.GetComponent<LayoutElement>() ?? instance.AddComponent<LayoutElement>();
+            layoutElement.preferredHeight = _height;
+
+            if (instance.transform is RectTransform rect)
+            {
+                rect.sizeDelta = new Vector2(rect.sizeDelta.x, _height);
             }
         }
     }

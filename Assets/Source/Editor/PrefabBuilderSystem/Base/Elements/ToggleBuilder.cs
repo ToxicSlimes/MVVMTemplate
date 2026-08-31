@@ -90,7 +90,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         {
             var colors = DesignSystemProvider.Colors;
             _backgroundColor = colors?.inputBackground ?? new Color(0.2f, 0.2f, 0.2f, 1f);
-            _checkmarkColor = colors?.indigo ?? new Color(0.388f, 0.4f, 0.945f, 1f);
+            _checkmarkColor = colors?.indigo ?? new Color(0.184f, 0.816f, 0.451f, 1f);
             _labelColor = colors?.textPrimary ?? Color.white;
             return this;
         }
@@ -114,6 +114,12 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
 
             toggle.isOn = _isOn;
 
+            var hlg = instance.GetComponent<HorizontalLayoutGroup>();
+            if (hlg != null)
+            {
+                hlg.spacing = _spacing;
+            }
+
             var bg = instance.transform.Find("Background");
             if (bg != null)
             {
@@ -123,6 +129,16 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                     bgImg.color = _backgroundColor;
                     if (_backgroundSprite != null) { bgImg.sprite = _backgroundSprite; bgImg.type = Image.Type.Sliced; }
                 }
+
+                var bgRt = bg as RectTransform;
+                if (bgRt != null)
+                {
+                    bgRt.sizeDelta = new Vector2(_toggleSize, _toggleSize);
+                }
+
+                var bgLe = bg.GetComponent<LayoutElement>() ?? bg.gameObject.AddComponent<LayoutElement>();
+                bgLe.preferredWidth = _toggleSize;
+                bgLe.preferredHeight = _toggleSize;
 
                 var checkmark = bg.Find("Checkmark");
                 if (checkmark != null)
@@ -136,13 +152,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
                 }
             }
 
-            var label = instance.GetComponentInChildren<TextMeshProUGUI>();
-            if (label != null && !string.IsNullOrEmpty(_label))
-            {
-                label.text = _label;
-                label.fontSize = _labelFontSize;
-                label.color = _labelColor;
-            }
+            ApplyLabel(instance);
 
             if (instance.GetComponent<CanvasGroup>() == null)
                 instance.AddComponent<CanvasGroup>();
@@ -150,6 +160,32 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             ControlDefaults.ApplyTo(bcb);
 
             ApplyLayoutElement(instance);
+        }
+
+        private void ApplyLabel(GameObject instance)
+        {
+            if (string.IsNullOrEmpty(_label))
+                return;
+
+            var label = instance.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (label == null)
+            {
+                var labelGo = new GameObject("Label");
+                labelGo.transform.SetParent(instance.transform, false);
+                labelGo.AddComponent<RectTransform>();
+
+                label = labelGo.AddComponent<TextMeshProUGUI>();
+                label.alignment = TextAlignmentOptions.MidlineLeft;
+
+                var labelLe = labelGo.AddComponent<LayoutElement>();
+                labelLe.flexibleWidth = 1;
+            }
+
+            label.text = _label;
+            label.fontSize = _labelFontSize;
+            label.color = _labelColor;
+            label.enableAutoSizing = false;
         }
 
         public override BaseToggle Build(Transform parent)

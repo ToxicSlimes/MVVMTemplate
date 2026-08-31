@@ -164,6 +164,11 @@ namespace Core.Editor.PrefabBuilderSystem.Elements.GameUI
             component.sprite = _backgroundSprite;
 
             var outline = instance.GetComponent<Outline>();
+            if (outline == null && _showOutline)
+            {
+                outline = instance.AddComponent<Outline>();
+            }
+
             if (outline != null)
             {
                 outline.effectColor = _outlineColor;
@@ -177,6 +182,15 @@ namespace Core.Editor.PrefabBuilderSystem.Elements.GameUI
                 text.text = _text;
                 text.color = _textColor;
                 text.fontSize = _fontSize;
+                text.enableAutoSizing = false;
+            }
+
+            var layoutElement = instance.GetComponent<LayoutElement>() ?? instance.AddComponent<LayoutElement>();
+            layoutElement.preferredHeight = _size;
+
+            if (instance.transform is RectTransform rect)
+            {
+                rect.sizeDelta = new Vector2(rect.sizeDelta.x, _size);
             }
         }
     }

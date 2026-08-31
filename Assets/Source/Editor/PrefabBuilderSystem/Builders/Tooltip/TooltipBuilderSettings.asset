@@ -17,9 +17,9 @@ MonoBehaviour:
   Spacing: 4
   TitleFontSize: 14
   DescriptionFontSize: 12
-  BackgroundColor: {r: 0.12, g: 0.12, b: 0.14, a: 0.95}
-  TitleColor: {r: 1, g: 1, b: 1, a: 1}
-  DescriptionColor: {r: 0.7, g: 0.7, b: 0.75, a: 1}
-  BorderColor: {r: 0.3, g: 0.3, b: 0.35, a: 1}
+  BackgroundColor: {r: 0.051, g: 0.09, b: 0.188, a: 1}
+  TitleColor: {r: 0.973, g: 0.98, b: 0.988, a: 1}
+  DescriptionColor: {r: 0.639, g: 0.706, b: 0.8, a: 1}
+  BorderColor: {r: 0.639, g: 0.706, b: 0.8, a: 0.12}
   BorderWidth: 1
   CornerRadius: 6

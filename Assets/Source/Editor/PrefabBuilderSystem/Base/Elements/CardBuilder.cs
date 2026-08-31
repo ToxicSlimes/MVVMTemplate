@@ -155,12 +155,59 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         protected override void ApplyCustomizations(GameObject instance, Image component)
         {
             component.color = _backgroundColor;
+            component.sprite = _backgroundSprite;
 
-            var outline = instance.GetComponent<Outline>();
-            if (outline != null && _borderWidth > 0)
+            if (_backgroundSprite != null)
             {
-                outline.effectColor = _borderColor;
+                component.type = Image.Type.Sliced;
             }
+
+            ApplyOutline(instance);
+            ApplyLayoutGroup(instance);
+            ApplyLayoutElement(instance);
+        }
+
+        private void ApplyOutline(GameObject instance)
+        {
+            var outline = instance.GetComponent<Outline>();
+
+            if (_borderWidth <= 0)
+            {
+                if (outline != null)
+                {
+                    outline.enabled = false;
+                }
+
+                return;
+            }
+
+            outline ??= instance.AddComponent<Outline>();
+            outline.enabled = true;
+            outline.effectColor = _borderColor;
+            outline.effectDistance = new Vector2(_borderWidth, -_borderWidth);
+        }
+
+        private void ApplyLayoutGroup(GameObject instance)
+        {
+            var existing = instance.GetComponent<HorizontalOrVerticalLayoutGroup>();
+            var matches = _vertical ? existing is VerticalLayoutGroup : existing is HorizontalLayoutGroup;
+
+            if (existing != null && !matches)
+            {
+                Object.DestroyImmediate(existing);
+                existing = null;
+            }
+
+            existing ??= _vertical
+                ? instance.AddComponent<VerticalLayoutGroup>()
+                : (HorizontalOrVerticalLayoutGroup)instance.AddComponent<HorizontalLayoutGroup>();
+
+            existing.padding = new RectOffset(_padding.left, _padding.right, _padding.top, _padding.bottom);
+            existing.spacing = _spacing;
+            existing.childControlWidth = true;
+            existing.childControlHeight = true;
+            existing.childForceExpandWidth = _vertical;
+            existing.childForceExpandHeight = !_vertical;
         }
     }
 }

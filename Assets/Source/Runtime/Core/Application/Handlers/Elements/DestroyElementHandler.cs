@@ -19,7 +19,7 @@ namespace Core.Application.Handlers.Elements
         public UniTask<Nothing> Handle(DestroyElementCommand request, CancellationToken cancellationToken)
         {
             _elementService.DestroyElement(request.Element);
-            return Nothing.Task;
+            return NothingTask.Completed;
         }
     }
 }
