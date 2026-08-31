@@ -1,6 +1,8 @@
+using System;
 using Core.Abstractions.StateMachines.States;
 using Core.Abstractions.StateMachines;
 using Core.Abstractions.Services;
+using Core.Application.Handlers.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +12,15 @@ public class BootstrapState : GameStateBase<BootstrapState>, IEnterState
   private readonly ILogger _logger;
   private readonly ICacheService _cache;
 
-  public BootstrapState(ILogger logger, ICacheService cache)
+  public BootstrapState(ILogger logger, ICacheService cache, PauseInputPublisher pauseInput)
   {
     _logger = logger;
     _cache = cache;
+
+    if (pauseInput == null)
+    {
+      throw new ArgumentNullException(nameof(pauseInput));
+    }
   }
 
   public void Enter()

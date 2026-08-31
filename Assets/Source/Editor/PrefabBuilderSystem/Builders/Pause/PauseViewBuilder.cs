@@ -27,29 +27,15 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Pause
         private const float ButtonFontSize = 20f;
 
         private const float LegendWidth = 300f;
-        private const float LegendHeight = 356f;
+        private const float LegendHeight = 96f;
         private const float LegendMargin = 48f;
         private const float LegendKeyWidth = 96f;
         private const float LegendRowHeight = 30f;
         private const float LegendFontSize = 17f;
         private const float LegendTitleFontSize = 20f;
 
-        /// <remarks>
-        /// Список сверен с картой <c>Player</c> в <c>InputSystem_Actions</c> и с обоими путями
-        /// чтения ввода: сетевым через <c>AlienButton</c> и локальным через наблюдаемые сервиса —
-        /// смена ракурса идёт вторым, потому что видна только своему игроку и в состоянии
-        /// симуляции ничего не меняет. Привязки без потребителя сюда не попадают: <c>Attack</c>
-        /// собирается, но его никто не разбирает, <c>Crouch</c> и <c>Previous</c> не собираются
-        /// вовсе. Подсказка, обещающая несуществующее действие, вреднее отсутствующей.
-        /// </remarks>
         private static readonly (string Key, string Action)[] Controls =
         {
-            ("WASD", "MOVE"),
-            ("MOUSE", "LOOK"),
-            ("SHIFT", "SPRINT"),
-            ("SPACE", "JUMP"),
-            ("E", "GRAB / DROP"),
-            ("2", "CAMERA 1ST / 3RD"),
             ("ESC", "PAUSE"),
         };
 
