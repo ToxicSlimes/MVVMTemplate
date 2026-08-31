@@ -1,0 +1,19 @@
+{
+  "name": "com.toxicslimes.mvvm-template",
+  "version": "1.0.0",
+  "displayName": "MVVM Template",
+  "description": "Unity 6 MVVM + CQRS core: views, mediator, Fusion ports, UtilityAI.",
+  "unity": "6000.0",
+  "documentationUrl": "https://github.com/ToxicSlimes/MVVMTemplate",
+  "license": "MIT",
+  "author": {
+    "name": "ToxicSlimes",
+    "url": "https://github.com/ToxicSlimes/MVVMTemplate"
+  },
+  "dependencies": {
+    "com.unity.addressables": "2.9.1",
+    "com.unity.ai.navigation": "2.0.12",
+    "com.unity.inputsystem": "1.19.0",
+    "com.unity.ugui": "2.0.0"
+  }
+}

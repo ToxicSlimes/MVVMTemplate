@@ -63,7 +63,6 @@ namespace Core.Editor.NetworkPrefabTools
             {
                 root.AddComponent<NetworkObject>();
                 root.AddComponent<NetworkedAvatarController>();
-                root.AddComponent<PlayerPauseInput>();
             });
         }
 

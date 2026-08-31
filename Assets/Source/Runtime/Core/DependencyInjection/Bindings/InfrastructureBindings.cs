@@ -1,6 +1,7 @@
 using Core.Abstractions.MVVM.Models.Inventory;
 using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Application.Handlers.Lobby;
+using Core.Application.Handlers.Player;
 using Core.Network.Abstractions.Services;
 using Core.Abstractions.Factories;
 using Core.Abstractions.StateMachines.States;
@@ -68,6 +69,10 @@ public static class InfrastructureBindings
       container.Resolve<INetworkSpawner>(),
       container.Resolve<INetworkSpawnPoints>()));
     builder.AddMediatorServices();
+    builder.AddSingleton(container => new PauseInputPublisher(
+      container.Resolve<IInputService>(),
+      container.Resolve<IMediator>(),
+      container.Resolve<INetworkRunnerController>()));
     builder.AddViewModels();
     builder.AddElementServices();
 
