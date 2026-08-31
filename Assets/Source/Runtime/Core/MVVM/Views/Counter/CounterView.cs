@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Core.Infrastructure.MVVM.Animation;
 using Core.Abstractions.Popup;
 using Core.Application.Commands.Elements;
 using Core.Data.Domain.Models.Elements.Samples;
@@ -7,28 +6,27 @@ using Core.Data.UI;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.MVVM.ViewModels.Counter;
 using Core.MVVM.Elements.Samples;
-using Core.UI.Binding;
 using Core.UI.Controls;
 using R3;
 using Reflex.Attributes;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Core.MVVM.Views.Counter
 {
-    public class CounterView : AnimatedView<CounterViewModel>
+    public class CounterView : PanelView<CounterViewModel>
     {
+        private const string IncrementsFormat = "Total actions: {0}";
+
         [Inject] private IMediator _mediator;
 
         [Header("Display")]
         [SerializeField] private BaseText _counterText;
-        [SerializeField] private TMP_Text _incrementsText;
+        [SerializeField] private BaseText _incrementsText;
 
         [Header("Buttons")]
         [SerializeField] private BaseButton _incrementButton;
         [SerializeField] private BaseButton _decrementButton;
-        [SerializeField] private Button _resetButton;
+        [SerializeField] private BaseButton _resetButton;
         [SerializeField] private BaseButton _toggleGalleryButton;
         [SerializeField] private BaseText _toggleButtonLabel;
 
@@ -50,7 +48,7 @@ namespace Core.MVVM.Views.Counter
 
         private bool _galleryPopulated;
 
-        protected override void OnBind(ref DisposableBag disposables)
+        protected override void BindPanel(ref DisposableBag disposables)
         {
             BindCounterMode(ref disposables);
             BindModeToggle(ref disposables);
@@ -59,37 +57,23 @@ namespace Core.MVVM.Views.Counter
 
         private void BindCounterMode(ref DisposableBag disposables)
         {
-            if (_counterText != null)
-                _counterText.BindTo(ViewModel.DisplayText, ref disposables);
+            Bind(_counterText, ViewModel.DisplayText, ref disposables);
+            Bind(_incrementsText, ViewModel.TotalIncrements, IncrementsFormat, ref disposables);
 
-            if (_incrementsText != null)
-            {
-                ViewModel.TotalIncrements
-                    .Subscribe(_incrementsText, static (count, tmp) => tmp.text = $"Total actions: {count}")
-                    .AddTo(ref disposables);
-            }
+            Bind(_incrementButton, ViewModel.IncrementCommand, ref disposables);
+            Bind(_decrementButton, ViewModel.DecrementCommand, ref disposables);
 
-            if (_incrementButton != null)
-                _incrementButton.BindTo(ViewModel.IncrementCommand, ref disposables);
+            if (_resetButton == null) return;
 
-            if (_decrementButton != null)
-                _decrementButton.BindTo(ViewModel.DecrementCommand, ref disposables);
-
-            if (_resetButton != null)
-            {
-                ViewModel.CounterValue
-                    .Subscribe(_resetButton, static (v, btn) => btn.interactable = v != 0)
-                    .AddTo(ref disposables);
-            }
+            ViewModel.CounterValue
+                .Subscribe(_resetButton, static (v, btn) => btn.interactable = v != 0)
+                .AddTo(ref disposables);
         }
 
         private void BindModeToggle(ref DisposableBag disposables)
         {
-            if (_toggleGalleryButton != null)
-                _toggleGalleryButton.BindTo(ViewModel.ToggleGalleryCommand, ref disposables);
-
-            if (_toggleButtonLabel != null)
-                _toggleButtonLabel.BindTo(ViewModel.ToggleButtonText, ref disposables);
+            Bind(_toggleGalleryButton, ViewModel.ToggleGalleryCommand, ref disposables);
+            Bind(_toggleButtonLabel, ViewModel.ToggleButtonText, ref disposables);
 
             ViewModel.IsGalleryMode
                 .Subscribe(this, static (isGallery, self) =>
@@ -114,18 +98,17 @@ namespace Core.MVVM.Views.Counter
             if (_decrementTooltip != null)
                 _decrementTooltip.SetTooltipData("Decrement", "Subtract 1 from the counter");
 
-            if (_resetConfirm != null)
+            if (_resetConfirm == null) return;
+
+            var vm = ViewModel;
+            _resetConfirm.SetDataProvider(() => new ConfirmPopupData
             {
-                var vm = ViewModel;
-                _resetConfirm.SetDataProvider(() => new ConfirmPopupData
-                {
-                    Title = "Reset Counter?",
-                    Message = $"Current value: {vm.CounterValue.Value}. This will reset to zero.",
-                    ConfirmText = "Reset",
-                    CancelText = "Keep",
-                    OnConfirm = () => vm.ResetCommand.Execute(Unit.Default)
-                });
-            }
+                Title = "Reset Counter?",
+                Message = $"Current value: {vm.CounterValue.Value}. This will reset to zero.",
+                ConfirmText = "Reset",
+                CancelText = "Keep",
+                OnConfirm = () => vm.ResetCommand.Execute(Unit.Default)
+            });
         }
 
         private void PopulateGallery()

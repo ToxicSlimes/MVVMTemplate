@@ -241,6 +241,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             }
             else
             {
+                tmp.enableAutoSizing = false;
                 tmp.fontSize = _fontSize;
             }
 
@@ -281,6 +282,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             }
             else
             {
+                tmp.enableAutoSizing = false;
                 tmp.fontSize = _fontSize;
             }
 

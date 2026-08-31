@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e212158105e405b90c13a7140d59024, type: 3}
+  m_Name: LobbyRoomViewBuilderSettings
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.Builders.LobbyRoom.LobbyRoomViewBuilderSettings
+  RoomCodeTopOffset: 64
+  RoomCodeBlockWidth: 560
+  RoomCodeBlockHeight: 120
+  RoomCodeLabelHeight: 20
+  RoomCodeRowSpacing: 20
+  RoomCodeRowHeight: 96
+  RoomCodeTextWidth: 320
+  CopyButtonSize: 52
+  RosterTopOffset: 262
+  RosterRowWidth: 1320
+  SlotWidth: 312
+  SlotHeight: 400
+  SlotBorderWidth: 2
+  AvatarSize: 112
+  SlotNameHeight: 30
+  SlotRoleHeight: 20
+  ReadyBadgeHeight: 38
+  ReadyBadgeBorderWidth: 2
+  FooterSideMargin: 80
+  FooterBottomOffset: 56
+  FooterHeight: 60
+  LeaveButtonWidth: 220
+  StartButtonWidth: 300
+  ReadyToggleWidth: 220
+  ReadyToggleSize: 28
+  RoomCodeFontSize: 76
+  CopyButtonFontSize: 14
+  SlotNameFontSize: 22
+  EmptySlotFontSize: 15
+  ReadyBadgeFontSize: 14
+  FooterButtonFontSize: 20
+  ReadyToggleFontSize: 20

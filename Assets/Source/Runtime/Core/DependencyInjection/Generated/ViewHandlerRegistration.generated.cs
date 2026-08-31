@@ -8,11 +8,17 @@
 using Core.Application.Handlers.Views;
 using Core.Application.Requests.Views;
 using Core.Infrastructure.Mediator.Registration;
-using Core.MVVM.ViewModels.Counter;
+using Core.MVVM.ViewModels.ConnectingOverlay;
 using Core.MVVM.ViewModels.Inventory;
+using Core.MVVM.ViewModels.LobbyRoom;
+using Core.MVVM.ViewModels.Matchmaking;
+using Core.MVVM.ViewModels.Pause;
 using Core.MVVM.ViewModels.Settings;
-using Core.MVVM.Views.Counter;
+using Core.MVVM.Views.ConnectingOverlay;
 using Core.MVVM.Views.Inventory;
+using Core.MVVM.Views.LobbyRoom;
+using Core.MVVM.Views.Matchmaking;
+using Core.MVVM.Views.Pause;
 using Core.MVVM.Views.Settings;
 
 namespace Core.DependencyInjection.Generated
@@ -23,14 +29,14 @@ namespace Core.DependencyInjection.Generated
         {
             // Modal views
             builder.AddHandler<
-                ShowViewRequest<CounterView, CounterViewModel>,
+                ShowViewRequest<ConnectingOverlayView, ConnectingOverlayViewModel>,
                 bool,
-                ShowViewRequestHandler<CounterView, CounterViewModel>>();
+                ShowViewRequestHandler<ConnectingOverlayView, ConnectingOverlayViewModel>>();
 
             builder.AddHandler<
-                HideViewRequest<CounterView, CounterViewModel>,
+                HideViewRequest<ConnectingOverlayView, ConnectingOverlayViewModel>,
                 bool,
-                HideViewRequestHandler<CounterView, CounterViewModel>>();
+                HideViewRequestHandler<ConnectingOverlayView, ConnectingOverlayViewModel>>();
 
             builder.AddHandler<
                 ShowViewRequest<InventoryView, InventoryViewModel>,
@@ -41,6 +47,36 @@ namespace Core.DependencyInjection.Generated
                 HideViewRequest<InventoryView, InventoryViewModel>,
                 bool,
                 HideViewRequestHandler<InventoryView, InventoryViewModel>>();
+
+            builder.AddHandler<
+                ShowViewRequest<LobbyRoomView, LobbyRoomViewModel>,
+                bool,
+                ShowViewRequestHandler<LobbyRoomView, LobbyRoomViewModel>>();
+
+            builder.AddHandler<
+                HideViewRequest<LobbyRoomView, LobbyRoomViewModel>,
+                bool,
+                HideViewRequestHandler<LobbyRoomView, LobbyRoomViewModel>>();
+
+            builder.AddHandler<
+                ShowViewRequest<MatchmakingView, MatchmakingViewModel>,
+                bool,
+                ShowViewRequestHandler<MatchmakingView, MatchmakingViewModel>>();
+
+            builder.AddHandler<
+                HideViewRequest<MatchmakingView, MatchmakingViewModel>,
+                bool,
+                HideViewRequestHandler<MatchmakingView, MatchmakingViewModel>>();
+
+            builder.AddHandler<
+                ShowViewRequest<PauseView, PauseViewModel>,
+                bool,
+                ShowViewRequestHandler<PauseView, PauseViewModel>>();
+
+            builder.AddHandler<
+                HideViewRequest<PauseView, PauseViewModel>,
+                bool,
+                HideViewRequestHandler<PauseView, PauseViewModel>>();
 
             builder.AddHandler<
                 ShowViewRequest<SettingsView, SettingsViewModel>,

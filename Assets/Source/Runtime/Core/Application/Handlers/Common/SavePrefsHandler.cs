@@ -20,7 +20,7 @@ namespace Core.Application.Handlers.Common
         public UniTask<Nothing> Handle(SavePrefsCommand<T> command, CancellationToken ct)
         {
             _prefsService.Save(command.Key, command.Value);
-            return Nothing.Task;
+            return NothingTask.Completed;
         }
     }
 }

@@ -18,14 +18,21 @@ MonoBehaviour:
   GridSpacing: 6
   GridConstraintCount: 5
   DetailPanelHeight: 100
+  FilterButtonWidth: 60
+  FilterButtonHeight: 28
+  FilterBarSpacing: 4
+  FilterBarHeight: 36
+  FilterActiveColor: {r: 0.184, g: 0.816, b: 0.451, a: 1}
+  FilterInactiveColor: {r: 0.086, g: 0.149, b: 0.29, a: 0.4}
+  FilterFontSize: 11
   HeaderFontSize: 20
   ItemCountFontSize: 14
   DetailNameFontSize: 18
   DetailDescFontSize: 13
-  BgDimColor: {r: 0, g: 0, b: 0, a: 0.7}
-  ModalBgColor: {r: 0.14, g: 0.14, b: 0.16, a: 1}
-  HeaderColor: {r: 0.18, g: 0.18, b: 0.2, a: 1}
-  DetailPanelColor: {r: 0.16, g: 0.16, b: 0.19, a: 1}
-  RemoveButtonColor: {r: 0.85, g: 0.25, b: 0.25, a: 1}
-  BackButtonColor: {r: 0.3, g: 0.3, b: 0.35, a: 1}
-  ItemCountColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  BgDimColor: {r: 0.024, g: 0.043, b: 0.102, a: 0.7}
+  ModalBgColor: {r: 0.051, g: 0.09, b: 0.188, a: 1}
+  HeaderColor: {r: 0.086, g: 0.149, b: 0.29, a: 0.8}
+  DetailPanelColor: {r: 0.086, g: 0.149, b: 0.29, a: 0.4}
+  RemoveButtonColor: {r: 0.902, g: 0.224, b: 0.275, a: 0.45}
+  BackButtonColor: {r: 0.086, g: 0.149, b: 0.29, a: 0.4}
+  ItemCountColor: {r: 0.482, g: 0.553, b: 0.659, a: 1}

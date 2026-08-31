@@ -103,6 +103,7 @@ Assets/Source/
     │   ├── Navigation/         # INavigationTarget
     │   ├── Services/           # IAudioService, ICacheService...
     │   └── StateMachines/      # IGameState, IEnterState
+    ├── AI/                     # UtilityAI (UtilitySelector, UtilityAgentProfile)
     ├── Application/            # CQRS layer
     │   ├── Commands/           # IncrementCounterCommand, NavigateCommand...
     │   ├── Queries/            # GetCounterQuery, GetAudioStateQuery...
@@ -110,9 +111,10 @@ Assets/Source/
     │   ├── Notifications/      # CounterChangedNotification...
     │   └── Requests/Views/     # ShowViewRequest, HideViewRequest
     ├── MVVM/
-    │   ├── Models/             # CounterModel, SettingsModel, MainMenuModel
-    │   ├── ViewModels/         # CounterViewModel, SettingsViewModel...
-    │   └── Views/              # CounterView, SettingsView, MainMenuView
+    │   ├── Models/             # CounterModel, SettingsModel, MainMenuModel, LobbyModel
+    │   ├── ViewModels/         # CounterViewModel, MatchmakingViewModel...
+    │   └── Views/              # CounterView, MatchmakingView, LobbyRoomView...
+    ├── Network/                # Fusion ports + FusionAdapter
     ├── Infrastructure/         # Service implementations
     │   ├── MVVM/               # ViewService, ViewFactory, ViewConfig
     │   ├── Mediator/           # Mediator implementation
@@ -120,7 +122,7 @@ Assets/Source/
     ├── Presentation/
     │   ├── States/             # BootstrapState, MainMenuState...
     │   └── Handlers/           # NavigationHandlers
-    ├── Configs/                # DesignSystem, AudioConfig...
+    ├── Configs/                # DesignSystem, AudioConfig, NetworkConfig...
     └── DependencyInjection/
         ├── Bindings/           # Service registration
         ├── Installers/         # ProjectInstaller (entry point)
@@ -161,6 +163,33 @@ Demonstrates: Commands, Queries, Notifications, Handlers — the complete CQRS p
 ### Settings (modal view)
 
 Demonstrates: Complex modal with tabs, sliders, toggles, audio integration.
+
+### Matchmaking (network template)
+
+Photon Fusion 2 is isolated behind `Core.Network.Abstractions`. The Fusion adapter is the only assembly that references Fusion types.
+
+Play on the Main Menu opens Matchmaking. Create or join a room, ready up, add lobby bots, start a match. The session FSM goes Lobby → Countdown → Playing → Ended. Playing loads `GameplayScene` (empty arena + spawn points) and does not spawn player bodies or apply win rules — a game hooks `FinishMatch` and `PlayerAvatarSpawner`.
+
+| Layer | File |
+|-------|------|
+| Ports | `INetworkService`, `INetworkRunnerController`, `INetworkSpawner`, `INetworkLobby` |
+| Adapter | `FusionRunnerController`, `FusionSpawner`, `FusionMessenger`, `FusionInputSource` |
+| Session | `GameSessionMachine`, `NetworkPlayer`, `BotRoster` |
+| UI | Matchmaking, LobbyRoom, ConnectingOverlay, Pause |
+
+Rebuild network prefabs with `Tools → Network → Build Network Prefabs`. Rebuild the empty gameplay scene with `Tools → Network → Build Gameplay Scene`. Photon FusionMenu is unused.
+
+### Utility AI
+
+`Core.AI` is a game-agnostic utility selector. A game supplies its own goal enum, context snapshot, and scorer; the template does not ship sample goals.
+
+| Type | Role |
+|------|------|
+| `UtilityResponse` | `weight × AnimationCurve` consideration |
+| `UtilitySelector.Choose<TGoal>` | score goals, apply inertia, pick the max |
+| `UtilityAgentProfile` | ScriptableObject base: decision period + inertia |
+
+Inherit `UtilityAgentProfile`, add per-goal `UtilityResponse` fields, score a context struct, then call `UtilitySelector.Choose`. FusionAdapter does not reference `Core.AI`.
 
 ## How to Add a New Feature
 
@@ -275,6 +304,8 @@ Run all code generators: `Tools → MVVM → Scan & Generate` — done.
 | Design System | `Tools → Design System → Apply` | Apply colors/typography to prefabs |
 | Prefab Builder | `Tools → UI Prefab Builder` | Visual prefab construction system |
 | View Stub Gen | `Tools → UI Prefab Builder → Generate View Stub` | Prefab → C# BindableView code |
+| Network Prefabs | `Tools → Network → Build Network Prefabs` | Session, player, empty avatar NetworkObjects |
+| Gameplay Scene | `Tools → Network → Build Gameplay Scene` | Empty networked arena + spawn points |
 
 ## Popup System
 

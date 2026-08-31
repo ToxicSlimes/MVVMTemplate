@@ -9,6 +9,7 @@ namespace Core.Infrastructure.UI.States
         private readonly RectTransform _rectTransform;
         private readonly CanvasGroup _canvasGroup;
         private readonly UnityEngine.UI.Graphic _graphic;
+        private readonly Color _baseColor;
         private ControlVisualConfig _config;
         private ControlState _currentState = ControlState.Normal;
         private MotionHandle _scaleHandle;
@@ -22,12 +23,19 @@ namespace Core.Infrastructure.UI.States
             _rectTransform = rectTransform;
             _canvasGroup = canvasGroup;
             _graphic = graphic;
+            _baseColor = graphic != null ? graphic.color : Color.white;
         }
 
         public void SetConfig(ControlVisualConfig config)
         {
             _config = config;
         }
+
+        /// <summary>
+        /// Цвета конфига — подкраска, а не замена: они умножаются на собственный цвет контрола.
+        /// Иначе первый же переход состояния стёр бы цвет, заданный билдером.
+        /// </summary>
+        private Color ResolveColor(ControlState state) => _baseColor * _config.GetColor(state);
 
         public void TransitionTo(ControlState state)
         {
@@ -38,7 +46,7 @@ namespace Core.Infrastructure.UI.States
 
             var targetScale = _config.GetScale(state);
             var targetAlpha = _config.GetAlpha(state);
-            var targetColor = _config.GetColor(state);
+            var targetColor = ResolveColor(state);
             var duration = _config.GetTransitionDuration(state);
 
             if (_rectTransform != null)
@@ -85,7 +93,7 @@ namespace Core.Infrastructure.UI.States
                 _canvasGroup.alpha = _config.GetAlpha(state);
 
             if (_graphic != null)
-                _graphic.color = _config.GetColor(state);
+                _graphic.color = ResolveColor(state);
         }
 
         public void CancelActive()

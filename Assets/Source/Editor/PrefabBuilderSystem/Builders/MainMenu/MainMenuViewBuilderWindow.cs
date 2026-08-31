@@ -1,6 +1,5 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Core;
-using Core.Editor.PrefabBuilderSystem.MainView;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,22 +9,22 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
     {
         private const string SettingsPath = "Assets/Source/Editor/PrefabBuilderSystem/Builders/MainMenu/MainMenuViewBuilderSettings.asset";
 
-        private MainViewBuilderSettings _settings;
+        private MainMenuViewBuilderSettings _settings;
         private UnityEditor.Editor _settingsEditor;
         private Vector2 _scrollPosition;
 
-        protected override string WindowTitle => "Main Menu Builder";
+        protected override string WindowTitle => "Main Menu View Builder";
 
         [MenuItem("Tools/UI Prefab Builder/Build Main Menu View")]
         public static void ShowWindow()
         {
-            GetWindow<MainMenuViewBuilderWindow>("Main Menu Builder");
+            GetWindow<MainMenuViewBuilderWindow>("Main Menu View Builder");
         }
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            _settings = LoadOrCreateSettings<MainViewBuilderSettings>(SettingsPath);
+            _settings = LoadOrCreateSettings<MainMenuViewBuilderSettings>(SettingsPath);
             Builder.Settings = _settings;
         }
 

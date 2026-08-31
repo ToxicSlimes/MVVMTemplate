@@ -4,11 +4,11 @@ using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Requests.Views;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Attributes;
-using Core.MVVM.ViewModels.Counter;
 using Core.MVVM.ViewModels.Inventory;
+using Core.MVVM.ViewModels.Matchmaking;
 using Core.MVVM.ViewModels.Settings;
-using Core.MVVM.Views.Counter;
 using Core.MVVM.Views.Inventory;
+using Core.MVVM.Views.Matchmaking;
 using Core.MVVM.Views.Settings;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -16,7 +16,7 @@ using R3;
 namespace Core.MVVM.ViewModels.MainMenu
 {
     [GenerateViewCommands]
-    public class MainMenuViewModel : DisposableObject
+    public class MainMenuViewModel : DisposableObject, IVisibilityAware
     {
         private readonly IMainMenuModel _model;
         private readonly IMediator _mediator;
@@ -71,10 +71,7 @@ namespace Core.MVVM.ViewModels.MainMenu
 
         private async UniTaskVoid OnPlay()
         {
-            // TEMPLATE EXAMPLE: Opens CounterView as a modal to demonstrate the CQRS pattern.
-            // Replace this with your own game state navigation, e.g.:
-            // await _mediator.Send(Navigate.ToGame());
-            await _mediator.Send(new ShowViewRequest<CounterView, CounterViewModel>());
+            await _mediator.Send(new ShowViewRequest<MatchmakingView, MatchmakingViewModel>());
         }
 
         private async UniTaskVoid OnSettings()

@@ -11,11 +11,13 @@ using TMPro;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.Inventory
 {
-    public class InventoryViewBuilder : ViewBuilder<InventoryView>
+    public class InventoryViewBuilder : PanelViewBuilder<InventoryView>
     {
         public InventoryViewBuilderSettings Settings { get; set; }
 
         protected override string PrefabPath => "Assets/Prefabs/Views/InventoryView.prefab";
+
+        protected override bool HasBackground => false;
 
         private Button _backButton;
         private TextMeshProUGUI _itemCountText;
@@ -27,7 +29,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Inventory
         private TextMeshProUGUI _selectedDescriptionText;
         private Button _removeButton;
 
-        protected override void BuildViewStructure()
+        protected override void BuildPanelStructure()
         {
             var s = Settings;
 

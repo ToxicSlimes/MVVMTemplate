@@ -1,4 +1,7 @@
 using Core.Abstractions.MVVM.Models.Inventory;
+using Core.Abstractions.MVVM.Models.Lobby;
+using Core.Application.Handlers.Lobby;
+using Core.Network.Abstractions.Services;
 using Core.Abstractions.Factories;
 using Core.Abstractions.StateMachines.States;
 using System.Collections.Generic;
@@ -34,6 +37,7 @@ using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Publishing;
 using Core.Infrastructure.Mediator.Registration.Extensions;
 using Core.Infrastructure.Services.Input;
+using Core.Network.FusionAdapter.DependencyInjection;
 using Core.Infrastructure.Popup;
 using Core.Abstractions.UI;
 using Core.Infrastructure.UI.Navigation;
@@ -58,10 +62,15 @@ public static class InfrastructureBindings
     builder.AddInputServices();
     builder.AddPopupServices();
     builder.AddInfrastructure();
+    builder.AddFusionNetwork();
+    builder.AddSingleton(container => new PlayerAvatarSpawner(
+      container.Resolve<INetworkRunnerController>(),
+      container.Resolve<INetworkSpawner>(),
+      container.Resolve<INetworkSpawnPoints>()));
     builder.AddMediatorServices();
     builder.AddViewModels();
     builder.AddElementServices();
-    
+
     return builder;
   }
 
@@ -101,6 +110,8 @@ public static class InfrastructureBindings
   private static ContainerBuilder AddModels(this ContainerBuilder builder)
   {
     builder.AddSingleton(typeof(InventoryModel), typeof(IInventoryModel));
+    builder.AddSingleton(container => (ILobbyModelWriter)container.Resolve<ILobbyModel>());
+
     return builder;
   }
 

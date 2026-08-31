@@ -12,11 +12,13 @@ using Unity.VisualScripting;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
 {
-    public class SettingsViewBuilder : ViewBuilder<MVVM.Views.Settings.SettingsView>
+    public class SettingsViewBuilder : PanelViewBuilder<MVVM.Views.Settings.SettingsView>
     {
         public SettingsViewBuilderSettings Settings { get; set; }
 
         protected override string PrefabPath => "Assets/Prefabs/Views/SettingsView.prefab";
+
+        protected override bool HasBackground => false;
 
         // Wiring refs
         private Image _dimBackground;
@@ -53,7 +55,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
         private Button _resetButton;
         private Button _cancelButton;
 
-        protected override void BuildViewStructure()
+        protected override void BuildPanelStructure()
         {
             var s = Settings;
 
@@ -94,7 +96,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
                 .Build(header.transform);
 
             _closeButton = new ButtonBuilder("CloseButton")
-                .WithLabel("\u2715")
+                .WithLabel("\u00d7")
                 .WithLabelSize(18f)
                 .Ghost()
                 .WithSize(s.CloseButtonSize, s.CloseButtonSize)

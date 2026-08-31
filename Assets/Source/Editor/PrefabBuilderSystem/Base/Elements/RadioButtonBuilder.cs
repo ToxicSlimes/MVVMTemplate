@@ -16,7 +16,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         private float _fontSize = 14f;
         private float _radioSize = 20f;
         private Color _uncheckedColor = new(0.3f, 0.3f, 0.3f, 1f);
-        private Color _checkedColor = new(0.388f, 0.4f, 0.945f, 1f);
+        private Color _checkedColor = new(0.184f, 0.816f, 0.451f, 1f);
         private Color _textColor = Color.white;
         private ToggleGroup _group;
 
@@ -63,7 +63,7 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
         {
             var colors = DesignSystemProvider.Colors;
             _uncheckedColor = colors?.inputBackground ?? new Color(0.3f, 0.3f, 0.3f, 1f);
-            _checkedColor = colors?.indigo ?? new Color(0.388f, 0.4f, 0.945f, 1f);
+            _checkedColor = colors?.indigo ?? new Color(0.184f, 0.816f, 0.451f, 1f);
             _textColor = colors?.textPrimary ?? Color.white;
             return this;
         }

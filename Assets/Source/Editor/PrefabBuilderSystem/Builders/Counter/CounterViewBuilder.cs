@@ -10,7 +10,7 @@ using TMPro;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 {
-    public class CounterViewBuilder : ViewBuilder<CounterView>
+    public class CounterViewBuilder : PanelViewBuilder<CounterView>
     {
         private const string TooltipPrefabPath = "Assets/Prefabs/Popups/TooltipPopup.prefab";
         private const string ConfirmPrefabPath = "Assets/Prefabs/Popups/ConfirmPopup.prefab";
@@ -18,6 +18,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
         public CounterViewBuilderSettings Settings { get; set; }
 
         protected override string PrefabPath => "Assets/Prefabs/Views/CounterView.prefab";
+
+        protected override bool HasBackground => false;
 
         // Counter panel refs
         private GameObject _counterPanel;
@@ -40,7 +42,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
         private Transform _statBarsContainer;
         private Transform _actionItemsContainer;
 
-        protected override void BuildViewStructure()
+        protected override void BuildPanelStructure()
         {
             var s = Settings;
 

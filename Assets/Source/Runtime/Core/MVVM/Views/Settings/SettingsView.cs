@@ -1,9 +1,7 @@
 using System;
 using System.Linq;
-using Core.Infrastructure.MVVM.Animation;
 using Core.Abstractions.Services.Input;
 using Core.Data.Domain.Enums;
-using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Attributes;
 using Core.MVVM.ViewModels.Settings;
@@ -15,7 +13,7 @@ using UnityEngine.UI;
 
 namespace Core.MVVM.Views.Settings
 {
-    public class SettingsView : AnimatedView<SettingsViewModel>
+    public class SettingsView : PanelView<SettingsViewModel>
     {
         public override bool IsPersistent => true;
 
@@ -96,7 +94,7 @@ namespace Core.MVVM.Views.Settings
 
         [Inject] private IInputService _inputService;
 
-        protected override void OnBind(ref DisposableBag disposables)
+        protected override void BindPanel(ref DisposableBag disposables)
         {
             InitializeTabArrays();
             SetupDropdowns();
@@ -161,11 +159,8 @@ namespace Core.MVVM.Views.Settings
 
         private void BindCloseButtons(ref DisposableBag disposables)
         {
-            if (_dimBackground != null)
-                _dimBackground.BindTo(ViewModel.CloseCommand, ref disposables);
-
-            if (_closeButton != null)
-                _closeButton.BindTo(ViewModel.CloseCommand, ref disposables);
+            Bind(_dimBackground, ViewModel.CloseCommand, ref disposables);
+            Bind(_closeButton, ViewModel.CloseCommand, ref disposables);
         }
 
         private void BindTabs(ref DisposableBag disposables)
@@ -335,20 +330,9 @@ namespace Core.MVVM.Views.Settings
 
         private void BindFooterButtons(ref DisposableBag disposables)
         {
-            if (_applyButton != null)
-                _applyButton.BindTo(ViewModel.ApplyCommand, ref disposables);
-
-            if (_resetButton != null)
-                _resetButton.BindTo(ViewModel.ResetCommand, ref disposables);
-
-            if (_cancelButton != null)
-                _cancelButton.BindTo(ViewModel.CancelCommand, ref disposables);
-        }
-
-        public override async UniTask ShowAsync()
-        {
-            ViewModel.IsVisible.Value = true;
-            await base.ShowAsync();
+            Bind(_applyButton, ViewModel.ApplyCommand, ref disposables);
+            Bind(_resetButton, ViewModel.ResetCommand, ref disposables);
+            Bind(_cancelButton, ViewModel.CancelCommand, ref disposables);
         }
     }
 }
