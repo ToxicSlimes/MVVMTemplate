@@ -3,6 +3,7 @@ using Core.Abstractions.Popup;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.MVVM.Views.Counter;
+using Core.UI.Controls;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
         // Toggle button
         private Button _toggleButton;
         private TextMeshProUGUI _toggleLabel;
+        private BaseButton _closeButton;
 
         // Gallery panel + containers
         private GameObject _galleryPanel;
@@ -48,13 +50,18 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
 
             // Modal
             var modal = new ModalBuilder("CounterModal")
-                .WithTitle("Demo Showcase")
+                .WithTitle("Counter (CQRS Demo)")
                 .WithSize(s.ModalWidth, s.ModalHeight)
                 .WithDimColor(s.BgDimColor)
                 .WithBackgroundColor(s.ModalBgColor)
                 .WithHeaderColor(s.HeaderColor)
-                .NoCloseButton()
                 .Build(Root);
+
+            var closeTransform = modal.transform.Find("Window/Header/CloseButton");
+            if (closeTransform != null)
+            {
+                _closeButton = closeTransform.GetComponent<BaseButton>();
+            }
 
             var content = modal.transform.Find("Window/Content");
             if (content == null) content = modal.transform;
@@ -230,6 +237,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Counter
             var so = new SerializedObject(view);
 
             // Counter
+            SerializationHelper.Wire(so, "_closeButton", _closeButton);
             SerializationHelper.Wire(so, "_counterText", _counterText);
             SerializationHelper.Wire(so, "_incrementsText", _incrementsText);
             SerializationHelper.Wire(so, "_incrementButton", _incrementButton);
