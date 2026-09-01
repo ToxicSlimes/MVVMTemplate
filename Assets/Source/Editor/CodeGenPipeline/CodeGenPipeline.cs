@@ -8,8 +8,7 @@ using UnityEngine;
 
 namespace Core.Editor.CodeGenPipeline
 {
-    [InitializeOnLoad]
-    internal static class CodeGenPipeline
+    public static class CodeGenPipeline
     {
         private static readonly string[] ScannerTypeNames =
         {
@@ -20,13 +19,86 @@ namespace Core.Editor.CodeGenPipeline
             "Core.Editor.StorageMapperScanner.StorageMapperScanner"
         };
 
-        [DidReloadScripts]
-        private static void OnScriptsReloaded()
+        [MenuItem("Tools/MVVM/Scan & Generate All")]
+        public static void ScanAndGenerateAll()
+        {
+            var anyChanged = RunAllScanners();
+            if (anyChanged)
+            {
+                AssetDatabase.Refresh();
+                Debug.Log("[CodeGenPipeline] All registrations regenerated.");
+            }
+            else
+            {
+                Debug.Log("[CodeGenPipeline] All generated files are up to date.");
+            }
+        }
+
+        [MenuItem("Tools/MVVM/Validate Template Setup")]
+        public static void ValidateTemplateSetup()
+        {
+            var issues = 0;
+
+            if (!System.IO.File.Exists("Assets/Source/Runtime/Core/DependencyInjection/Generated/ViewModelRegistration.generated.cs"))
+            {
+                Debug.LogError("[Template] Missing ViewModelRegistration.generated.cs — run Tools → MVVM → Scan & Generate All.");
+                issues++;
+            }
+
+            if (!System.IO.File.Exists("Assets/Source/Runtime/Core/DependencyInjection/Generated/MediatorHandlerRegistration.generated.cs"))
+            {
+                Debug.LogError("[Template] Missing MediatorHandlerRegistration.generated.cs — run Tools → Mediator → Scan & Generate Handler Registration.");
+                issues++;
+            }
+
+            var bootstrapScene = AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/Source/Assets/Scenes/BootstrapScene.unity");
+            if (bootstrapScene == null)
+            {
+                Debug.LogError("[Template] BootstrapScene not found at Assets/Source/Assets/Scenes/BootstrapScene.unity");
+                issues++;
+            }
+            else
+            {
+                var scenes = EditorBuildSettings.scenes;
+                var inBuild = scenes.Any(s => s.path.Contains("BootstrapScene") && s.enabled);
+                if (!inBuild)
+                {
+                    Debug.LogWarning("[Template] BootstrapScene is not enabled in Build Settings.");
+                    issues++;
+                }
+            }
+
+            var viewConfig = AssetDatabase.FindAssets("t:ViewConfig");
+            if (viewConfig.Length == 0)
+            {
+                Debug.LogWarning("[Template] ViewConfig asset not found under Assets/Source/00. Configs/");
+                issues++;
+            }
+
+            if (issues == 0)
+            {
+                Debug.Log("[Template] Setup looks good. Open BootstrapScene and press Play.");
+            }
+            else
+            {
+                Debug.LogWarning($"[Template] Found {issues} setup issue(s). See messages above.");
+            }
+        }
+
+        private static bool RunAllScanners()
         {
             var anyChanged = false;
 
             foreach (var typeName in ScannerTypeNames)
                 anyChanged |= TryInvokeGenerate(typeName);
+
+            return anyChanged;
+        }
+
+        [DidReloadScripts]
+        private static void OnScriptsReloaded()
+        {
+            var anyChanged = RunAllScanners();
 
             if (anyChanged)
             {

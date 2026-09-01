@@ -1,6 +1,7 @@
 using System;
 using Core.Abstractions.MVVM.Models.Counter;
 using Core.Abstractions.MVVM.ViewModels;
+using Core.Application.Commands.Common;
 using Core.Application.Commands.Counter;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Attributes;
@@ -30,6 +31,7 @@ namespace Core.MVVM.ViewModels.Counter
         public ReactiveCommand<Unit> DecrementCommand { get; set; }
         public ReactiveCommand<Unit> ResetCommand { get; set; }
         public ReactiveCommand<Unit> ToggleGalleryCommand { get; set; }
+        public ReactiveCommand<Unit> BackCommand { get; set; }
 
         public CounterViewModel(ICounterModel model, IMediator mediator)
         {
@@ -68,6 +70,9 @@ namespace Core.MVVM.ViewModels.Counter
                 ToggleButtonText.Value = IsGalleryMode.Value ? "Show Counter" : "Show Elements";
             });
             ToggleGalleryCommand.AddTo(ref Disposables);
+
+            BackCommand = new ReactiveCommand<Unit>(_ => OnBack().Forget());
+            BackCommand.AddTo(ref Disposables);
         }
 
         private void OnModelValueChanged(int oldValue, int newValue)
@@ -90,6 +95,11 @@ namespace Core.MVVM.ViewModels.Counter
         private async UniTaskVoid OnReset()
         {
             await _mediator.Send(new ResetCounterCommand());
+        }
+
+        private async UniTaskVoid OnBack()
+        {
+            await _mediator.Send(new NavigateBackCommand());
         }
 
         private static string FormatDisplay(int value) => $"Count: {value}";

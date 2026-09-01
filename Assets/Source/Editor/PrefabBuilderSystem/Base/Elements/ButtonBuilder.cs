@@ -158,6 +158,11 @@ namespace Core.Editor.PrefabBuilderSystem.Elements
             return this;
         }
 
+        public ButtonBuilder Outline()
+        {
+            return WithVariant(ButtonVariant.Outline);
+        }
+
         public ButtonBuilder Danger()
         {
             var colors = DesignSystemProvider.Colors;

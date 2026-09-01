@@ -1,11 +1,17 @@
 using System;
 using Core.Abstractions.MVVM.Models.MainMenu;
 using Core.Abstractions.MVVM.ViewModels;
+using Core.Application.Commands.Common;
 using Core.Application.Requests.Views;
 using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Attributes;
+using Core.MVVM.ViewModels.Counter;
+using Core.MVVM.ViewModels.Inventory;
 using Core.MVVM.ViewModels.Matchmaking;
+using Core.MVVM.ViewModels.Settings;
+using Core.MVVM.Views.Inventory;
 using Core.MVVM.Views.Matchmaking;
+using Core.MVVM.Views.Settings;
 using Cysharp.Threading.Tasks;
 using R3;
 
@@ -19,7 +25,10 @@ namespace Core.MVVM.ViewModels.MainMenu
 
         public ReactiveProperty<bool> IsVisible { get; }
 
-        public ReactiveCommand<Unit> PlayCommand { get; set; }
+        public ReactiveCommand<Unit> CounterCommand { get; set; }
+        public ReactiveCommand<Unit> SettingsCommand { get; set; }
+        public ReactiveCommand<Unit> InventoryCommand { get; set; }
+        public ReactiveCommand<Unit> MultiplayerCommand { get; set; }
         public ReactiveCommand<Unit> QuitCommand { get; set; }
 
         public MainMenuViewModel(IMainMenuModel model, IMediator mediator)
@@ -48,8 +57,17 @@ namespace Core.MVVM.ViewModels.MainMenu
 
         private void SetupCommands()
         {
-            PlayCommand = new ReactiveCommand<Unit>(_ => OnPlay().Forget());
-            PlayCommand.AddTo(ref Disposables);
+            CounterCommand = new ReactiveCommand<Unit>(_ => OnCounter().Forget());
+            CounterCommand.AddTo(ref Disposables);
+
+            SettingsCommand = new ReactiveCommand<Unit>(_ => OnSettings().Forget());
+            SettingsCommand.AddTo(ref Disposables);
+
+            InventoryCommand = new ReactiveCommand<Unit>(_ => OnInventory().Forget());
+            InventoryCommand.AddTo(ref Disposables);
+
+            MultiplayerCommand = new ReactiveCommand<Unit>(_ => OnMultiplayer().Forget());
+            MultiplayerCommand.AddTo(ref Disposables);
 
             QuitCommand = new ReactiveCommand<Unit>(_ => OnQuit());
             QuitCommand.AddTo(ref Disposables);
@@ -57,7 +75,22 @@ namespace Core.MVVM.ViewModels.MainMenu
 
         private void OnModelIsVisibleChanged(bool value) => IsVisible.Value = value;
 
-        private async UniTaskVoid OnPlay()
+        private async UniTaskVoid OnCounter()
+        {
+            await _mediator.Send(new ShowViewCommand<CounterViewModel>());
+        }
+
+        private async UniTaskVoid OnSettings()
+        {
+            await _mediator.Send(new ShowViewRequest<SettingsView, SettingsViewModel>());
+        }
+
+        private async UniTaskVoid OnInventory()
+        {
+            await _mediator.Send(new ShowViewRequest<InventoryView, InventoryViewModel>());
+        }
+
+        private async UniTaskVoid OnMultiplayer()
         {
             await _mediator.Send(new ShowViewRequest<MatchmakingView, MatchmakingViewModel>());
         }

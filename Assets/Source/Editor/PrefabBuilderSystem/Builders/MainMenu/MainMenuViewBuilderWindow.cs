@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Core;
+using Core.Editor.PrefabBuilderSystem.Settings;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,6 +20,38 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
         public static void ShowWindow()
         {
             GetWindow<MainMenuViewBuilderWindow>("Main Menu View Builder");
+        }
+
+        [MenuItem("Tools/MVVM/Rebuild Main Menu Prefab")]
+        public static void RebuildPrefab()
+        {
+            var settings = LoadOrCreateSettingsStatic<MainMenuViewBuilderSettings>(SettingsPath);
+            var builder = new MainMenuViewBuilder { Settings = settings };
+            builder.Build();
+            Debug.Log("[MainMenuViewBuilder] MainMenuView.prefab rebuilt.");
+        }
+
+        private static TSettings LoadOrCreateSettingsStatic<TSettings>(string path)
+            where TSettings : BuilderSettingsBase
+        {
+            var settings = AssetDatabase.LoadAssetAtPath<TSettings>(path);
+            if (settings != null)
+            {
+                return settings;
+            }
+
+            settings = ScriptableObject.CreateInstance<TSettings>();
+            settings.ResetToDefaults();
+            var directory = System.IO.Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(directory) && !AssetDatabase.IsValidFolder(directory))
+            {
+                System.IO.Directory.CreateDirectory(directory);
+                AssetDatabase.Refresh();
+            }
+
+            AssetDatabase.CreateAsset(settings, path);
+            AssetDatabase.SaveAssets();
+            return settings;
         }
 
         protected override void OnEnable()

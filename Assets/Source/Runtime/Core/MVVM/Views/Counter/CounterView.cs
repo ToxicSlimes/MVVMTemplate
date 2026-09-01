@@ -24,6 +24,7 @@ namespace Core.MVVM.Views.Counter
         [SerializeField] private BaseText _incrementsText;
 
         [Header("Buttons")]
+        [SerializeField] private BaseButton _closeButton;
         [SerializeField] private BaseButton _incrementButton;
         [SerializeField] private BaseButton _decrementButton;
         [SerializeField] private BaseButton _resetButton;
@@ -50,6 +51,7 @@ namespace Core.MVVM.Views.Counter
 
         protected override void BindPanel(ref DisposableBag disposables)
         {
+            Bind(_closeButton, ViewModel.BackCommand, ref disposables);
             BindCounterMode(ref disposables);
             BindModeToggle(ref disposables);
             SetupPopups();

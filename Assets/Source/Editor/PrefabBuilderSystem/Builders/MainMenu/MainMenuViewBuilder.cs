@@ -19,7 +19,10 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
         private GameObject _menuBlock;
         private GameObject _footerBlock;
 
-        private BaseButton _playButton;
+        private BaseButton _counterButton;
+        private BaseButton _settingsButton;
+        private BaseButton _inventoryButton;
+        private BaseButton _multiplayerButton;
         private BaseButton _quitButton;
 
         protected override void BuildPanelStructure()
@@ -50,7 +53,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
             StretchToAnchors(_titleBlock);
 
             new TextBuilder("Title")
-                .WithText("ABDUCTION")
+                .WithText("MVVM TEMPLATE")
                 .WithFontSize(s.TitleFontSize)
                 .WithColor(DesignSystemProvider.Colors.textPrimary)
                 .Bold()
@@ -60,7 +63,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
                 .Build(_titleBlock.transform);
 
             new TextBuilder("Subtitle")
-                .WithText("Co-op pet abduction")
+                .WithText("Unity 6 · MVVM + CQRS Examples")
                 .BodyLarge()
                 .Centered()
                 .Secondary()
@@ -72,7 +75,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
         private void BuildMenuBlock(MainMenuViewBuilderSettings s)
         {
             var menuLayout = new VerticalLayoutBuilder("MenuBlock")
-                .WithSpacing(SpacingSize.MD)
+                .WithSpacing(SpacingSize.SM)
                 .WithAlignment(TextAnchor.MiddleCenter)
                 .ForceExpand(false, false)
                 .WithAnchors(s.MenuBlockAnchorMin, s.MenuBlockAnchorMax)
@@ -81,8 +84,29 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
             _menuBlock = menuLayout.gameObject;
             StretchToAnchors(_menuBlock);
 
-            _playButton = new ButtonBuilder("PlayButton")
-                .WithLabel("PLAY")
+            _counterButton = new ButtonBuilder("CounterButton")
+                .WithLabel("COUNTER")
+                .WithLabelSize(s.MenuButtonFontSize)
+                .Outline()
+                .WithPreferredSize(s.ButtonWidth, s.MenuButtonHeight)
+                .Build(_menuBlock.transform);
+
+            _settingsButton = new ButtonBuilder("SettingsButton")
+                .WithLabel("SETTINGS")
+                .WithLabelSize(s.MenuButtonFontSize)
+                .Outline()
+                .WithPreferredSize(s.ButtonWidth, s.MenuButtonHeight)
+                .Build(_menuBlock.transform);
+
+            _inventoryButton = new ButtonBuilder("InventoryButton")
+                .WithLabel("INVENTORY")
+                .WithLabelSize(s.MenuButtonFontSize)
+                .Outline()
+                .WithPreferredSize(s.ButtonWidth, s.MenuButtonHeight)
+                .Build(_menuBlock.transform);
+
+            _multiplayerButton = new ButtonBuilder("MultiplayerButton")
+                .WithLabel("MULTIPLAYER")
                 .WithLabelSize(s.PlayButtonFontSize)
                 .Primary()
                 .WithPreferredSize(s.ButtonWidth, s.PlayButtonHeight)
@@ -112,7 +136,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
             footerRect.anchoredPosition = new Vector2(0f, s.FooterBottomMargin);
 
             new TextBuilder("BuildLabel")
-                .WithText("prototype build 0.1")
+                .WithText("Open BootstrapScene → Play")
                 .Caption()
                 .WithAlignment(TextAlignmentOptions.MidlineLeft)
                 .NoAutoSize()
@@ -123,8 +147,8 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
                 .SetFlexibleWidth(1f)
                 .Build(_footerBlock.transform);
 
-            new TextBuilder("PlayerCountLabel")
-                .WithText("2-4 players")
+            new TextBuilder("VersionLabel")
+                .WithText("v1.0.0")
                 .Caption()
                 .WithAlignment(TextAlignmentOptions.MidlineRight)
                 .NoAutoSize()
@@ -143,7 +167,10 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
         protected override void WireFields(MainMenuView view)
         {
             WireAll(view,
-                ("_playButton", _playButton),
+                ("_counterButton", _counterButton),
+                ("_settingsButton", _settingsButton),
+                ("_inventoryButton", _inventoryButton),
+                ("_multiplayerButton", _multiplayerButton),
                 ("_quitButton", _quitButton));
         }
     }

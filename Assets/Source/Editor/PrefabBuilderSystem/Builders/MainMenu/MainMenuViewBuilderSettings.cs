@@ -14,11 +14,11 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
         public float SubtitleHeight = 36f;
 
         [Header("Menu Block")]
-        public Vector2 MenuBlockAnchorMin = new(0f, 0.10f);
+        public Vector2 MenuBlockAnchorMin = new(0f, 0.08f);
         public Vector2 MenuBlockAnchorMax = new(1f, 0.57f);
         public float ButtonWidth = 400f;
-        public float PlayButtonHeight = 72f;
-        public float MenuButtonHeight = 60f;
+        public float PlayButtonHeight = 64f;
+        public float MenuButtonHeight = 52f;
 
         [Header("Footer")]
         public float FooterHeight = 40f;
@@ -38,11 +38,11 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.MainMenu
             TitleHeight = 140f;
             SubtitleHeight = 36f;
 
-            MenuBlockAnchorMin = new Vector2(0f, 0.10f);
+            MenuBlockAnchorMin = new Vector2(0f, 0.08f);
             MenuBlockAnchorMax = new Vector2(1f, 0.57f);
             ButtonWidth = 400f;
-            PlayButtonHeight = 72f;
-            MenuButtonHeight = 60f;
+            PlayButtonHeight = 64f;
+            MenuButtonHeight = 52f;
 
             FooterHeight = 40f;
             FooterSideMargin = 48f;

@@ -8,9 +8,13 @@ Ready-to-use foundation for any Unity project — just add your game logic on to
 
 1. Open in **Unity 6000.x**
 2. Wait for Package Manager to download dependencies (R3, UniTask, Reflex, etc.)
-3. Wait for compilation
-4. Run code generators: `Tools → MVVM → Scan & Generate` (all scanners)
-5. Open `BootstrapScene` → Press Play
+3. Wait for compilation (codegen runs automatically on script reload)
+4. Run `Tools → MVVM → Scan & Generate All` if generated files are missing
+5. Run `Tools → MVVM → Rebuild Main Menu Prefab` after pulling template updates
+6. Optional: `Tools → MVVM → Validate Template Setup` — checks scenes, configs, codegen
+7. Open `BootstrapScene` → Press Play
+
+The main menu is a **demo hub** — open Counter, Settings, Inventory, or Multiplayer without writing code first.
 
 ## Use as a Git submodule
 
@@ -187,15 +191,23 @@ Assets/Source/
 
 ## Included Examples
 
-### MainMenu (MVVM basics)
+### MainMenu (demo hub)
 
-Demonstrates: View ↔ ViewModel binding, button commands, state machine navigation.
+Entry point after bootstrap. Each button opens a built-in example on top of the menu (view stack — Back returns to the hub).
+
+| Button | Example | Pattern |
+|--------|---------|---------|
+| Counter | CQRS commands, queries, notifications, element gallery | `ShowViewCommand<TViewModel>` |
+| Settings | Modal with tabs, audio sliders, PlayerPrefs | `ShowViewRequest<TView, TViewModel>` |
+| Inventory | Filterable list, selection, drag-reorder | `ShowViewRequest` + `NavigateBackCommand` |
+| Multiplayer | Photon Fusion matchmaking flow | `ShowViewRequest` |
+| Quit | Exit play mode / application | — |
 
 | Layer | File |
 |-------|------|
 | Model | `MainMenuModel` — visibility state |
-| ViewModel | `MainMenuViewModel` — Play, Quit commands |
-| View | `MainMenuView` — Play and Quit bound via `OnClickAsObservable()` |
+| ViewModel | `MainMenuViewModel` — routes to example views |
+| View | `MainMenuView` — demo hub buttons |
 | State | `MainMenuState` — shows MainMenuView via ViewService |
 
 ### Counter (full CQRS cycle)
@@ -356,6 +368,10 @@ Run all code generators: `Tools → MVVM → Scan & Generate` — done.
 
 | Tool | Menu | Description |
 |------|------|-------------|
+| **New Feature** | `Tools → MVVM → New Feature...` | Wizard: Model + ViewModel + View + ViewMapping in one step |
+| Codegen (all) | `Tools → MVVM → Scan & Generate All` | Regenerates ViewModel, ViewHandler, Mediator, Element, StorageMapper DI |
+| Template check | `Tools → MVVM → Validate Template Setup` | Verifies BootstrapScene, ViewConfig, generated files |
+| Rebuild main menu | `Tools → MVVM → Rebuild Main Menu Prefab` | Rebuilds demo hub prefab from builder |
 | Scene Toolbar | Main toolbar (auto) | Scene switcher + additive scene loader |
 | Design System | `Tools → Design System → Apply` | Apply colors/typography to prefabs |
 | Prefab Builder | `Tools → UI Prefab Builder` | Visual prefab construction system |
@@ -433,6 +449,26 @@ await _popupService.ShowAsync<ItemTooltipPopup, ItemTooltipData>(
 **"ViewConfig not found"** → Check `00. Configs/` folder, assign ViewConfig SO to the config provider.
 
 **"Scene not in build"** → `File → Build Settings → Add Open Scenes`.
+
+## CI / compile without opening the Editor
+
+Local (batchmode, no Editor window):
+
+```powershell
+.\Tools\ci-compile.ps1
+```
+
+```bash
+chmod +x ./Tools/ci-compile.sh && ./Tools/ci-compile.sh
+```
+
+GitHub Actions (`.github/workflows/compile.yml`) runs the same check on push/PR. Add repository secrets:
+
+- `UNITY_LICENSE` — Unity activation file content
+- `UNITY_EMAIL` — Unity account email
+- `UNITY_PASSWORD` — Unity account password
+
+Unity C# projects reference Editor assemblies in generated `.csproj` files, so `dotnet build MVVMTemplate.sln` only works on a machine where Unity has already generated those projects with a valid local Editor path. Use the batchmode scripts above for a reliable headless compile check.
 
 ## License
 

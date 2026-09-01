@@ -5,17 +5,11 @@ using UnityEngine;
 namespace Core.Configs.DesignSystem
 {
     /// <summary>
-    /// Токены цвета интерфейса, сведённые к гамме «Abduction».
+    /// UI color tokens for the MVVM Template design system.
     /// </summary>
     /// <remarks>
-    /// Имена токенов остались от шаблона (indigo, pink, purple, bubble-цвета) и намеренно не
-    /// переименованы: на них завязаны все билдеры вью и строковые ключи шаблонов, а переименование
-    /// стоило бы пересборки каждого префаба ради косметики. Читать их нужно по смыслу в игре:
-    /// indigo — зелёный корпус тарелки (главное действие), cyan — её луч (подсказки и ввод),
-    /// purple — тёплый фонарь деда (нейтральное состояние), pink — угли попаданий (предупреждение),
-    /// error* — красная тревога и только она. Фон — тёмно-синяя ночь.
-    /// Красный не используется ни для чего, кроме опасности: иначе тревога перестаёт читаться
-    /// как тревога.
+    /// Token names (indigo, pink, purple, bubble colors) are stable API for prefab builders and templates.
+    /// Customize values in the ColorPalette asset; renaming fields requires rebuilding affected prefabs.
     /// </remarks>
     [CreateAssetMenu(fileName = "ColorPalette", menuName = "MVVM/Design System/Color Palette")]
     public class ColorPalette : ConfigBase
