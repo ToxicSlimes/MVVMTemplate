@@ -79,6 +79,7 @@ namespace Core.Editor.CodeGenPipeline
 
             issues += CountToolkitBindingIssues();
             issues += CountAudioConfigIssues();
+            issues += CountLocalizationIssues();
 
             if (issues == 0)
                 Debug.Log("[Template] All checks passed. Open BootstrapScene and press Play.");
@@ -138,6 +139,27 @@ namespace Core.Editor.CodeGenPipeline
             }
 
             return issues;
+        }
+
+        private static int CountLocalizationIssues()
+        {
+            var validatorType = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a =>
+                {
+                    try { return a.GetTypes(); }
+                    catch { return Array.Empty<Type>(); }
+                })
+                .FirstOrDefault(t => t.FullName == "Core.Editor.Localization.LocalizationSetup");
+
+            if (validatorType == null)
+                return 0;
+
+            var method = validatorType.GetMethod("CountBlockingIssues", BindingFlags.Public | BindingFlags.Static);
+            if (method == null)
+                return 0;
+
+            var result = method.Invoke(null, null);
+            return result is int count ? count : 0;
         }
 
         private static bool RunAllScanners()

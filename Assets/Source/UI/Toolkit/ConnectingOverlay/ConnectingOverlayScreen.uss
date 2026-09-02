@@ -1,1 +1,4 @@
-ConnectingOverlayScreen.uss
+.connecting-panel {
+    max-width: 420px;
+    align-items: stretch;
+}

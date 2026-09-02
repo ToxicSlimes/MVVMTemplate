@@ -11,7 +11,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.65);
+    background-color: rgba(18, 8, 40, 0.75);
     border-width: 0;
     margin: 0;
     padding: 0;
@@ -19,46 +19,90 @@
 
 .settings-panel {
     position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 8%;
-    bottom: 8%;
+    left: 8%;
+    right: 8%;
+    top: 6%;
+    bottom: 6%;
     padding: var(--space-lg);
     background-color: var(--color-bg-surface);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-none);
+    border-left-width: var(--border-chunky);
+    border-top-width: var(--border-chunky);
+    border-right-width: var(--border-chunky);
+    border-bottom-width: var(--border-chunky);
+    border-left-color: var(--color-panel-light);
+    border-top-color: var(--color-panel-light);
+    border-right-color: var(--color-panel-dark);
+    border-bottom-color: var(--color-panel-dark);
 }
 
 .settings-header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: var(--space-sm);
+    padding-bottom: var(--space-sm);
+    border-bottom-width: 2px;
+    border-bottom-color: var(--color-panel-dark);
+}
+
+.settings-header .screen-title {
+    margin-bottom: 0;
 }
 
 .settings-close {
-    min-width: 40px;
-    min-height: 40px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 12px;
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: var(--color-panel-light);
+    border-top-color: var(--color-panel-light);
+    border-right-color: var(--color-panel-dark);
+    border-bottom-color: var(--color-panel-dark);
+    background-color: var(--color-bg-deep);
+    color: var(--color-candy-pink);
 }
 
 .settings-tabs {
     flex-direction: row;
     flex-wrap: wrap;
     margin: var(--space-md) 0;
+    padding: var(--space-xs);
+    background-color: var(--color-bg-deep);
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: var(--color-panel-dark);
+    border-top-color: var(--color-panel-dark);
+    border-right-color: var(--color-panel-light);
+    border-bottom-color: var(--color-panel-light);
 }
 
 .tab-button {
     margin-right: var(--space-xs);
-    min-height: 36px;
-    font-size: 13px;
+    margin-bottom: var(--space-xs);
+    min-height: 32px;
+    font-size: 8px;
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
 }
 
 .tab-button-active {
     background-color: var(--color-accent);
-    color: var(--color-bg-deep);
+    color: var(--color-outline);
+    border-left-color: rgb(255, 240, 170);
+    border-top-color: rgb(255, 240, 170);
+    border-right-color: var(--color-accent-dark);
+    border-bottom-color: var(--color-accent-dark);
 }
 
 .tab-content {
     display: none;
-    padding: var(--space-sm);
+    padding: var(--space-md) var(--space-sm);
 }
 
 .tab-content-active {
@@ -68,15 +112,28 @@
 .settings-content-scroll {
     flex-grow: 1;
     max-height: 420px;
+    background-color: var(--color-bg-deep);
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: var(--color-panel-dark);
+    border-top-color: var(--color-panel-dark);
+    border-right-color: var(--color-panel-light);
+    border-bottom-color: var(--color-panel-light);
+    padding: var(--space-md);
 }
 
 .settings-footer {
     flex-direction: row;
     justify-content: flex-end;
     margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top-width: 2px;
+    border-top-color: var(--color-panel-dark);
 }
 
 .settings-footer .btn {
     margin-left: var(--space-xs);
-    min-width: 88px;
+    min-width: 96px;
 }

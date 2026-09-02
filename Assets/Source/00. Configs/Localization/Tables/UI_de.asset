@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_de
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: 04a693edfcfca1746b3b3804ef8a5c17, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 3615260672
+    m_Localized: MVVM Template
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3774644224
+    m_Localized: "Unity 6 \xB7 MVVM + CQRS Examples"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3783032832
+    m_Localized: Counter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3783032833
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198656
+    m_Localized: Inventory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198657
+    m_Localized: Multiplayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198658
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198659
+    m_Localized: "Open BootstrapScene \u2192 Play"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198660
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198661
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198662
+    m_Localized: Video
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198663
+    m_Localized: Display
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198664
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198665
+    m_Localized: Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198666
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198667
+    m_Localized: Apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198668
+    m_Localized: Reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198669
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198670
+    m_Localized: 'Volume: {0}%'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

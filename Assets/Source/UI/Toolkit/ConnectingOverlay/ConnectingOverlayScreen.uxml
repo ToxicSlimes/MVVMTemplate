@@ -1,9 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/pixel-theme.uss" />
     <Style src="../Theme/toolkit-screen.uss" />
     <Style src="ConnectingOverlayScreen.uss" />
     <ui:VisualElement class="overlay-dim">
-        <ui:VisualElement class="screen-panel">
+        <ui:VisualElement class="screen-panel panel-pixel connecting-panel">
             <ui:Label text="CONNECTING" class="screen-title" />
             <ui:Label name="status-label" text="Searching..." class="screen-subtitle" />
             <ui:VisualElement class="progress-track">

@@ -20,6 +20,7 @@ using Core.Abstractions.Services.Platform;
 using Core.Configs.Services;
 using Core.Infrastructure.AssetManagement;
 using Core.Infrastructure.Services.Audio;
+using Core.Infrastructure.Services.Localization;
 using Core.Infrastructure.MVVM;
 using Core.Infrastructure.MVVM.Animation;
 using Core.Infrastructure.MVVM.Canvas;
@@ -181,6 +182,31 @@ public static class InfrastructureBindings
       {
         Debug.LogWarning($"[DI] Failed to initialize AudioService: {ex.Message}");
         return new NullAudioService();
+      }
+    });
+
+    builder.AddSingleton<ILocalizationService>(container =>
+    {
+      try
+      {
+        var configProvider = container.Resolve<IConfigProvider>();
+        LocalizationConfig localizationConfig = null;
+
+        try
+        {
+          localizationConfig = configProvider.GetConfig<LocalizationConfig>();
+        }
+        catch (System.Exception)
+        {
+          localizationConfig = null;
+        }
+
+        return new LocalizationService(container.Resolve<IPrefsService>(), localizationConfig);
+      }
+      catch (System.Exception ex)
+      {
+        Debug.LogWarning($"[DI] Failed to initialize LocalizationService: {ex.Message}");
+        return new NullLocalizationService();
       }
     });
     

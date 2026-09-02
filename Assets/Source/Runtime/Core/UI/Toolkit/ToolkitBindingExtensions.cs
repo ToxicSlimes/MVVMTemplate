@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Core.Abstractions.Services;
+using Core.Data.Domain.Enums;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -170,6 +172,98 @@ namespace Core.UI.Toolkit.Binding
             property.Subscribe(fill, static (value, target) =>
                     target.style.width = new Length(Mathf.Clamp01(value) * 100f, LengthUnit.Percent))
                 .AddTo(ref bag);
+        }
+
+        public static void BindLocalized(
+            this Label label,
+            ILocalizationService localization,
+            string table,
+            string key,
+            ref DisposableBag bag)
+        {
+            if (label == null || localization == null) return;
+
+            void Refresh() => label.text = localization.Localize(table, key);
+
+            Refresh();
+            Action<GameLanguage> onLanguageChanged = _ => Refresh();
+            localization.LanguageChanged += onLanguageChanged;
+            bag.Add(Disposable.Create(() => localization.LanguageChanged -= onLanguageChanged));
+        }
+
+        public static void BindLocalized(
+            this Label label,
+            ILocalizationService localization,
+            string table,
+            string key,
+            Func<object[]> argumentFactory,
+            ref DisposableBag bag)
+        {
+            if (label == null || localization == null || argumentFactory == null) return;
+
+            void Refresh()
+            {
+                var args = argumentFactory();
+                label.text = args == null || args.Length == 0
+                    ? localization.Localize(table, key)
+                    : localization.Localize(table, key, args);
+            }
+
+            Refresh();
+            Action<GameLanguage> onLanguageChanged = _ => Refresh();
+            localization.LanguageChanged += onLanguageChanged;
+            bag.Add(Disposable.Create(() => localization.LanguageChanged -= onLanguageChanged));
+        }
+
+        public static void BindLocalized(
+            this Button button,
+            ILocalizationService localization,
+            string table,
+            string key,
+            ref DisposableBag bag)
+        {
+            if (button == null || localization == null) return;
+
+            void Refresh() => button.text = localization.Localize(table, key);
+
+            Refresh();
+            Action<GameLanguage> onLanguageChanged = _ => Refresh();
+            localization.LanguageChanged += onLanguageChanged;
+            bag.Add(Disposable.Create(() => localization.LanguageChanged -= onLanguageChanged));
+        }
+
+        public static void BindLocalizedLabel(
+            this Slider slider,
+            ILocalizationService localization,
+            string table,
+            string key,
+            ref DisposableBag bag)
+        {
+            if (slider == null || localization == null) return;
+
+            void Refresh() => slider.label = localization.Localize(table, key);
+
+            Refresh();
+            Action<GameLanguage> onLanguageChanged = _ => Refresh();
+            localization.LanguageChanged += onLanguageChanged;
+            bag.Add(Disposable.Create(() => localization.LanguageChanged -= onLanguageChanged));
+        }
+
+        public static void BindLocalizedLabel(
+            this DropdownField dropdown,
+            ILocalizationService localization,
+            string table,
+            string key,
+            ref DisposableBag bag)
+        {
+            if (dropdown == null || localization == null) return;
+
+            void Refresh() => dropdown.label = localization.Localize(table, key);
+
+            Refresh();
+            Action<GameLanguage> onLanguageChanged = _ => Refresh();
+            localization.LanguageChanged += onLanguageChanged;
+            bag.Add(Disposable.Create(() => localization.LanguageChanged -= onLanguageChanged));
         }
     }
 }

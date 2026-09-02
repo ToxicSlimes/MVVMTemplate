@@ -1,9 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/pixel-theme.uss" />
     <Style src="../Theme/toolkit-screen.uss" />
     <Style src="PauseScreen.uss" />
     <ui:VisualElement class="pause-overlay">
-        <ui:VisualElement class="screen-panel pause-panel">
+        <ui:VisualElement class="screen-panel panel-pixel pause-panel">
             <ui:Label text="PAUSED" class="screen-title" />
             <ui:Button name="resume-button" text="Resume" class="btn btn-primary" />
             <ui:Button name="leave-button" text="Leave Match" class="btn btn-danger" />

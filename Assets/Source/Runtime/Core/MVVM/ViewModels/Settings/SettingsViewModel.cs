@@ -105,6 +105,19 @@ namespace Core.MVVM.ViewModels.Settings
             SetupViewModelSubscriptions();
             SetupCommands();
             LoadAudioStateAsync().Forget();
+            LoadLocalizationStateAsync().Forget();
+        }
+
+        private async UniTaskVoid LoadLocalizationStateAsync()
+        {
+            try
+            {
+                var state = await _mediator.Send(new GetLocalizationStateQuery());
+                Language.Value = state.CurrentLanguage;
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private async UniTaskVoid LoadAudioStateAsync()
@@ -302,6 +315,7 @@ namespace Core.MVVM.ViewModels.Settings
             try
             {
                 _model.Apply();
+                _mediator.Send(new SetLanguageCommand(Language.Value)).Forget();
             }
             finally
             {

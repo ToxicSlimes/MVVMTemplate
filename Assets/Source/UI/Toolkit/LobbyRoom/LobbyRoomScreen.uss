@@ -3,14 +3,17 @@
 }
 
 .room-code {
-    font-size: 24px;
-    -unity-font-style: bold;
+    -unity-font-definition: url('../Theme/Fonts/PressStart2P-Regular.ttf');
+    font-size: 14px;
     color: var(--color-accent);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: var(--color-text-shadow);
     margin-right: var(--space-sm);
 }
 
 .copy-button {
-    min-width: 72px;
+    min-width: 88px;
+    font-size: 8px;
 }
 
 .slots-row {
@@ -26,24 +29,34 @@
     margin-bottom: var(--space-sm);
     padding: var(--space-md);
     background-color: var(--color-bg-elevated);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-none);
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: var(--color-panel-light);
+    border-top-color: var(--color-panel-light);
+    border-right-color: var(--color-panel-dark);
+    border-bottom-color: var(--color-panel-dark);
     display: none;
 }
 
 .slot-name {
-    font-size: 16px;
-    -unity-font-style: bold;
+    -unity-font-definition: url('../Theme/Fonts/PressStart2P-Regular.ttf');
+    font-size: 10px;
     color: var(--color-text-primary);
 }
 
 .slot-role {
-    font-size: 12px;
+    -unity-font-definition: url('../Theme/Fonts/PressStart2P-Regular.ttf');
+    font-size: 8px;
     color: var(--color-text-secondary);
     margin-top: var(--space-xs);
 }
 
 .slot-ready {
-    font-size: 11px;
+    -unity-font-definition: url('../Theme/Fonts/PressStart2P-Regular.ttf');
+    font-size: 8px;
     color: var(--color-primary);
     margin-top: var(--space-sm);
     display: none;

@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using Core.Abstractions.Localization;
 using Core.Abstractions.Services.Input;
+using Core.Abstractions.Services;
 using Core.Data.Domain.Enums;
 using Core.MVVM.ViewModels.Settings;
 using Core.UI.Toolkit;
@@ -14,7 +16,9 @@ namespace Core.MVVM.Views.Settings
     public class SettingsToolkitView : ToolkitPanelView<SettingsViewModel>
     {
         [Inject] private IInputService _inputService;
+        [Inject] private ILocalizationService _localizationService;
 
+        private Label _titleLabel;
         private Button _dimButton;
         private Button _closeButton;
         private Button _applyButton;
@@ -67,6 +71,7 @@ namespace Core.MVVM.Views.Settings
         {
             QueryElements();
             SetupDropdowns();
+            BindLocalizedText(ref disposables);
             BindCloseButtons(ref disposables);
             BindTabs(ref disposables);
             BindKeyboardNavigation(ref disposables);
@@ -83,6 +88,7 @@ namespace Core.MVVM.Views.Settings
         {
             if (Root == null) return;
 
+            _titleLabel = Root.Q<Label>(className: "screen-title");
             _dimButton = Root.Q<Button>("dim-button");
             _closeButton = Root.Q<Button>("close-button");
             _applyButton = Root.Q<Button>("apply-button");
@@ -163,6 +169,23 @@ namespace Core.MVVM.Views.Settings
                 _languageDropdown.choices = Enum.GetNames(typeof(GameLanguage)).ToList();
         }
 
+        private void BindLocalizedText(ref DisposableBag disposables)
+        {
+            if (_localizationService == null)
+                return;
+
+            BindLocalized(_titleLabel, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Title, ref disposables);
+            BindLocalized(_tabButtons[0], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabAudio, ref disposables);
+            BindLocalized(_tabButtons[1], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabVideo, ref disposables);
+            BindLocalized(_tabButtons[2], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabDisplay, ref disposables);
+            BindLocalized(_tabButtons[3], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabControls, ref disposables);
+            BindLocalized(_tabButtons[4], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabGame, ref disposables);
+            BindLocalized(_applyButton, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Apply, ref disposables);
+            BindLocalized(_resetButton, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Reset, ref disposables);
+            BindLocalized(_cancelButton, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Cancel, ref disposables);
+            BindLocalizedLabel(_languageDropdown, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Language, ref disposables);
+        }
+
         private void BindCloseButtons(ref DisposableBag disposables)
         {
             Bind(_dimButton, ViewModel.CloseCommand, ref disposables);
@@ -233,10 +256,25 @@ namespace Core.MVVM.Views.Settings
 
         private void BindAudio(ref DisposableBag disposables)
         {
-            Bind(_masterVolume, ViewModel.MasterVolume, _masterVolumeValue, "{0:P0}", ref disposables);
+            Bind(_masterVolume, ViewModel.MasterVolume, ref disposables);
             Bind(_musicVolume, ViewModel.MusicVolume, _musicVolumeValue, "{0:P0}", ref disposables);
             Bind(_sfxVolume, ViewModel.SfxVolume, _sfxVolumeValue, "{0:P0}", ref disposables);
             Bind(_voiceVolume, ViewModel.VoiceVolume, _voiceVolumeValue, "{0:P0}", ref disposables);
+
+            if (_localizationService != null && _masterVolumeValue != null)
+            {
+                RefreshMasterLabelFromVolume();
+                ViewModel.MasterVolume.Subscribe(this, static (_, self) => self.RefreshMasterLabelFromVolume())
+                    .AddTo(ref disposables);
+                Action<GameLanguage> onLanguageChanged = _ => RefreshMasterLabelFromVolume();
+                _localizationService.LanguageChanged += onLanguageChanged;
+                disposables.Add(Disposable.Create(() => _localizationService.LanguageChanged -= onLanguageChanged));
+            }
+            else
+            {
+                Bind(_masterVolume, ViewModel.MasterVolume, _masterVolumeValue, "{0:P0}", ref disposables);
+            }
+
             Bind(_muteAllToggle, ViewModel.IsMuteAll, ref disposables);
             Bind(_muteMusicToggle, ViewModel.IsMuteMusic, ref disposables);
             Bind(_muteSfxToggle, ViewModel.IsMuteSfx, ref disposables);
@@ -334,6 +372,17 @@ namespace Core.MVVM.Views.Settings
             Bind(_applyButton, ViewModel.ApplyCommand, ref disposables);
             Bind(_resetButton, ViewModel.ResetCommand, ref disposables);
             Bind(_cancelButton, ViewModel.CancelCommand, ref disposables);
+        }
+
+        private void RefreshMasterLabelFromVolume()
+        {
+            if (_localizationService == null || _masterVolumeValue == null)
+                return;
+
+            _masterVolumeValue.text = _localizationService.Localize(
+                UiLocalizationKeys.Table,
+                UiLocalizationKeys.Settings.VolumeLabel,
+                Mathf.RoundToInt(ViewModel.MasterVolume.Value * 100f));
         }
     }
 }

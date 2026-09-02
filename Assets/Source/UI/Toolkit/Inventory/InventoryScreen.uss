@@ -6,12 +6,22 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: var(--space-sm);
+    padding: var(--space-xs);
+    background-color: var(--color-bg-deep);
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: var(--color-panel-dark);
+    border-top-color: var(--color-panel-dark);
+    border-right-color: var(--color-panel-light);
+    border-bottom-color: var(--color-panel-light);
 }
 
 .filter-button {
     margin: 2px;
     min-height: 32px;
-    font-size: 12px;
+    font-size: 8px;
 }
 
 .items-scroll {
@@ -22,18 +32,29 @@
     margin-top: var(--space-md);
     padding: var(--space-md);
     background-color: var(--color-bg-elevated);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-none);
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: var(--color-panel-light);
+    border-top-color: var(--color-panel-light);
+    border-right-color: var(--color-panel-dark);
+    border-bottom-color: var(--color-panel-dark);
 }
 
 .detail-title {
-    font-size: 18px;
-    -unity-font-style: bold;
-    color: var(--color-text-primary);
+    -unity-font-definition: url('../Theme/Fonts/PressStart2P-Regular.ttf');
+    font-size: 11px;
+    color: var(--color-accent);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: var(--color-text-shadow);
     margin-bottom: var(--space-xs);
 }
 
 .detail-description {
-    font-size: 13px;
+    -unity-font-definition: url('../Theme/Fonts/PressStart2P-Regular.ttf');
+    font-size: 8px;
     color: var(--color-text-secondary);
     white-space: normal;
     margin-bottom: var(--space-sm);
@@ -42,4 +63,5 @@
 .item-button {
     margin-bottom: var(--space-xs);
     -unity-text-align: middle-left;
+    font-size: 8px;
 }

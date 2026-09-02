@@ -1,8 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/pixel-theme.uss" />
+    <Style src="../Theme/pixel-controls.uss" />
     <Style src="CounterScreen.uss" />
     <ui:VisualElement name="counter-root" class="counter-root">
-        <ui:VisualElement name="counter-panel" class="counter-panel">
+        <ui:VisualElement name="counter-panel" class="counter-panel panel-pixel">
             <ui:Button name="close-button" text="Back" class="btn btn-secondary" tooltip="Return to main menu" />
             <ui:Label name="counter-label" text="0" class="counter-value" />
             <ui:Label name="increments-label" text="Total actions: 0" class="counter-meta" />
@@ -15,7 +17,7 @@
                 <ui:Label name="toggle-gallery-label" text="Show Gallery" />
             </ui:Button>
         </ui:VisualElement>
-        <ui:VisualElement name="gallery-panel" class="gallery-panel">
+        <ui:VisualElement name="gallery-panel" class="gallery-panel panel-pixel">
             <ui:Button name="gallery-back-button" text="Back to Counter" class="btn btn-secondary" />
             <ui:Label text="Element Gallery" class="gallery-title" />
             <ui:Label text="Elements created via ReconcileToolkitElementsCommand at runtime." class="gallery-subtitle" />
@@ -24,7 +26,7 @@
             <ui:ScrollView name="action-items-container" class="gallery-scroll" />
         </ui:VisualElement>
         <ui:VisualElement name="confirm-overlay" class="confirm-overlay">
-            <ui:VisualElement class="confirm-dialog">
+            <ui:VisualElement class="confirm-dialog panel-pixel">
                 <ui:Label name="confirm-title" text="Reset Counter?" class="confirm-title" />
                 <ui:Label name="confirm-message" text="" class="confirm-message" />
                 <ui:VisualElement class="confirm-actions">

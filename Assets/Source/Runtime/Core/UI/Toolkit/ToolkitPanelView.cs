@@ -1,4 +1,5 @@
 using Core.Abstractions.MVVM.ViewModels;
+using Core.Abstractions.Services;
 using Core.UI.Toolkit.Binding;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -110,6 +111,62 @@ namespace Core.UI.Toolkit
         {
             if (target == null || source == null) return;
             target.BindFill(source, ref bag);
+        }
+
+        protected static void BindLocalized(
+            Label target,
+            ILocalizationService localization,
+            string table,
+            string key,
+            ref DisposableBag bag)
+        {
+            if (target == null || localization == null) return;
+            target.BindLocalized(localization, table, key, ref bag);
+        }
+
+        protected static void BindLocalized(
+            Label target,
+            ILocalizationService localization,
+            string table,
+            string key,
+            System.Func<object[]> argumentFactory,
+            ref DisposableBag bag)
+        {
+            if (target == null || localization == null) return;
+            target.BindLocalized(localization, table, key, argumentFactory, ref bag);
+        }
+
+        protected static void BindLocalized(
+            Button target,
+            ILocalizationService localization,
+            string table,
+            string key,
+            ref DisposableBag bag)
+        {
+            if (target == null || localization == null) return;
+            target.BindLocalized(localization, table, key, ref bag);
+        }
+
+        protected static void BindLocalizedLabel(
+            Slider target,
+            ILocalizationService localization,
+            string table,
+            string key,
+            ref DisposableBag bag)
+        {
+            if (target == null || localization == null) return;
+            target.BindLocalizedLabel(localization, table, key, ref bag);
+        }
+
+        protected static void BindLocalizedLabel(
+            DropdownField target,
+            ILocalizationService localization,
+            string table,
+            string key,
+            ref DisposableBag bag)
+        {
+            if (target == null || localization == null) return;
+            target.BindLocalizedLabel(localization, table, key, ref bag);
         }
 
         private void SetViewModelVisible(bool value)

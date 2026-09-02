@@ -7,9 +7,16 @@ namespace Services
 {
   public class DataPreloadService : IDataPreloadService
   {
-    public UniTask PreloadDataAsync(IProgress<float> progress = null, CancellationToken cancellationToken = default)
+    private readonly ILocalizationService _localizationService;
+
+    public DataPreloadService(ILocalizationService localizationService)
     {
-      return UniTask.CompletedTask;
+      _localizationService = localizationService;
+    }
+
+    public async UniTask PreloadDataAsync(IProgress<float> progress = null, CancellationToken cancellationToken = default)
+    {
+      await _localizationService.InitializeAsync(cancellationToken);
     }
   }
 }

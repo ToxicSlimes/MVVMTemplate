@@ -69,6 +69,7 @@ namespace Core.DependencyInjection.Generated
             builder.AddHandler<GetAudioStateQuery, AudioState, GetAudioStateHandler>();
             builder.AddHandler<GetCounterQuery, CounterState, GetCounterHandler>();
             builder.AddHandler<GetInventoryQuery, List<InventoryItemData>, GetInventoryHandler>();
+            builder.AddHandler<GetLocalizationStateQuery, LocalizationState, GetLocalizationStateHandler>();
             builder.AddHandler<IncrementCounterCommand, Nothing, IncrementCounterHandler>();
             builder.AddHandler<NavigateCommand<InventoryNavigation>, Nothing, InventoryNavigationHandler>();
             builder.AddHandler<JoinRoomCommand, Nothing, JoinRoomHandler>();
@@ -84,6 +85,7 @@ namespace Core.DependencyInjection.Generated
             builder.AddHandler<SelectItemCommand, Nothing, SelectItemHandler>();
             builder.AddHandler<SetAudioMuteCommand, Nothing, SetAudioMuteHandler>();
             builder.AddHandler<SetAudioVolumeCommand, Nothing, SetAudioVolumeHandler>();
+            builder.AddHandler<SetLanguageCommand, Nothing, SetLanguageHandler>();
             builder.AddHandler<SetReadyCommand, Nothing, SetReadyHandler>();
             builder.AddHandler<ShutdownNetworkSessionCommand, Nothing, ShutdownNetworkSessionHandler>();
             builder.AddHandler<SpawnBotCommand, Nothing, SpawnBotHandler>();

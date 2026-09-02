@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/pixel-theme.uss" />
     <Style src="../Counter/CounterScreen.uss" />
     <ui:VisualElement class="action-item">
         <ui:VisualElement class="action-item-text">

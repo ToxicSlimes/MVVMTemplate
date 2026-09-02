@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UI Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: UI
+  m_TableCollectionNameGuidString: 04a693edfcfca1746b3b3804ef8a5c17
+  m_Entries:
+  - m_Id: 3615260672
+    m_Key: main_menu.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3774644224
+    m_Key: main_menu.subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3783032832
+    m_Key: main_menu.counter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3783032833
+    m_Key: main_menu.settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198656
+    m_Key: main_menu.inventory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198657
+    m_Key: main_menu.multiplayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198658
+    m_Key: main_menu.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198659
+    m_Key: main_menu.footer_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198660
+    m_Key: settings.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198661
+    m_Key: settings.tab_audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198662
+    m_Key: settings.tab_video
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198663
+    m_Key: settings.tab_display
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198664
+    m_Key: settings.tab_controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198665
+    m_Key: settings.tab_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198666
+    m_Key: settings.language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198667
+    m_Key: settings.apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198668
+    m_Key: settings.reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198669
+    m_Key: settings.cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3808198670
+    m_Key: settings.volume_label
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7669211285396914682
+  references:
+    version: 2
+    RefIds:
+    - rid: 7669211285396914682
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1788347327983
