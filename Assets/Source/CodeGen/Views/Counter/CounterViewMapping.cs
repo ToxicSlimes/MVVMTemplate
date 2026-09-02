@@ -4,5 +4,5 @@ using Core.MVVM.Views.Counter;
 
 namespace Core.Views.Counter
 {
-    public class CounterViewMapping : ViewMappingBase<CounterView, CounterViewModel> { }
+    public class CounterViewMapping : ToolkitViewMappingBase<CounterToolkitView, CounterViewModel> { }
 }

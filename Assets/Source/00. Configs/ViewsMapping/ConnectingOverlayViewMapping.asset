@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ConnectingOverlayViewMapping
   m_EditorClassIdentifier: Assembly-CSharp::Core.Views.ConnectingOverlay.ConnectingOverlayViewMapping
   ViewPrefab:
-    m_AssetGUID: b56d88e04a22cbb41be023ae127bb74a
+    m_AssetGUID: 14269b47ad1a89648968b7f74ca6d4e9
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

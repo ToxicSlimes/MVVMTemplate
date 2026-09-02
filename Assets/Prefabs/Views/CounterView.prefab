@@ -128,6 +128,7 @@ MonoBehaviour:
   _isPersistent: 0
   _counterText: {fileID: 5674888815265007753}
   _incrementsText: {fileID: 7230098448041001741}
+  _closeButton: {fileID: 0}
   _incrementButton: {fileID: 1348809157125287531}
   _decrementButton: {fileID: 8655824311475778867}
   _resetButton: {fileID: 4617049072070664628}
@@ -1616,10 +1617,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CounterModal
       objectReference: {fileID: 0}
-    - target: {fileID: 4630229707301286144, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5139714408121193202, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -1650,7 +1647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8055438347238646516, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
       propertyPath: m_text
-      value: Demo Showcase
+      value: Counter (CQRS Demo)
       objectReference: {fileID: 0}
     - target: {fileID: 8055438347238646516, guid: 9af26b4d9950ac94f809c2bdd0837a43, type: 3}
       propertyPath: m_fontColor.b

@@ -1,0 +1,37 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="CounterScreen.uss" />
+    <ui:VisualElement name="counter-root" class="counter-root">
+        <ui:VisualElement name="counter-panel" class="counter-panel">
+            <ui:Button name="close-button" text="Back" class="btn btn-secondary" tooltip="Return to main menu" />
+            <ui:Label name="counter-label" text="0" class="counter-value" />
+            <ui:Label name="increments-label" text="Total actions: 0" class="counter-meta" />
+            <ui:VisualElement class="counter-actions">
+                <ui:Button name="decrement-button" text="-" class="btn btn-outline" tooltip="Decrement&#10;Subtract 1 from the counter" />
+                <ui:Button name="increment-button" text="+" class="btn btn-primary" tooltip="Increment&#10;Add 1 to the counter" />
+            </ui:VisualElement>
+            <ui:Button name="reset-button" text="Reset" class="btn btn-danger" tooltip="Reset counter to zero" />
+            <ui:Button name="toggle-gallery-button" class="btn btn-secondary">
+                <ui:Label name="toggle-gallery-label" text="Show Gallery" />
+            </ui:Button>
+        </ui:VisualElement>
+        <ui:VisualElement name="gallery-panel" class="gallery-panel">
+            <ui:Button name="gallery-back-button" text="Back to Counter" class="btn btn-secondary" />
+            <ui:Label text="Element Gallery" class="gallery-title" />
+            <ui:Label text="Elements created via ReconcileToolkitElementsCommand at runtime." class="gallery-subtitle" />
+            <ui:ScrollView name="text-cards-container" class="gallery-scroll" />
+            <ui:ScrollView name="stat-bars-container" class="gallery-scroll" />
+            <ui:ScrollView name="action-items-container" class="gallery-scroll" />
+        </ui:VisualElement>
+        <ui:VisualElement name="confirm-overlay" class="confirm-overlay">
+            <ui:VisualElement class="confirm-dialog">
+                <ui:Label name="confirm-title" text="Reset Counter?" class="confirm-title" />
+                <ui:Label name="confirm-message" text="" class="confirm-message" />
+                <ui:VisualElement class="confirm-actions">
+                    <ui:Button name="cancel-button" text="Keep" class="btn btn-secondary" />
+                    <ui:Button name="confirm-button" text="Reset" class="btn btn-danger" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

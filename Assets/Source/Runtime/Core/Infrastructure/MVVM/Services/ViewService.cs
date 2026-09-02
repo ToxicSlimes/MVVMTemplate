@@ -343,7 +343,12 @@ namespace Core.Infrastructure.MVVM.Services
             ViewHidden?.Invoke(view);
             if (!view.IsPersistent)
             {
-                _viewCache.TryRemove(view.GetType(), out _);
+                var viewModelType = view.ViewModel?.GetType();
+                if (viewModelType != null)
+                    _viewCache.TryRemove(viewModelType, out _);
+                else
+                    _viewCache.TryRemove(view.GetType(), out _);
+
                 _viewFactory.Destroy(view);
             }
         }
@@ -462,6 +467,20 @@ namespace Core.Infrastructure.MVVM.Services
         private void AssignSortingOrder(IView view)
         {
             if (view is not Component component) return;
+
+            var uiDocument = component.GetComponent<UnityEngine.UIElements.UIDocument>();
+            if (uiDocument != null)
+            {
+                _currentMaxSortingOrder++;
+                uiDocument.sortingOrder = _currentMaxSortingOrder;
+
+                lock (_sync)
+                {
+                    _viewSortingOrders[view] = _currentMaxSortingOrder;
+                }
+
+                return;
+            }
 
             var canvas = component.GetComponent<UnityEngine.Canvas>();
             if (canvas == null)

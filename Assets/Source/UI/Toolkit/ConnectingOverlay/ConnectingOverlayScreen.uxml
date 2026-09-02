@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/toolkit-screen.uss" />
+    <Style src="ConnectingOverlayScreen.uss" />
+    <ui:VisualElement class="overlay-dim">
+        <ui:VisualElement class="screen-panel">
+            <ui:Label text="CONNECTING" class="screen-title" />
+            <ui:Label name="status-label" text="Searching..." class="screen-subtitle" />
+            <ui:VisualElement class="progress-track">
+                <ui:VisualElement name="progress-fill" class="progress-fill" />
+            </ui:VisualElement>
+            <ui:Button name="cancel-button" text="Cancel" class="btn btn-secondary" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

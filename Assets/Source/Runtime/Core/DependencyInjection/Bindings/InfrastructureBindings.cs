@@ -87,7 +87,8 @@ public static class InfrastructureBindings
       mediator
         .RegisterViewHandlers()
         .RegisterAllHandlers()
-        .RegisterElementHandlers();
+        .RegisterElementHandlers()
+        .RegisterToolkitElementHandlers();
     });
 
     return builder;
@@ -146,28 +147,41 @@ public static class InfrastructureBindings
 
     builder.AddSingleton<IAudioService>(container =>
     {
-      var configProvider = container.Resolve<IConfigProvider>();
-      var audioConfig = configProvider.GetConfig<AudioConfig>();
-      
-      if (audioConfig == null)
+      try
       {
-        Debug.LogWarning("[DI] AudioConfig not found, AudioService will not be initialized");
-        return null;
+        var configProvider = container.Resolve<IConfigProvider>();
+        var audioConfig = configProvider.GetConfig<AudioConfig>();
+
+        if (!AudioConfigAccess.TryGetRuntimeAssets(
+              audioConfig,
+              out var audioMixer,
+              out var soundConfig,
+              out var mixerGroupConfig,
+              out var audioSourcePrefab))
+        {
+          Debug.LogWarning("[DI] AudioConfig assets are missing or broken, using NullAudioService");
+          return new NullAudioService();
+        }
+
+        var go = new GameObject("AudioService");
+        Object.DontDestroyOnLoad(go);
+        var service = go.AddComponent<AudioService>();
+
+        service.Initialize(
+          container.Resolve<IPrefsService>(),
+          audioMixer,
+          soundConfig,
+          mixerGroupConfig,
+          audioSourcePrefab
+        );
+
+        return service;
       }
-      
-      var go = new GameObject("AudioService");
-      Object.DontDestroyOnLoad(go);
-      var service = go.AddComponent<AudioService>();
-      
-      service.Initialize(
-        container.Resolve<IPrefsService>(),
-        audioConfig.AudioMixer,
-        audioConfig.SoundConfig,
-        audioConfig.MixerGroupConfig,
-        audioConfig.AudioSourcePrefab
-      );
-      
-      return service;
+      catch (System.Exception ex)
+      {
+        Debug.LogWarning($"[DI] Failed to initialize AudioService: {ex.Message}");
+        return new NullAudioService();
+      }
     });
     
     return builder;

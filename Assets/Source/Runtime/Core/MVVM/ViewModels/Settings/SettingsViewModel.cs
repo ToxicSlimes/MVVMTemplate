@@ -1,6 +1,7 @@
 using System;
 using Core.Abstractions.MVVM.Models.Settings;
 using Core.Abstractions.MVVM.ViewModels;
+using Core.Application.Commands.Common;
 using Core.Application.Commands.Settings;
 using Core.Application.Queries.Settings;
 using Core.Data.Domain.Enums;
@@ -8,8 +9,6 @@ using Core.Infrastructure.Mediator.Abstractions;
 using Core.Infrastructure.Mediator.Attributes;
 using Cysharp.Threading.Tasks;
 using R3;
-using Core.Application.Requests.Views;
-using Core.MVVM.Views.Settings;
 
 namespace Core.MVVM.ViewModels.Settings
 {
@@ -295,10 +294,20 @@ namespace Core.MVVM.ViewModels.Settings
         private async UniTaskVoid Close()
         {
             _model.IsVisible = false;
-            await _mediator.Send(new HideViewRequest<SettingsView, SettingsViewModel>());
+            await _mediator.Send(new NavigateBackCommand());
         }
 
-        private void Apply() => _model.Apply();
+        private void Apply()
+        {
+            try
+            {
+                _model.Apply();
+            }
+            finally
+            {
+                Close().Forget();
+            }
+        }
 
         private void ResetToDefaults()
         {
@@ -312,7 +321,7 @@ namespace Core.MVVM.ViewModels.Settings
             _model.LoadFromPlayerPrefs();
             LoadAudioStateAsync().Forget();
             _model.IsVisible = false;
-            await _mediator.Send(new HideViewRequest<SettingsView, SettingsViewModel>());
+            await _mediator.Send(new NavigateBackCommand());
         }
 
         private void SelectTab(SettingsTab tab) => _model.CurrentTab = tab;

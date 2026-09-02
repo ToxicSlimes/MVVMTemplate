@@ -82,17 +82,17 @@ namespace Core.MVVM.ViewModels.MainMenu
 
         private async UniTaskVoid OnSettings()
         {
-            await _mediator.Send(new ShowViewRequest<SettingsView, SettingsViewModel>());
+            await _mediator.Send(new ShowViewRequest<SettingsToolkitView, SettingsViewModel>());
         }
 
         private async UniTaskVoid OnInventory()
         {
-            await _mediator.Send(new ShowViewRequest<InventoryView, InventoryViewModel>());
+            await _mediator.Send(new ShowViewRequest<InventoryToolkitView, InventoryViewModel>());
         }
 
         private async UniTaskVoid OnMultiplayer()
         {
-            await _mediator.Send(new ShowViewRequest<MatchmakingView, MatchmakingViewModel>());
+            await _mediator.Send(new ShowViewRequest<MatchmakingToolkitView, MatchmakingViewModel>());
         }
 
         private static void OnQuit()

@@ -15,6 +15,21 @@ MonoBehaviour:
   m_GroupName: Elements
   m_GUID: 9cf6ac0487f51a84da32cf095cca8c99
   m_SerializeEntries:
+  - m_GUID: 1f38ca1d1bcd4194eb28456dfbff437a
+    m_Address: Assets/Source/UI/Toolkit/Elements/StatBar.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95d477b9c46e4da42b95e46b64dc6498
+    m_Address: Assets/Source/UI/Toolkit/Elements/TextCard.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98dd5354bbd84214eac07de7fd2163d3
+    m_Address: Assets/Source/UI/Toolkit/Elements/ActionListItem.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e526a9da27d763649b1af153dcf89e7d
     m_Address: Assets/Prefabs/Elements
     m_ReadOnly: 0

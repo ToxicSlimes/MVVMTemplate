@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/toolkit-screen.uss" />
+    <Style src="MatchmakingScreen.uss" />
+    <ui:VisualElement class="screen-root">
+        <ui:VisualElement class="screen-panel matchmaking-panel">
+            <ui:Button name="back-button" text="Back" class="btn btn-secondary" />
+            <ui:Label text="MULTIPLAYER" class="screen-title" />
+            <ui:VisualElement class="field-row">
+                <ui:Label text="Nickname" class="field-label" />
+                <ui:TextField name="nickname-field" class="field-input" />
+            </ui:VisualElement>
+            <ui:Button name="create-button" text="Create Room" class="btn btn-primary" />
+            <ui:VisualElement class="field-row">
+                <ui:Label text="Room Code" class="field-label" />
+                <ui:TextField name="code-field" class="field-input" />
+            </ui:VisualElement>
+            <ui:Button name="join-button" text="Join" class="btn btn-outline" />
+            <ui:Button name="refresh-button" text="Refresh Sessions" class="btn btn-secondary" />
+            <ui:Label name="status-label" text="" class="screen-subtitle" />
+            <ui:ScrollView name="sessions-scroll" class="scroll-panel" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

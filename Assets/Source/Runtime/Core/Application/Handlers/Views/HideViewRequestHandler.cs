@@ -10,7 +10,7 @@ namespace Core.Application.Handlers.Views
 {
     public sealed class HideViewRequestHandler<TView, TViewModel>
         : IRequestHandler<HideViewRequest<TView, TViewModel>, bool>
-        where TView : BindableView<TViewModel>
+        where TView : class, IView
         where TViewModel : DisposableObject
     {
         private readonly IViewService _viewService;
@@ -24,13 +24,7 @@ namespace Core.Application.Handlers.Views
             HideViewRequest<TView, TViewModel> request,
             CancellationToken ct)
         {
-            var view = _viewService.GetActiveView<TView>();
-            if (view != null)
-            {
-                await _viewService.HideAsync(view);
-                return true;
-            }
-            return false;
+            return await _viewService.HideViewAsync<TViewModel>();
         }
     }
 }

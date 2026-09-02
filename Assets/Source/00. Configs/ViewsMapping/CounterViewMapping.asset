@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CounterViewMapping
   m_EditorClassIdentifier: Assembly-CSharp::Core.Views.Counter.CounterViewMapping
   ViewPrefab:
-    m_AssetGUID: ea51f0746cb27af4e87029fa691fec1e
+    m_AssetGUID: b2c3d4e5f6789012345678abcdef0123
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

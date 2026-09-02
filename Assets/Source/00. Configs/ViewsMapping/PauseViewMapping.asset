@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PauseViewMapping
   m_EditorClassIdentifier: Assembly-CSharp::Core.Views.Pause.PauseViewMapping
   ViewPrefab:
-    m_AssetGUID: c872771ac26b1b04a9c169d24baf79d4
+    m_AssetGUID: 42a9c18b10b91dc40a59d3eaa480128b
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

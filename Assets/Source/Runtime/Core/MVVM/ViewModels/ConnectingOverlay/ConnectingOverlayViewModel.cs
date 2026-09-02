@@ -96,7 +96,7 @@ namespace Core.MVVM.ViewModels.ConnectingOverlay
         private async UniTaskVoid OnCancel()
         {
             IsVisible.Value = false;
-            await _mediator.Send(new HideViewRequest<ConnectingOverlayView, ConnectingOverlayViewModel>());
+            await _mediator.Send(new HideViewRequest<ConnectingOverlayToolkitView, ConnectingOverlayViewModel>());
             await _mediator.Send(new ShutdownNetworkSessionCommand());
         }
     }

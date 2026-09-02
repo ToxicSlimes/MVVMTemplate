@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a531a232f18431e8a8d9a7ad3fd9bf, type: 3}
+  m_Name: CardTemplate
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.Templates.UITemplate
+  DisplayName: Card
+  Description: Glassmorphism card with header and content
+  Category: Components
+  Icon: {fileID: 0}
+  Root:
+    Id: Root
+    Name: Root
+    ElementType: 1
+    Children:
+    - Id: Header
+      Name: Header
+      ElementType: 1
+      Children:
+      - Id: Title
+        Name: Title
+        ElementType: 3
+        Children: []
+        UseDesignSystem: 1
+        TextStyleName: heading3
+        ColorName: textPrimary
+        SpacingSize: 2
+        BackgroundColorName: 
+        ButtonVariant: 
+        Stretch: 1
+        Size: {x: 0, y: 0}
+        MinSize: {x: 0, y: 0}
+        PreferredWidth: -1
+        PreferredHeight: -1
+        FlexibleWidth: -1
+        FlexibleHeight: -1
+        Text: Card Title
+        Placeholder: 
+        Sprite: {fileID: 0}
+        Bold: 0
+        Centered: 0
+        FontSize: 14
+        Color: {r: 1, g: 1, b: 1, a: 1}
+        BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+        Spacing: 10
+        Padding: 0
+      - Id: Subtitle
+        Name: Subtitle
+        ElementType: 3
+        Children: []
+        UseDesignSystem: 1
+        TextStyleName: bodySmall
+        ColorName: textSecondary
+        SpacingSize: 2
+        BackgroundColorName: 
+        ButtonVariant: 
+        Stretch: 1
+        Size: {x: 0, y: 0}
+        MinSize: {x: 0, y: 0}
+        PreferredWidth: -1
+        PreferredHeight: -1
+        FlexibleWidth: -1
+        FlexibleHeight: -1
+        Text: Card subtitle or description
+        Placeholder: 
+        Sprite: {fileID: 0}
+        Bold: 0
+        Centered: 0
+        FontSize: 14
+        Color: {r: 1, g: 1, b: 1, a: 1}
+        BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+        Spacing: 10
+        Padding: 0
+      UseDesignSystem: 1
+      TextStyleName: 
+      ColorName: 
+      SpacingSize: 0
+      BackgroundColorName: 
+      ButtonVariant: 
+      Stretch: 1
+      Size: {x: 0, y: 0}
+      MinSize: {x: 0, y: 0}
+      PreferredWidth: -1
+      PreferredHeight: -1
+      FlexibleWidth: -1
+      FlexibleHeight: -1
+      Text: 
+      Placeholder: 
+      Sprite: {fileID: 0}
+      Bold: 0
+      Centered: 0
+      FontSize: 14
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+      Spacing: 10
+      Padding: 0
+    - Id: Content
+      Name: Content
+      ElementType: 0
+      Children: []
+      UseDesignSystem: 1
+      TextStyleName: 
+      ColorName: 
+      SpacingSize: 2
+      BackgroundColorName: 
+      ButtonVariant: 
+      Stretch: 1
+      Size: {x: 0, y: 0}
+      MinSize: {x: 0, y: 0}
+      PreferredWidth: -1
+      PreferredHeight: -1
+      FlexibleWidth: -1
+      FlexibleHeight: 1
+      Text: 
+      Placeholder: 
+      Sprite: {fileID: 0}
+      Bold: 0
+      Centered: 0
+      FontSize: 14
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+      Spacing: 10
+      Padding: 0
+    - Id: Footer
+      Name: Footer
+      ElementType: 2
+      Children:
+      - Id: ActionButton
+        Name: ActionButton
+        ElementType: 5
+        Children: []
+        UseDesignSystem: 1
+        TextStyleName: 
+        ColorName: 
+        SpacingSize: 2
+        BackgroundColorName: 
+        ButtonVariant: Primary
+        Stretch: 1
+        Size: {x: 100, y: 36}
+        MinSize: {x: 0, y: 0}
+        PreferredWidth: -1
+        PreferredHeight: -1
+        FlexibleWidth: -1
+        FlexibleHeight: -1
+        Text: Action
+        Placeholder: 
+        Sprite: {fileID: 0}
+        Bold: 0
+        Centered: 0
+        FontSize: 14
+        Color: {r: 1, g: 1, b: 1, a: 1}
+        BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+        Spacing: 10
+        Padding: 0
+      UseDesignSystem: 1
+      TextStyleName: 
+      ColorName: 
+      SpacingSize: 1
+      BackgroundColorName: 
+      ButtonVariant: 
+      Stretch: 1
+      Size: {x: 0, y: 0}
+      MinSize: {x: 0, y: 0}
+      PreferredWidth: -1
+      PreferredHeight: -1
+      FlexibleWidth: -1
+      FlexibleHeight: -1
+      Text: 
+      Placeholder: 
+      Sprite: {fileID: 0}
+      Bold: 0
+      Centered: 0
+      FontSize: 14
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+      Spacing: 10
+      Padding: 0
+    UseDesignSystem: 1
+    TextStyleName: 
+    ColorName: 
+    SpacingSize: 2
+    BackgroundColorName: cardBackground
+    ButtonVariant: 
+    Stretch: 0
+    Size: {x: 300, y: 200}
+    MinSize: {x: 0, y: 0}
+    PreferredWidth: -1
+    PreferredHeight: -1
+    FlexibleWidth: -1
+    FlexibleHeight: -1
+    Text: 
+    Placeholder: 
+    Sprite: {fileID: 0}
+    Bold: 0
+    Centered: 0
+    FontSize: 14
+    Color: {r: 1, g: 1, b: 1, a: 1}
+    BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    Spacing: 10
+    Padding: 24
+  Tags:
+  - card
+  - panel
+  - glassmorphism
+  DefaultOutputPath: Assets/Prefabs/UI/
+  AddCanvas: 0
+  AddCanvasScaler: 1

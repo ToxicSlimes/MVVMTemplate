@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InventoryViewMapping
   m_EditorClassIdentifier: Assembly-CSharp::Core.Views.Inventory.InventoryViewMapping
   ViewPrefab:
-    m_AssetGUID: 68e7cc99995994c46af254dd051f7e00
+    m_AssetGUID: 6203e49a8f626624aa4bdd38f1bd8d71
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

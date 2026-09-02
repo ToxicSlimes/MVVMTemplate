@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Core.Configs.Services;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Core.Editor.CodeGenPipeline
         private static readonly string[] ScannerTypeNames =
         {
             "Core.Editor.ElementHandlerScanner.ElementHandlerScanner",
+            "Core.Editor.ElementHandlerScanner.ToolkitElementHandlerScanner",
             "Core.Editor.Mediator.MediatorHandlerScanner",
             "Core.Editor.ViewModelScanner.ViewModelScanner",
             "Core.Editor.ViewHandlerScanner.ViewHandlerScanner",
@@ -75,14 +77,67 @@ namespace Core.Editor.CodeGenPipeline
                 issues++;
             }
 
+            issues += CountToolkitBindingIssues();
+            issues += CountAudioConfigIssues();
+
             if (issues == 0)
-            {
-                Debug.Log("[Template] Setup looks good. Open BootstrapScene and press Play.");
-            }
+                Debug.Log("[Template] All checks passed. Open BootstrapScene and press Play.");
             else
-            {
                 Debug.LogWarning($"[Template] Found {issues} setup issue(s). See messages above.");
+        }
+
+        private static int CountToolkitBindingIssues()
+        {
+            var validatorType = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a =>
+                {
+                    try { return a.GetTypes(); }
+                    catch { return Array.Empty<Type>(); }
+                })
+                .FirstOrDefault(t => t.FullName == "Core.Editor.UIToolkit.ToolkitBindingValidator");
+
+            if (validatorType == null)
+                return 0;
+
+            var method = validatorType.GetMethod("CountBlockingIssues", BindingFlags.Public | BindingFlags.Static);
+            if (method == null)
+                return 0;
+
+            var result = method.Invoke(null, null);
+            if (result is not int count)
+                return 0;
+
+            if (count > 0)
+                Debug.LogError($"[Template] Toolkit binding validation found {count} error(s). Run Tools → UI Toolkit → Validate Toolkit Bindings.");
+
+            return count;
+        }
+
+        private static int CountAudioConfigIssues()
+        {
+            var issues = 0;
+            var guids = AssetDatabase.FindAssets("t:AudioConfig");
+            foreach (var guid in guids)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                var config = AssetDatabase.LoadAssetAtPath<AudioConfig>(path);
+                if (config == null)
+                    continue;
+
+                if (config.AudioSourcePrefab == null)
+                {
+                    Debug.LogError($"[Template] AudioConfig missing AudioSourcePrefab at {path}");
+                    issues++;
+                }
+
+                if (config.AudioMixer == null)
+                {
+                    Debug.LogError($"[Template] AudioConfig missing AudioMixer at {path}");
+                    issues++;
+                }
             }
+
+            return issues;
         }
 
         private static bool RunAllScanners()

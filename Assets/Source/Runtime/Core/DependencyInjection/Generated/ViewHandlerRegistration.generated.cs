@@ -29,64 +29,64 @@ namespace Core.DependencyInjection.Generated
         {
             // Modal views
             builder.AddHandler<
-                ShowViewRequest<ConnectingOverlayView, ConnectingOverlayViewModel>,
+                ShowViewRequest<ConnectingOverlayToolkitView, ConnectingOverlayViewModel>,
                 bool,
-                ShowViewRequestHandler<ConnectingOverlayView, ConnectingOverlayViewModel>>();
+                ShowViewRequestHandler<ConnectingOverlayToolkitView, ConnectingOverlayViewModel>>();
 
             builder.AddHandler<
-                HideViewRequest<ConnectingOverlayView, ConnectingOverlayViewModel>,
+                HideViewRequest<ConnectingOverlayToolkitView, ConnectingOverlayViewModel>,
                 bool,
-                HideViewRequestHandler<ConnectingOverlayView, ConnectingOverlayViewModel>>();
+                HideViewRequestHandler<ConnectingOverlayToolkitView, ConnectingOverlayViewModel>>();
 
             builder.AddHandler<
-                ShowViewRequest<InventoryView, InventoryViewModel>,
+                ShowViewRequest<InventoryToolkitView, InventoryViewModel>,
                 bool,
-                ShowViewRequestHandler<InventoryView, InventoryViewModel>>();
+                ShowViewRequestHandler<InventoryToolkitView, InventoryViewModel>>();
 
             builder.AddHandler<
-                HideViewRequest<InventoryView, InventoryViewModel>,
+                HideViewRequest<InventoryToolkitView, InventoryViewModel>,
                 bool,
-                HideViewRequestHandler<InventoryView, InventoryViewModel>>();
+                HideViewRequestHandler<InventoryToolkitView, InventoryViewModel>>();
 
             builder.AddHandler<
-                ShowViewRequest<LobbyRoomView, LobbyRoomViewModel>,
+                ShowViewRequest<LobbyRoomToolkitView, LobbyRoomViewModel>,
                 bool,
-                ShowViewRequestHandler<LobbyRoomView, LobbyRoomViewModel>>();
+                ShowViewRequestHandler<LobbyRoomToolkitView, LobbyRoomViewModel>>();
 
             builder.AddHandler<
-                HideViewRequest<LobbyRoomView, LobbyRoomViewModel>,
+                HideViewRequest<LobbyRoomToolkitView, LobbyRoomViewModel>,
                 bool,
-                HideViewRequestHandler<LobbyRoomView, LobbyRoomViewModel>>();
+                HideViewRequestHandler<LobbyRoomToolkitView, LobbyRoomViewModel>>();
 
             builder.AddHandler<
-                ShowViewRequest<MatchmakingView, MatchmakingViewModel>,
+                ShowViewRequest<MatchmakingToolkitView, MatchmakingViewModel>,
                 bool,
-                ShowViewRequestHandler<MatchmakingView, MatchmakingViewModel>>();
+                ShowViewRequestHandler<MatchmakingToolkitView, MatchmakingViewModel>>();
 
             builder.AddHandler<
-                HideViewRequest<MatchmakingView, MatchmakingViewModel>,
+                HideViewRequest<MatchmakingToolkitView, MatchmakingViewModel>,
                 bool,
-                HideViewRequestHandler<MatchmakingView, MatchmakingViewModel>>();
+                HideViewRequestHandler<MatchmakingToolkitView, MatchmakingViewModel>>();
 
             builder.AddHandler<
-                ShowViewRequest<PauseView, PauseViewModel>,
+                ShowViewRequest<PauseToolkitView, PauseViewModel>,
                 bool,
-                ShowViewRequestHandler<PauseView, PauseViewModel>>();
+                ShowViewRequestHandler<PauseToolkitView, PauseViewModel>>();
 
             builder.AddHandler<
-                HideViewRequest<PauseView, PauseViewModel>,
+                HideViewRequest<PauseToolkitView, PauseViewModel>,
                 bool,
-                HideViewRequestHandler<PauseView, PauseViewModel>>();
+                HideViewRequestHandler<PauseToolkitView, PauseViewModel>>();
 
             builder.AddHandler<
-                ShowViewRequest<SettingsView, SettingsViewModel>,
+                ShowViewRequest<SettingsToolkitView, SettingsViewModel>,
                 bool,
-                ShowViewRequestHandler<SettingsView, SettingsViewModel>>();
+                ShowViewRequestHandler<SettingsToolkitView, SettingsViewModel>>();
 
             builder.AddHandler<
-                HideViewRequest<SettingsView, SettingsViewModel>,
+                HideViewRequest<SettingsToolkitView, SettingsViewModel>,
                 bool,
-                HideViewRequestHandler<SettingsView, SettingsViewModel>>();
+                HideViewRequestHandler<SettingsToolkitView, SettingsViewModel>>();
 
             return builder;
         }

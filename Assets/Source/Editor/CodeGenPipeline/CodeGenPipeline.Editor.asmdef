@@ -1,7 +1,10 @@
 {
     "name": "CodeGenPipeline.Editor",
     "rootNamespace": "Core.Editor.CodeGenPipeline",
-    "references": [],
+    "references": [
+        "GUID:8187a248641c846be8d9a8daebf60b54",
+        "GUID:bcea71e9df9d040f4bbf671696609a19"
+    ],
     "includePlatforms": [
         "Editor"
     ],

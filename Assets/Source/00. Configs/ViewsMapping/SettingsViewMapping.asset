@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SettingsViewMapping
   m_EditorClassIdentifier: Assembly-CSharp::Core.Views.Settings.SettingsViewMapping
   ViewPrefab:
-    m_AssetGUID: 0786dfdb064a3734591646aeb3528aef
+    m_AssetGUID: f94fd718edf57f547b065bd9c1bd834a
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

@@ -1,0 +1,118 @@
+.screen-root {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg-deep);
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+}
+
+.screen-panel {
+    width: 90%;
+    max-width: 720px;
+    padding: var(--space-lg);
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-lg);
+    align-items: stretch;
+}
+
+.screen-title {
+    font-size: 28px;
+    -unity-font-style: bold;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-md);
+}
+
+.screen-subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-md);
+}
+
+.btn {
+    min-height: 44px;
+    border-radius: var(--radius-md);
+    margin: var(--space-xs) 0;
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+    color: var(--color-text-primary);
+    border-width: 0;
+    font-size: 15px;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+}
+
+.btn-secondary {
+    background-color: var(--color-bg-elevated);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border-width: 1px;
+    border-color: var(--color-text-secondary);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+}
+
+.field-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-sm);
+}
+
+.field-label {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    min-width: 140px;
+}
+
+.field-value {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    min-width: 56px;
+    -unity-text-align: middle-right;
+}
+
+.scroll-panel {
+    max-height: 280px;
+    margin-bottom: var(--space-sm);
+    background-color: var(--color-bg-elevated);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
+}
+
+.progress-track {
+    height: 8px;
+    background-color: var(--color-bg-elevated);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: var(--space-md) 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--color-primary);
+    width: 0%;
+}
+
+.overlay-dim {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    align-items: center;
+    justify-content: center;
+}

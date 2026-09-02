@@ -1,0 +1,17 @@
+:root {
+    --color-bg-deep: rgb(15, 23, 42);
+    --color-bg-surface: rgb(30, 41, 59);
+    --color-bg-elevated: rgb(51, 65, 85);
+    --color-primary: rgb(47, 208, 115);
+    --color-accent: rgb(255, 211, 78);
+    --color-text-primary: rgb(248, 250, 252);
+    --color-text-secondary: rgb(163, 180, 204);
+    --color-danger: rgb(255, 138, 61);
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}

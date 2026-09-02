@@ -5,7 +5,7 @@ using Core.Infrastructure.Mediator.Abstractions;
 namespace Core.Application.Requests.Views
 {
     public readonly struct HideViewRequest<TView, TViewModel> : IRequest<bool>
-        where TView : BindableView<TViewModel>
+        where TView : class, IView
         where TViewModel : DisposableObject
     {
     }

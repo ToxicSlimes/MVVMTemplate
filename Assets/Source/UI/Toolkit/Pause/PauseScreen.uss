@@ -1,0 +1,13 @@
+.pause-overlay {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.pause-panel {
+    max-width: 360px;
+    align-items: stretch;
+}

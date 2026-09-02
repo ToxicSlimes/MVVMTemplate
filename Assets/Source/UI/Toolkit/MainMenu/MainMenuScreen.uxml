@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="MainMenuScreen.uss" />
+    <ui:VisualElement class="menu-root">
+        <ui:VisualElement class="menu-header">
+            <ui:Label text="MVVM TEMPLATE" class="menu-title" />
+            <ui:Label text="Unity 6 · MVVM + CQRS Examples" class="menu-subtitle" />
+        </ui:VisualElement>
+        <ui:VisualElement class="menu-actions">
+            <ui:Button name="counter-button" text="COUNTER" class="btn btn-outline" />
+            <ui:Button name="settings-button" text="SETTINGS" class="btn btn-outline" />
+            <ui:Button name="inventory-button" text="INVENTORY" class="btn btn-outline" />
+            <ui:Button name="multiplayer-button" text="MULTIPLAYER" class="btn btn-primary menu-play" />
+            <ui:Button name="quit-button" text="QUIT" class="btn btn-ghost" />
+        </ui:VisualElement>
+        <ui:VisualElement class="menu-footer">
+            <ui:Label text="Open BootstrapScene → Play" class="menu-footer-text" />
+            <ui:Label text="v1.0.0" class="menu-footer-text menu-footer-version" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

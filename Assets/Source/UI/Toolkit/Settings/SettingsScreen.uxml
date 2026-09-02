@@ -1,0 +1,71 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/toolkit-screen.uss" />
+    <Style src="SettingsScreen.uss" />
+    <ui:VisualElement class="settings-overlay">
+        <ui:Button name="dim-button" class="settings-dim" />
+        <ui:VisualElement class="settings-panel">
+            <ui:VisualElement class="settings-header">
+                <ui:Label text="SETTINGS" class="screen-title" />
+                <ui:Button name="close-button" text="X" class="btn btn-ghost settings-close" />
+            </ui:VisualElement>
+            <ui:VisualElement class="settings-tabs">
+                <ui:Button name="tab-audio" text="Audio" class="btn btn-outline tab-button" />
+                <ui:Button name="tab-video" text="Video" class="btn btn-outline tab-button" />
+                <ui:Button name="tab-display" text="Display" class="btn btn-outline tab-button" />
+                <ui:Button name="tab-controls" text="Controls" class="btn btn-outline tab-button" />
+                <ui:Button name="tab-game" text="Game" class="btn btn-outline tab-button" />
+            </ui:VisualElement>
+            <ui:ScrollView class="settings-content-scroll">
+                <ui:VisualElement name="content-audio" class="tab-content">
+                    <ui:Slider name="master-volume" label="Master" low-value="0" high-value="1" />
+                    <ui:Label name="master-volume-value" class="field-value" />
+                    <ui:Slider name="music-volume" label="Music" low-value="0" high-value="1" />
+                    <ui:Label name="music-volume-value" class="field-value" />
+                    <ui:Slider name="sfx-volume" label="SFX" low-value="0" high-value="1" />
+                    <ui:Label name="sfx-volume-value" class="field-value" />
+                    <ui:Slider name="voice-volume" label="Voice" low-value="0" high-value="1" />
+                    <ui:Label name="voice-volume-value" class="field-value" />
+                    <ui:Toggle name="mute-all-toggle" label="Mute All" />
+                    <ui:Toggle name="mute-music-toggle" label="Mute Music" />
+                    <ui:Toggle name="mute-sfx-toggle" label="Mute SFX" />
+                </ui:VisualElement>
+                <ui:VisualElement name="content-video" class="tab-content">
+                    <ui:DropdownField name="resolution-dropdown" label="Resolution" />
+                    <ui:DropdownField name="quality-dropdown" label="Quality" />
+                    <ui:Toggle name="fullscreen-toggle" label="Fullscreen" />
+                    <ui:Toggle name="vsync-toggle" label="VSync" />
+                    <ui:Toggle name="show-fps-toggle" label="Show FPS" />
+                    <ui:DropdownField name="target-fps-dropdown" label="Target FPS" />
+                </ui:VisualElement>
+                <ui:VisualElement name="content-display" class="tab-content">
+                    <ui:Slider name="brightness-slider" label="Brightness" low-value="0" high-value="1" />
+                    <ui:Label name="brightness-value" class="field-value" />
+                    <ui:Slider name="gamma-slider" label="Gamma" low-value="0.5" high-value="2" />
+                    <ui:Label name="gamma-value" class="field-value" />
+                    <ui:Slider name="ui-scale-slider" label="UI Scale" low-value="0.75" high-value="1.5" />
+                    <ui:Label name="ui-scale-value" class="field-value" />
+                    <ui:Toggle name="colorblind-toggle" label="Colorblind Mode" />
+                    <ui:DropdownField name="colorblind-type-dropdown" label="Colorblind Type" />
+                </ui:VisualElement>
+                <ui:VisualElement name="content-controls" class="tab-content">
+                    <ui:Slider name="mouse-sensitivity-slider" label="Mouse Sensitivity" low-value="0.1" high-value="10" />
+                    <ui:Label name="mouse-sensitivity-value" class="field-value" />
+                    <ui:Toggle name="invert-y-toggle" label="Invert Y Axis" />
+                </ui:VisualElement>
+                <ui:VisualElement name="content-game" class="tab-content">
+                    <ui:DropdownField name="language-dropdown" label="Language" />
+                    <ui:Toggle name="autosave-toggle" label="Auto Save" />
+                    <ui:Toggle name="tutorials-toggle" label="Show Tutorials" />
+                    <ui:Toggle name="screen-shake-toggle" label="Screen Shake" />
+                    <ui:Toggle name="mature-content-toggle" label="Mature Content" />
+                </ui:VisualElement>
+            </ui:ScrollView>
+            <ui:VisualElement class="settings-footer">
+                <ui:Button name="apply-button" text="Apply" class="btn btn-primary" />
+                <ui:Button name="reset-button" text="Reset" class="btn btn-secondary" />
+                <ui:Button name="cancel-button" text="Cancel" class="btn btn-ghost" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

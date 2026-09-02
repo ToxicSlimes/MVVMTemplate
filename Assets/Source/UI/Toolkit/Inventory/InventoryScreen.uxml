@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/toolkit-screen.uss" />
+    <Style src="InventoryScreen.uss" />
+    <ui:VisualElement class="screen-root">
+        <ui:VisualElement class="screen-panel inventory-panel">
+            <ui:Button name="back-button" text="Back" class="btn btn-secondary" />
+            <ui:Label text="INVENTORY" class="screen-title" />
+            <ui:Label name="item-count-label" text="Items: 0" class="screen-subtitle" />
+            <ui:VisualElement name="filter-bar" class="filter-bar" />
+            <ui:ScrollView name="items-scroll" class="scroll-panel items-scroll" />
+            <ui:VisualElement name="detail-panel" class="detail-panel">
+                <ui:Label name="selected-name-label" text="" class="detail-title" />
+                <ui:Label name="selected-description-label" text="" class="detail-description" />
+                <ui:Button name="remove-button" text="Remove" class="btn btn-danger" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

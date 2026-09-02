@@ -1,0 +1,350 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a531a232f18431e8a8d9a7ad3fd9bf, type: 3}
+  m_Name: ModalTemplate
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.Templates.UITemplate
+  DisplayName: Modal Dialog
+  Description: Standard modal with header, content, and footer
+  Category: Dialogs
+  Icon: {fileID: 0}
+  Root:
+    Id: Root
+    Name: Root
+    ElementType: 0
+    Children:
+    - Id: Overlay
+      Name: Overlay
+      ElementType: 0
+      Children:
+      - Id: ModalContainer
+        Name: Modal
+        ElementType: 1
+        Children:
+        - Id: Header
+          Name: Header
+          ElementType: 2
+          Children:
+          - Id: Title
+            Name: Title
+            ElementType: 3
+            Children: []
+            UseDesignSystem: 1
+            TextStyleName: heading3
+            ColorName: textPrimary
+            SpacingSize: 2
+            BackgroundColorName: 
+            ButtonVariant: 
+            Stretch: 1
+            Size: {x: 0, y: 0}
+            MinSize: {x: 0, y: 0}
+            PreferredWidth: -1
+            PreferredHeight: -1
+            FlexibleWidth: 1
+            FlexibleHeight: -1
+            Text: Modal Title
+            Placeholder: 
+            Sprite: {fileID: 0}
+            Bold: 0
+            Centered: 0
+            FontSize: 14
+            Color: {r: 1, g: 1, b: 1, a: 1}
+            BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+            Spacing: 10
+            Padding: 0
+          - Id: CloseButton
+            Name: CloseButton
+            ElementType: 5
+            Children: []
+            UseDesignSystem: 1
+            TextStyleName: 
+            ColorName: 
+            SpacingSize: 2
+            BackgroundColorName: 
+            ButtonVariant: IconButton
+            Stretch: 1
+            Size: {x: 32, y: 32}
+            MinSize: {x: 0, y: 0}
+            PreferredWidth: -1
+            PreferredHeight: -1
+            FlexibleWidth: -1
+            FlexibleHeight: -1
+            Text: "\xD7"
+            Placeholder: 
+            Sprite: {fileID: 0}
+            Bold: 0
+            Centered: 0
+            FontSize: 14
+            Color: {r: 1, g: 1, b: 1, a: 1}
+            BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+            Spacing: 10
+            Padding: 0
+          UseDesignSystem: 1
+          TextStyleName: 
+          ColorName: 
+          SpacingSize: 1
+          BackgroundColorName: 
+          ButtonVariant: 
+          Stretch: 1
+          Size: {x: 0, y: 0}
+          MinSize: {x: 0, y: 0}
+          PreferredWidth: -1
+          PreferredHeight: 48
+          FlexibleWidth: -1
+          FlexibleHeight: -1
+          Text: 
+          Placeholder: 
+          Sprite: {fileID: 0}
+          Bold: 0
+          Centered: 0
+          FontSize: 14
+          Color: {r: 1, g: 1, b: 1, a: 1}
+          BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+          Spacing: 10
+          Padding: 0
+        - Id: Content
+          Name: Content
+          ElementType: 1
+          Children:
+          - Id: Description
+            Name: Description
+            ElementType: 3
+            Children: []
+            UseDesignSystem: 1
+            TextStyleName: body
+            ColorName: textSecondary
+            SpacingSize: 2
+            BackgroundColorName: 
+            ButtonVariant: 
+            Stretch: 1
+            Size: {x: 0, y: 0}
+            MinSize: {x: 0, y: 0}
+            PreferredWidth: -1
+            PreferredHeight: -1
+            FlexibleWidth: -1
+            FlexibleHeight: -1
+            Text: Modal content goes here...
+            Placeholder: 
+            Sprite: {fileID: 0}
+            Bold: 0
+            Centered: 0
+            FontSize: 14
+            Color: {r: 1, g: 1, b: 1, a: 1}
+            BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+            Spacing: 10
+            Padding: 0
+          UseDesignSystem: 1
+          TextStyleName: 
+          ColorName: 
+          SpacingSize: 1
+          BackgroundColorName: 
+          ButtonVariant: 
+          Stretch: 1
+          Size: {x: 0, y: 0}
+          MinSize: {x: 0, y: 0}
+          PreferredWidth: -1
+          PreferredHeight: -1
+          FlexibleWidth: -1
+          FlexibleHeight: 1
+          Text: 
+          Placeholder: 
+          Sprite: {fileID: 0}
+          Bold: 0
+          Centered: 0
+          FontSize: 14
+          Color: {r: 1, g: 1, b: 1, a: 1}
+          BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+          Spacing: 10
+          Padding: 0
+        - Id: Footer
+          Name: Footer
+          ElementType: 2
+          Children:
+          - Id: FooterSpacer
+            Name: FooterSpacer
+            ElementType: 12
+            Children: []
+            UseDesignSystem: 1
+            TextStyleName: 
+            ColorName: 
+            SpacingSize: 2
+            BackgroundColorName: 
+            ButtonVariant: 
+            Stretch: 1
+            Size: {x: 0, y: 0}
+            MinSize: {x: 0, y: 0}
+            PreferredWidth: -1
+            PreferredHeight: -1
+            FlexibleWidth: -1
+            FlexibleHeight: 1
+            Text: 
+            Placeholder: 
+            Sprite: {fileID: 0}
+            Bold: 0
+            Centered: 0
+            FontSize: 14
+            Color: {r: 1, g: 1, b: 1, a: 1}
+            BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+            Spacing: 10
+            Padding: 0
+          - Id: CancelButton
+            Name: CancelButton
+            ElementType: 5
+            Children: []
+            UseDesignSystem: 1
+            TextStyleName: 
+            ColorName: 
+            SpacingSize: 2
+            BackgroundColorName: 
+            ButtonVariant: Secondary
+            Stretch: 1
+            Size: {x: 100, y: 40}
+            MinSize: {x: 0, y: 0}
+            PreferredWidth: -1
+            PreferredHeight: -1
+            FlexibleWidth: -1
+            FlexibleHeight: -1
+            Text: Cancel
+            Placeholder: 
+            Sprite: {fileID: 0}
+            Bold: 0
+            Centered: 0
+            FontSize: 14
+            Color: {r: 1, g: 1, b: 1, a: 1}
+            BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+            Spacing: 10
+            Padding: 0
+          - Id: ConfirmButton
+            Name: ConfirmButton
+            ElementType: 5
+            Children: []
+            UseDesignSystem: 1
+            TextStyleName: 
+            ColorName: 
+            SpacingSize: 2
+            BackgroundColorName: 
+            ButtonVariant: Primary
+            Stretch: 1
+            Size: {x: 100, y: 40}
+            MinSize: {x: 0, y: 0}
+            PreferredWidth: -1
+            PreferredHeight: -1
+            FlexibleWidth: -1
+            FlexibleHeight: -1
+            Text: Confirm
+            Placeholder: 
+            Sprite: {fileID: 0}
+            Bold: 0
+            Centered: 0
+            FontSize: 14
+            Color: {r: 1, g: 1, b: 1, a: 1}
+            BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+            Spacing: 10
+            Padding: 0
+          UseDesignSystem: 1
+          TextStyleName: 
+          ColorName: 
+          SpacingSize: 1
+          BackgroundColorName: 
+          ButtonVariant: 
+          Stretch: 1
+          Size: {x: 0, y: 0}
+          MinSize: {x: 0, y: 0}
+          PreferredWidth: -1
+          PreferredHeight: 48
+          FlexibleWidth: -1
+          FlexibleHeight: -1
+          Text: 
+          Placeholder: 
+          Sprite: {fileID: 0}
+          Bold: 0
+          Centered: 0
+          FontSize: 14
+          Color: {r: 1, g: 1, b: 1, a: 1}
+          BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+          Spacing: 10
+          Padding: 0
+        UseDesignSystem: 1
+        TextStyleName: 
+        ColorName: 
+        SpacingSize: 2
+        BackgroundColorName: cardBackground
+        ButtonVariant: 
+        Stretch: 0
+        Size: {x: 500, y: 400}
+        MinSize: {x: 0, y: 0}
+        PreferredWidth: -1
+        PreferredHeight: -1
+        FlexibleWidth: -1
+        FlexibleHeight: -1
+        Text: 
+        Placeholder: 
+        Sprite: {fileID: 0}
+        Bold: 0
+        Centered: 0
+        FontSize: 14
+        Color: {r: 1, g: 1, b: 1, a: 1}
+        BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+        Spacing: 10
+        Padding: 24
+      UseDesignSystem: 1
+      TextStyleName: 
+      ColorName: 
+      SpacingSize: 2
+      BackgroundColorName: 
+      ButtonVariant: 
+      Stretch: 1
+      Size: {x: 0, y: 0}
+      MinSize: {x: 0, y: 0}
+      PreferredWidth: -1
+      PreferredHeight: -1
+      FlexibleWidth: -1
+      FlexibleHeight: -1
+      Text: 
+      Placeholder: 
+      Sprite: {fileID: 0}
+      Bold: 0
+      Centered: 0
+      FontSize: 14
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      BackgroundColor: {r: 0, g: 0, b: 0, a: 0.5}
+      Spacing: 10
+      Padding: 0
+    UseDesignSystem: 1
+    TextStyleName: 
+    ColorName: 
+    SpacingSize: 2
+    BackgroundColorName: darkSurface
+    ButtonVariant: 
+    Stretch: 1
+    Size: {x: 0, y: 0}
+    MinSize: {x: 0, y: 0}
+    PreferredWidth: -1
+    PreferredHeight: -1
+    FlexibleWidth: -1
+    FlexibleHeight: -1
+    Text: 
+    Placeholder: 
+    Sprite: {fileID: 0}
+    Bold: 0
+    Centered: 0
+    FontSize: 14
+    Color: {r: 1, g: 1, b: 1, a: 1}
+    BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    Spacing: 10
+    Padding: 0
+  Tags:
+  - modal
+  - dialog
+  - popup
+  DefaultOutputPath: Assets/Prefabs/UI/
+  AddCanvas: 0
+  AddCanvasScaler: 1

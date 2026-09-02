@@ -1,0 +1,8 @@
+.matchmaking-panel {
+    max-width: 560px;
+}
+
+.field-input {
+    flex-grow: 1;
+    min-width: 180px;
+}

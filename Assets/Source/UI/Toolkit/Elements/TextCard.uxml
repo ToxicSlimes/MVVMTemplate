@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Counter/CounterScreen.uss" />
+    <ui:VisualElement class="text-card">
+        <ui:Label name="title-label" text="Title" class="text-card-title" />
+        <ui:Label name="description-label" text="Description" class="text-card-description" />
+    </ui:VisualElement>
+</ui:UXML>

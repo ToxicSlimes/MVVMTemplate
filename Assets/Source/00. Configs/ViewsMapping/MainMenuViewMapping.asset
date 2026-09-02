@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MainMenuViewMapping
   m_EditorClassIdentifier: Assembly-CSharp::Core.Views.MainMenu.MainMenuViewMapping
   ViewPrefab:
-    m_AssetGUID: 2b9b377f555378d4ca18f0f881d8e772
+    m_AssetGUID: 289e65ff4b449404ab2a20e4cc9a803c
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

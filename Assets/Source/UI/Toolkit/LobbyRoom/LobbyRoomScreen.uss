@@ -1,0 +1,58 @@
+.lobby-panel {
+    max-width: 900px;
+}
+
+.room-code {
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: var(--color-accent);
+    margin-right: var(--space-sm);
+}
+
+.copy-button {
+    min-width: 72px;
+}
+
+.slots-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: var(--space-md) 0;
+}
+
+.slot-card {
+    width: 48%;
+    min-height: 120px;
+    margin-bottom: var(--space-sm);
+    padding: var(--space-md);
+    background-color: var(--color-bg-elevated);
+    border-radius: var(--radius-md);
+    display: none;
+}
+
+.slot-name {
+    font-size: 16px;
+    -unity-font-style: bold;
+    color: var(--color-text-primary);
+}
+
+.slot-role {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+}
+
+.slot-ready {
+    font-size: 11px;
+    color: var(--color-primary);
+    margin-top: var(--space-sm);
+    display: none;
+}
+
+.ready-toggle {
+    margin-bottom: var(--space-sm);
+}
+
+.start-label-hidden {
+    display: none;
+}

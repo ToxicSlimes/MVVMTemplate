@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85446d08e634c2f40a990400e6148a16, type: 3}
+  m_Name: TextCardToolkitElementMapping
+  m_EditorClassIdentifier: Assembly-CSharp::Core.MVVM.Config.Generated.TextCardToolkitElementMapping
+  ElementTemplate:
+    m_AssetGUID: 95d477b9c46e4da42b95e46b64dc6498
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

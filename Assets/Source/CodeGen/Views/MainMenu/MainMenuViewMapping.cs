@@ -4,7 +4,7 @@ using Core.MVVM.Views.MainMenu;
 
 namespace Core.Views.MainMenu
 {
-    public class MainMenuViewMapping : ViewMappingBase<MainMenuView, MainMenuViewModel>
+    public class MainMenuViewMapping : ToolkitViewMappingBase<MainMenuToolkitView, MainMenuViewModel>
     {
     }
 }

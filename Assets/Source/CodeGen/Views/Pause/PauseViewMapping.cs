@@ -4,7 +4,7 @@ using Core.MVVM.Views.Pause;
 
 namespace Core.Views.Pause
 {
-    public class PauseViewMapping : ViewMappingBase<PauseView, PauseViewModel>
+    public class PauseViewMapping : ToolkitViewMappingBase<PauseToolkitView, PauseViewModel>
     {
     }
 }

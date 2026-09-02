@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LobbyRoomViewMapping
   m_EditorClassIdentifier: Assembly-CSharp::Core.Views.LobbyRoom.LobbyRoomViewMapping
   ViewPrefab:
-    m_AssetGUID: c6ece742d882deb469f61fdfcec73369
+    m_AssetGUID: 90f9a1c474cd0c6489561e485008cdf9
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

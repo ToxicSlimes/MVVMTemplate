@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Counter/CounterScreen.uss" />
+    <ui:VisualElement class="action-item">
+        <ui:VisualElement class="action-item-text">
+            <ui:Label name="item-title" text="Title" class="item-title" />
+            <ui:Label name="item-subtitle" text="Subtitle" class="item-subtitle" />
+        </ui:VisualElement>
+        <ui:Button name="item-action-button" text="Action" class="btn btn-primary item-action-button" />
+    </ui:VisualElement>
+</ui:UXML>

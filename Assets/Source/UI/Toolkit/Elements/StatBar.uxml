@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Counter/CounterScreen.uss" />
+    <ui:VisualElement class="stat-bar">
+        <ui:VisualElement class="stat-bar-header">
+            <ui:Label name="stat-label" text="Label" class="stat-label" />
+            <ui:Label name="stat-value" text="0/0" class="stat-value" />
+        </ui:VisualElement>
+        <ui:VisualElement class="stat-track">
+            <ui:VisualElement name="stat-fill" class="stat-fill" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

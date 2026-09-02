@@ -1,0 +1,42 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="../Theme/design-tokens.uss" />
+    <Style src="../Theme/toolkit-screen.uss" />
+    <Style src="LobbyRoomScreen.uss" />
+    <ui:VisualElement class="screen-root">
+        <ui:VisualElement class="screen-panel lobby-panel">
+            <ui:Label text="LOBBY" class="screen-title" />
+            <ui:VisualElement class="field-row">
+                <ui:Label text="Room Code" class="field-label" />
+                <ui:Label name="room-code-label" text="----" class="room-code" />
+                <ui:Button name="copy-button" text="Copy" class="btn btn-outline copy-button" />
+            </ui:VisualElement>
+            <ui:VisualElement name="slots-row" class="slots-row">
+                <ui:VisualElement name="slot-0" class="slot-card">
+                    <ui:Label name="slot-0-name" text="" class="slot-name" />
+                    <ui:Label name="slot-0-role" text="" class="slot-role" />
+                    <ui:Label name="slot-0-ready" text="READY" class="slot-ready" />
+                </ui:VisualElement>
+                <ui:VisualElement name="slot-1" class="slot-card">
+                    <ui:Label name="slot-1-name" text="" class="slot-name" />
+                    <ui:Label name="slot-1-role" text="" class="slot-role" />
+                    <ui:Label name="slot-1-ready" text="READY" class="slot-ready" />
+                </ui:VisualElement>
+                <ui:VisualElement name="slot-2" class="slot-card">
+                    <ui:Label name="slot-2-name" text="" class="slot-name" />
+                    <ui:Label name="slot-2-role" text="" class="slot-role" />
+                    <ui:Label name="slot-2-ready" text="READY" class="slot-ready" />
+                </ui:VisualElement>
+                <ui:VisualElement name="slot-3" class="slot-card">
+                    <ui:Label name="slot-3-name" text="" class="slot-name" />
+                    <ui:Label name="slot-3-role" text="" class="slot-role" />
+                    <ui:Label name="slot-3-ready" text="READY" class="slot-ready" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Toggle name="ready-toggle" label="Ready" class="ready-toggle" />
+            <ui:Button name="add-bot-button" text="Add Bot" class="btn btn-secondary" />
+            <ui:Button name="start-button" text="START" class="btn btn-primary" />
+            <ui:Label name="start-label" text="START" class="start-label-hidden" />
+            <ui:Button name="leave-button" text="Leave" class="btn btn-danger" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

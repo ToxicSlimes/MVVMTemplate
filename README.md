@@ -16,6 +16,18 @@ Ready-to-use foundation for any Unity project — just add your game logic on to
 
 The main menu is a **demo hub** — open Counter, Settings, Inventory, or Multiplayer without writing code first.
 
+**Counter** uses the **UI Toolkit pilot** (`CounterToolkitView` + UXML/USS). Other screens remain on uGUI.
+
+## UI Toolkit (Counter pilot)
+
+| Step | Action |
+|------|--------|
+| Edit layout | `Tools → UI Toolkit → Open Counter Edit Scene` or edit `Assets/Source/UI/Toolkit/Counter/CounterScreen.uxml` |
+| Refresh prefab + configs | `Tools → UI Toolkit → Setup Counter Toolkit Assets` |
+| Guidelines | [docs/ui-toolkit-uxml.md](docs/ui-toolkit-uxml.md) |
+
+Counter binds via `Root.Q<T>("kebab-case-name")` and shares the same `CounterViewModel`, `ViewService`, and Addressables flow as uGUI views.
+
 ## Use as a Git submodule
 
 This repo is a full Unity project. Downstream games pin **this repository** to a commit and import `Assets/Source` as a UPM package so scripts compile under `Packages/`.

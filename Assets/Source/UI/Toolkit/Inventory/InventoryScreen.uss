@@ -1,0 +1,45 @@
+.inventory-panel {
+    max-width: 640px;
+}
+
+.filter-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-sm);
+}
+
+.filter-button {
+    margin: 2px;
+    min-height: 32px;
+    font-size: 12px;
+}
+
+.items-scroll {
+    max-height: 220px;
+}
+
+.detail-panel {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background-color: var(--color-bg-elevated);
+    border-radius: var(--radius-md);
+}
+
+.detail-title {
+    font-size: 18px;
+    -unity-font-style: bold;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.detail-description {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    white-space: normal;
+    margin-bottom: var(--space-sm);
+}
+
+.item-button {
+    margin-bottom: var(--space-xs);
+    -unity-text-align: middle-left;
+}

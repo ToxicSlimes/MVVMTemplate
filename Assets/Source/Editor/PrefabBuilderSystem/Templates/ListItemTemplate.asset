@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a531a232f18431e8a8d9a7ad3fd9bf, type: 3}
+  m_Name: ListItemTemplate
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::Core.Editor.PrefabBuilderSystem.Templates.UITemplate
+  DisplayName: List Item
+  Description: Icon + Title + Subtitle + Chevron
+  Category: Lists
+  Icon: {fileID: 0}
+  Root:
+    Id: Root
+    Name: Root
+    ElementType: 2
+    Children:
+    - Id: Icon
+      Name: Icon
+      ElementType: 4
+      Children: []
+      UseDesignSystem: 1
+      TextStyleName: 
+      ColorName: 
+      SpacingSize: 2
+      BackgroundColorName: elevatedSurface
+      ButtonVariant: 
+      Stretch: 1
+      Size: {x: 48, y: 48}
+      MinSize: {x: 0, y: 0}
+      PreferredWidth: -1
+      PreferredHeight: -1
+      FlexibleWidth: -1
+      FlexibleHeight: -1
+      Text: 
+      Placeholder: 
+      Sprite: {fileID: 0}
+      Bold: 0
+      Centered: 0
+      FontSize: 14
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+      Spacing: 10
+      Padding: 0
+    - Id: TextColumn
+      Name: Text
+      ElementType: 1
+      Children:
+      - Id: Title
+        Name: Title
+        ElementType: 3
+        Children: []
+        UseDesignSystem: 1
+        TextStyleName: body
+        ColorName: textPrimary
+        SpacingSize: 2
+        BackgroundColorName: 
+        ButtonVariant: 
+        Stretch: 1
+        Size: {x: 0, y: 0}
+        MinSize: {x: 0, y: 0}
+        PreferredWidth: -1
+        PreferredHeight: -1
+        FlexibleWidth: -1
+        FlexibleHeight: -1
+        Text: Item Title
+        Placeholder: 
+        Sprite: {fileID: 0}
+        Bold: 1
+        Centered: 0
+        FontSize: 14
+        Color: {r: 1, g: 1, b: 1, a: 1}
+        BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+        Spacing: 10
+        Padding: 0
+      - Id: Subtitle
+        Name: Subtitle
+        ElementType: 3
+        Children: []
+        UseDesignSystem: 1
+        TextStyleName: bodySmall
+        ColorName: textSecondary
+        SpacingSize: 2
+        BackgroundColorName: 
+        ButtonVariant: 
+        Stretch: 1
+        Size: {x: 0, y: 0}
+        MinSize: {x: 0, y: 0}
+        PreferredWidth: -1
+        PreferredHeight: -1
+        FlexibleWidth: -1
+        FlexibleHeight: -1
+        Text: Item description
+        Placeholder: 
+        Sprite: {fileID: 0}
+        Bold: 0
+        Centered: 0
+        FontSize: 14
+        Color: {r: 1, g: 1, b: 1, a: 1}
+        BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+        Spacing: 10
+        Padding: 0
+      UseDesignSystem: 1
+      TextStyleName: 
+      ColorName: 
+      SpacingSize: 0
+      BackgroundColorName: 
+      ButtonVariant: 
+      Stretch: 1
+      Size: {x: 0, y: 0}
+      MinSize: {x: 0, y: 0}
+      PreferredWidth: -1
+      PreferredHeight: -1
+      FlexibleWidth: 1
+      FlexibleHeight: -1
+      Text: 
+      Placeholder: 
+      Sprite: {fileID: 0}
+      Bold: 0
+      Centered: 0
+      FontSize: 14
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+      Spacing: 10
+      Padding: 0
+    - Id: Chevron
+      Name: Chevron
+      ElementType: 3
+      Children: []
+      UseDesignSystem: 1
+      TextStyleName: heading3
+      ColorName: textTertiary
+      SpacingSize: 2
+      BackgroundColorName: 
+      ButtonVariant: 
+      Stretch: 1
+      Size: {x: 0, y: 0}
+      MinSize: {x: 0, y: 0}
+      PreferredWidth: -1
+      PreferredHeight: -1
+      FlexibleWidth: -1
+      FlexibleHeight: -1
+      Text: "\u203A"
+      Placeholder: 
+      Sprite: {fileID: 0}
+      Bold: 0
+      Centered: 0
+      FontSize: 14
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+      Spacing: 10
+      Padding: 0
+    UseDesignSystem: 1
+    TextStyleName: 
+    ColorName: 
+    SpacingSize: 2
+    BackgroundColorName: 
+    ButtonVariant: 
+    Stretch: 0
+    Size: {x: 0, y: 0}
+    MinSize: {x: 0, y: 0}
+    PreferredWidth: -1
+    PreferredHeight: 72
+    FlexibleWidth: -1
+    FlexibleHeight: -1
+    Text: 
+    Placeholder: 
+    Sprite: {fileID: 0}
+    Bold: 0
+    Centered: 0
+    FontSize: 14
+    Color: {r: 1, g: 1, b: 1, a: 1}
+    BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    Spacing: 10
+    Padding: 12
+  Tags:
+  - list
+  - item
+  - row
+  DefaultOutputPath: Assets/Prefabs/UI/
+  AddCanvas: 0
+  AddCanvasScaler: 1

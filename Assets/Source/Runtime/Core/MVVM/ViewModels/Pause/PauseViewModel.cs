@@ -71,7 +71,7 @@ namespace Core.MVVM.ViewModels.Pause
             _input.DisablePlayerActions();
             _input.EnableUIActions();
 
-            await _mediator.Send(new ShowViewRequest<PauseView, PauseViewModel>());
+            await _mediator.Send(new ShowViewRequest<PauseToolkitView, PauseViewModel>());
         }
 
         private async UniTaskVoid Resume()
@@ -81,7 +81,7 @@ namespace Core.MVVM.ViewModels.Pause
             _input.DisableUIActions();
             _input.EnablePlayerActions();
 
-            await _mediator.Send(new HideViewRequest<PauseView, PauseViewModel>());
+            await _mediator.Send(new HideViewRequest<PauseToolkitView, PauseViewModel>());
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Core.MVVM.ViewModels.Pause
         {
             IsVisible.Value = false;
 
-            await _mediator.Send(new HideViewRequest<PauseView, PauseViewModel>());
+            await _mediator.Send(new HideViewRequest<PauseToolkitView, PauseViewModel>());
             await _mediator.Send(new LeaveRoomCommand());
 
             _input.DisablePlayerActions();

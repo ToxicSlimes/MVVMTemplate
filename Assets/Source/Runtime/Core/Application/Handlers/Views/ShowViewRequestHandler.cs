@@ -10,7 +10,7 @@ namespace Core.Application.Handlers.Views
 {
     public sealed class ShowViewRequestHandler<TView, TViewModel>
         : IRequestHandler<ShowViewRequest<TView, TViewModel>, bool>
-        where TView : BindableView<TViewModel>
+        where TView : class, IView
         where TViewModel : DisposableObject
     {
         private readonly IViewService _viewService;
@@ -24,7 +24,7 @@ namespace Core.Application.Handlers.Views
             ShowViewRequest<TView, TViewModel> request,
             CancellationToken ct)
         {
-            await _viewService.ShowAsync<TView, TViewModel>();
+            await _viewService.ShowAsync<TViewModel>();
             return true;
         }
     }

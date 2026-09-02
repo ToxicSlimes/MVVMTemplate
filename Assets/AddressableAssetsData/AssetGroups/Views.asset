@@ -15,11 +15,51 @@ MonoBehaviour:
   m_GroupName: Views
   m_GUID: 9d9d0f77d2f9efa48b72a5883b2b2624
   m_SerializeEntries:
+  - m_GUID: 14269b47ad1a89648968b7f74ca6d4e9
+    m_Address: Assets/Prefabs/Views/ConnectingOverlayToolkitHost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 243bc6084bd77d54abe2babfff8af7f3
+    m_Address: Assets/Prefabs/Views/MatchmakingToolkitHost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 289e65ff4b449404ab2a20e4cc9a803c
+    m_Address: Assets/Prefabs/Views/MainMenuToolkitHost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42a9c18b10b91dc40a59d3eaa480128b
+    m_Address: Assets/Prefabs/Views/PauseToolkitHost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6203e49a8f626624aa4bdd38f1bd8d71
+    m_Address: Assets/Prefabs/Views/InventoryToolkitHost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90f9a1c474cd0c6489561e485008cdf9
+    m_Address: Assets/Prefabs/Views/LobbyRoomToolkitHost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2c3d4e5f6789012345678abcdef0123
+    m_Address: Assets/Prefabs/Views/CounterToolkitHost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f6a9d8d811c4bc2409ebae7349044c21
     m_Address: Assets/Prefabs/Views
     m_ReadOnly: 0
     m_SerializedLabels:
     - Views
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f94fd718edf57f547b065bd9c1bd834a
+    m_Address: Assets/Prefabs/Views/SettingsToolkitHost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0dd45898ae5b11b419135cb09050fb92, type: 2}

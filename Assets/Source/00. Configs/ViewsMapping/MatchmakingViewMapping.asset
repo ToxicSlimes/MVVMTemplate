@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MatchmakingViewMapping
   m_EditorClassIdentifier: Assembly-CSharp::Core.Views.Matchmaking.MatchmakingViewMapping
   ViewPrefab:
-    m_AssetGUID: 30ec8c5c77f688f4a9ecdbcbfc07e97b
+    m_AssetGUID: 243bc6084bd77d54abe2babfff8af7f3
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

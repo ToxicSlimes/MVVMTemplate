@@ -117,7 +117,7 @@ namespace Core.MVVM.ViewModels.Matchmaking
 
         private async UniTaskVoid OpenRoom()
         {
-            await _mediator.Send(new ShowViewRequest<LobbyRoomView, LobbyRoomViewModel>());
+            await _mediator.Send(new ShowViewRequest<LobbyRoomToolkitView, LobbyRoomViewModel>());
         }
 
         private void OnModelSessionsChanged() => _sessionsUpdated.OnNext(Unit.Default);

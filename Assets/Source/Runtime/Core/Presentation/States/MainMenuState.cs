@@ -1,9 +1,7 @@
 using Core.Abstractions.MVVM.Services;
-using Core.Abstractions.MVVM.ViewModels;
 using Core.Abstractions.StateMachines;
 using Core.Abstractions.StateMachines.States;
 using Core.MVVM.ViewModels.MainMenu;
-using Core.MVVM.Views.MainMenu;
 using Cysharp.Threading.Tasks;
 using Core.Abstractions.Services;
 
@@ -26,7 +24,7 @@ public class MainMenuState : GameStateBase<MainMenuState>, IEnterState
 
     private async UniTaskVoid ShowMainMenu()
     {
-        await _viewService.ShowAsync<MainMenuView, MainMenuViewModel>();
+        await _viewService.ShowAsync<MainMenuViewModel>();
     }
 
     public override void Exit()
