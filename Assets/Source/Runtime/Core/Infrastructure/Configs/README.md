@@ -4,7 +4,7 @@
 
 ## Что где лежит
 
-- `Assets/Source/Runtime/Core/Configs/` — **типы конфигов** (код, `.cs`)
+- `Assets/Source/Runtime/Core/Infrastructure/Configs/` — **типы конфигов** (код, `.cs`)
 - `Assets/Source/00. Configs/` — **инстансы конфигов** (данные, `.asset`)
 
 ## Как конфиги загружаются в рантайме

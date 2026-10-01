@@ -12,7 +12,7 @@ namespace Core.Editor.ViewModelScanner
     public static class ViewModelScanner
     {
         private const string OutputPath =
-            "Assets/Source/Runtime/Core/DependencyInjection/Generated/ViewModelRegistration.generated.cs";
+            "Assets/Source/Runtime/Core/CompositionRoot/Generated/ViewModelRegistration.generated.cs";
 
         private const string Namespace = "Core.DependencyInjection.Generated";
         private const string AttributeName = "GenerateViewCommandsAttribute";

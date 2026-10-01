@@ -11,7 +11,7 @@ namespace Core.Editor.StorageMapperScanner
 {
     public static class StorageMapperScanner
     {
-        private const string OutputPath = "Assets/Source/Runtime/Core/DependencyInjection/Generated/StorageMapperRegistration.generated.cs";
+        private const string OutputPath = "Assets/Source/Runtime/Core/CompositionRoot/Generated/StorageMapperRegistration.generated.cs";
         private const string Namespace = "Core.DependencyInjection.Generated";
 
         [MenuItem("Tools/GameData/Scan and Generate Storage Mapper Registration")]

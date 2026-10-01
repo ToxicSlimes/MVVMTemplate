@@ -41,13 +41,13 @@ namespace Core.Editor.CodeGenPipeline
         {
             var issues = 0;
 
-            if (!System.IO.File.Exists("Assets/Source/Runtime/Core/DependencyInjection/Generated/ViewModelRegistration.generated.cs"))
+            if (!System.IO.File.Exists("Assets/Source/Runtime/Core/CompositionRoot/Generated/ViewModelRegistration.generated.cs"))
             {
                 Debug.LogError("[Template] Missing ViewModelRegistration.generated.cs — run Tools → MVVM → Scan & Generate All.");
                 issues++;
             }
 
-            if (!System.IO.File.Exists("Assets/Source/Runtime/Core/DependencyInjection/Generated/MediatorHandlerRegistration.generated.cs"))
+            if (!System.IO.File.Exists("Assets/Source/Runtime/Core/CompositionRoot/Generated/MediatorHandlerRegistration.generated.cs"))
             {
                 Debug.LogError("[Template] Missing MediatorHandlerRegistration.generated.cs — run Tools → Mediator → Scan & Generate Handler Registration.");
                 issues++;

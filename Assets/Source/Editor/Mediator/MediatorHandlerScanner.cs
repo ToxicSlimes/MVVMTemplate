@@ -15,7 +15,7 @@ namespace Core.Editor.Mediator
 
     public static class MediatorHandlerScanner
     {
-        private const string OutputPath = "Assets/Source/Runtime/Core/DependencyInjection/Generated";
+        private const string OutputPath = "Assets/Source/Runtime/Core/CompositionRoot/Generated";
         private const string OutputFileName = "MediatorHandlerRegistration.generated.cs";
         private const string Namespace = "Core.DependencyInjection.Generated";
 

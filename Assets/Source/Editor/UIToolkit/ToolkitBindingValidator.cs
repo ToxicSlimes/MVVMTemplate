@@ -17,7 +17,7 @@ namespace Core.Editor.UIToolkit
     {
         private static readonly string[] SupplementalBindingSources =
         {
-            "Assets/Source/Runtime/Core/UI/Toolkit/ToolkitConfirmOverlay.cs"
+            "Assets/Source/Runtime/Core/Presentation/UI/Toolkit/ToolkitConfirmOverlay.cs"
         };
 
         private static readonly Regex NamedButtonRegex = new(

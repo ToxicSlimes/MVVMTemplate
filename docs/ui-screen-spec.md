@@ -25,7 +25,7 @@ Play BootstrapScene
 | `Packages/ui-design/screens/` | React reference layouts (pxlkit-style) |
 | `Assets/Source/UI/Toolkit/_specs/` | Unity copy of validated specs |
 | `Assets/Source/Editor/UIToolkit/ScreenSpec/` | Editor importer + generators |
-| `Assets/Source/Runtime/Core/MVVM/Views/*/*.Bindings.generated.cs` | Generated localization bind stubs |
+| `Assets/Source/Runtime/Core/Presentation/MVVM/Views/*/*.Bindings.generated.cs` | Generated localization bind stubs |
 
 ## Spec file structure
 

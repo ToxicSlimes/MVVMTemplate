@@ -45,8 +45,30 @@ def main():
     errors = []
 
     expected_paths = {
+        "Core.Domain": "Assets/Source/Runtime/Core/Domain/Core.Domain.asmdef",
+        "Core.Application": "Assets/Source/Runtime/Core/Application/Core.Application.asmdef",
+        "Core.Presentation.States": "Assets/Source/Runtime/Core/Presentation/Core.Presentation.States.asmdef",
+        "Core.Presentation.MVVM": "Assets/Source/Runtime/Core/Presentation/MVVM/Core.Presentation.MVVM.asmdef",
+        "Core.Presentation.UI": "Assets/Source/Runtime/Core/Presentation/UI/Core.Presentation.UI.asmdef",
+        "Core.Presentation.UI.Toolkit": "Assets/Source/Runtime/Core/Presentation/UI/Toolkit/Core.Presentation.UI.Toolkit.asmdef",
+        "Core.Presentation.UI.Toolkit.Elements": "Assets/Source/Runtime/Core/Presentation/UI/Toolkit/Elements/Core.Presentation.UI.Toolkit.Elements.asmdef",
+        "Core.Infrastructure": "Assets/Source/Runtime/Core/Infrastructure/Core.Infrastructure.asmdef",
+        "Core.Infrastructure.Configs": "Assets/Source/Runtime/Core/Infrastructure/Configs/Core.Infrastructure.Configs.asmdef",
+        "Core.CompositionRoot": "Assets/Source/Runtime/Core/CompositionRoot/Core.CompositionRoot.asmdef",
         "Core.Mediator.Contracts": "Assets/Source/Runtime/Core/Mediator/Contracts/Core.Mediator.Contracts.asmdef",
         "Core.Mediator.Reflex": "Assets/Source/Runtime/Core/Mediator/Reflex/Core.Mediator.Reflex.asmdef",
+    }
+
+    legacy_assemblies = {
+        "Core.Data",
+        "Core.Configs",
+        "Core.DependencyInjection",
+        "Core.MVVM",
+        "Core.Presentation",
+        "Core.UI",
+        "Core.UI.Toolkit",
+        "Core.UI.Toolkit.Elements",
+        "Core.Infrastructure.Mediator",
     }
 
     for name, expected_path in expected_paths.items():
@@ -59,8 +81,9 @@ def main():
         if actual_path != expected_path:
             errors.append(f"{name} is at {actual_path}, expected {expected_path}")
 
-    if "Core.Infrastructure.Mediator" in assemblies:
-        errors.append("Legacy assembly Core.Infrastructure.Mediator still exists")
+    found_legacy = legacy_assemblies.intersection(assemblies)
+    if found_legacy:
+        errors.append(f"Legacy assembly names still exist: {sorted(found_legacy)}")
 
     application = assemblies.get("Core.Application")
     if application:

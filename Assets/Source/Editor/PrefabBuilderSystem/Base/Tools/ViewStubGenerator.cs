@@ -17,7 +17,7 @@ namespace Core.Editor.PrefabBuilderSystem.Tools
         private GameObject _sourcePrefab;
         private string _viewName = "NewView";
         private string _namespace = "Core.MVVM.Views";
-        private string _outputPath = "Assets/Source/Runtime/Core/MVVM/Views";
+        private string _outputPath = "Assets/Source/Runtime/Core/Presentation/MVVM/Views";
         private List<ElementInfo> _elements = new();
         private Dictionary<ElementInfo, bool> _selectedElements = new();
         private Vector2 _elementsScrollPos;

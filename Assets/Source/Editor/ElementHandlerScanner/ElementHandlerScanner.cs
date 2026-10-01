@@ -12,7 +12,7 @@ namespace Core.Editor.ElementHandlerScanner
 {
     public static class ElementHandlerScanner
     {
-        private const string OutputPath = "Assets/Source/Runtime/Core/DependencyInjection/Generated/ElementHandlerRegistration.generated.cs";
+        private const string OutputPath = "Assets/Source/Runtime/Core/CompositionRoot/Generated/ElementHandlerRegistration.generated.cs";
         private const string Namespace = "Core.DependencyInjection.Generated";
 
         [MenuItem("Tools/Elements/Scan and Generate Handler Registration")]

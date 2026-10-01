@@ -1,5 +1,5 @@
 {
-    "name": "Core.Configs",
+    "name": "Core.Infrastructure.Configs",
     "rootNamespace": "Core.Configs",
     "references": [
         "GUID:bcea71e9df9d040f4bbf671696609a19",

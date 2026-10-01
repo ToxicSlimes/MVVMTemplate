@@ -13,7 +13,7 @@ namespace Core.Editor.ElementHandlerScanner
 {
     public static class ToolkitElementHandlerScanner
     {
-        private const string OutputPath = "Assets/Source/Runtime/Core/DependencyInjection/Generated/ToolkitElementHandlerRegistration.generated.cs";
+        private const string OutputPath = "Assets/Source/Runtime/Core/CompositionRoot/Generated/ToolkitElementHandlerRegistration.generated.cs";
         private const string Namespace = "Core.DependencyInjection.Generated";
 
         public static bool Generate()

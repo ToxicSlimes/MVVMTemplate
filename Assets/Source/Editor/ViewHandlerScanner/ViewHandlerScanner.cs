@@ -13,7 +13,7 @@ namespace Core.Editor.ViewHandlerScanner
     public static class ViewHandlerScanner
     {
         private const string OutputPath =
-            "Assets/Source/Runtime/Core/DependencyInjection/Generated/ViewHandlerRegistration.generated.cs";
+            "Assets/Source/Runtime/Core/CompositionRoot/Generated/ViewHandlerRegistration.generated.cs";
 
         private const string Namespace = "Core.DependencyInjection.Generated";
 

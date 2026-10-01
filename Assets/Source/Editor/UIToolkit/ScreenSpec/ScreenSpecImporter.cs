@@ -145,7 +145,7 @@ namespace Core.Editor.UIToolkit.ScreenSpec
             if (spec == null || string.IsNullOrEmpty(spec.viewType) || spec.output == null || string.IsNullOrEmpty(spec.output.folder))
                 return null;
 
-            var viewsRoot = "Assets/Source/Runtime/Core/MVVM/Views";
+            var viewsRoot = "Assets/Source/Runtime/Core/Presentation/MVVM/Views";
             return Path.Combine(viewsRoot, spec.output.folder, spec.viewType + ".Bindings.generated.cs").Replace('\\', '/');
         }
     }
