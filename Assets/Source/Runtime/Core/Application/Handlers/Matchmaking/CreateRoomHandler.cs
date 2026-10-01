@@ -1,5 +1,4 @@
 using System.Threading;
-using Core.Abstractions.Config;
 using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Application.Commands.Matchmaking;
 using Core.Infrastructure.Mediator.Abstractions;
@@ -19,9 +18,9 @@ namespace Core.Application.Handlers.Matchmaking
             INetworkRunnerController controller,
             INetworkLobby lobby,
             INetworkSpawner spawner,
-            IConfigProvider configProvider,
+            INetworkSessionOptionsProvider optionsProvider,
             ILobbyModelWriter model)
-            : base(controller, lobby, spawner, configProvider, model)
+            : base(controller, lobby, spawner, optionsProvider, model)
         {
         }
 

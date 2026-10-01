@@ -1,7 +1,5 @@
 using System.Threading;
-using Core.Abstractions.Config;
 using Core.Abstractions.MVVM.Models.Lobby;
-using Core.Configs.Services;
 using Core.Network.Abstractions.Services;
 using Core.Network.Abstractions.Types;
 using Cysharp.Threading.Tasks;
@@ -22,20 +20,20 @@ namespace Core.Application.Handlers.Matchmaking
         private readonly INetworkRunnerController _controller;
         private readonly INetworkLobby _lobby;
         private readonly INetworkSpawner _spawner;
-        private readonly IConfigProvider _configProvider;
+        private readonly INetworkSessionOptionsProvider _optionsProvider;
         private readonly ILobbyModelWriter _model;
 
         protected RoomLaunchHandlerBase(
             INetworkRunnerController controller,
             INetworkLobby lobby,
             INetworkSpawner spawner,
-            IConfigProvider configProvider,
+            INetworkSessionOptionsProvider optionsProvider,
             ILobbyModelWriter model)
         {
             _controller = controller;
             _lobby = lobby;
             _spawner = spawner;
-            _configProvider = configProvider;
+            _optionsProvider = optionsProvider;
             _model = model;
         }
 
@@ -54,9 +52,7 @@ namespace Core.Application.Handlers.Matchmaking
                 return NetworkStartResult.Failure(EmptyNicknameStatus, NetworkShutdownReason.InvalidArguments);
             }
 
-            var config = _configProvider.GetConfig<NetworkConfig>();
-
-            if (config == null)
+            if (!_optionsProvider.TryGet(out var options))
             {
                 ReportRejected(MissingConfigStatus);
                 return NetworkStartResult.Failure(MissingConfigStatus, NetworkShutdownReason.IncompatibleConfiguration);
@@ -69,10 +65,10 @@ namespace Core.Application.Handlers.Matchmaking
             var request = new NetworkStartRequest(
                 mode,
                 sessionName,
-                config.DefaultPlayerCount,
+                options.DefaultPlayerCount,
                 scenePath: null,
-                config.SessionVisible,
-                config.SessionOpen);
+                options.SessionVisible,
+                options.SessionOpen);
 
             var result = await _controller.StartAsync(request, cancellationToken);
 

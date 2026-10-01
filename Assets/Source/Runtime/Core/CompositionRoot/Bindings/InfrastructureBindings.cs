@@ -266,6 +266,8 @@ public static class InfrastructureBindings
       configProvider.PreloadAllConfigsAsync().Forget();
       return configProvider;
     });
+    builder.AddSingleton<INetworkSessionOptionsProvider>(container =>
+      new NetworkSessionOptionsProvider(container.Resolve<IConfigProvider>()));
     builder.AddSingleton<ICanvasProvider>(_ => new CanvasProvider());
     builder.AddSingleton<IViewAnimator>(_ => new ViewAnimator());
     builder.AddSingleton<IViewConfig>(container =>

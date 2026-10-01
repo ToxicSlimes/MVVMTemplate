@@ -88,9 +88,15 @@ def main():
     application = assemblies.get("Core.Application")
     if application:
         references = resolve_internal_references(application[1], guid_to_name)
-        forbidden = references.intersection({"Core.Mediator.Reflex", "Core.Infrastructure.Mediator"})
+        forbidden = {
+            reference
+            for reference in references
+            if reference.startswith("Core.Presentation.")
+            or reference.startswith("Core.Infrastructure.")
+            or reference == "Core.Mediator.Reflex"
+        }
         if forbidden:
-            errors.append(f"Core.Application depends on mediator implementation: {sorted(forbidden)}")
+            errors.append(f"Core.Application has outward dependencies: {sorted(forbidden)}")
         if "Core.Mediator.Contracts" not in references:
             errors.append("Core.Application must reference Core.Mediator.Contracts")
 
