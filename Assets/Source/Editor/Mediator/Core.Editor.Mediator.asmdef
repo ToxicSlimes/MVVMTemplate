@@ -2,7 +2,7 @@
     "name": "Core.Editor.Mediator",
     "rootNamespace": "Core.Editor.Mediator",
     "references": [
-        "Core.Infrastructure.Mediator"
+        "Core.Mediator.Contracts"
     ],
     "includePlatforms": [
         "Editor"

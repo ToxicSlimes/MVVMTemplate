@@ -1,10 +1,8 @@
 {
-    "name": "Core.Infrastructure.Mediator",
+    "name": "Core.Mediator.Contracts",
     "rootNamespace": "Core.Infrastructure.Mediator",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:1530a967b84cfb44dbdd5e8a1989764f",
-        "GUID:5c01796d064528144a599661eaab93a6"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -14,5 +12,5 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": true
 }
