@@ -1,1 +1,39 @@
 @import url("unity-theme://default");
+@import url("pixel-dropdown-popup.uss");
+
+.unity-base-dropdown__container-outer {
+    background-color: rgb(58, 42, 96);
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(255, 230, 150);
+    border-top-color: rgb(255, 230, 150);
+    border-right-color: rgb(35, 22, 55);
+    border-bottom-color: rgb(35, 22, 55);
+    border-radius: 0;
+}
+
+.unity-base-dropdown__container-inner {
+    background-color: rgb(34, 20, 72);
+    border-width: 0;
+    border-radius: 0;
+}
+
+.unity-base-dropdown__item {
+    background-color: rgb(34, 20, 72);
+}
+
+.unity-base-dropdown__item:hover {
+    background-color: rgb(74, 56, 118);
+}
+
+.unity-base-dropdown__item:checked {
+    background-color: rgb(44, 140, 72);
+}
+
+.unity-base-dropdown__label {
+    -unity-font-definition: url("../../Source/UI/Toolkit/Theme/Fonts/PressStart2P-Regular.ttf");
+    font-size: 8px;
+    color: rgb(255, 248, 220);
+}

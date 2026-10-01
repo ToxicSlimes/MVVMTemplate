@@ -1,0 +1,20 @@
+{
+  "name": "@mvvm-template/ui-design-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node ../scripts/validate-spec.mjs",
+    "export": "node ../scripts/export-screen.mjs",
+    "export:tokens": "node ../scripts/export-tokens.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}

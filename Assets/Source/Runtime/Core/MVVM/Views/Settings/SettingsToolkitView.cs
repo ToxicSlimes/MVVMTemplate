@@ -13,12 +13,11 @@ using UnityEngine.UIElements;
 
 namespace Core.MVVM.Views.Settings
 {
-    public class SettingsToolkitView : ToolkitPanelView<SettingsViewModel>
+    public partial class SettingsToolkitView : ToolkitPanelView<SettingsViewModel>
     {
         [Inject] private IInputService _inputService;
         [Inject] private ILocalizationService _localizationService;
 
-        private Label _titleLabel;
         private Button _dimButton;
         private Button _closeButton;
         private Button _applyButton;
@@ -71,7 +70,6 @@ namespace Core.MVVM.Views.Settings
         {
             QueryElements();
             SetupDropdowns();
-            BindLocalizedText(ref disposables);
             BindCloseButtons(ref disposables);
             BindTabs(ref disposables);
             BindKeyboardNavigation(ref disposables);
@@ -82,13 +80,13 @@ namespace Core.MVVM.Views.Settings
             BindGame(ref disposables);
             BindFooter(ref disposables);
             UpdateTabVisuals(ViewModel.CurrentTab.Value);
+            ApplyGeneratedBindings(ref disposables);
         }
 
         private void QueryElements()
         {
             if (Root == null) return;
 
-            _titleLabel = Root.Q<Label>(className: "screen-title");
             _dimButton = Root.Q<Button>("dim-button");
             _closeButton = Root.Q<Button>("close-button");
             _applyButton = Root.Q<Button>("apply-button");
@@ -167,23 +165,6 @@ namespace Core.MVVM.Views.Settings
 
             if (_languageDropdown != null)
                 _languageDropdown.choices = Enum.GetNames(typeof(GameLanguage)).ToList();
-        }
-
-        private void BindLocalizedText(ref DisposableBag disposables)
-        {
-            if (_localizationService == null)
-                return;
-
-            BindLocalized(_titleLabel, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Title, ref disposables);
-            BindLocalized(_tabButtons[0], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabAudio, ref disposables);
-            BindLocalized(_tabButtons[1], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabVideo, ref disposables);
-            BindLocalized(_tabButtons[2], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabDisplay, ref disposables);
-            BindLocalized(_tabButtons[3], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabControls, ref disposables);
-            BindLocalized(_tabButtons[4], _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.TabGame, ref disposables);
-            BindLocalized(_applyButton, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Apply, ref disposables);
-            BindLocalized(_resetButton, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Reset, ref disposables);
-            BindLocalized(_cancelButton, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Cancel, ref disposables);
-            BindLocalizedLabel(_languageDropdown, _localizationService, UiLocalizationKeys.Table, UiLocalizationKeys.Settings.Language, ref disposables);
         }
 
         private void BindCloseButtons(ref DisposableBag disposables)

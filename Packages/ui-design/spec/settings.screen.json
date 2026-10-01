@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "screenId": "settings",
+  "viewType": "SettingsToolkitView",
+  "viewModelType": "SettingsViewModel",
+  "viewNamespace": "Core.MVVM.Views.Settings",
+  "output": {
+    "folder": "Settings",
+    "uxmlFile": "SettingsScreen.uxml",
+    "ussFile": "SettingsScreen.uss",
+    "includeToolkitScreen": true,
+    "includePixelControls": true
+  },
+  "theme": {
+    "styles": ["design-tokens.uss", "pixel-theme.uss", "pixel-controls.uss", "toolkit-screen.uss"]
+  },
+  "localization": {
+    "table": "UI",
+    "prefix": "settings",
+    "keys": [
+      { "key": "settings.title", "en": "Settings", "ru": "Настройки" },
+      { "key": "settings.tab_audio", "en": "Audio", "ru": "Аудио" },
+      { "key": "settings.tab_video", "en": "Video", "ru": "Видео" },
+      { "key": "settings.tab_display", "en": "Display", "ru": "Экран" },
+      { "key": "settings.tab_controls", "en": "Controls", "ru": "Управление" },
+      { "key": "settings.tab_game", "en": "Game", "ru": "Игра" },
+      { "key": "settings.language", "en": "Language", "ru": "Язык" },
+      { "key": "settings.apply", "en": "Apply", "ru": "Применить" },
+      { "key": "settings.reset", "en": "Reset", "ru": "Сброс" },
+      { "key": "settings.cancel", "en": "Cancel", "ru": "Отмена" },
+      { "key": "settings.volume_label", "en": "Volume: {0}%", "ru": "Громкость: {0}%" }
+    ]
+  },
+  "nodes": [
+    {
+      "type": "Container",
+      "class": "settings-overlay",
+      "children": [
+        { "type": "Button", "name": "dim-button", "text": "", "rawClass": true, "class": "settings-dim" },
+        {
+          "type": "Container",
+          "class": "settings-panel",
+          "children": [
+            {
+              "type": "Container",
+              "class": "settings-header",
+              "children": [
+                { "type": "Label", "text": "SETTINGS", "class": "screen-title" },
+                { "type": "Button", "name": "close-button", "text": "X", "tone": "ghost", "class": "settings-close" }
+              ]
+            },
+            {
+              "type": "Tabs",
+              "class": "settings-tabs",
+              "tabs": [
+                {
+                  "id": "audio",
+                  "label": "Audio",
+                  "tabButtonName": "tab-audio",
+                  "children": [
+                    { "type": "SliderRow", "name": "master-volume", "label": "Master", "valueName": "master-volume-value", "low": 0, "high": 1 },
+                    { "type": "SliderRow", "name": "music-volume", "label": "Music", "valueName": "music-volume-value", "low": 0, "high": 1 },
+                    { "type": "SliderRow", "name": "sfx-volume", "label": "SFX", "valueName": "sfx-volume-value", "low": 0, "high": 1 },
+                    { "type": "SliderRow", "name": "voice-volume", "label": "Voice", "valueName": "voice-volume-value", "low": 0, "high": 1 },
+                    {
+                      "type": "Container",
+                      "class": "settings-toggle-group",
+                      "children": [
+                        { "type": "Toggle", "name": "mute-all-toggle", "label": "Mute All" },
+                        { "type": "Toggle", "name": "mute-music-toggle", "label": "Mute Music" },
+                        { "type": "Toggle", "name": "mute-sfx-toggle", "label": "Mute SFX" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "video",
+                  "label": "Video",
+                  "tabButtonName": "tab-video",
+                  "children": [
+                    { "type": "Dropdown", "name": "resolution-dropdown", "label": "Resolution" },
+                    { "type": "Dropdown", "name": "quality-dropdown", "label": "Quality" },
+                    { "type": "Toggle", "name": "fullscreen-toggle", "label": "Fullscreen" },
+                    { "type": "Toggle", "name": "vsync-toggle", "label": "VSync" },
+                    { "type": "Toggle", "name": "show-fps-toggle", "label": "Show FPS" },
+                    { "type": "Dropdown", "name": "target-fps-dropdown", "label": "Target FPS" }
+                  ]
+                },
+                {
+                  "id": "display",
+                  "label": "Display",
+                  "tabButtonName": "tab-display",
+                  "children": [
+                    { "type": "SliderRow", "name": "brightness-slider", "label": "Brightness", "valueName": "brightness-value", "low": 0, "high": 1 },
+                    { "type": "SliderRow", "name": "gamma-slider", "label": "Gamma", "valueName": "gamma-value", "low": 0.5, "high": 2 },
+                    { "type": "SliderRow", "name": "ui-scale-slider", "label": "UI Scale", "valueName": "ui-scale-value", "low": 0.75, "high": 1.5 },
+                    { "type": "Toggle", "name": "colorblind-toggle", "label": "Colorblind Mode" },
+                    { "type": "Dropdown", "name": "colorblind-type-dropdown", "label": "Colorblind Type" }
+                  ]
+                },
+                {
+                  "id": "controls",
+                  "label": "Controls",
+                  "tabButtonName": "tab-controls",
+                  "children": [
+                    { "type": "SliderRow", "name": "mouse-sensitivity-slider", "label": "Sensitivity", "valueName": "mouse-sensitivity-value", "low": 0.1, "high": 10 },
+                    { "type": "Toggle", "name": "invert-y-toggle", "label": "Invert Y Axis" }
+                  ]
+                },
+                {
+                  "id": "game",
+                  "label": "Game",
+                  "tabButtonName": "tab-game",
+                  "children": [
+                    { "type": "Dropdown", "name": "language-dropdown", "label": "Language" },
+                    { "type": "Toggle", "name": "autosave-toggle", "label": "Auto Save" },
+                    { "type": "Toggle", "name": "tutorials-toggle", "label": "Show Tutorials" },
+                    { "type": "Toggle", "name": "screen-shake-toggle", "label": "Screen Shake" },
+                    { "type": "Toggle", "name": "mature-content-toggle", "label": "Mature Content" }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "class": "settings-footer",
+              "children": [
+                { "type": "Button", "name": "apply-button", "text": "Apply", "tone": "green" },
+                { "type": "Button", "name": "reset-button", "text": "Reset", "tone": "neutral" },
+                { "type": "Button", "name": "cancel-button", "text": "Cancel", "tone": "ghost" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "bindings": [
+    { "name": "dim-button", "kind": "command", "target": "CloseCommand" },
+    { "name": "close-button", "kind": "command", "target": "CloseCommand" },
+    { "name": "apply-button", "kind": "command", "target": "ApplyCommand" },
+    { "name": "reset-button", "kind": "command", "target": "ResetCommand" },
+    { "name": "cancel-button", "kind": "command", "target": "CancelCommand" },
+    { "name": "master-volume", "kind": "property", "target": "MasterVolume", "valueLabel": "master-volume-value", "format": "smart", "localizationKey": "settings.volume_label" },
+    { "name": "music-volume", "kind": "property", "target": "MusicVolume", "valueLabel": "music-volume-value", "format": "percent" },
+    { "name": "sfx-volume", "kind": "property", "target": "SfxVolume", "valueLabel": "sfx-volume-value", "format": "percent" },
+    { "name": "voice-volume", "kind": "property", "target": "VoiceVolume", "valueLabel": "voice-volume-value", "format": "percent" },
+    { "name": "mute-all-toggle", "kind": "property", "target": "IsMuteAll" },
+    { "name": "mute-music-toggle", "kind": "property", "target": "IsMuteMusic" },
+    { "name": "mute-sfx-toggle", "kind": "property", "target": "IsMuteSfx" },
+    { "name": "resolution-dropdown", "kind": "property", "target": "ResolutionIndex" },
+    { "name": "quality-dropdown", "kind": "enum", "target": "Quality" },
+    { "name": "fullscreen-toggle", "kind": "property", "target": "IsFullscreen" },
+    { "name": "vsync-toggle", "kind": "property", "target": "IsVSync" },
+    { "name": "show-fps-toggle", "kind": "property", "target": "ShowFps" },
+    { "name": "target-fps-dropdown", "kind": "enum", "target": "TargetFps" },
+    { "name": "brightness-slider", "kind": "property", "target": "Brightness", "valueLabel": "brightness-value", "format": "percent" },
+    { "name": "gamma-slider", "kind": "property", "target": "Gamma", "valueLabel": "gamma-value", "format": "float1" },
+    { "name": "ui-scale-slider", "kind": "property", "target": "UiScale", "valueLabel": "ui-scale-value", "format": "percent" },
+    { "name": "colorblind-toggle", "kind": "property", "target": "IsColorblindMode" },
+    { "name": "colorblind-type-dropdown", "kind": "enum", "target": "ColorblindType" },
+    { "name": "mouse-sensitivity-slider", "kind": "property", "target": "MouseSensitivity", "valueLabel": "mouse-sensitivity-value", "format": "float1" },
+    { "name": "invert-y-toggle", "kind": "property", "target": "InvertYAxis" },
+    { "name": "language-dropdown", "kind": "enum", "target": "Language" },
+    { "name": "autosave-toggle", "kind": "property", "target": "IsAutoSave" },
+    { "name": "tutorials-toggle", "kind": "property", "target": "ShowTutorials" },
+    { "name": "screen-shake-toggle", "kind": "property", "target": "ScreenShake" },
+    { "name": "mature-content-toggle", "kind": "property", "target": "MatureContent" },
+    { "name": "screen-title", "kind": "localized", "localizationKey": "settings.title", "queryByClass": true, "className": "screen-title", "elementType": "Label" },
+    { "name": "tab-audio", "kind": "localized", "localizationKey": "settings.tab_audio", "elementType": "Button" },
+    { "name": "tab-video", "kind": "localized", "localizationKey": "settings.tab_video", "elementType": "Button" },
+    { "name": "tab-display", "kind": "localized", "localizationKey": "settings.tab_display", "elementType": "Button" },
+    { "name": "tab-controls", "kind": "localized", "localizationKey": "settings.tab_controls", "elementType": "Button" },
+    { "name": "tab-game", "kind": "localized", "localizationKey": "settings.tab_game", "elementType": "Button" },
+    { "name": "language-dropdown", "kind": "localized", "localizationKey": "settings.language", "elementType": "Dropdown" },
+    { "name": "apply-button", "kind": "localized", "localizationKey": "settings.apply", "elementType": "Button" },
+    { "name": "reset-button", "kind": "localized", "localizationKey": "settings.reset", "elementType": "Button" },
+    { "name": "cancel-button", "kind": "localized", "localizationKey": "settings.cancel", "elementType": "Button" }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "com.mvvm-template.ui-design",
+  "version": "1.0.0",
+  "displayName": "MVVM UI Design Tools",
+  "description": "Screen spec tooling for the UI Toolkit pipeline. Node/npm workspace lives in npm/; no Unity runtime assemblies.",
+  "type": "tool"
+}

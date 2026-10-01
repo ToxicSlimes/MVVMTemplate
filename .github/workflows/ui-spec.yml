@@ -1,0 +1,37 @@
+name: UI Screen Spec
+
+on:
+  push:
+    branches: [main, master, develop]
+    paths:
+      - 'Packages/ui-design/**'
+      - 'Assets/Source/UI/Toolkit/_specs/**'
+  pull_request:
+    branches: [main, master, develop]
+    paths:
+      - 'Packages/ui-design/**'
+      - 'Assets/Source/UI/Toolkit/_specs/**'
+
+jobs:
+  validate-spec:
+    name: Validate screen specs
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Packages/ui-design/npm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: Packages/ui-design/npm/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate specs
+        run: npm run validate

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "screenId": "main-menu",
+  "viewType": "MainMenuToolkitView",
+  "viewModelType": "MainMenuViewModel",
+  "viewNamespace": "Core.MVVM.Views.MainMenu",
+  "output": {
+    "folder": "MainMenu",
+    "uxmlFile": "MainMenuScreen.uxml",
+    "ussFile": "MainMenuScreen.uss",
+    "includeToolkitScreen": false,
+    "includePixelControls": false
+  },
+  "theme": {
+    "styles": ["design-tokens.uss", "pixel-theme.uss"]
+  },
+  "localization": {
+    "table": "UI",
+    "prefix": "main_menu",
+    "keys": [
+      { "key": "main_menu.title", "en": "MVVM Template", "ru": "MVVM Шаблон" },
+      { "key": "main_menu.subtitle", "en": "Unity 6 · MVVM + CQRS Examples", "ru": "Unity 6 · Примеры MVVM + CQRS" },
+      { "key": "main_menu.counter", "en": "Counter", "ru": "Счётчик" },
+      { "key": "main_menu.settings", "en": "Settings", "ru": "Настройки" },
+      { "key": "main_menu.inventory", "en": "Inventory", "ru": "Инвентарь" },
+      { "key": "main_menu.multiplayer", "en": "Multiplayer", "ru": "Мультиплеер" },
+      { "key": "main_menu.quit", "en": "Quit", "ru": "Выход" },
+      { "key": "main_menu.footer_hint", "en": "Open BootstrapScene → Play", "ru": "Откройте BootstrapScene → Play" }
+    ]
+  },
+  "nodes": [
+    {
+      "type": "Container",
+      "class": "menu-root",
+      "children": [
+        {
+          "type": "Container",
+          "class": "menu-bg-decor",
+          "children": [
+            { "type": "Container", "class": "pixel-star menu-star-1" },
+            { "type": "Container", "class": "pixel-star menu-star-2" },
+            { "type": "Container", "class": "pixel-star menu-star-3" },
+            { "type": "Container", "class": "pixel-star menu-star-4" },
+            { "type": "Container", "class": "pixel-star menu-star-5" },
+            {
+              "type": "Container",
+              "class": "pixel-cloud menu-cloud-left",
+              "children": [
+                { "type": "Container", "class": "pixel-cloud-block cloud-a" },
+                { "type": "Container", "class": "pixel-cloud-block cloud-b" },
+                { "type": "Container", "class": "pixel-cloud-block cloud-c" }
+              ]
+            },
+            {
+              "type": "Container",
+              "class": "pixel-cloud menu-cloud-right",
+              "children": [
+                { "type": "Container", "class": "pixel-cloud-block cloud-d" },
+                { "type": "Container", "class": "pixel-cloud-block cloud-e" },
+                { "type": "Container", "class": "pixel-cloud-block cloud-f" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "class": "menu-card panel-pixel",
+          "children": [
+            {
+              "type": "Container",
+              "class": "menu-badge",
+              "children": [
+                { "type": "Container", "class": "menu-badge-shine" },
+                { "type": "Container", "class": "menu-badge-core" }
+              ]
+            },
+            {
+              "type": "Container",
+              "class": "menu-header",
+              "children": [
+                { "type": "Label", "text": "MVVM TEMPLATE", "class": "menu-title title-pixel" },
+                { "type": "Label", "text": "Unity 6 · MVVM + CQRS Examples", "class": "menu-subtitle subtitle-pixel" }
+              ]
+            },
+            {
+              "type": "Container",
+              "class": "menu-actions panel-pixel-inset",
+              "children": [
+                { "type": "Button", "name": "counter-button", "text": "COUNTER", "tone": "cyan" },
+                { "type": "Button", "name": "settings-button", "text": "SETTINGS", "tone": "cyan" },
+                { "type": "Button", "name": "inventory-button", "text": "INVENTORY", "tone": "cyan" },
+                { "type": "Button", "name": "multiplayer-button", "text": "MULTIPLAYER", "tone": "green", "class": "menu-play" },
+                { "type": "Button", "name": "quit-button", "text": "QUIT", "tone": "ghost" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "class": "menu-footer",
+          "children": [
+            { "type": "Label", "text": "Open BootstrapScene → Play", "class": "menu-footer-text font-pixel-caption" },
+            { "type": "Label", "text": "v1.0.0", "class": "menu-footer-text menu-footer-version font-pixel-caption" }
+          ]
+        }
+      ]
+    }
+  ],
+  "bindings": [
+    { "name": "counter-button", "kind": "command", "target": "CounterCommand" },
+    { "name": "settings-button", "kind": "command", "target": "SettingsCommand" },
+    { "name": "inventory-button", "kind": "command", "target": "InventoryCommand" },
+    { "name": "multiplayer-button", "kind": "command", "target": "MultiplayerCommand" },
+    { "name": "quit-button", "kind": "command", "target": "QuitCommand" },
+    { "name": "menu-title", "kind": "localized", "localizationKey": "main_menu.title", "queryByClass": true, "className": "menu-title", "elementType": "Label" },
+    { "name": "menu-subtitle", "kind": "localized", "localizationKey": "main_menu.subtitle", "queryByClass": true, "className": "menu-subtitle", "elementType": "Label" },
+    { "name": "footer-hint", "kind": "localized", "localizationKey": "main_menu.footer_hint", "queryByClass": true, "className": "menu-footer-text", "elementType": "Label" },
+    { "name": "counter-button", "kind": "localized", "localizationKey": "main_menu.counter", "elementType": "Button" },
+    { "name": "settings-button", "kind": "localized", "localizationKey": "main_menu.settings", "elementType": "Button" },
+    { "name": "inventory-button", "kind": "localized", "localizationKey": "main_menu.inventory", "elementType": "Button" },
+    { "name": "multiplayer-button", "kind": "localized", "localizationKey": "main_menu.multiplayer", "elementType": "Button" },
+    { "name": "quit-button", "kind": "localized", "localizationKey": "main_menu.quit", "elementType": "Button" }
+  ]
+}

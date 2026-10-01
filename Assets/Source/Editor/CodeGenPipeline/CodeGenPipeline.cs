@@ -78,6 +78,7 @@ namespace Core.Editor.CodeGenPipeline
             }
 
             issues += CountToolkitBindingIssues();
+            issues += CountScreenSpecIssues();
             issues += CountAudioConfigIssues();
             issues += CountLocalizationIssues();
 
@@ -110,6 +111,33 @@ namespace Core.Editor.CodeGenPipeline
 
             if (count > 0)
                 Debug.LogError($"[Template] Toolkit binding validation found {count} error(s). Run Tools → UI Toolkit → Validate Toolkit Bindings.");
+
+            return count;
+        }
+
+        private static int CountScreenSpecIssues()
+        {
+            var importerType = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a =>
+                {
+                    try { return a.GetTypes(); }
+                    catch { return Array.Empty<Type>(); }
+                })
+                .FirstOrDefault(t => t.FullName == "Core.Editor.UIToolkit.ScreenSpec.ScreenSpecImporter");
+
+            if (importerType == null)
+                return 0;
+
+            var method = importerType.GetMethod("CountBlockingIssues", BindingFlags.Public | BindingFlags.Static);
+            if (method == null)
+                return 0;
+
+            var result = method.Invoke(null, null);
+            if (result is not int count)
+                return 0;
+
+            if (count > 0)
+                Debug.LogError($"[Template] Screen spec validation found {count} error(s). Run Tools → UI Toolkit → Import All Screen Specs.");
 
             return count;
         }

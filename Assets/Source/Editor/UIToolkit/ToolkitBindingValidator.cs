@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Core.Infrastructure.MVVM.Config;
+using Core.Editor.UIToolkit.ScreenSpec;
 using Core.UI.Toolkit;
 using UnityEditor;
 using UnityEngine;
@@ -118,7 +119,44 @@ namespace Core.Editor.UIToolkit
                     $"UXML uses project://database style paths ({Path.GetFileName(uxmlPath)})."));
             }
 
+            ValidateScreenSpecDrift(viewType, uxmlPath, report);
+
             ValidatePrefab(viewType, report);
+        }
+
+        private static void ValidateScreenSpecDrift(Type viewType, string uxmlPath, ToolkitBindingReport report)
+        {
+            var spec = TryLoadSpecForView(viewType.Name);
+            if (spec == null)
+                return;
+
+            foreach (var issue in ScreenSpecValidator.ValidateDocument(spec, uxmlPath))
+            {
+                var severity = issue.StartsWith("ERROR:", StringComparison.Ordinal)
+                    ? ToolkitBindingSeverity.Error
+                    : ToolkitBindingSeverity.Warning;
+
+                report.Add(new ToolkitBindingIssue(
+                    severity,
+                    viewType.Name,
+                    issue));
+            }
+        }
+
+        private static ScreenSpecDocument TryLoadSpecForView(string viewTypeName)
+        {
+            const string specsDir = "Assets/Source/UI/Toolkit/_specs";
+            if (!Directory.Exists(specsDir))
+                return null;
+
+            foreach (var file in Directory.GetFiles(specsDir, "*.screen.json"))
+            {
+                var spec = ScreenSpecReader.Load(file.Replace('\\', '/'));
+                if (spec != null && spec.viewType == viewTypeName)
+                    return spec;
+            }
+
+            return null;
         }
 
         private static void ValidatePrefab(Type viewType, ToolkitBindingReport report)
@@ -169,7 +207,14 @@ namespace Core.Editor.UIToolkit
             var names = new HashSet<string>(StringComparer.Ordinal);
             var viewScriptPath = GetScriptPath(viewType);
             if (!string.IsNullOrEmpty(viewScriptPath))
+            {
                 AddQueryNamesFromFile(viewScriptPath, names);
+                var generatedPath = Path.Combine(
+                    Path.GetDirectoryName(viewScriptPath) ?? string.Empty,
+                    viewType.Name + ".Bindings.generated.cs");
+                if (File.Exists(generatedPath))
+                    AddQueryNamesFromFile(generatedPath, names);
+            }
 
             return names;
         }

@@ -1,29 +1,43 @@
+<!-- Generated from main-menu.screen.json - do not edit -->
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="../Theme/design-tokens.uss" />
     <Style src="../Theme/pixel-theme.uss" />
     <Style src="MainMenuScreen.uss" />
     <ui:VisualElement class="menu-root">
         <ui:VisualElement class="menu-bg-decor">
-            <ui:VisualElement class="pixel-star menu-star-1" />
-            <ui:VisualElement class="pixel-star menu-star-2" />
-            <ui:VisualElement class="pixel-star menu-star-3" />
-            <ui:VisualElement class="pixel-star menu-star-4" />
-            <ui:VisualElement class="pixel-star menu-star-5" />
+            <ui:VisualElement class="pixel-star menu-star-1">
+            </ui:VisualElement>
+            <ui:VisualElement class="pixel-star menu-star-2">
+            </ui:VisualElement>
+            <ui:VisualElement class="pixel-star menu-star-3">
+            </ui:VisualElement>
+            <ui:VisualElement class="pixel-star menu-star-4">
+            </ui:VisualElement>
+            <ui:VisualElement class="pixel-star menu-star-5">
+            </ui:VisualElement>
             <ui:VisualElement class="pixel-cloud menu-cloud-left">
-                <ui:VisualElement class="pixel-cloud-block cloud-a" />
-                <ui:VisualElement class="pixel-cloud-block cloud-b" />
-                <ui:VisualElement class="pixel-cloud-block cloud-c" />
+                <ui:VisualElement class="pixel-cloud-block cloud-a">
+                </ui:VisualElement>
+                <ui:VisualElement class="pixel-cloud-block cloud-b">
+                </ui:VisualElement>
+                <ui:VisualElement class="pixel-cloud-block cloud-c">
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="pixel-cloud menu-cloud-right">
-                <ui:VisualElement class="pixel-cloud-block cloud-d" />
-                <ui:VisualElement class="pixel-cloud-block cloud-e" />
-                <ui:VisualElement class="pixel-cloud-block cloud-f" />
+                <ui:VisualElement class="pixel-cloud-block cloud-d">
+                </ui:VisualElement>
+                <ui:VisualElement class="pixel-cloud-block cloud-e">
+                </ui:VisualElement>
+                <ui:VisualElement class="pixel-cloud-block cloud-f">
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement class="menu-card panel-pixel">
             <ui:VisualElement class="menu-badge">
-                <ui:VisualElement class="menu-badge-shine" />
-                <ui:VisualElement class="menu-badge-core" />
+                <ui:VisualElement class="menu-badge-shine">
+                </ui:VisualElement>
+                <ui:VisualElement class="menu-badge-core">
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="menu-header">
                 <ui:Label text="MVVM TEMPLATE" class="menu-title title-pixel" />

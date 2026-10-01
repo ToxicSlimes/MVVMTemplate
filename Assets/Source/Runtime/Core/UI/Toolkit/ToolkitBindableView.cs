@@ -149,6 +149,29 @@ namespace Core.UI.Toolkit
 
             Root.style.flexGrow = 1f;
             ApplyStyleSheets();
+            EnsureDropdownPopupStyles(Root);
+        }
+
+        private static void EnsureDropdownPopupStyles(VisualElement root)
+        {
+            if (root == null)
+                return;
+
+            if (root.panel?.visualTree != null)
+            {
+                ToolkitDropdownPopupStyles.EnsureApplied(root.panel.visualTree);
+                return;
+            }
+
+            root.RegisterCallback<AttachToPanelEvent>(OnRootAttachedToPanel);
+        }
+
+        private static void OnRootAttachedToPanel(AttachToPanelEvent evt)
+        {
+            var target = evt.currentTarget as VisualElement;
+            target?.UnregisterCallback<AttachToPanelEvent>(OnRootAttachedToPanel);
+            if (evt.destinationPanel?.visualTree != null)
+                ToolkitDropdownPopupStyles.EnsureApplied(evt.destinationPanel.visualTree);
         }
 
         private void ApplyStyleSheets()

@@ -1,0 +1,81 @@
+.unity-base-dropdown {
+    background-color: rgb(34, 20, 72);
+}
+
+.unity-base-dropdown__container-outer {
+    background-color: rgb(58, 42, 96);
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(255, 230, 150);
+    border-top-color: rgb(255, 230, 150);
+    border-right-color: rgb(35, 22, 55);
+    border-bottom-color: rgb(35, 22, 55);
+    border-radius: 0;
+    max-height: 280px;
+}
+
+.unity-base-dropdown__container-inner {
+    background-color: rgb(34, 20, 72);
+    border-width: 0;
+    border-radius: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.unity-base-dropdown .unity-scroll-view,
+.unity-base-dropdown .unity-scroll-view__content-viewport,
+.unity-base-dropdown #unity-content-container {
+    background-color: rgb(34, 20, 72);
+}
+
+.unity-base-dropdown__item {
+    background-color: rgb(34, 20, 72);
+    border-radius: 0;
+    min-height: 28px;
+    height: 28px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0;
+}
+
+.unity-base-dropdown__item:hover {
+    background-color: rgb(74, 56, 118);
+}
+
+.unity-base-dropdown__item:checked,
+.unity-base-dropdown__item:checked:hover {
+    background-color: rgb(44, 140, 72);
+}
+
+.unity-base-dropdown__label {
+    -unity-font-definition: url("../../Source/UI/Toolkit/Theme/Fonts/PressStart2P-Regular.ttf");
+    font-size: 8px;
+    color: rgb(255, 248, 220);
+}
+
+.unity-base-dropdown__item:hover > .unity-base-dropdown__label,
+.unity-base-dropdown__item:checked > .unity-base-dropdown__label {
+    color: rgb(255, 248, 220);
+}
+
+.unity-base-dropdown__checkmark {
+    -unity-background-image-tint-color: rgb(255, 223, 88);
+}
+
+.unity-base-dropdown .unity-scroller--vertical {
+    width: 10px;
+    background-color: rgb(58, 42, 96);
+}
+
+.unity-base-dropdown .unity-scroller--vertical .unity-base-slider__tracker {
+    background-color: rgb(34, 20, 72);
+    border-radius: 0;
+}
+
+.unity-base-dropdown .unity-scroller--vertical .unity-base-slider__dragger {
+    background-color: rgb(110, 198, 255);
+    border-radius: 0;
+    width: 8px;
+}

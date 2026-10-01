@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mvvm-template.dev/screen-spec.schema.json",
+  "title": "MVVMTemplate Screen Spec",
+  "type": "object",
+  "required": ["schemaVersion", "screenId", "viewType", "viewModelType", "output", "theme", "nodes", "bindings"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "screenId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "viewType": { "type": "string" },
+    "viewModelType": { "type": "string" },
+    "viewNamespace": { "type": "string" },
+    "output": {
+      "type": "object",
+      "required": ["folder", "uxmlFile", "ussFile"],
+      "properties": {
+        "folder": { "type": "string" },
+        "uxmlFile": { "type": "string" },
+        "ussFile": { "type": "string" },
+        "includeToolkitScreen": { "type": "boolean" },
+        "includePixelControls": { "type": "boolean" }
+      }
+    },
+    "theme": {
+      "type": "object",
+      "required": ["styles"],
+      "properties": {
+        "styles": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "localization": {
+      "type": "object",
+      "properties": {
+        "table": { "type": "string" },
+        "prefix": { "type": "string" },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["key", "en"],
+            "properties": {
+              "key": { "type": "string" },
+              "en": { "type": "string" },
+              "ru": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "bindings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/binding" }
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Container", "Label", "Button", "SliderRow", "Toggle", "Dropdown", "Tabs", "ScrollView", "TabPanel"]
+        },
+        "name": { "type": "string" },
+        "text": { "type": "string" },
+        "class": { "type": "string" },
+        "rawClass": { "type": "boolean" },
+        "tone": {
+          "type": "string",
+          "enum": ["green", "cyan", "gold", "red", "purple", "pink", "neutral", "ghost"]
+        },
+        "label": { "type": "string" },
+        "valueName": { "type": "string" },
+        "low": { "type": "number" },
+        "high": { "type": "number" },
+        "tabs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "label", "tabButtonName"],
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string" },
+              "tabButtonName": { "type": "string" },
+              "children": {
+                "type": "array",
+                "items": { "$ref": "#/$defs/node" }
+              }
+            }
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" }
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "required": ["name", "kind"],
+      "properties": {
+        "name": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["command", "property", "localized", "display", "enum"]
+        },
+        "target": { "type": "string" },
+        "valueLabel": { "type": "string" },
+        "localizationKey": { "type": "string" },
+        "format": { "type": "string" },
+        "elementType": { "type": "string" },
+        "queryByClass": { "type": "boolean" },
+        "className": { "type": "string" }
+      }
+    }
+  }
+}

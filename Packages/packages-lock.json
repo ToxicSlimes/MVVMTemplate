@@ -76,6 +76,12 @@
       "dependencies": {},
       "hash": "3d382e6e1d479380685887ef0c7a7a5492911b99"
     },
+    "com.mvvm-template.ui-design": {
+      "version": "file:ui-design",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.photonengine.fusion-fsm": {
       "version": "https://github.com/Photon-Server/Photon-UPM.git#fusion/v2/fusion-fsm",
       "depth": 0,
