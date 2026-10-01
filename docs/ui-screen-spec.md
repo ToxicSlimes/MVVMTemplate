@@ -94,4 +94,3 @@ Optional: `npm run export:tokens` writes a pxlkit token snippet for `design-toke
 - `main-menu.screen.json` → `MainMenu/MainMenuScreen.uxml`
 - `settings.screen.json` → `Settings/SettingsScreen.uxml`
 
-See `Packages/ui-design/spec/PROMPT.md` for AI copy-paste instructions.

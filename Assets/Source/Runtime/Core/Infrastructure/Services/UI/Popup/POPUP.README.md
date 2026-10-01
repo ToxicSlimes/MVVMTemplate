@@ -1,6 +1,6 @@
 # 🎈 Popup System Documentation
 
-Легковесная система попапов/тултипов для EndlessAdventure.
+Легковесная система попапов и тултипов для Unity UI.
 
 ---
 

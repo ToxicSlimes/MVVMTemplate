@@ -214,4 +214,4 @@ Assets/Source/
 
 **Версия**: 1.0
 **Создано**: 2026-01-21
-**Автор**: EndlessAdventure Team
+

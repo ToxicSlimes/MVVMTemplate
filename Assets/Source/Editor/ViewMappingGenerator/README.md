@@ -1,6 +1,6 @@
 # ViewMappingGenerator
 
-Editor tool для автоматической генерации ViewMapping классов в MVVM архитектуре проекта EndlessAdventure.
+Editor tool для автоматической генерации ViewMapping классов в MVVM-архитектуре шаблона.
 
 ## Назначение
 
