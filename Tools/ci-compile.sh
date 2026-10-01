@@ -5,6 +5,15 @@ UNITY_VERSION="${UNITY_VERSION:-6000.3.17f1}"
 PROJECT_PATH="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_FILE="$PROJECT_PATH/Logs/ci-compile.log"
 
+native_path() {
+  local path="$1"
+  if command -v cygpath >/dev/null 2>&1; then
+    cygpath -w "$path"
+  else
+    echo "$path"
+  fi
+}
+
 find_unity() {
   if [[ -n "${UNITY_PATH:-}" && -x "$UNITY_PATH" ]]; then
     echo "$UNITY_PATH"
@@ -34,18 +43,20 @@ find_unity() {
 }
 
 UNITY_EXE="$(find_unity)"
+PROJECT_PATH_NATIVE="$(native_path "$PROJECT_PATH")"
+LOG_FILE_NATIVE="$(native_path "$LOG_FILE")"
 mkdir -p "$(dirname "$LOG_FILE")"
 
-echo "Project: $PROJECT_PATH"
+echo "Project: $PROJECT_PATH_NATIVE"
 echo "Unity:   $UNITY_EXE"
-echo "Log:     $LOG_FILE"
+echo "Log:     $LOG_FILE_NATIVE"
 
 "$UNITY_EXE" \
   -batchmode \
   -nographics \
   -quit \
-  -projectPath "$PROJECT_PATH" \
+  -projectPath "$PROJECT_PATH_NATIVE" \
   -executeMethod Core.Editor.CI.UnityCompileCheck.Run \
-  -logFile "$LOG_FILE"
+  -logFile "$LOG_FILE_NATIVE"
 
 echo "Unity compile check passed."
