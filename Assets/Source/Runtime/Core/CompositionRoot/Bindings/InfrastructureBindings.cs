@@ -64,6 +64,7 @@ public static class InfrastructureBindings
     builder.AddInputServices();
     builder.AddPopupServices();
     builder.AddInfrastructure();
+    builder.AddSaveServices();
     builder.AddFusionNetwork();
     builder.AddSingleton(container => new PlayerAvatarSpawner(
       container.Resolve<INetworkRunnerController>(),
