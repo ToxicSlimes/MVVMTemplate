@@ -1,5 +1,5 @@
 using Core.Abstractions.MVVM.Models.Lobby;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 using Core.Network.FusionAdapter.Player;
 using Fusion;
 using Reflex.Attributes;

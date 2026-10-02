@@ -1,9 +1,9 @@
-using Core.MVVM.ViewModels.MainMenu;
+using Core.Presentation.MVVM.ViewModels.MainMenu;
 using Core.UI.Controls;
 using R3;
 using UnityEngine;
 
-namespace Core.MVVM.Views.MainMenu
+namespace Core.Presentation.MVVM.Views.MainMenu
 {
     public class MainMenuView : PanelView<MainMenuViewModel>
     {

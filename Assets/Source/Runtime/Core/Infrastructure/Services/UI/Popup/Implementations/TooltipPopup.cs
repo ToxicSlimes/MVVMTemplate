@@ -1,5 +1,5 @@
 using LitMotion;
-using Core.Data.UI;
+using Core.Domain.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

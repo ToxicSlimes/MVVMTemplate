@@ -2,7 +2,7 @@
 using Core.Abstractions.Popup;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
-using Core.MVVM.Views.Counter;
+using Core.Presentation.MVVM.Views.Counter;
 using Core.UI.Controls;
 using UnityEditor;
 using UnityEngine;

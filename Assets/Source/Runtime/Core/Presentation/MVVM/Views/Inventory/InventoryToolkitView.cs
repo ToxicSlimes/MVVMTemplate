@@ -1,12 +1,12 @@
 using System;
-using Core.Data.Domain.Enums;
-using Core.Data.Domain.Models.Elements;
-using Core.MVVM.ViewModels.Inventory;
+using Core.Domain.Enums;
+using Core.Domain.Models.Elements;
+using Core.Presentation.MVVM.ViewModels.Inventory;
 using Core.UI.Toolkit;
 using R3;
 using UnityEngine.UIElements;
 
-namespace Core.MVVM.Views.Inventory
+namespace Core.Presentation.MVVM.Views.Inventory
 {
     public class InventoryToolkitView : ToolkitPanelView<InventoryViewModel>
     {

@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Implementation.Wrappers
+namespace Core.Mediator.Implementation.Wrappers
 {
     using System.Collections.Generic;
     using System.Linq;

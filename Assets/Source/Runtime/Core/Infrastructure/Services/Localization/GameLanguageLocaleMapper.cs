@@ -1,4 +1,4 @@
-using Core.Data.Domain.Enums;
+using Core.Domain.Enums;
 
 namespace Core.Infrastructure.Services.Localization
 {

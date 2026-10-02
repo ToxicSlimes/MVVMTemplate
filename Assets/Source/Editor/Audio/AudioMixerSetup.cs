@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
-using Core.Configs.Services;
+using Core.Infrastructure.Configs.Services;
 using UnityEditor;
 using UnityEngine;
 

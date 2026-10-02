@@ -3,7 +3,7 @@ using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.Elements.GameUI;
 using Core.Editor.PrefabBuilderSystem.Theming;
-using Core.MVVM.Views.LobbyRoom;
+using Core.Presentation.MVVM.Views.LobbyRoom;
 using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;

@@ -2,8 +2,8 @@
 using Core.Abstractions.Popup;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
-using Core.MVVM.Elements;
-using Core.MVVM.Elements.Samples;
+using Core.Presentation.MVVM.Elements;
+using Core.Presentation.MVVM.Elements.Samples;
 using UnityEditor;
 using Core.UI.Controls;
 using UnityEngine;

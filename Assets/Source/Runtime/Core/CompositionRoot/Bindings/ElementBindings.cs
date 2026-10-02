@@ -2,8 +2,8 @@ using Core.Abstractions.AssetManagement;
 using Core.Abstractions.Config;
 using Core.Abstractions.MVVM.Config;
 using Core.Abstractions.MVVM.Services;
-using Core.Infrastructure.MVVM.Config;
-using Core.Infrastructure.MVVM.Services;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.Services;
 using Reflex.Core;
 using UnityEngine;
 #if UNITY_EDITOR

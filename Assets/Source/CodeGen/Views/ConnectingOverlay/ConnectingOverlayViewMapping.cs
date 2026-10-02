@@ -1,6 +1,6 @@
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.ViewModels.ConnectingOverlay;
-using Core.MVVM.Views.ConnectingOverlay;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.ViewModels.ConnectingOverlay;
+using Core.Presentation.MVVM.Views.ConnectingOverlay;
 
 namespace Core.Views.ConnectingOverlay
 {

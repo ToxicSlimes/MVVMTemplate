@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Core.Abstractions.Services;
-using Core.Data.Domain.Enums;
+using Core.Domain.Enums;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;

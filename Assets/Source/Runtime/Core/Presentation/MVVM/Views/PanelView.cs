@@ -1,5 +1,5 @@
 using Core.Abstractions.MVVM.ViewModels;
-using Core.Infrastructure.MVVM.Animation;
+using Core.Presentation.MVVM.Animation;
 using Core.UI.Binding;
 using Core.UI.Controls;
 using Cysharp.Threading.Tasks;
@@ -7,7 +7,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Views
+namespace Core.Presentation.MVVM.Views
 {
     public abstract class PanelView<TViewModel> : AnimatedView<TViewModel> where TViewModel : DisposableObject
     {

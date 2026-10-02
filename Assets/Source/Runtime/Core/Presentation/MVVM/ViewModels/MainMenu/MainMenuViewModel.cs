@@ -3,19 +3,19 @@ using Core.Abstractions.MVVM.Models.MainMenu;
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Common;
 using Core.Application.Requests.Views;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
-using Core.MVVM.ViewModels.Counter;
-using Core.MVVM.ViewModels.Inventory;
-using Core.MVVM.ViewModels.Matchmaking;
-using Core.MVVM.ViewModels.Settings;
-using Core.MVVM.Views.Inventory;
-using Core.MVVM.Views.Matchmaking;
-using Core.MVVM.Views.Settings;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
+using Core.Presentation.MVVM.Views.Matchmaking;
+using Core.Presentation.MVVM.ViewModels.Counter;
+using Core.Presentation.MVVM.ViewModels.Inventory;
+using Core.Presentation.MVVM.ViewModels.Matchmaking;
+using Core.Presentation.MVVM.ViewModels.Settings;
+using Core.Presentation.MVVM.Views.Inventory;
+using Core.Presentation.MVVM.Views.Settings;
 using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Core.MVVM.ViewModels.MainMenu
+namespace Core.Presentation.MVVM.ViewModels.MainMenu
 {
     [GenerateViewCommands]
     public class MainMenuViewModel : DisposableObject, IVisibilityAware

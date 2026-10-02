@@ -8,7 +8,7 @@ namespace Core.Editor.ViewMappingGenerator
             string viewNamespace = null, string viewModelNamespace = null)
         {
             var builder = new StringBuilder();
-            builder.AppendLine("using Core.Infrastructure.MVVM.Config;");
+            builder.AppendLine("using Core.Presentation.MVVM.Config;");
             builder.AppendLine("using Core.Abstractions.MVVM.Views;");
             if (!string.IsNullOrEmpty(viewModelNamespace))
                 builder.AppendLine("using " + viewModelNamespace + ";");

@@ -6,10 +6,10 @@
 
 using Core.Application.Commands.Elements;
 using Core.Application.Handlers.Elements;
-using Core.Data.Domain.Models.Elements;
-using Core.Data.Domain.Models.Elements.Samples;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Registration;
+using Core.Domain.Models.Elements;
+using Core.Domain.Models.Elements.Samples;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Registration;
 using Core.UI.Toolkit.Elements.Samples;
 
 namespace Core.DependencyInjection.Generated

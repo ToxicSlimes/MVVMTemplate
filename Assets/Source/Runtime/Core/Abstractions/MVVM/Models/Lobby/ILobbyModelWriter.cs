@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Core.Data.Domain.Enums;
-using Core.Data.Domain.Models.Lobby;
+using Core.Domain.Enums;
+using Core.Domain.Models.Lobby;
 
 namespace Core.Abstractions.MVVM.Models.Lobby
 {

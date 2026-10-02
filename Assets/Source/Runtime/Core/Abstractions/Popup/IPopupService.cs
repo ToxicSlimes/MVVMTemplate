@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Core.Data.UI;
+using Core.Domain.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

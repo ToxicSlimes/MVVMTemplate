@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using TMPro;
 using System.IO;
-using Core.Configs.DesignSystem;
+using Core.Presentation.UI.DesignSystem;
 
 namespace Core.Editor.DesignSystem
 {

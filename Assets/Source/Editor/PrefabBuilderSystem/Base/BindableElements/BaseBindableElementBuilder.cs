@@ -1,10 +1,10 @@
 #if UNITY_EDITOR
 using System.IO;
 using Core.Abstractions.MVVM.Elements;
-using Core.Infrastructure.MVVM.Config;
+using Core.Presentation.MVVM.Config;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Abstractions.Popup;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 using Core.UI.Controls;
 using UnityEditor;
 using UnityEngine;

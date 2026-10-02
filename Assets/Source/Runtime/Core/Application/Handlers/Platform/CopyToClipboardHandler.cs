@@ -1,8 +1,8 @@
 using System.Threading;
 using Core.Abstractions.Services.Platform;
 using Core.Application.Commands.Platform;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Application.Handlers.Platform

@@ -1,12 +1,12 @@
 using Core.Abstractions.MVVM.Elements;
 using Core.Abstractions.Popup;
-using Core.Data.Domain.Models.Elements.Samples;
-using Core.Data.UI;
+using Core.Domain.Models.Elements.Samples;
+using Core.Domain.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Elements.Samples
+namespace Core.Presentation.MVVM.Elements.Samples
 {
     public class StatBarElement : BindableElement<StatBarData>
     {

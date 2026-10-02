@@ -1,17 +1,18 @@
 using System;
 using System.Linq;
 using Core.Abstractions.Services.Input;
-using Core.Data.Domain.Enums;
+using Core.Domain.Enums;
+using Core.Presentation.MVVM.Views;
 using R3;
 using Reflex.Attributes;
-using Core.MVVM.ViewModels.Settings;
+using Core.Presentation.MVVM.ViewModels.Settings;
 using Core.UI.Binding;
 using Core.UI.Controls;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Views.Settings
+namespace Core.Presentation.MVVM.Views.Settings
 {
     public class SettingsView : PanelView<SettingsViewModel>
     {

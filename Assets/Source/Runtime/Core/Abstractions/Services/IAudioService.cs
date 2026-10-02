@@ -1,5 +1,5 @@
 using System;
-using Core.Data.Domain.Enums;
+using Core.Domain.Enums;
 using UnityEngine;
 
 namespace Core.Abstractions.Services

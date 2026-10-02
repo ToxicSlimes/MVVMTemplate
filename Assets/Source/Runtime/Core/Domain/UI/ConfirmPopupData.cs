@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Data.UI
+namespace Core.Domain.UI
 {
     /// <summary>
     /// TEMPLATE EXAMPLE: Data for a confirmation popup with callbacks.

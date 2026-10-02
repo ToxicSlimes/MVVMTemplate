@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Exceptions
+namespace Core.Mediator.Exceptions
 {
     using System;
 

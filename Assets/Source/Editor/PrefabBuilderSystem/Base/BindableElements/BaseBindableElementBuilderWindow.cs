@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using Core.Abstractions.MVVM.Elements;
 using Core.Editor.PrefabBuilderSystem.Settings;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Implementation
+namespace Core.Mediator.Implementation
 {
     using System;
     using System.Collections.Concurrent;

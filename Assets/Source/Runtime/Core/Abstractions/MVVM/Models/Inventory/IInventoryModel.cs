@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 
 namespace Core.Abstractions.MVVM.Models.Inventory
 {

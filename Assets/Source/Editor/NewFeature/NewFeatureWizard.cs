@@ -199,7 +199,7 @@ namespace Core.Abstractions.MVVM.Models.{feature}
 $@"using System;
 using Core.Abstractions.MVVM.Models.{feature};
 
-namespace Core.MVVM.Models.{feature}
+namespace Core.Presentation.MVVM.Models.{feature}
 {{
     public class {feature}Model : I{feature}Model
     {{
@@ -231,12 +231,12 @@ $@"using System;
 using Core.Abstractions.MVVM.Models.{feature};
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Common;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
 using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Core.MVVM.ViewModels.{feature}
+namespace Core.Presentation.MVVM.ViewModels.{feature}
 {{
     [GenerateViewCommands]
     public class {feature}ViewModel : DisposableObject
@@ -290,12 +290,12 @@ namespace Core.MVVM.ViewModels.{feature}
 ";
 
         private static string GenerateView(string feature) =>
-$@"using Core.MVVM.ViewModels.{feature};
+$@"using Core.Presentation.MVVM.ViewModels.{feature};
 using Core.UI.Controls;
 using R3;
 using UnityEngine;
 
-namespace Core.MVVM.Views.{feature}
+namespace Core.Presentation.MVVM.Views.{feature}
 {{
     public class {feature}View : PanelView<{feature}ViewModel>
     {{
@@ -312,9 +312,9 @@ namespace Core.MVVM.Views.{feature}
 ";
 
         private static string GenerateViewMapping(string feature) =>
-$@"using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.ViewModels.{feature};
-using Core.MVVM.Views.{feature};
+$@"using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.ViewModels.{feature};
+using Core.Presentation.MVVM.Views.{feature};
 
 namespace Core.Views.{feature}
 {{

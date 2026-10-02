@@ -1,9 +1,9 @@
 using Core.Abstractions.Config;
-using Core.Data.Configs.Audio;
+using Core.Infrastructure.Configs.Audio;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Core.Configs.Services
+namespace Core.Infrastructure.Configs.Services
 {
     [CreateAssetMenu(fileName = "AudioConfig", menuName = "Configs/Services/Audio Config")]
     public class AudioConfig : ConfigBase

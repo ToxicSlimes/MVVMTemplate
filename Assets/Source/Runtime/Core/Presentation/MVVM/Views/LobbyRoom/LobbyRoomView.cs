@@ -1,12 +1,13 @@
-using Core.Data.Domain.Models.Lobby;
-using Core.MVVM.ViewModels.LobbyRoom;
+using Core.Domain.Models.Lobby;
+using Core.Presentation.MVVM.Views;
+using Core.Presentation.MVVM.ViewModels.LobbyRoom;
 using Core.UI.Controls;
 using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Views.LobbyRoom
+namespace Core.Presentation.MVVM.Views.LobbyRoom
 {
     public class LobbyRoomView : PanelView<LobbyRoomViewModel>
     {

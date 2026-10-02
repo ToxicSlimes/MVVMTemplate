@@ -4,13 +4,13 @@ using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Settings;
 using Core.Application.Queries.Settings;
-using Core.Data.Domain.Enums;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
+using Core.Domain.Enums;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
 using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Core.MVVM.ViewModels.Settings
+namespace Core.Presentation.MVVM.ViewModels.Settings
 {
     [GenerateViewCommands]
     public class SettingsViewModel : DisposableObject, IVisibilityAware

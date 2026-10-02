@@ -3,7 +3,7 @@ using Core.Abstractions.MVVM.Views;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Core.Infrastructure.MVVM.Animation
+namespace Core.Presentation.MVVM.Animation
 {
     public abstract class AnimatedView<TViewModel> : BindableView<TViewModel> where TViewModel : DisposableObject
     {

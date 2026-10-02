@@ -1,8 +1,8 @@
-namespace Core.Infrastructure.Mediator.Handlers
+namespace Core.Mediator.Handlers
 {
     using System.Threading;
     using Cysharp.Threading.Tasks;
-    using Core.Infrastructure.Mediator.Abstractions;
+    using Core.Mediator.Abstractions;
 
     /// <summary>
     /// Handler that returns a stream of responses.

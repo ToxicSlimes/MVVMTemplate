@@ -3,13 +3,13 @@ using Core.Abstractions.MVVM.Models.Counter;
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Counter;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
 
-namespace Core.MVVM.ViewModels.Counter
+namespace Core.Presentation.MVVM.ViewModels.Counter
 {
     [GenerateViewCommands]
     public class CounterViewModel : DisposableObject

@@ -1,8 +1,8 @@
 #if UNITY_EDITOR
-using Core.Configs.DesignSystem;
+using Core.Presentation.UI.DesignSystem;
 using Core.Editor.PrefabBuilderSystem.Conventions;
 using Core.Editor.PrefabBuilderSystem.Theming;
-using Core.Infrastructure.UI;
+using Core.Presentation.UI;
 using Core.UI.Controls;
 using UnityEngine;
 using TMPro;

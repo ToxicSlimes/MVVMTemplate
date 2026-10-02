@@ -1,7 +1,7 @@
 using System;
 using Core.Abstractions.MVVM.Models.Counter;
 
-namespace Core.MVVM.Models.Counter
+namespace Core.Presentation.MVVM.Models.Counter
 {
     /// <summary>
     /// TEMPLATE EXAMPLE: Concrete model implementation.

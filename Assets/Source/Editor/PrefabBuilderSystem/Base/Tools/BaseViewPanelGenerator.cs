@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.Theming;
-using Core.Infrastructure.MVVM.Animation;
+using Core.Presentation.MVVM.Animation;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;

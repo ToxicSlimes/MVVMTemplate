@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Abstractions
+namespace Core.Mediator.Abstractions
 {
     /// <summary>
     /// Main mediator interface combining ISender and IPublisher.

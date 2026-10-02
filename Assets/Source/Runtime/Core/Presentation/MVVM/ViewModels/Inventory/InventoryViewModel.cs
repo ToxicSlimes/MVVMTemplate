@@ -5,14 +5,14 @@ using Core.Abstractions.MVVM.Models.Inventory;
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Inventory;
-using Core.Data.Domain.Enums;
-using Core.Data.Domain.Models.Elements;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
+using Core.Domain.Enums;
+using Core.Domain.Models.Elements;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
 using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Core.MVVM.ViewModels.Inventory
+namespace Core.Presentation.MVVM.ViewModels.Inventory
 {
     [GenerateViewCommands]
     public class InventoryViewModel : DisposableObject

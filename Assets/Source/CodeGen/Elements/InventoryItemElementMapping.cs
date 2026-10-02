@@ -3,11 +3,11 @@
 // Do not edit manually.
 // </auto-generated>
 
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.Elements;
-using Core.Data.Domain.Models.Elements;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.Elements;
+using Core.Domain.Models.Elements;
 
-namespace Source.Runtime.Core.MVVM.Config.Generated
+namespace Source.Runtime.Core.Presentation.MVVM.Config.Generated
 {
     public class InventoryItemElementMapping : ElementMappingBase<InventoryItemElement, InventoryItemData>
     {

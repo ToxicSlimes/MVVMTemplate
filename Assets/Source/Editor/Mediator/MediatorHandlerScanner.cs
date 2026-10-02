@@ -7,9 +7,9 @@ namespace Core.Editor.Mediator
     using System.Reflection;
     using System.Text;
     using System.Text.RegularExpressions;
-    using Core.Infrastructure.Mediator.Abstractions;
-    using Core.Infrastructure.Mediator.Attributes;
-    using Core.Infrastructure.Mediator.Handlers;
+    using Core.Mediator.Abstractions;
+    using Core.Mediator.Attributes;
+    using Core.Mediator.Handlers;
     using UnityEditor;
     using UnityEngine;
 
@@ -295,7 +295,7 @@ namespace Core.Editor.Mediator
             var sb = new StringBuilder();
             var usings = new HashSet<string>
             {
-                "Core.Infrastructure.Mediator.Registration"
+                "Core.Mediator.Registration"
             };
 
             foreach (var h in scanResult.RequestHandlers)
@@ -330,7 +330,7 @@ namespace Core.Editor.Mediator
 
             if (scanResult.GenericHandlerUsages.Count > 0)
             {
-                usings.Add("Core.Infrastructure.Mediator.Abstractions");
+                usings.Add("Core.Mediator.Abstractions");
                 usings.Add("Core.Application.Commands.Common");
                 usings.Add("Core.Application.Handlers.Common");
                 usings.Add("Core.Application.Queries.Common");

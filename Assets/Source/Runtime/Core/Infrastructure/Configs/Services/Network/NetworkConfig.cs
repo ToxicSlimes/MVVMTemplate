@@ -3,7 +3,7 @@ using Core.Abstractions.Config;
 using Core.Network.Abstractions.Types;
 using UnityEngine;
 
-namespace Core.Configs.Services
+namespace Core.Infrastructure.Configs.Services
 {
     [CreateAssetMenu(fileName = "NetworkConfig", menuName = "Configs/Services/Network Config")]
     public class NetworkConfig : ServiceConfigBase

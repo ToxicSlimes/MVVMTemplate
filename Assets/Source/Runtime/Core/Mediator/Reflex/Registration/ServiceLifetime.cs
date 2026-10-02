@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Registration
+namespace Core.Mediator.Registration
 {
     public enum ServiceLifetime
     {

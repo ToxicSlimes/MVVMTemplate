@@ -1,4 +1,4 @@
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 using Core.Network.Abstractions.Types;
 
 namespace Core.Application.Commands.Network

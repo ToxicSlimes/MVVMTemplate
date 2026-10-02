@@ -1,9 +1,9 @@
 #if UNITY_EDITOR
 using System;
-using Core.Data.Domain.Enums;
+using Core.Domain.Enums;
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
-using Core.MVVM.Views.Inventory;
+using Core.Presentation.MVVM.Views.Inventory;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;

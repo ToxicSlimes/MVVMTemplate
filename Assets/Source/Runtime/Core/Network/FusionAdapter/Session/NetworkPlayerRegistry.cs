@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Core.Application.Notifications.Matchmaking;
-using Core.Data.Domain.Models.Lobby;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Domain.Models.Lobby;
+using Core.Mediator.Abstractions;
 using Core.Network.Abstractions.Services;
 using Cysharp.Threading.Tasks;
 using Fusion;

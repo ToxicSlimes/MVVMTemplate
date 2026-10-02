@@ -1,6 +1,6 @@
 using System.Threading;
 using Core.Application.Notifications.Network;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Handlers;
 using Core.Network.Abstractions.Services;
 using Core.Network.FusionAdapter.Mapping;
 using Core.Network.FusionAdapter.Player;

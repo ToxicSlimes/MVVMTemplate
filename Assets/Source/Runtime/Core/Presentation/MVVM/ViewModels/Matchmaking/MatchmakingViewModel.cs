@@ -5,15 +5,15 @@ using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Matchmaking;
 using Core.Application.Requests.Views;
-using Core.Data.Domain.Models.Lobby;
-using Core.MVVM.ViewModels.LobbyRoom;
-using Core.MVVM.Views.LobbyRoom;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
+using Core.Domain.Models.Lobby;
+using Core.Presentation.MVVM.ViewModels.LobbyRoom;
+using Core.Presentation.MVVM.Views.LobbyRoom;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
 using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Core.MVVM.ViewModels.Matchmaking
+namespace Core.Presentation.MVVM.ViewModels.Matchmaking
 {
     [GenerateViewCommands]
     public class MatchmakingViewModel : DisposableObject, IVisibilityAware

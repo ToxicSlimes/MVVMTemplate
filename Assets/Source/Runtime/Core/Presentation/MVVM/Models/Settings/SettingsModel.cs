@@ -1,11 +1,11 @@
 using System;
 using Core.Abstractions.Services;
 using Core.Abstractions.MVVM.Models.Settings;
-using Core.Data.Domain.Enums;
-using Core.Data.Domain.Models;
+using Core.Domain.Enums;
+using Core.Domain.Models;
 using UnityEngine;
 
-namespace Core.MVVM.Models.Settings
+namespace Core.Presentation.MVVM.Models.Settings
 {
     public class SettingsModel : ISettingsModel
     {

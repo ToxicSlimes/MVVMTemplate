@@ -1,5 +1,5 @@
 
-namespace Core.Data.UI
+namespace Core.Domain.UI
 {
     public struct TooltipData : IPopupData
     {

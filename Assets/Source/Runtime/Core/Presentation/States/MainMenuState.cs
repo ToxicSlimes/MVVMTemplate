@@ -1,7 +1,7 @@
 using Core.Abstractions.MVVM.Services;
 using Core.Abstractions.StateMachines;
 using Core.Abstractions.StateMachines.States;
-using Core.MVVM.ViewModels.MainMenu;
+using Core.Presentation.MVVM.ViewModels.MainMenu;
 using Cysharp.Threading.Tasks;
 using Core.Abstractions.Services;
 

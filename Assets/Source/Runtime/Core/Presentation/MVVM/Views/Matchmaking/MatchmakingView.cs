@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using Core.Data.Domain.Models.Lobby;
-using Core.MVVM.ViewModels.Matchmaking;
+using Core.Domain.Models.Lobby;
+using Core.Presentation.MVVM.ViewModels.Matchmaking;
 using Core.UI.Controls;
 using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Views.Matchmaking
+namespace Core.Presentation.MVVM.Views.Matchmaking
 {
     public class MatchmakingView : PanelView<MatchmakingViewModel>
     {

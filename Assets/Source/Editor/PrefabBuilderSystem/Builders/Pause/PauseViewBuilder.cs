@@ -2,7 +2,7 @@
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.Theming;
-using Core.MVVM.Views.Pause;
+using Core.Presentation.MVVM.Views.Pause;
 using Core.UI.Controls;
 using UnityEngine;
 

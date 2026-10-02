@@ -1,5 +1,5 @@
 using Core.Abstractions.MVVM.Views;
-using Core.Infrastructure.MVVM.Animation;
+using Core.Presentation.MVVM.Animation;
 using LitMotion;
 using UnityEditor;
 using UnityEngine;

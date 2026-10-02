@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Abstractions.MVVM.Models.Inventory;
-using Core.Data.Domain.Enums;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Enums;
+using Core.Domain.Models.Elements;
 
-namespace Core.MVVM.Models.Inventory
+namespace Core.Presentation.MVVM.Models.Inventory
 {
     /// <summary>
     /// Concrete inventory model with sample data.

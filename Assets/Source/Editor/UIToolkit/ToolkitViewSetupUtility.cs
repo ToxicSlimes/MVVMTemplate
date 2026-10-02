@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 using System.IO;
-using Core.Infrastructure.MVVM.Config;
+using Core.Presentation.MVVM.Config;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;

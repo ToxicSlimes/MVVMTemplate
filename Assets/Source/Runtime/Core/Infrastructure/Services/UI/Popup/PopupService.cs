@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Core.Abstractions.MVVM.Canvas;
 using Core.Abstractions.Popup;
 using Core.Abstractions.Services.Input;
-using Core.Data.UI;
+using Core.Domain.UI;
 using Core.Infrastructure.Extensions;
 using Cysharp.Threading.Tasks;
 using R3;

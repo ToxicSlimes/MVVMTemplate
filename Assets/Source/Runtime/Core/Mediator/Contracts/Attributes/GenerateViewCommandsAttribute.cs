@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Infrastructure.Mediator.Attributes
+namespace Core.Mediator.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public sealed class GenerateViewCommandsAttribute : Attribute

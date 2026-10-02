@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Core.Application.Notifications.Network;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 using Core.Network.Abstractions.Services;
 using Core.Network.Abstractions.Types;
 using Core.Network.FusionAdapter.Callbacks;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Core.Abstractions.MVVM.Elements;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UIElements;
 

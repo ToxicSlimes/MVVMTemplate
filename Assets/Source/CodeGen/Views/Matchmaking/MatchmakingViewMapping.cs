@@ -1,6 +1,6 @@
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.ViewModels.Matchmaking;
-using Core.MVVM.Views.Matchmaking;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.ViewModels.Matchmaking;
+using Core.Presentation.MVVM.Views.Matchmaking;
 
 namespace Core.Views.Matchmaking
 {

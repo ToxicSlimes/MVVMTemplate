@@ -1,8 +1,8 @@
-namespace Core.Infrastructure.Mediator.Pipeline
+namespace Core.Mediator.Pipeline
 {
     using System.Threading;
     using Cysharp.Threading.Tasks;
-    using Core.Infrastructure.Mediator.Abstractions;
+    using Core.Mediator.Abstractions;
 
     /// <summary>
     /// Delegate for stream pipeline.

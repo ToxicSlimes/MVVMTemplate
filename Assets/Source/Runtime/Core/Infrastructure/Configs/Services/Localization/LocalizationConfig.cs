@@ -1,7 +1,7 @@
 using Core.Abstractions.Config;
 using UnityEngine;
 
-namespace Core.Configs.Services
+namespace Core.Infrastructure.Configs.Services
 {
     [CreateAssetMenu(fileName = "LocalizationConfig", menuName = "Configs/Services/Localization Config")]
     public class LocalizationConfig : ConfigBase

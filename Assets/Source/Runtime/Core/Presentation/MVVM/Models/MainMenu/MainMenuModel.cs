@@ -1,7 +1,7 @@
 using System;
 using Core.Abstractions.MVVM.Models.MainMenu;
 
-namespace Core.MVVM.Models.MainMenu
+namespace Core.Presentation.MVVM.Models.MainMenu
 {
     public class MainMenuModel : IMainMenuModel
     {

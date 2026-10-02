@@ -1,10 +1,11 @@
-using Core.MVVM.ViewModels.ConnectingOverlay;
+using Core.Presentation.MVVM.Views;
+using Core.Presentation.MVVM.ViewModels.ConnectingOverlay;
 using Core.UI.Controls;
 using R3;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Views.ConnectingOverlay
+namespace Core.Presentation.MVVM.Views.ConnectingOverlay
 {
     public class ConnectingOverlayView : PanelView<ConnectingOverlayViewModel>
     {

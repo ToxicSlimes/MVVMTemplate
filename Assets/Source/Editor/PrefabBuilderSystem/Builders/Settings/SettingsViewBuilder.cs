@@ -2,7 +2,7 @@
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.SettingsView;
-using Core.MVVM.Views.Settings;
+using Core.Presentation.MVVM.Views.Settings;
 using UnityEditor;
 using Core.UI.Controls;
 using UnityEngine;
@@ -12,7 +12,7 @@ using Unity.VisualScripting;
 
 namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
 {
-    public class SettingsViewBuilder : PanelViewBuilder<MVVM.Views.Settings.SettingsView>
+    public class SettingsViewBuilder : PanelViewBuilder<Presentation.MVVM.Views.Settings.SettingsView>
     {
         public SettingsViewBuilderSettings Settings { get; set; }
 
@@ -303,7 +303,7 @@ namespace Core.Editor.PrefabBuilderSystem.Builders.Settings
             return dropdown.gameObject;
         }
 
-        protected override void WireFields(MVVM.Views.Settings.SettingsView view)
+        protected override void WireFields(Presentation.MVVM.Views.Settings.SettingsView view)
         {
             var so = new SerializedObject(view);
 

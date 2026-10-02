@@ -1,8 +1,8 @@
-using Core.Data.Configs.Audio;
+using Core.Infrastructure.Configs.Audio;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Core.Configs.Services
+namespace Core.Infrastructure.Configs.Services
 {
     public static class AudioConfigAccess
     {

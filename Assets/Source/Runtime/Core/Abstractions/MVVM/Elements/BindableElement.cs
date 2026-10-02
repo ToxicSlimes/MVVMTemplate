@@ -1,9 +1,9 @@
 using System;
 using Core.Abstractions.MVVM.Elements;
-using Core.Data.UI;
+using Core.Domain.UI;
 using R3;
 using Core.Abstractions.Popup;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,5 +1,5 @@
 using System;
-using Core.Data.Domain.Models.Elements.Samples;
+using Core.Domain.Models.Elements.Samples;
 using UnityEngine.UIElements;
 
 namespace Core.UI.Toolkit.Elements.Samples

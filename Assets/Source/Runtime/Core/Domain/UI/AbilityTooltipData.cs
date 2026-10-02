@@ -1,4 +1,4 @@
-namespace Core.Data.UI
+namespace Core.Domain.UI
 {
     /// <summary>
     /// TEMPLATE EXAMPLE: Custom popup data class.

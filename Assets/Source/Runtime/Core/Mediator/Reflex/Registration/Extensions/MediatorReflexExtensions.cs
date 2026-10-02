@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Registration.Extensions
+namespace Core.Mediator.Registration.Extensions
 {
     using System;
     using Reflex.Core;

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Threading;
 using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Application.Notifications.Network;
-using Core.Data.Domain.Models.Lobby;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Domain.Models.Lobby;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Application.Handlers.Lobby

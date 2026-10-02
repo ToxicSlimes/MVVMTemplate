@@ -2,7 +2,7 @@
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.Theming;
-using Core.MVVM.Views.Matchmaking;
+using Core.Presentation.MVVM.Views.Matchmaking;
 using Core.UI.Controls;
 using UnityEngine;
 using UnityEngine.UI;

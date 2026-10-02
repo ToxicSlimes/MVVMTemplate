@@ -1,7 +1,7 @@
 using Core.Abstractions.Config;
 using Core.Network.Abstractions.Services;
 
-namespace Core.Configs.Services
+namespace Core.Infrastructure.Configs.Services
 {
     public sealed class NetworkSessionOptionsProvider : INetworkSessionOptionsProvider
     {

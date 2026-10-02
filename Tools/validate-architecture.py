@@ -100,9 +100,55 @@ def main():
         if "Core.Mediator.Contracts" not in references:
             errors.append("Core.Application must reference Core.Mediator.Contracts")
 
+    infrastructure = assemblies.get("Core.Infrastructure")
+    if infrastructure:
+        references = resolve_internal_references(infrastructure[1], guid_to_name)
+        forbidden = sorted(
+            reference for reference in references if reference.startswith("Core.Presentation.")
+        )
+        if forbidden:
+            errors.append(f"Core.Infrastructure depends on Presentation: {forbidden}")
+
+    for name, (_, data) in assemblies.items():
+        if not name.startswith("Core.Presentation."):
+            continue
+        references = resolve_internal_references(data, guid_to_name)
+        forbidden = sorted(
+            reference for reference in references if reference.startswith("Core.Infrastructure.")
+        )
+        if forbidden:
+            errors.append(f"{name} depends on Infrastructure: {forbidden}")
+
     contracts = assemblies.get("Core.Mediator.Contracts")
     if contracts and not contracts[1].get("noEngineReferences", False):
         errors.append("Core.Mediator.Contracts must set noEngineReferences=true")
+
+    for source_path in SOURCE.rglob("*.cs"):
+        source = source_path.read_text(encoding="utf-8-sig")
+        if "Core.Infrastructure.MVVM" in source:
+            relative_path = source_path.relative_to(ROOT).as_posix()
+            errors.append(f"Legacy MVVM namespace remains: {relative_path}")
+        if "Core.MVVM" in source:
+            relative_path = source_path.relative_to(ROOT).as_posix()
+            errors.append(f"Legacy presentation namespace remains: {relative_path}")
+        if "Core.Infrastructure.Mediator" in source:
+            relative_path = source_path.relative_to(ROOT).as_posix()
+            errors.append(f"Legacy mediator namespace remains: {relative_path}")
+        if "Core.Data" in source:
+            relative_path = source_path.relative_to(ROOT).as_posix()
+            errors.append(f"Legacy domain namespace remains: {relative_path}")
+        if "Core.Configs" in source:
+            relative_path = source_path.relative_to(ROOT).as_posix()
+            errors.append(f"Legacy config namespace remains: {relative_path}")
+
+    views_root = SOURCE / "Runtime" / "Core" / "Presentation" / "MVVM" / "Views"
+    for view_path in views_root.rglob("*.cs"):
+        source = view_path.read_text(encoding="utf-8-sig")
+        if re.search(r"\bIMediator\b", source):
+            relative_path = view_path.relative_to(ROOT).as_posix()
+            errors.append(
+                f"View must communicate through its ViewModel, not IMediator directly: {relative_path}"
+            )
 
     if errors:
         for error in errors:

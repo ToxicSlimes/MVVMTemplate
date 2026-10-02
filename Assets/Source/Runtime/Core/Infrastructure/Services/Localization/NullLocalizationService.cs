@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using Core.Abstractions.Services;
-using Core.Data.Domain.Enums;
+using Core.Domain.Enums;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Infrastructure.Services.Localization

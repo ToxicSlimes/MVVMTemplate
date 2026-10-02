@@ -1,6 +1,6 @@
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.ViewModels.Counter;
-using Core.MVVM.Views.Counter;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.ViewModels.Counter;
+using Core.Presentation.MVVM.Views.Counter;
 
 namespace Core.Views.Counter
 {

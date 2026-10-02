@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using AnimationPlayMode = Core.Abstractions.MVVM.Animation.AnimationPlayMode;
 
-namespace Core.Infrastructure.MVVM.Animation
+namespace Core.Presentation.MVVM.Animation
 {
     [DisallowMultipleComponent]
     public class ViewAnimationOrchestrator : MonoBehaviour

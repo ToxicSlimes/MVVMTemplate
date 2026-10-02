@@ -1,8 +1,8 @@
-namespace Core.Infrastructure.Mediator.Publishing
+namespace Core.Mediator.Publishing
 {
     using System.Collections.Generic;
     using System.Threading;
-    using Core.Infrastructure.Mediator.Abstractions;
+    using Core.Mediator.Abstractions;
     using Cysharp.Threading.Tasks;
 
     public interface INotificationPublisher

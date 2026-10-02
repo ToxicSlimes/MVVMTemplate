@@ -3,7 +3,7 @@ using Core.Abstractions.Services;
 using R3;
 using UnityEngine.UIElements;
 
-namespace Core.MVVM.Views.MainMenu
+namespace Core.Presentation.MVVM.Views.MainMenu
 {
     public partial class MainMenuToolkitView
     {

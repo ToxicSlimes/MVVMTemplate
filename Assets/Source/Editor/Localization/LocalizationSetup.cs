@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Core.Abstractions.Localization;
-using Core.Configs.Services;
+using Core.Infrastructure.Configs.Services;
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;

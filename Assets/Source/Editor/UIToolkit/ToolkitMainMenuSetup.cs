@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
-using Core.MVVM.Views.MainMenu;
+using Core.Presentation.MVVM.Views.MainMenu;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;

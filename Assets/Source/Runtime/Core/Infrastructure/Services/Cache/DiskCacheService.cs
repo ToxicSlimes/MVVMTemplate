@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using Core.Abstractions.Services;
-using Core.Data.Domain.Models.Cache;
+using Core.Domain.Models.Cache;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;

@@ -197,7 +197,7 @@ namespace Core.Editor.ViewHandlerScanner
         {
             var namespaces = new HashSet<string>
             {
-                "Core.Infrastructure.Mediator.Registration",
+                "Core.Mediator.Registration",
                 "Core.Application.Requests.Views",
                 "Core.Application.Handlers.Views"
             };

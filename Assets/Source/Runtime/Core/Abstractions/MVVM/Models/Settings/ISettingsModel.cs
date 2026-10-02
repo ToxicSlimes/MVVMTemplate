@@ -1,6 +1,6 @@
 using System;
 using Core.Abstractions.MVVM.Models;
-using Core.Data.Domain.Enums;
+using Core.Domain.Enums;
 
 namespace Core.Abstractions.MVVM.Models.Settings
 {

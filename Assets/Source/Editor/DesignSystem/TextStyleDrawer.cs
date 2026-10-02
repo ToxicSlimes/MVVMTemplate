@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-using Core.Configs.DesignSystem;
+using Core.Presentation.UI.DesignSystem;
 using MissingReferencesVisualizer;
 
 namespace Editor.DesignSystem

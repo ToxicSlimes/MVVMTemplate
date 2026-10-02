@@ -1,9 +1,9 @@
 using System.Threading;
 using Core.Application.Notifications.Player;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 
-namespace Core.MVVM.ViewModels.Pause
+namespace Core.Presentation.MVVM.ViewModels.Pause
 {
     /// <summary>
     /// Открывает и закрывает меню паузы по клавише выхода.

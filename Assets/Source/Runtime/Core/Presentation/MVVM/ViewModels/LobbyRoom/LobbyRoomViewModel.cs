@@ -5,13 +5,13 @@ using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Matchmaking;
 using Core.Application.Commands.Platform;
-using Core.Data.Domain.Models.Lobby;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
+using Core.Domain.Models.Lobby;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
 using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Core.MVVM.ViewModels.LobbyRoom
+namespace Core.Presentation.MVVM.ViewModels.LobbyRoom
 {
     [GenerateViewCommands]
     public class LobbyRoomViewModel : DisposableObject

@@ -1,8 +1,8 @@
 using System.Threading;
 using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Application.Notifications.Matchmaking;
-using Core.Data.Domain.Enums;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Domain.Enums;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Application.Handlers.Lobby

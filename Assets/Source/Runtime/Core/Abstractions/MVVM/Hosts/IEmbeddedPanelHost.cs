@@ -3,7 +3,7 @@ using Core.Abstractions.MVVM.ViewModels;
 using Core.Abstractions.MVVM.Views;
 using Cysharp.Threading.Tasks;
 
-namespace Core.MVVM.Hosts
+namespace Core.Presentation.MVVM.Hosts
 {
     public interface IEmbeddedPanelHost
     {

@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
-using Core.Configs.DesignSystem;
+using Core.Presentation.UI.DesignSystem;
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;

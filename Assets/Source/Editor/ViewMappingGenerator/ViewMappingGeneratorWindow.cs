@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Abstractions.MVVM.Views;
-using Core.Infrastructure.MVVM.Config;
+using Core.Presentation.MVVM.Config;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

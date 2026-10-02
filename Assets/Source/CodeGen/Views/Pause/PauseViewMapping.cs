@@ -1,6 +1,6 @@
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.ViewModels.Pause;
-using Core.MVVM.Views.Pause;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.ViewModels.Pause;
+using Core.Presentation.MVVM.Views.Pause;
 
 namespace Core.Views.Pause
 {

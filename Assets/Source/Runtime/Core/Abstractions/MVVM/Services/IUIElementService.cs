@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Core.Abstractions.MVVM.Elements;
 using Cysharp.Threading.Tasks;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 using UnityEngine;
 
 namespace Core.Abstractions.MVVM.Services

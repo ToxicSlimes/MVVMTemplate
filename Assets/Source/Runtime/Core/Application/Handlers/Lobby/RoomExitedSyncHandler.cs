@@ -1,7 +1,7 @@
 using System.Threading;
 using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Application.Notifications.Network;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Handlers;
 using Core.Network.Abstractions.Types;
 using Cysharp.Threading.Tasks;
 

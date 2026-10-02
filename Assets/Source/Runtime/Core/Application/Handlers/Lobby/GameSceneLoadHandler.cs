@@ -1,7 +1,7 @@
 using System.Threading;
 using Core.Application.Notifications.Matchmaking;
-using Core.Data.Domain.Enums;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Domain.Enums;
+using Core.Mediator.Handlers;
 using Core.Network.Abstractions.Services;
 using Cysharp.Threading.Tasks;
 

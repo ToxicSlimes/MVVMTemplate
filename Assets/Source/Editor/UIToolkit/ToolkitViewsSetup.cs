@@ -1,12 +1,12 @@
 #if UNITY_EDITOR
-using Core.MVVM.Views.ConnectingOverlay;
-using Core.MVVM.Views.Counter;
-using Core.MVVM.Views.Inventory;
-using Core.MVVM.Views.LobbyRoom;
-using Core.MVVM.Views.MainMenu;
-using Core.MVVM.Views.Matchmaking;
-using Core.MVVM.Views.Pause;
-using Core.MVVM.Views.Settings;
+using Core.Presentation.MVVM.Views.ConnectingOverlay;
+using Core.Presentation.MVVM.Views.Counter;
+using Core.Presentation.MVVM.Views.Inventory;
+using Core.Presentation.MVVM.Views.LobbyRoom;
+using Core.Presentation.MVVM.Views.MainMenu;
+using Core.Presentation.MVVM.Views.Matchmaking;
+using Core.Presentation.MVVM.Views.Pause;
+using Core.Presentation.MVVM.Views.Settings;
 using UnityEditor;
 using UnityEngine;
 

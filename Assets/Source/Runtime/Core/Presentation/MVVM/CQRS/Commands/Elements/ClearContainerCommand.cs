@@ -1,4 +1,4 @@
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 using UnityEngine;
 
 namespace Core.Application.Commands.Elements

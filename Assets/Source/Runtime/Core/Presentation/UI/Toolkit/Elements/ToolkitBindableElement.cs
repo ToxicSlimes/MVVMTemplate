@@ -1,6 +1,6 @@
 using System;
 using Core.Abstractions.MVVM.Elements;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 using UnityEngine.UIElements;
 
 namespace Core.UI.Toolkit.Elements

@@ -1,22 +1,22 @@
 using System.Collections.Generic;
-using Core.Application.Commands.Elements;
-using Core.Data.Domain.Models.Elements.Samples;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.MVVM.ViewModels.Counter;
+using Core.Abstractions.MVVM.Services;
+using Core.Domain.Models.Elements.Samples;
+using Core.Presentation.MVVM.ViewModels.Counter;
 using Core.UI.Toolkit;
 using Core.UI.Toolkit.Elements.Samples;
+using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Core.MVVM.Views.Counter
+namespace Core.Presentation.MVVM.Views.Counter
 {
     public class CounterToolkitView : ToolkitPanelView<CounterViewModel>
     {
         private const string IncrementsFormat = "Total actions: {0}";
 
-        [Inject] private IMediator _mediator;
+        [Inject] private IToolkitElementService _elementService;
 
         private Label _counterLabel;
         private Label _incrementsLabel;
@@ -133,9 +133,9 @@ namespace Core.MVVM.Views.Counter
                 new() { Id = "card-3", Title = "Popup Support", Description = "Each element sets VisualElement.tooltip for hover hints." }
             };
 
-            _mediator.Send(new ReconcileToolkitElementsCommand<TextCardToolkitElement, TextCardData>(
+            _elementService.ReconcileElementsAsync<TextCardToolkitElement, TextCardData>(
                 _textCardsContainer.contentContainer,
-                textCards));
+                textCards).Forget();
 
             var statBars = new List<StatBarData>
             {
@@ -144,9 +144,9 @@ namespace Core.MVVM.Views.Counter
                 new() { Id = "stat-xp", Label = "Experience", CurrentValue = 450f, MaxValue = 1000f, FormattedValue = "450/1000 XP" }
             };
 
-            _mediator.Send(new ReconcileToolkitElementsCommand<StatBarToolkitElement, StatBarData>(
+            _elementService.ReconcileElementsAsync<StatBarToolkitElement, StatBarData>(
                 _statBarsContainer.contentContainer,
-                statBars));
+                statBars).Forget();
 
             var actionItems = new List<ActionListItemData>
             {
@@ -155,10 +155,10 @@ namespace Core.MVVM.Views.Counter
                 new() { Id = "action-3", Title = "Locked Skill", Subtitle = "Requires Level 10", ActionLabel = "Locked", IsActionEnabled = false }
             };
 
-            _mediator.Send(new ReconcileToolkitElementsCommand<ActionListItemToolkitElement, ActionListItemData>(
+            _elementService.ReconcileElementsAsync<ActionListItemToolkitElement, ActionListItemData>(
                 _actionItemsContainer.contentContainer,
                 actionItems,
-                OnActionItemClicked));
+                OnActionItemClicked).Forget();
         }
 
         private static void OnActionItemClicked(ActionListItemData data)

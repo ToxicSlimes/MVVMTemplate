@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Core.Configs.Services
+namespace Core.Infrastructure.Configs.Services
 {
     [Serializable]
     public class NetworkPrefabEntry

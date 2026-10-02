@@ -1,9 +1,9 @@
-using Core.MVVM.ViewModels.ConnectingOverlay;
+using Core.Presentation.MVVM.ViewModels.ConnectingOverlay;
 using Core.UI.Toolkit;
 using R3;
 using UnityEngine.UIElements;
 
-namespace Core.MVVM.Views.ConnectingOverlay
+namespace Core.Presentation.MVVM.Views.ConnectingOverlay
 {
     public class ConnectingOverlayToolkitView : ToolkitPanelView<ConnectingOverlayViewModel>
     {

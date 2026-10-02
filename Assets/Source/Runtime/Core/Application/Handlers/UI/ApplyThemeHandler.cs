@@ -1,8 +1,8 @@
 using System.Threading;
 using Core.Abstractions.UI;
 using Core.Application.Commands.UI;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Application.Handlers.UI

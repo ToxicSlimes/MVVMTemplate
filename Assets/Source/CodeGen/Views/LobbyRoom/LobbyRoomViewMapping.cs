@@ -1,6 +1,6 @@
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.ViewModels.LobbyRoom;
-using Core.MVVM.Views.LobbyRoom;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.ViewModels.LobbyRoom;
+using Core.Presentation.MVVM.Views.LobbyRoom;
 
 namespace Core.Views.LobbyRoom
 {

@@ -2,9 +2,9 @@ using System.Threading;
 using Core.Abstractions.MVVM.Elements;
 using Core.Abstractions.MVVM.Services;
 using Core.Application.Commands.Elements;
-using Core.Data.Domain.Models.Elements;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Domain.Models.Elements;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Application.Handlers.Elements

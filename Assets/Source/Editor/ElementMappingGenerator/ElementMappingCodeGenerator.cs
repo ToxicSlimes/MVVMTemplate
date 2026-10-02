@@ -5,7 +5,7 @@ namespace Core.Editor.ElementMappingGenerator
 {
     public static class ElementMappingCodeGenerator
     {
-        private const string GeneratedNamespace = "Source.Runtime.Core.MVVM.Config.Generated";
+        private const string GeneratedNamespace = "Source.Runtime.Core.Presentation.MVVM.Config.Generated";
         private const string GeneratedFolder = "Assets/Source/CodeGen/Elements";
         private const string AssetFolder = "Assets/Source/00. Configs/ElementsMapping";
 
@@ -22,7 +22,7 @@ namespace Core.Editor.ElementMappingGenerator
             builder.AppendLine("// Do not edit manually.");
             builder.AppendLine("// </auto-generated>");
             builder.AppendLine();
-            builder.AppendLine("using Core.Infrastructure.MVVM.Config;");
+            builder.AppendLine("using Core.Presentation.MVVM.Config;");
 
             if (!string.IsNullOrEmpty(elementNamespace))
                 builder.AppendLine($"using {elementNamespace};");

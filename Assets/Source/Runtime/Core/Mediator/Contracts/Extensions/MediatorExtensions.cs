@@ -1,9 +1,9 @@
-namespace Core.Infrastructure.Mediator.Extensions
+namespace Core.Mediator.Extensions
 {
     using System;
     using System.Threading;
-    using Core.Infrastructure.Mediator.Abstractions;
-    using Core.Infrastructure.Mediator.Exceptions;
+    using Core.Mediator.Abstractions;
+    using Core.Mediator.Exceptions;
     using Cysharp.Threading.Tasks;
 
     public static class MediatorExtensions

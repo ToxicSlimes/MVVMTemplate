@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Core.Infrastructure.MVVM.Config;
+using Core.Presentation.MVVM.Config;
 using Core.Editor.UIToolkit.ScreenSpec;
 using Core.UI.Toolkit;
 using UnityEditor;

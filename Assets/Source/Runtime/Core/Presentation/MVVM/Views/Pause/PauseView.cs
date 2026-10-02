@@ -1,9 +1,9 @@
-using Core.MVVM.ViewModels.Pause;
+using Core.Presentation.MVVM.ViewModels.Pause;
 using Core.UI.Controls;
 using R3;
 using UnityEngine;
 
-namespace Core.MVVM.Views.Pause
+namespace Core.Presentation.MVVM.Views.Pause
 {
     public class PauseView : PanelView<PauseViewModel>
     {

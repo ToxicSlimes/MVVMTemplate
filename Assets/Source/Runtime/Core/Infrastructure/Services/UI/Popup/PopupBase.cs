@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using Core.Abstractions.Popup;
-using Core.Data.UI;
+using Core.Domain.UI;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using UnityEngine;

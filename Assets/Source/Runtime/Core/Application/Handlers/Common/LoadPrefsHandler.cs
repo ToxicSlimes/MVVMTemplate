@@ -1,6 +1,6 @@
 using System.Threading;
 using Core.Abstractions.Services;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 using Core.Application.Queries.Common;
 

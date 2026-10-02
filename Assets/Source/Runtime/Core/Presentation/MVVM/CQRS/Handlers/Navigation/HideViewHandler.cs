@@ -1,7 +1,7 @@
 using System.Threading;
 using Core.Abstractions.MVVM.Services;
 using Core.Abstractions.MVVM.ViewModels;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 using Core.Application.Commands.Common;
 

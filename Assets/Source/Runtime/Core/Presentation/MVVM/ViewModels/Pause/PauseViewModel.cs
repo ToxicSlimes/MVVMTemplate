@@ -4,13 +4,13 @@ using Core.Abstractions.Services.Input;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Matchmaking;
 using Core.Application.Requests.Views;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
-using Core.MVVM.Views.Pause;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
+using Core.Presentation.MVVM.Views.Pause;
 using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Core.MVVM.ViewModels.Pause
+namespace Core.Presentation.MVVM.ViewModels.Pause
 {
     /// <summary>
     /// Меню паузы: выход из матча и возврат в игру.

@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Pipeline
+namespace Core.Mediator.Pipeline
 {
     using System.Threading;
     using Cysharp.Threading.Tasks;

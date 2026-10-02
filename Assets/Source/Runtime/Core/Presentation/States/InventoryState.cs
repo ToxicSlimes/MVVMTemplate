@@ -1,8 +1,8 @@
 using Core.Abstractions.MVVM.Services;
 using Core.Abstractions.StateMachines;
 using Core.Abstractions.StateMachines.States;
-using Core.MVVM.ViewModels.Inventory;
-using Core.MVVM.Views.Inventory;
+using Core.Presentation.MVVM.ViewModels.Inventory;
+using Core.Presentation.MVVM.Views.Inventory;
 using Cysharp.Threading.Tasks;
 using Core.Abstractions.Services;
 

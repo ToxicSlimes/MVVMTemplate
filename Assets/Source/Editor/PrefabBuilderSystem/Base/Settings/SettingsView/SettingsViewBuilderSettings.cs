@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 using UnityEngine;
-using Core.Configs.DesignSystem;
+using Core.Presentation.UI.DesignSystem;
 using Core.Editor.PrefabBuilderSystem.Settings;
 using Core.Editor.PrefabBuilderSystem.Theming;
 

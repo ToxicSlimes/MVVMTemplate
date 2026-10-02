@@ -2,9 +2,9 @@
 
 using System.IO;
 
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.Config.Generated;
-using Core.MVVM.Views.Counter;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.Config.Generated;
+using Core.Presentation.MVVM.Views.Counter;
 using UnityEditor;
 
 using UnityEditor.SceneManagement;

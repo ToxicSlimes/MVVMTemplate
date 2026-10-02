@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace Core.Infrastructure.Mediator.Abstractions
+namespace Core.Mediator.Abstractions
 {
     /// <summary>
     /// Готовый результат для хендлеров без возвращаемого значения.

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Core.Abstractions.MVVM.Elements;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 using Core.UI.Toolkit.Elements;
 using UnityEditor;
 using UnityEngine;
@@ -122,9 +122,9 @@ namespace Core.Editor.ElementHandlerScanner
         {
             var namespaces = new HashSet<string>
             {
-                "Core.Infrastructure.Mediator.Abstractions",
-                "Core.Infrastructure.Mediator.Registration",
-                "Core.Data.Domain.Models.Elements",
+                "Core.Mediator.Abstractions",
+                "Core.Mediator.Registration",
+                "Core.Domain.Models.Elements",
                 "Core.Application.Commands.Elements",
                 "Core.Application.Handlers.Elements"
             };

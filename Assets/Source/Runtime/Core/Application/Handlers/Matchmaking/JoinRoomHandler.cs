@@ -1,8 +1,8 @@
 using System.Threading;
 using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Application.Commands.Matchmaking;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Handlers;
 using Core.Network.Abstractions.Services;
 using Core.Network.Abstractions.Types;
 using Cysharp.Threading.Tasks;

@@ -1,5 +1,5 @@
 using Core.Abstractions.MVVM.Elements;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 
 namespace Core.Application.Commands.Elements
 {

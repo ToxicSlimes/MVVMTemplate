@@ -3,13 +3,13 @@ using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Network;
 using Core.Application.Requests.Views;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Attributes;
-using Core.MVVM.Views.ConnectingOverlay;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Attributes;
+using Core.Presentation.MVVM.Views.ConnectingOverlay;
 using Cysharp.Threading.Tasks;
 using R3;
 
-namespace Core.MVVM.ViewModels.ConnectingOverlay
+namespace Core.Presentation.MVVM.ViewModels.ConnectingOverlay
 {
     [GenerateViewCommands]
     public class ConnectingOverlayViewModel : DisposableObject, IVisibilityAware

@@ -1,12 +1,12 @@
-namespace Core.Infrastructure.Mediator.Registration
+namespace Core.Mediator.Registration
 {
     using System;
     using System.Collections.Generic;
-    using Core.Infrastructure.Mediator.Abstractions;
-    using Core.Infrastructure.Mediator.Handlers;
-    using Core.Infrastructure.Mediator.Implementation;
-    using Core.Infrastructure.Mediator.Pipeline;
-    using Core.Infrastructure.Mediator.Publishing;
+    using Core.Mediator.Abstractions;
+    using Core.Mediator.Handlers;
+    using Core.Mediator.Implementation;
+    using Core.Mediator.Pipeline;
+    using Core.Mediator.Publishing;
     using Reflex.Core;
 
     public sealed class MediatorBuilder

@@ -1,4 +1,4 @@
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 using Core.Network.Abstractions.Services;
 using Core.Network.FusionAdapter.Input;
 using Core.Network.FusionAdapter.Messaging;

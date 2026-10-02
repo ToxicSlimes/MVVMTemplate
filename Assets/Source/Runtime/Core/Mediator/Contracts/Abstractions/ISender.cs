@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Abstractions
+namespace Core.Mediator.Abstractions
 {
     using System.Threading;
     using Cysharp.Threading.Tasks;

@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Core.Configs.Services;
+using Core.Infrastructure.Configs.Services;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;

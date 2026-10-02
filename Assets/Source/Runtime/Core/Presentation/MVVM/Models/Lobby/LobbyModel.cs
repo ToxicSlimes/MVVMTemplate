@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Core.Abstractions.MVVM.Models.Lobby;
-using Core.Data.Domain.Enums;
-using Core.Data.Domain.Models.Lobby;
+using Core.Domain.Enums;
+using Core.Domain.Models.Lobby;
 
-namespace Core.MVVM.Models.Lobby
+namespace Core.Presentation.MVVM.Models.Lobby
 {
     /// <summary>
     /// Состояние лобби. Ничего не знает о сети: наполняется извне через

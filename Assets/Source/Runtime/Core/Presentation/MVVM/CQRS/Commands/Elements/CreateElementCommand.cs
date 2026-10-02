@@ -1,7 +1,7 @@
 using System;
 using Core.Abstractions.MVVM.Elements;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Data.Domain.Models.Elements;
+using Core.Mediator.Abstractions;
+using Core.Domain.Models.Elements;
 using UnityEngine;
 
 namespace Core.Application.Commands.Elements

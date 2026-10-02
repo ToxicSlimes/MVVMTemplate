@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using Core.Data.Domain.Enums;
+using Core.Domain.Enums;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Abstractions.Services

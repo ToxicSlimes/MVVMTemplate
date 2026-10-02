@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Infrastructure.UI
+namespace Core.Presentation.UI
 {
     public class DropdownItemColorizer : MonoBehaviour
     {

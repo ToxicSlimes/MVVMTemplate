@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Core.Abstractions.MVVM.Elements;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Data.Domain.Models.Elements;
+using Core.Mediator.Abstractions;
+using Core.Domain.Models.Elements;
 using UnityEngine.UIElements;
 
 namespace Core.Application.Commands.Elements

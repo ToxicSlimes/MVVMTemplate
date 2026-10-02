@@ -1,12 +1,12 @@
 using Core.Abstractions.Localization;
 using Core.Abstractions.Services;
-using Core.MVVM.ViewModels.MainMenu;
+using Core.Presentation.MVVM.ViewModels.MainMenu;
 using Core.UI.Toolkit;
 using Reflex.Attributes;
 using R3;
 using UnityEngine.UIElements;
 
-namespace Core.MVVM.Views.MainMenu
+namespace Core.Presentation.MVVM.Views.MainMenu
 {
     public partial class MainMenuToolkitView : ToolkitPanelView<MainMenuViewModel>
     {

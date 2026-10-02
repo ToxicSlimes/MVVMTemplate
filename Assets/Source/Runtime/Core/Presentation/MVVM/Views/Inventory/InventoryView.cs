@@ -1,23 +1,24 @@
 using System;
-using Core.Application.Commands.Elements;
-using Core.Data.Domain.Enums;
-using Core.Data.Domain.Models.Elements;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.MVVM.Elements;
-using Core.MVVM.ViewModels.Inventory;
+using Core.Abstractions.MVVM.Services;
+using Core.Domain.Enums;
+using Core.Domain.Models.Elements;
+using Core.Presentation.MVVM.Views;
+using Core.Presentation.MVVM.Elements;
+using Core.Presentation.MVVM.ViewModels.Inventory;
 using Core.UI.Controls;
+using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Views.Inventory
+namespace Core.Presentation.MVVM.Views.Inventory
 {
     public class InventoryView : PanelView<InventoryViewModel>
     {
         private const string ItemCountFormat = "Items: {0}";
 
-        [Inject] private IMediator _mediator;
+        [Inject] private IUIElementService _elementService;
 
         [Header("Header")]
         [SerializeField] private BaseButton _backButton;
@@ -61,10 +62,10 @@ namespace Core.MVVM.Views.Inventory
             ViewModel.FilteredItems
                 .Subscribe(this, static (items, self) =>
                 {
-                    self._mediator.Send(new ReconcileElementsCommand<InventoryItemElement, InventoryItemData>(
+                    self._elementService.ReconcileElementsAsync<InventoryItemElement, InventoryItemData>(
                         self._itemsContainer,
                         items,
-                        self.OnItemClicked));
+                        self.OnItemClicked).Forget();
                 })
                 .AddTo(ref disposables);
         }

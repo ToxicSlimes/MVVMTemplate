@@ -1,6 +1,6 @@
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Abstractions.MVVM.Views;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 
 namespace Core.Application.Requests.Views
 {

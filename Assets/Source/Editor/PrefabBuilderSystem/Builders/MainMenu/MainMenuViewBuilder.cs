@@ -2,7 +2,7 @@
 using Core.Editor.PrefabBuilderSystem.Core;
 using Core.Editor.PrefabBuilderSystem.Elements;
 using Core.Editor.PrefabBuilderSystem.Theming;
-using Core.MVVM.Views.MainMenu;
+using Core.Presentation.MVVM.Views.MainMenu;
 using Core.UI.Controls;
 using UnityEngine;
 using TMPro;

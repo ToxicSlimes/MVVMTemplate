@@ -2,15 +2,15 @@ using System;
 using Core.Abstractions.MVVM.Elements;
 using Core.Abstractions.Popup;
 using Core.Abstractions.UI.DragDrop;
-using Core.Data.Domain.Enums;
-using Core.Data.Domain.Models.Elements;
-using Core.Data.UI;
+using Core.Domain.Enums;
+using Core.Domain.Models.Elements;
+using Core.Domain.UI;
 using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Elements
+namespace Core.Presentation.MVVM.Elements
 {
     public class InventoryItemElement : BindableElement<InventoryItemData>
     {

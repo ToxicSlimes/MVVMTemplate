@@ -1,5 +1,5 @@
 using System;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 using UnityEngine.AddressableAssets;
 
 namespace Core.Abstractions.MVVM.Config

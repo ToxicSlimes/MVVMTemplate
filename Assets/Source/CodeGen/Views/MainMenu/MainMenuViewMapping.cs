@@ -1,6 +1,6 @@
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.ViewModels.MainMenu;
-using Core.MVVM.Views.MainMenu;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.ViewModels.MainMenu;
+using Core.Presentation.MVVM.Views.MainMenu;
 
 namespace Core.Views.MainMenu
 {

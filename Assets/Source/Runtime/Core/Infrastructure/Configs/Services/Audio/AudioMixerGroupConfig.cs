@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Core.Abstractions.Config;
-using Core.Data.Domain.Enums;
+using Core.Domain.Audio;
+using Core.Domain.Enums;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Core.Data.Configs.Audio
+namespace Core.Infrastructure.Configs.Audio
 {
     [CreateAssetMenu(fileName = "AudioMixerGroupConfig", menuName = "Configs/Audio/Mixer Group Config")]
     public class AudioMixerGroupConfig : ConfigBase

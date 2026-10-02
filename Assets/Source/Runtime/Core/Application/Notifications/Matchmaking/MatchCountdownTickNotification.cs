@@ -1,4 +1,4 @@
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 
 namespace Core.Application.Notifications.Matchmaking
 {

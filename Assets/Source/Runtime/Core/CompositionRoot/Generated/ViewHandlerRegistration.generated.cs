@@ -7,19 +7,19 @@
 
 using Core.Application.Handlers.Views;
 using Core.Application.Requests.Views;
-using Core.Infrastructure.Mediator.Registration;
-using Core.MVVM.ViewModels.ConnectingOverlay;
-using Core.MVVM.ViewModels.Inventory;
-using Core.MVVM.ViewModels.LobbyRoom;
-using Core.MVVM.ViewModels.Matchmaking;
-using Core.MVVM.ViewModels.Pause;
-using Core.MVVM.ViewModels.Settings;
-using Core.MVVM.Views.ConnectingOverlay;
-using Core.MVVM.Views.Inventory;
-using Core.MVVM.Views.LobbyRoom;
-using Core.MVVM.Views.Matchmaking;
-using Core.MVVM.Views.Pause;
-using Core.MVVM.Views.Settings;
+using Core.Mediator.Registration;
+using Core.Presentation.MVVM.ViewModels.ConnectingOverlay;
+using Core.Presentation.MVVM.ViewModels.Inventory;
+using Core.Presentation.MVVM.ViewModels.LobbyRoom;
+using Core.Presentation.MVVM.ViewModels.Matchmaking;
+using Core.Presentation.MVVM.ViewModels.Pause;
+using Core.Presentation.MVVM.ViewModels.Settings;
+using Core.Presentation.MVVM.Views.ConnectingOverlay;
+using Core.Presentation.MVVM.Views.Inventory;
+using Core.Presentation.MVVM.Views.LobbyRoom;
+using Core.Presentation.MVVM.Views.Matchmaking;
+using Core.Presentation.MVVM.Views.Pause;
+using Core.Presentation.MVVM.Views.Settings;
 
 namespace Core.DependencyInjection.Generated
 {

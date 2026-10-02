@@ -9,7 +9,7 @@ namespace Core.Editor.UIToolkit.ScreenSpec
         {
             var sb = new StringBuilder();
             var viewNs = string.IsNullOrEmpty(spec.viewNamespace)
-                ? "Core.MVVM.Views"
+                ? "Core.Presentation.MVVM.Views"
                 : spec.viewNamespace;
 
             sb.AppendLine("using Core.Abstractions.Localization;");

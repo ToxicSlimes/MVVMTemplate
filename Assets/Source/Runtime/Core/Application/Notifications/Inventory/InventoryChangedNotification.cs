@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Core.Data.Domain.Models.Elements;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Domain.Models.Elements;
+using Core.Mediator.Abstractions;
 
 namespace Core.Application.Notifications.Inventory
 {

@@ -1,5 +1,5 @@
 using Core.Abstractions.Services.Platform;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 
 namespace Core.Application.Queries.Platform
 {

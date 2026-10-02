@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Core.Data.Domain.Models.Lobby;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Domain.Models.Lobby;
+using Core.Mediator.Abstractions;
 
 namespace Core.Application.Notifications.Matchmaking
 {

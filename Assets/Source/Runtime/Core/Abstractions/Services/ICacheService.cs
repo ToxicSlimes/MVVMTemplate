@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using Core.Data.Domain.Models.Cache;
+using Core.Domain.Models.Cache;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Abstractions.Services

@@ -2,8 +2,8 @@ using Core.Abstractions.StateMachines.States;
 using Core.Abstractions.StateMachines;
 using System.Threading;
 using Core.Abstractions.Navigation;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 using Core.Application.Commands.Common;
 

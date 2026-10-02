@@ -2,8 +2,8 @@ using System.Threading;
 using Core.Abstractions.MVVM.Models.Counter;
 using Core.Application.Commands.Counter;
 using Core.Application.Notifications.Counter;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Application.Handlers.Counter

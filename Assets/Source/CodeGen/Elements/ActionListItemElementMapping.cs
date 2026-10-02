@@ -3,11 +3,11 @@
 // Do not edit manually.
 // </auto-generated>
 
-using Core.Infrastructure.MVVM.Config;
-using Core.MVVM.Elements.Samples;
-using Core.Data.Domain.Models.Elements.Samples;
+using Core.Presentation.MVVM.Config;
+using Core.Presentation.MVVM.Elements.Samples;
+using Core.Domain.Models.Elements.Samples;
 
-namespace Core.MVVM.Config.Generated
+namespace Core.Presentation.MVVM.Config.Generated
 {
     public class ActionListItemElementMapping : ElementMappingBase<ActionListItemElement, ActionListItemData>
     {

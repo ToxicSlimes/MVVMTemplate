@@ -3,15 +3,15 @@ using System.Linq;
 using Core.Abstractions.Localization;
 using Core.Abstractions.Services.Input;
 using Core.Abstractions.Services;
-using Core.Data.Domain.Enums;
-using Core.MVVM.ViewModels.Settings;
+using Core.Domain.Enums;
+using Core.Presentation.MVVM.ViewModels.Settings;
 using Core.UI.Toolkit;
 using R3;
 using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Core.MVVM.Views.Settings
+namespace Core.Presentation.MVVM.Views.Settings
 {
     public partial class SettingsToolkitView : ToolkitPanelView<SettingsViewModel>
     {

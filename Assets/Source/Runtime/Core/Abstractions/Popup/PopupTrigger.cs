@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Core.Abstractions.Popup;
 using Core.Abstractions.UI;
-using Core.Data.UI;
+using Core.Domain.UI;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;

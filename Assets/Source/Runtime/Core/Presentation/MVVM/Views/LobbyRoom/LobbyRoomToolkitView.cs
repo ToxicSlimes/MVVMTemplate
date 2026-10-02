@@ -1,11 +1,11 @@
-using Core.Data.Domain.Models.Lobby;
-using Core.MVVM.ViewModels.LobbyRoom;
+using Core.Domain.Models.Lobby;
+using Core.Presentation.MVVM.ViewModels.LobbyRoom;
 using Core.UI.Toolkit;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Core.MVVM.Views.LobbyRoom
+namespace Core.Presentation.MVVM.Views.LobbyRoom
 {
     public class LobbyRoomToolkitView : ToolkitPanelView<LobbyRoomViewModel>
     {

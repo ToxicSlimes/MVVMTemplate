@@ -1,8 +1,8 @@
 using System.Threading;
 using Core.Abstractions.MVVM.ViewModels;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
-using Core.MVVM.Hosts;
+using Core.Presentation.MVVM.Hosts;
 using Core.Application.Requests.Views;
 
 namespace Core.Application.Handlers.Views

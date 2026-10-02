@@ -3,7 +3,7 @@ using Core.Abstractions.Services;
 using R3;
 using UnityEngine.UIElements;
 
-namespace Core.MVVM.Views.Settings
+namespace Core.Presentation.MVVM.Views.Settings
 {
     public partial class SettingsToolkitView
     {

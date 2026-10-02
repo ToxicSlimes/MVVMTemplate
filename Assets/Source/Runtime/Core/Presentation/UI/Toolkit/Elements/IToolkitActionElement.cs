@@ -1,5 +1,5 @@
 using System;
-using Core.Data.Domain.Models.Elements;
+using Core.Domain.Models.Elements;
 
 namespace Core.UI.Toolkit.Elements
 {

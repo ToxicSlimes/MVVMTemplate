@@ -1,5 +1,5 @@
-using Core.Data.Domain.Enums;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Domain.Enums;
+using Core.Mediator.Abstractions;
 
 namespace Core.Application.Notifications.Matchmaking
 {

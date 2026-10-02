@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
-using global::Core.Infrastructure.UI;
-using global::Core.Infrastructure.UI.Effects;
-using global::Core.Infrastructure.UI.States;
+using global::Core.Presentation.UI;
+using global::Core.Presentation.UI.Effects;
+using global::Core.Presentation.UI.States;
 using UnityEditor;
 using UnityEngine;
 

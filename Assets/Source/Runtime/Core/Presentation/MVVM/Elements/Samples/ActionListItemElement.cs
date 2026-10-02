@@ -1,11 +1,11 @@
 using System;
 using Core.Abstractions.MVVM.Elements;
-using Core.Data.Domain.Models.Elements.Samples;
+using Core.Domain.Models.Elements.Samples;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.MVVM.Elements.Samples
+namespace Core.Presentation.MVVM.Elements.Samples
 {
     public class ActionListItemElement : BindableElement<ActionListItemData>
     {

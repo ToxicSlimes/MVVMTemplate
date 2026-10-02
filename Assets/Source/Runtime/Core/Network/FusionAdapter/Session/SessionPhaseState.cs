@@ -1,6 +1,6 @@
 using Core.Application.Notifications.Matchmaking;
-using Core.Data.Domain.Enums;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Domain.Enums;
+using Core.Mediator.Abstractions;
 using Cysharp.Threading.Tasks;
 using Fusion.Addons.FSM;
 using ILogger = Core.Abstractions.Services.ILogger;

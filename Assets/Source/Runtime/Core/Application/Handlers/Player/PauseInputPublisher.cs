@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Core.Abstractions.Services.Input;
 using Core.Application.Notifications.Player;
-using Core.Infrastructure.Mediator.Abstractions;
+using Core.Mediator.Abstractions;
 using Core.Network.Abstractions.Services;
 using Cysharp.Threading.Tasks;
 

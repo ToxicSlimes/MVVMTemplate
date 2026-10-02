@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Core.Infrastructure.MVVM.Config;
+using Core.Presentation.MVVM.Config;
 using Core.Abstractions.MVVM.Elements;
 using UnityEditor;
 using UnityEditor.AddressableAssets;

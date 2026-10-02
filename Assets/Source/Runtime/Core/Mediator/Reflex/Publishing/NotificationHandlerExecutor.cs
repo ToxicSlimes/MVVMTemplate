@@ -1,4 +1,4 @@
-namespace Core.Infrastructure.Mediator.Publishing
+namespace Core.Mediator.Publishing
 {
     using Cysharp.Threading.Tasks;
 

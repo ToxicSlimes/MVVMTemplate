@@ -1,7 +1,7 @@
 using System.Threading;
 using Core.Application.Commands.Matchmaking;
-using Core.Infrastructure.Mediator.Abstractions;
-using Core.Infrastructure.Mediator.Handlers;
+using Core.Mediator.Abstractions;
+using Core.Mediator.Handlers;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Network.FusionAdapter.Session
