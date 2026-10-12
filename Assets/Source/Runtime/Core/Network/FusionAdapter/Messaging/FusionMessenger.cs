@@ -105,7 +105,7 @@ namespace Core.Network.FusionAdapter.Messaging
                     break;
 
                 default:
-                    Dispatch(typeId, ResolveOrigin(player, routeArg).ToCore(), payload);
+                    Dispatch(typeId, ResolveOrigin(runner, player, routeArg).ToCore(), payload);
                     break;
             }
         }
@@ -237,8 +237,18 @@ namespace Core.Network.FusionAdapter.Messaging
         private static ReliableKey BuildDirectKey(int typeId, PlayerRef origin) =>
             BuildKey(typeId, NetworkMessageRoute.Direct, origin.RawEncoded);
 
-        private static PlayerRef ResolveOrigin(PlayerRef transportSender, int routeArg) =>
-            routeArg != 0 ? PlayerRef.FromEncoded(routeArg) : transportSender;
+        private static PlayerRef ResolveOrigin(
+            NetworkRunner runner,
+            PlayerRef transportSender,
+            int routeArg)
+        {
+            // On the authority, the Fusion transport identity is authoritative.
+            // routeArg is only trusted by clients receiving a message relayed by authority.
+            if (runner.IsServer || runner.IsSharedModeMasterClient)
+                return transportSender;
+
+            return routeArg != 0 ? PlayerRef.FromEncoded(routeArg) : transportSender;
+        }
 
         private NetworkRunner RequireRunner()
         {

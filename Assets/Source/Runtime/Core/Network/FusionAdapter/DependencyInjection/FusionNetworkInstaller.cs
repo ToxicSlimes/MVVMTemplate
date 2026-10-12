@@ -1,5 +1,8 @@
 using Core.Mediator.Abstractions;
+using Core.Network.Abstractions.Gateway;
+using Core.Network.Abstractions.Gateway.Transport;
 using Core.Network.Abstractions.Services;
+using Core.Network.FusionAdapter.Gateway;
 using Core.Network.FusionAdapter.Input;
 using Core.Network.FusionAdapter.Messaging;
 using Core.Network.FusionAdapter.Player;
@@ -55,6 +58,29 @@ namespace Core.Network.FusionAdapter.DependencyInjection
                 container.Resolve<INetworkRunnerAccessor>(),
                 container.Resolve<ILogger>()
             ));
+
+            builder.AddSingleton<IGatewayPayloadCodec>(_ => new JsonGatewayPayloadCodec());
+            builder.AddSingleton<IGatewayAuthority>(container => new FusionGatewayAuthority(
+                container.Resolve<INetworkRunnerController>()));
+            builder.AddSingleton<IGatewayErrorReporter>(container => new GatewayErrorReporter(
+                container.Resolve<ILogger>()));
+            builder.AddSingleton(container => new GatewayRouter(
+                container.All<IGatewayRoute>()));
+            builder.AddSingleton(container => new GatewayClientTerminal(
+                container.Resolve<INetworkMessenger>(),
+                container.Resolve<IGatewayPayloadCodec>()));
+            builder.AddSingleton<IGateway>(container => new GatewayPipeline(
+                container.All<IGatewayPipe>(),
+                container.Resolve<GatewayClientTerminal>()));
+            builder.AddSingleton(container => new GatewayServerIngress(
+                container.Resolve<INetworkMessenger>(),
+                container.Resolve<IGatewayPayloadCodec>(),
+                container.Resolve<GatewayRouter>(),
+                new GatewayPipeline(
+                    container.All<IGatewayPipe>(),
+                    container.Resolve<GatewayRouter>()),
+                    container.Resolve<IGatewayAuthority>(),
+                    container.Resolve<IGatewayErrorReporter>()));
 
             builder.AddSingleton<INetworkInputSource>(container => new FusionInputSource(
                 container.Resolve<INetworkRunnerAccessor>()));
