@@ -1,5 +1,6 @@
 using Core.Abstractions.StateMachines;
 using Core.Network.Abstractions.Gateway.Transport;
+using Core.DependencyInjection.Bindings;
 using Reflex.Core;
 using Reflex.Exceptions;
 using UnityEngine;
@@ -14,12 +15,14 @@ public class ProjectInstaller : MonoBehaviour, IInstaller
 
     try
     {
+      container.Resolve<MorpehWorldProvider>();
       container.Resolve<GatewayServerIngress>();
       container.Resolve<IGameStateMachine>().Enter<BootstrapState>();
     }
     catch (UnknownContractException)
     {
       container = BuildProjectContainer();
+      container.Resolve<MorpehWorldProvider>();
       container.Resolve<GatewayServerIngress>();
       container.Resolve<IGameStateMachine>().Enter<BootstrapState>();
     }

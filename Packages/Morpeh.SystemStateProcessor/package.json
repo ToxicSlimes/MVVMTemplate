@@ -1,0 +1,17 @@
+{
+  "name": "com.codewriter.morpeh.systemstateprocessor",
+  "displayName": "Morpeh.SystemStateProcessor",
+  "description": "Reactivity for Morpeh ECS",
+  "version": "2.0.0-patched.1",
+  "unity": "2021.3",
+  "license": "MIT",
+  "author": "CodeWriter (https://github.com/orgs/codewriter-packages)",
+  "dependencies": {
+    "com.scellecs.morpeh": "2024.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codewriter-packages/Morpeh.SystemStateProcessor.git",
+    "revision": "287ad413cc8cda7438f1c9e3356eff56a9fab454"
+  }
+}

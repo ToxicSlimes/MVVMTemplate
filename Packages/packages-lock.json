@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.actionik.morpeh.queries": {
+      "version": "https://github.com/actionk/Morpeh.Queries.git#bce804e45230a64d57d4199ad6b580f2e400e1d5",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "bce804e45230a64d57d4199ad6b580f2e400e1d5"
+    },
     "com.annulusgames.lit-motion": {
       "version": "https://github.com/AnnulusGames/LitMotion.git?path=src/LitMotion/Assets/LitMotion",
       "depth": 0,
@@ -19,6 +26,21 @@
         "com.annulusgames.lit-motion": "2.0.0"
       },
       "hash": "a174f0ace85831bc6790d497d2d683a64fc513dd"
+    },
+    "com.codewriter.morpeh.events": {
+      "version": "https://github.com/codewriter-packages/Morpeh.Events.git#a33c92ad9b4ce07f2f41d100785c4a3fe6dac60c",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a33c92ad9b4ce07f2f41d100785c4a3fe6dac60c"
+    },
+    "com.codewriter.morpeh.systemstateprocessor": {
+      "version": "file:Morpeh.SystemStateProcessor",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.scellecs.morpeh": "2024.1.1"
+      }
     },
     "com.codewriter.triinspector": {
       "version": "https://github.com/codewriter-packages/Tri-Inspector.git",
@@ -61,6 +83,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9"
+    },
+    "com.farco.morpeh.helpers": {
+      "version": "https://github.com/SH42913/morpeh.helpers.git?path=/Assets/Morpeh.Helpers#70bc7542d3e36c71b38b01818f12652078a97ca2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "70bc7542d3e36c71b38b01818f12652078a97ca2"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
@@ -116,6 +145,12 @@
       "source": "git",
       "dependencies": {},
       "hash": "d90dc4eed907a467abf0597c90210aed57fcccff"
+    },
+    "com.scellecs.morpeh": {
+      "version": "file:Morpeh/Scellecs.Morpeh",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -447,12 +482,30 @@
       },
       "url": "https://packages.unity.com"
     },
+    "jp.hadashikick.vcontainer": {
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#af7bd4ecabaf6ea3f9e58ecc4352dd5296e5ef29",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.mono-cecil": "1.10.1"
+      },
+      "hash": "af7bd4ecabaf6ea3f9e58ecc4352dd5296e5ef29"
+    },
     "net.tnrd.nsubstitute": {
       "version": "https://github.com/Thundernerd/Unity3D-NSubstitute.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "449712b25ae237eb5da2d958dd72a5432051e192"
+    },
+    "store.gameslab.morpeh.addons": {
+      "version": "file:Morpeh.Addons",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.scellecs.morpeh": "2024.1.1",
+        "jp.hadashikick.vcontainer": "1.13.2"
+      }
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

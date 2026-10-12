@@ -58,6 +58,7 @@ public static class InfrastructureBindings
 {
   public static ContainerBuilder AddCore(this ContainerBuilder builder)
   {
+    builder.AddMorpehEcs();
     builder.AddCoreStates();
     builder.AddModels();
     builder.AddCoreServices();

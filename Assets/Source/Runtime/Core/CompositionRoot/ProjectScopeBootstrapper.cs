@@ -7,9 +7,6 @@ public static class ProjectScopeBootstrapper
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void EnsureProjectScope()
     {
-#if UNITY_INCLUDE_TESTS
-        return;
-#else
         if (Object.FindFirstObjectByType<ProjectInstaller>() != null)
             return;
 
@@ -21,6 +18,5 @@ public static class ProjectScopeBootstrapper
         }
 
         Object.Instantiate(prefab);
-#endif
     }
 }

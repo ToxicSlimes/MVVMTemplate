@@ -1,0 +1,24 @@
+{
+  "name": "store.gameslab.morpeh.addons",
+  "author": "Gameslab",
+  "displayName": "Morpeh Addons",
+  "description": "A set of additional tools (addons) for Morpeh ECS, adding sugar for a more \"feature-friendly\" framework syntax.",
+  "unity": "2020.3",
+  "version": "2024.1.1-patched.1",
+  "keywords": [
+    "morpeh",
+    "ecs",
+    "feature",
+    "oneshot",
+    "oneframe"
+  ],
+  "dependencies": {
+    "com.scellecs.morpeh": "2024.1.1",
+    "jp.hadashikick.vcontainer": "1.13.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MexicanMan/morpeh.addons",
+    "revision": "a20ae2ad6bf96da9e27fa2ff8eec366e492652cc"
+  }
+}

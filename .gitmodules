@@ -1,0 +1,3 @@
+[submodule "Packages/Morpeh"]
+	path = Packages/Morpeh
+	url = https://github.com/scellecs/morpeh.git
