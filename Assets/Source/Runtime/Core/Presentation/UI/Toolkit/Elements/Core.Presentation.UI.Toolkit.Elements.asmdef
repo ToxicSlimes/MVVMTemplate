@@ -2,12 +2,12 @@
     "name": "Core.Presentation.UI.Toolkit.Elements",
     "rootNamespace": "",
     "references": [
-        "GUID:bcea71e9df9d040f4bbf671696609a19",
-        "GUID:0bf93224da45a47a2b1bef848214b27f",
-        "GUID:c1d2e3f4a5b60718293a4b5c6d7e8f90",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:593a5b492d29ac6448b1ebf7f035ef33",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "Core.Abstractions",
+        "Core.Domain",
+        "Core.Presentation.UI.Toolkit",
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.InputSystem",
         "GUID:UnityEngine.UIElementsModule"
     ],
     "includePlatforms": [],
@@ -20,5 +20,6 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+    "useGUIDs": false
 }

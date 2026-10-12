@@ -2,8 +2,8 @@
     "name": "Core.Mediator.Contracts",
     "rootNamespace": "Core.Infrastructure.Mediator",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:77221876cc6b8244180b96e320b1bcd4"
+        "UniTask",
+        "R3.Unity"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -13,5 +13,6 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": true
+    "noEngineReferences": true,
+    "useGUIDs": false
 }

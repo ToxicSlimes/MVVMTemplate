@@ -30,5 +30,6 @@
             "define": "FUSION_ENABLE_MPPM"
         }
     ],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+    "useGUIDs": false
 }

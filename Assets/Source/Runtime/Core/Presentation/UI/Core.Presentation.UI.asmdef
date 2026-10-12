@@ -2,18 +2,18 @@
     "name": "Core.Presentation.UI",
     "rootNamespace": "",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:77221876cc6b8244180b96e320b1bcd4",
-        "GUID:0bf93224da45a47a2b1bef848214b27f",
-        "GUID:bcea71e9df9d040f4bbf671696609a19",
-        "GUID:3b570a5146f9d4f0fa107ed4559471a3",
-        "GUID:3aa1866a824b5472da50fe142777d95f",
-        "GUID:4368f6075359c4611b74470590e3ec1f",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:92b20ed6554ee4597a42c090a1cbbae4",
-        "GUID:25c802232b4d7400eaf3066d3e800e38",
-        "GUID:1530a967b84cfb44dbdd5e8a1989764f",
-        "GUID:324caed91501a9c47a04ebfd87b68794"
+        "Unity.TextMeshPro",
+        "R3.Unity",
+        "Core.Domain",
+        "Core.Abstractions",
+        "LitMotion",
+        "LitMotion.Extensions",
+        "LitMotion.Animation",
+        "UniTask",
+        "Core.Application",
+        "Core.Mediator.Contracts",
+        "Reflex",
+        "TriInspector"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -25,5 +25,6 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+    "useGUIDs": false
 }

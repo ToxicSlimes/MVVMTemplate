@@ -2,10 +2,12 @@
     "name": "MissingReferenceTools.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:bcea71e9df9d040f4bbf671696609a19",
-        "GUID:8187a248641c846be8d9a8daebf60b54"
+        "Core.Abstractions",
+        "Core.Infrastructure.Configs"
     ],
-    "includePlatforms": ["Editor"],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
     "overrideReferences": true,
@@ -13,5 +15,6 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+    "useGUIDs": false
 }

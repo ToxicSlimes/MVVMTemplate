@@ -11,7 +11,7 @@ The upstream binaries generate bootstrap sources in every Unity assembly. That i
 
 Installed patched DLLs:
 
-- `Scellecs.Morpeh.SourceGenerator.AspectGenerator.dll`: SHA-256 `e0a27218fd9587593567eb5501da1cdd8a753c7b1fbd6474e2305cc020c28ed2`
-- `Scellecs.Morpeh.SourceGenerator.FilterSystemGenerator.dll`: SHA-256 `ebee65557fbb9074523e4ce7d498b0d09eb7cba070689b2a4c0aee6a4a1700e7`
+- `Scellecs.Morpeh.SourceGenerator.AspectGenerator.dll`: SHA-256 `7f12006131e98d68c35f3bfa08a68dfc6f181ec72ca8df3d385dfc76cc2700aa`
+- `Scellecs.Morpeh.SourceGenerator.FilterSystemGenerator.dll`: SHA-256 `1e2cf3ba7024c49455bf1060e735ec57f6602a1d5782406a46927e687c45edad`
 
-The DLLs are Editor-only managed plugins carrying the `RoslynAnalyzer` asset label. `UnityDependencies.zip` is intentionally not imported: Unity supplies its own Roslyn host assemblies.
+The DLLs are Editor-only managed plugins carrying the `RoslynAnalyzer` asset label. They are rebuilt from the pinned upstream commit for `netstandard2.0`, because Unity 6000 rejects Roslyn analyzers that reference `netstandard` 2.1. Roslyn dependency DLLs are included under `Roslyn/` so plugin reference validation succeeds when this folder is consumed as a UPM package.

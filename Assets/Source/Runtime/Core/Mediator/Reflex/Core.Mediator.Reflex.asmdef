@@ -2,10 +2,10 @@
     "name": "Core.Mediator.Reflex",
     "rootNamespace": "Core.Infrastructure.Mediator",
     "references": [
-        "GUID:25c802232b4d7400eaf3066d3e800e38",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:1530a967b84cfb44dbdd5e8a1989764f",
-        "GUID:5c01796d064528144a599661eaab93a6"
+        "Core.Mediator.Contracts",
+        "UniTask",
+        "Reflex",
+        "UniTask.Linq"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -15,5 +15,6 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+    "useGUIDs": false
 }

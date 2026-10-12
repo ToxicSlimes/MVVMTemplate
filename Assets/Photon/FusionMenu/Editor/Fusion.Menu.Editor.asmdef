@@ -26,5 +26,6 @@
             "define": "FUSION_ENABLE_TEXTMESHPRO"
         }
     ],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+    "useGUIDs": false
 }

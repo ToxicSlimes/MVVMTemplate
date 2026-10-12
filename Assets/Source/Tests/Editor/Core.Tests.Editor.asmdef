@@ -9,10 +9,10 @@
         "Core.Network.Abstractions",
         "Core.Network.FusionAdapter",
         "Core.CompositionRoot",
-        "GUID:3377deebfb0acde45876d12c6e3d27cc",
-        "GUID:aff314a8513966749982effcc0e6ee82",
-        "GUID:1530a967b84cfb44dbdd5e8a1989764f",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "Scellecs.Morpeh",
+        "Core.Infrastructure.Morpeh.SourceGeneration",
+        "Reflex",
+        "UniTask"
     ],
     "includePlatforms": [
         "Editor"
@@ -31,5 +31,6 @@
     "noEngineReferences": false,
     "optionalUnityReferences": [
         "TestAssemblies"
-    ]
+    ],
+    "useGUIDs": false
 }
