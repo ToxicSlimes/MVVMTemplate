@@ -15,6 +15,8 @@
     "com.unity.ai.navigation": "2.0.12",
     "com.unity.inputsystem": "1.19.0",
     "com.unity.localization": "1.5.4",
-    "com.unity.ugui": "2.0.0"
+    "com.unity.ugui": "2.0.0",
+    "com.cysharp.r3": "https://github.com/Cysharp/R3.git?path=src/R3.Unity/Assets/R3.Unity",
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
   }
 }
