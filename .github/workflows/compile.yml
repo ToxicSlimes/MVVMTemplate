@@ -13,6 +13,9 @@ jobs:
     env:
       UNITY_VERSION: 6000.6.2f1
     steps:
+      - name: Free disk space for the Unity image
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
