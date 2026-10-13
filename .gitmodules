@@ -1,3 +1,4 @@
 [submodule "Packages/Morpeh"]
 	path = Packages/Morpeh
-	url = https://github.com/scellecs/morpeh.git
+	url = https://github.com/ToxicSlimes/morpeh.git
+	branch = unity-6000.6
