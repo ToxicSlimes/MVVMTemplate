@@ -26,8 +26,7 @@ namespace Core.Network.FusionAdapter.Spawning
         public void InjectSceneObjects()
         {
             var sceneObjects = UnityEngine.Object.FindObjectsByType<NetworkObject>(
-                FindObjectsInactive.Include,
-                FindObjectsSortMode.None);
+                FindObjectsInactive.Include);
 
             for (var i = 0; i < sceneObjects.Length; i++)
             {
@@ -52,7 +51,7 @@ namespace Core.Network.FusionAdapter.Spawning
                 return;
             }
 
-            if (!_injected.Add(instance.gameObject.GetInstanceID()))
+            if (!_injected.Add(instance.gameObject.GetEntityId().GetHashCode()))
             {
                 return;
             }

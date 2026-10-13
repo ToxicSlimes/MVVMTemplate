@@ -1,0 +1,8 @@
+{
+  "name": "com.exitgames.photonrealtime",
+  "displayName": "Photon Realtime",
+  "version": "5.0.0-local",
+  "unity": "2021.3",
+  "description": "Local Photon Realtime sources bundled with MVVMTemplate/Fusion.",
+  "dependencies": {}
+}

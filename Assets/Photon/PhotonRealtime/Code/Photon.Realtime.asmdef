@@ -2,5 +2,11 @@
     "name": "Photon.Realtime",
     "references": [],
     "includePlatforms": [],
-    "excludePlatforms": []
+    "excludePlatforms": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "PhotonClient.dll"
+    ],
+    "autoReferenced": true,
+    "useGUIDs": false
 }

@@ -2,6 +2,7 @@
     "name": "MissingReferenceTools.Editor",
     "rootNamespace": "",
     "references": [
+        "Core.Presentation.UI",
         "Core.Abstractions",
         "Core.Infrastructure.Configs"
     ],

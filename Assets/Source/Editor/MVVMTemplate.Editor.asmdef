@@ -1,0 +1,37 @@
+{
+    "name": "MVVMTemplate.Editor",
+    "rootNamespace": "",
+    "references": [
+        "Core.Domain",
+        "Core.Application",
+        "Core.Infrastructure",
+        "Core.Infrastructure.Configs",
+        "Core.Presentation.MVVM",
+        "Core.Presentation.UI",
+        "Core.Presentation.UI.Toolkit",
+        "Core.Presentation.UI.Toolkit.Elements",
+        "MissingReferenceTools.Editor",
+        "Unity.Localization",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "UnityEditor.UIBuilderModule",
+        "UnityEngine.UIElementsModule",
+        "Core.Abstractions",
+        "Core.Network.FusionAdapter",
+        "Core.Network.Abstractions"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "NEVER_COMPILE_OPTIONAL_EDITOR_TOOLS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "useGUIDs": false
+}

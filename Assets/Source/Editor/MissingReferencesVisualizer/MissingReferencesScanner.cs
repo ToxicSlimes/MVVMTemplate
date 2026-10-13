@@ -86,7 +86,7 @@ namespace MissingReferencesVisualizer
                 {
                     if (prop.propertyType == SerializedPropertyType.ObjectReference)
                     {
-                        if (prop.objectReferenceValue == null && prop.objectReferenceInstanceIDValue != 0)
+                        if (prop.objectReferenceValue == null && prop.objectReferenceEntityIdValue.GetHashCode() != 0)
                         {
                             string path = GetHierarchyPath(go);
                             string componentType = comp.GetType().Name;

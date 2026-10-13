@@ -42,7 +42,7 @@ namespace MissingReferencesVisualizer
             if (property == null) return false;
             if (property.propertyType != SerializedPropertyType.ObjectReference) return false;
 
-            return property.objectReferenceValue == null && property.objectReferenceInstanceIDValue != 0;
+            return property.objectReferenceValue == null && property.objectReferenceEntityIdValue.GetHashCode() != 0;
         }
 
 

@@ -1,4 +1,4 @@
-#if UNITY_EDITOR && UNITY_2019_1_OR_NEWER
+#if UNITY_EDITOR && UNITY_2019_1_OR_NEWER && !UNITY_6000_3_OR_NEWER
 using System.Threading.Tasks;
 using Unity.IL2CPP.CompilerServices;
 using UnityEditor;

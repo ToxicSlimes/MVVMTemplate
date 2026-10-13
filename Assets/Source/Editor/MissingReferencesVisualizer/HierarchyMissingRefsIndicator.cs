@@ -14,13 +14,13 @@ namespace MissingReferencesVisualizer
 
         static HierarchyMissingRefsIndicator()
         {
-            EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyItemGUI;
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI += OnHierarchyItemGUI;
             warningIcon = EditorGUIUtility.IconContent("console.warnicon");
             
             isEnabled = EditorPrefs.GetBool(ENABLE_KEY, true);
         }
 
-        private static void OnHierarchyItemGUI(int instanceID, Rect selectionRect)
+        private static void OnHierarchyItemGUI(EntityId instanceID, Rect selectionRect)
         {
             if (!isEnabled) return;
 

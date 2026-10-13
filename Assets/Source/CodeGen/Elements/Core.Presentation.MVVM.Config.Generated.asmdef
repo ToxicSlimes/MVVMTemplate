@@ -1,0 +1,21 @@
+{
+    "name": "Core.Presentation.MVVM.Config.Generated",
+    "rootNamespace": "",
+    "references": [
+        "Core.Domain",
+        "Core.Presentation.MVVM",
+        "Core.Presentation.UI.Toolkit.Elements"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "NEVER_COMPILE_STALE_GENERATED_MAPPINGS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "useGUIDs": false
+}
