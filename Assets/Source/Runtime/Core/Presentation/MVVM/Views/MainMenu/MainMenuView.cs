@@ -13,11 +13,13 @@ namespace Core.Presentation.MVVM.Views.MainMenu
         [SerializeField] private BaseButton _inventoryButton;
 
         [Header("Actions")]
+        [SerializeField] private BaseButton _playButton;
         [SerializeField] private BaseButton _multiplayerButton;
         [SerializeField] private BaseButton _quitButton;
 
         protected override void BindPanel(ref DisposableBag disposables)
         {
+            Bind(_playButton, ViewModel.PlayCommand, ref disposables);
             Bind(_counterButton, ViewModel.CounterCommand, ref disposables);
             Bind(_settingsButton, ViewModel.SettingsCommand, ref disposables);
             Bind(_inventoryButton, ViewModel.InventoryCommand, ref disposables);

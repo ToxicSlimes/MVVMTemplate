@@ -25,6 +25,7 @@ namespace Core.Presentation.MVVM.ViewModels.MainMenu
 
         public ReactiveProperty<bool> IsVisible { get; }
 
+        public ReactiveCommand<Unit> PlayCommand { get; set; }
         public ReactiveCommand<Unit> CounterCommand { get; set; }
         public ReactiveCommand<Unit> SettingsCommand { get; set; }
         public ReactiveCommand<Unit> InventoryCommand { get; set; }
@@ -57,6 +58,9 @@ namespace Core.Presentation.MVVM.ViewModels.MainMenu
 
         private void SetupCommands()
         {
+            PlayCommand = new ReactiveCommand<Unit>(_ => OnPlay().Forget());
+            PlayCommand.AddTo(ref Disposables);
+
             CounterCommand = new ReactiveCommand<Unit>(_ => OnCounter().Forget());
             CounterCommand.AddTo(ref Disposables);
 
@@ -74,6 +78,11 @@ namespace Core.Presentation.MVVM.ViewModels.MainMenu
         }
 
         private void OnModelIsVisibleChanged(bool value) => IsVisible.Value = value;
+
+        private async UniTaskVoid OnPlay()
+        {
+            await _mediator.Send(Navigate.ToGame());
+        }
 
         private async UniTaskVoid OnCounter()
         {
