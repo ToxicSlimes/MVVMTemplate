@@ -21,6 +21,7 @@ using Core.Infrastructure.Configs.Services;
 using Core.Infrastructure.AssetManagement;
 using Core.Infrastructure.Services.Audio;
 using Core.Infrastructure.Services.Localization;
+using Core.Infrastructure.Services.Network;
 using Core.Presentation.MVVM;
 using Core.Presentation.MVVM.Animation;
 using Core.Presentation.MVVM.Canvas;
@@ -56,7 +57,7 @@ using ILogger = Core.Abstractions.Services.ILogger;
 
 public static class InfrastructureBindings
 {
-  public static ContainerBuilder AddCore(this ContainerBuilder builder)
+  public static ContainerBuilder AddCore(this ContainerBuilder builder, bool networkEnabled = true)
   {
     builder.AddMorpehEcs();
     builder.AddCoreStates();
@@ -66,11 +67,7 @@ public static class InfrastructureBindings
     builder.AddPopupServices();
     builder.AddInfrastructure();
     builder.AddSaveServices();
-    builder.AddFusionNetwork();
-    builder.AddSingleton(container => new PlayerAvatarSpawner(
-      container.Resolve<INetworkRunnerController>(),
-      container.Resolve<INetworkSpawner>(),
-      container.Resolve<INetworkSpawnPoints>()));
+    builder.AddNetwork(networkEnabled);
     builder.AddMediatorServices();
     builder.AddSingleton(container => new PauseInputPublisher(
       container.Resolve<IInputService>(),
@@ -78,6 +75,23 @@ public static class InfrastructureBindings
       container.Resolve<INetworkRunnerController>()));
     builder.AddViewModels();
     builder.AddElementServices();
+
+    return builder;
+  }
+
+  private static ContainerBuilder AddNetwork(this ContainerBuilder builder, bool enabled)
+  {
+    if (!enabled)
+    {
+      builder.AddSingleton<INetworkRunnerController>(_ => new NullNetworkRunnerController());
+      return builder;
+    }
+
+    builder.AddFusionNetwork();
+    builder.AddSingleton(container => new PlayerAvatarSpawner(
+      container.Resolve<INetworkRunnerController>(),
+      container.Resolve<INetworkSpawner>(),
+      container.Resolve<INetworkSpawnPoints>()));
 
     return builder;
   }

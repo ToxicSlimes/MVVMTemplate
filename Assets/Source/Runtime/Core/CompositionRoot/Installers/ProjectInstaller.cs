@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class ProjectInstaller : MonoBehaviour, IInstaller
 {
+  [SerializeField] private bool _networkEnabled = true;
+
   private Container _ownedFallbackContainer;
 
   private void Start()
@@ -15,16 +17,11 @@ public class ProjectInstaller : MonoBehaviour, IInstaller
 
     try
     {
-      container.Resolve<MorpehWorldProvider>();
-      container.Resolve<GatewayServerIngress>();
-      container.Resolve<IGameStateMachine>().Enter<BootstrapState>();
+      Boot(container);
     }
     catch (UnknownContractException)
     {
-      container = BuildProjectContainer();
-      container.Resolve<MorpehWorldProvider>();
-      container.Resolve<GatewayServerIngress>();
-      container.Resolve<IGameStateMachine>().Enter<BootstrapState>();
+      Boot(BuildProjectContainer());
     }
 
     DontDestroyOnLoad(this);
@@ -32,7 +29,19 @@ public class ProjectInstaller : MonoBehaviour, IInstaller
 
   public void InstallBindings(ContainerBuilder containerBuilder)
   {
-    containerBuilder.AddCore();
+    containerBuilder.AddCore(_networkEnabled);
+  }
+
+  private static void Boot(Container container)
+  {
+    container.Resolve<MorpehWorldProvider>();
+
+    if (container.HasBinding<GatewayServerIngress>())
+    {
+      container.Resolve<GatewayServerIngress>();
+    }
+
+    container.Resolve<IGameStateMachine>().Enter<BootstrapState>();
   }
 
   private void OnDestroy()
@@ -45,7 +54,7 @@ public class ProjectInstaller : MonoBehaviour, IInstaller
   {
     _ownedFallbackContainer?.Dispose();
     _ownedFallbackContainer = new ContainerBuilder()
-      .AddCore()
+      .AddCore(_networkEnabled)
       .Build();
 
     return _ownedFallbackContainer;
