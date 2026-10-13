@@ -53,10 +53,14 @@ public class ProjectInstaller : MonoBehaviour, IInstaller
   private Container BuildProjectContainer()
   {
     _ownedFallbackContainer?.Dispose();
-    _ownedFallbackContainer = new ContainerBuilder()
-      .AddCore(_networkEnabled)
-      .Build();
 
+    var builder = new ContainerBuilder();
+    foreach (var installer in GetComponentsInChildren<IInstaller>())
+    {
+      installer.InstallBindings(builder);
+    }
+
+    _ownedFallbackContainer = builder.Build();
     return _ownedFallbackContainer;
   }
 }
