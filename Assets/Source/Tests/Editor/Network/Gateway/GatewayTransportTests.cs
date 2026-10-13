@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,6 +11,7 @@ using Core.Network.Abstractions.Services;
 using Core.Network.Abstractions.Types;
 using Cysharp.Threading.Tasks;
 using NUnit.Framework;
+using UnityEngine.TestTools;
 
 namespace Core.Tests.Network.Gateway
 {
@@ -90,8 +92,8 @@ namespace Core.Tests.Network.Gateway
             Assert.That(messenger.SentMessages, Is.Empty);
         }
 
-        [Test]
-        public async Task ServerIngress_RoutesRequestWithRemotePeerFeature()
+        [UnityTest]
+        public IEnumerator ServerIngress_RoutesRequestWithRemotePeerFeature() => UniTask.ToCoroutine(async () =>
         {
             var messenger = new FakeMessenger();
             var codec = new FakePayloadCodec();
@@ -122,10 +124,10 @@ namespace Core.Tests.Network.Gateway
             Assert.That(sent.Target.Player, Is.EqualTo(sender));
             Assert.That(sent.Message.IsSuccess, Is.True);
             Assert.That(response.Value, Is.EqualTo("hello!"));
-        }
+        });
 
-        [Test]
-        public async Task ServerIngress_UnknownRouteReturnsFailure()
+        [UnityTest]
+        public IEnumerator ServerIngress_UnknownRouteReturnsFailure() => UniTask.ToCoroutine(async () =>
         {
             var messenger = new FakeMessenger();
             var codec = new FakePayloadCodec();
@@ -143,10 +145,10 @@ namespace Core.Tests.Network.Gateway
             Assert.That(response.ErrorCode, Is.EqualTo("route_not_found"));
             Assert.That(response.Error, Is.EqualTo("Gateway route is not available"));
             Assert.That(response.Error, Does.Not.Contain("missing"));
-        }
+        });
 
-        [Test]
-        public async Task ServerIngress_NonAuthorityDoesNotExecuteRequest()
+        [UnityTest]
+        public IEnumerator ServerIngress_NonAuthorityDoesNotExecuteRequest() => UniTask.ToCoroutine(async () =>
         {
             var messenger = new FakeMessenger();
             var codec = new FakePayloadCodec();
@@ -179,10 +181,10 @@ namespace Core.Tests.Network.Gateway
 
             Assert.That(executed, Is.False);
             Assert.That(messenger.SentMessages, Is.Empty);
-        }
+        });
 
-        [Test]
-        public async Task ServerIngress_RejectsPayloadRouteThatDiffersFromEnvelope()
+        [UnityTest]
+        public IEnumerator ServerIngress_RejectsPayloadRouteThatDiffersFromEnvelope() => UniTask.ToCoroutine(async () =>
         {
             var messenger = new FakeMessenger();
             var codec = new FakePayloadCodec();
@@ -206,10 +208,10 @@ namespace Core.Tests.Network.Gateway
             Assert.That(response.IsSuccess, Is.False);
             Assert.That(response.ErrorCode, Is.EqualTo("invalid_request"));
             Assert.That(response.Error, Is.EqualTo("Gateway request is invalid"));
-        }
+        });
 
-        [Test]
-        public async Task ServerIngress_DisposeCancelsInFlightHandlerAndSuppressesReply()
+        [UnityTest]
+        public IEnumerator ServerIngress_DisposeCancelsInFlightHandlerAndSuppressesReply() => UniTask.ToCoroutine(async () =>
         {
             var messenger = new FakeMessenger();
             var codec = new FakePayloadCodec();
@@ -238,7 +240,7 @@ namespace Core.Tests.Network.Gateway
 
             Assert.That(cancellationObserved, Is.True);
             Assert.That(messenger.SentMessages, Is.Empty);
-        }
+        });
 
         private static GatewayServerIngress CreateIngress(
             FakeMessenger messenger,
