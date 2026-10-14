@@ -20,8 +20,6 @@ namespace Core.Infrastructure.Services.Config
     {
       _assetProvider = assetProvider;
       _logger = logger;
-
-      PreloadAllConfigsAsync().Forget();
     }
 
     public async UniTask<T> GetConfigAsync<T>() where T : ConfigBase
