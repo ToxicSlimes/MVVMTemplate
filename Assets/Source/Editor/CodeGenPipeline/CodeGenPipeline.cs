@@ -6,6 +6,7 @@ using Core.Infrastructure.Configs.Services;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.Assemblies;
 
 namespace Core.Editor.CodeGenPipeline
 {
@@ -90,7 +91,7 @@ namespace Core.Editor.CodeGenPipeline
 
         private static int CountToolkitBindingIssues()
         {
-            var validatorType = AppDomain.CurrentDomain.GetAssemblies()
+            var validatorType = CurrentAssemblies.GetLoadedAssemblies()
                 .SelectMany(a =>
                 {
                     try { return a.GetTypes(); }
@@ -117,7 +118,7 @@ namespace Core.Editor.CodeGenPipeline
 
         private static int CountScreenSpecIssues()
         {
-            var importerType = AppDomain.CurrentDomain.GetAssemblies()
+            var importerType = CurrentAssemblies.GetLoadedAssemblies()
                 .SelectMany(a =>
                 {
                     try { return a.GetTypes(); }
@@ -171,7 +172,7 @@ namespace Core.Editor.CodeGenPipeline
 
         private static int CountLocalizationIssues()
         {
-            var validatorType = AppDomain.CurrentDomain.GetAssemblies()
+            var validatorType = CurrentAssemblies.GetLoadedAssemblies()
                 .SelectMany(a =>
                 {
                     try { return a.GetTypes(); }
@@ -218,7 +219,7 @@ namespace Core.Editor.CodeGenPipeline
 
         private static bool TryInvokeGenerate(string fullTypeName)
         {
-            var scannerType = AppDomain.CurrentDomain.GetAssemblies()
+            var scannerType = CurrentAssemblies.GetLoadedAssemblies()
                 .Where(a => !a.IsDynamic)
                 .SelectMany(a =>
                 {
