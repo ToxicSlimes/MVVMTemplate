@@ -12,7 +12,8 @@
         "Scellecs.Morpeh",
         "Core.Infrastructure.Morpeh.SourceGeneration",
         "Reflex",
-        "UniTask"
+        "UniTask",
+        "Core.Infrastructure.Morpeh"
     ],
     "includePlatforms": [
         "Editor"

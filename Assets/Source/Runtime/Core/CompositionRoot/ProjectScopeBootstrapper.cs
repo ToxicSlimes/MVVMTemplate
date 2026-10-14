@@ -7,7 +7,7 @@ public static class ProjectScopeBootstrapper
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void EnsureProjectScope()
     {
-        if (Object.FindFirstObjectByType<ProjectInstaller>() != null)
+        if (Object.FindAnyObjectByType<ProjectInstaller>() != null)
             return;
 
         var prefab = Resources.Load<GameObject>(ProjectScopeResourcePath);

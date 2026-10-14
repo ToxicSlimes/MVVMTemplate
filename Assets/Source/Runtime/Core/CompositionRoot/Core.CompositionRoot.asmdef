@@ -18,7 +18,8 @@
         "Core.Network.FusionAdapter",
         "Core.Presentation.UI.Toolkit",
         "Core.Presentation.UI.Toolkit.Elements",
-        "Core.Presentation.UI"
+        "Core.Presentation.UI",
+        "Core.Infrastructure.Morpeh"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

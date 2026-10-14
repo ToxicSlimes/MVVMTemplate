@@ -1,5 +1,6 @@
 using System.Reflection;
 using Core.DependencyInjection.Bindings;
+using Core.Infrastructure.Morpeh;
 using NUnit.Framework;
 using Reflex.Core;
 using Scellecs.Morpeh;
@@ -36,6 +37,21 @@ namespace Core.Tests.CompositionRoot
         }
 
         [Test]
+        public void Repository_ProvidesNamedAccessToWorldData()
+        {
+            World.Create();
+            var repository = new TestRepository(new MorpehWorldProvider());
+
+            var entity = repository.Create(42);
+
+            Assert.That(repository.Values.Get(entity).Value, Is.EqualTo(42));
+
+            repository.Remove(entity);
+
+            Assert.That(entity.IsNullOrDisposed(), Is.True);
+        }
+
+        [Test]
         public void EnsureProjectScope_WhenInstallerIsMissing_InstantiatesProjectScope()
         {
             var existingInstaller = Object.FindFirstObjectByType<ProjectInstaller>();
@@ -63,6 +79,31 @@ namespace Core.Tests.CompositionRoot
                     Object.DestroyImmediate(installer.gameObject);
                 }
             }
+        }
+
+        private struct TestComponent : IComponent
+        {
+            public int Value;
+        }
+
+        private sealed class TestRepository : MorpehRepository
+        {
+            public TestRepository(MorpehWorldProvider worldProvider)
+                : base(worldProvider)
+            {
+                Values = GetStash<TestComponent>();
+            }
+
+            public Stash<TestComponent> Values { get; }
+
+            public Entity Create(int value)
+            {
+                var entity = CreateEntity();
+                Values.Add(entity, new TestComponent { Value = value });
+                return entity;
+            }
+
+            public void Remove(Entity entity) => RemoveEntity(entity);
         }
     }
 }

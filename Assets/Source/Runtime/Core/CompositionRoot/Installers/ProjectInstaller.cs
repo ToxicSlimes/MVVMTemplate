@@ -1,6 +1,7 @@
 using Core.Abstractions.StateMachines;
 using Core.Network.Abstractions.Gateway.Transport;
 using Core.DependencyInjection.Bindings;
+using Core.Infrastructure.Morpeh;
 using Reflex.Core;
 using Reflex.Exceptions;
 using UnityEngine;

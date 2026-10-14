@@ -1,4 +1,4 @@
-using Core.DependencyInjection.Bindings;
+using Core.Infrastructure.Morpeh;
 using NUnit.Framework;
 using Reflex.Attributes;
 using Reflex.Core;
