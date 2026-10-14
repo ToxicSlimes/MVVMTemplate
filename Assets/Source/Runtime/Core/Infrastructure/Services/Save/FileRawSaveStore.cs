@@ -66,7 +66,6 @@ namespace Core.Infrastructure.Services.Save
                             ReadCopy(EnsureDerivedPathSafe(path), pathKey),
                             ReadCopy(EnsureDerivedPathSafe(path + BackupSuffix), pathKey + BackupSuffix));
                     },
-                    configureAwait: false,
                     cancellationToken: ct);
                 return OperationResult<RawSaveCopies>.Success(copies);
             }
@@ -115,7 +114,6 @@ namespace Core.Infrastructure.Services.Save
                             EnsureDerivedPathSafe(path + BackupSuffix),
                             data);
                     },
-                    configureAwait: false,
                     cancellationToken: ct);
                 return OperationResult.Success();
             }
@@ -155,7 +153,6 @@ namespace Core.Infrastructure.Services.Save
                             EnsureDerivedPathSafe(path + BackupSuffix),
                             EnsureDerivedPathSafe(path + TempSuffix));
                     },
-                    configureAwait: false,
                     cancellationToken: ct);
                 return OperationResult.Success();
             }
