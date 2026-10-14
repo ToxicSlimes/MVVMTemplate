@@ -70,7 +70,6 @@ namespace Core.Presentation.MVVM.Services
                 _viewCache[viewType] = view;
             }
             AssignSortingOrder(view);
-            await ShowViewInternal(view);
 
             lock (_sync)
             {
@@ -80,6 +79,8 @@ namespace Core.Presentation.MVVM.Services
                 }
                 Interlocked.Exchange(ref _currentView, view);
             }
+
+            await ShowViewInternal(view);
             ViewShown?.Invoke(view);
             return view;
         }
@@ -106,7 +107,6 @@ namespace Core.Presentation.MVVM.Services
             }
             
             AssignSortingOrder(view);
-            await ShowViewInternal(view);
 
             lock (_sync)
             {
@@ -117,7 +117,8 @@ namespace Core.Presentation.MVVM.Services
                 Interlocked.Exchange(ref _currentView, view);
                 _viewParams[view] = effectiveParams;
             }
-            
+
+            await ShowViewInternal(view);
             ViewShown?.Invoke(view);
             return view;
         }
@@ -256,7 +257,6 @@ namespace Core.Presentation.MVVM.Services
             }
 
             AssignSortingOrder(view);
-            await ShowViewInternalWithParams(view, showParams);
 
             lock (_sync)
             {
@@ -268,6 +268,7 @@ namespace Core.Presentation.MVVM.Services
                 _viewParams[view] = showParams;
             }
 
+            await ShowViewInternalWithParams(view, showParams);
             ViewShown?.Invoke(view);
 
             if (showParams.OnShown != null)
@@ -380,8 +381,7 @@ namespace Core.Presentation.MVVM.Services
             }
 
             AssignSortingOrder(previousView);
-            await ShowViewInternal(previousView);
-            
+
             lock (_sync)
             {
                 if (!_activeViews.Contains(previousView))
@@ -390,7 +390,8 @@ namespace Core.Presentation.MVVM.Services
                 }
                 Interlocked.Exchange(ref _currentView, previousView);
             }
-            
+
+            await ShowViewInternal(previousView);
             ViewShown?.Invoke(previousView);
         }
 
@@ -514,6 +515,8 @@ namespace Core.Presentation.MVVM.Services
 
         private async UniTask HideViewInternal(IView view, bool addToHistory)
         {
+            _viewAnimator.StopAnimation(view);
+
             if (addToHistory)
             {
                 lock (_sync)
@@ -551,10 +554,14 @@ namespace Core.Presentation.MVVM.Services
                     component.gameObject.SetActive(true);
                     break;
             }
+
+            ThrowIfHiddenWhileShowing(view);
         }
 
         private async UniTask HideViewInternalWithParams(IView view, bool addToHistory, ViewShowParams showParams)
         {
+            _viewAnimator.StopAnimation(view);
+
             if (showParams.OnHidden != null)
             {
                 await showParams.OnHidden.Invoke();
@@ -602,6 +609,19 @@ namespace Core.Presentation.MVVM.Services
                 case UnityEngine.Component component:
                     component.gameObject.SetActive(true);
                     break;
+            }
+
+            ThrowIfHiddenWhileShowing(view);
+        }
+
+        private void ThrowIfHiddenWhileShowing(IView view)
+        {
+            lock (_sync)
+            {
+                if (!_activeViews.Contains(view))
+                {
+                    throw new OperationCanceledException();
+                }
             }
         }
     }

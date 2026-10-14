@@ -67,6 +67,24 @@ namespace Core.Tests.Infrastructure.MVVM
             Assert.That(service.CurrentView, Is.SameAs(view));
         }
 
+        [Test]
+        public async Task HideViewAsync_WhileViewIsShowing_HidesItAndCancelsTheShow()
+        {
+            var showAnimation = new UniTaskCompletionSource();
+            var view = new FakeView(new FirstViewModel(), showAnimation: showAnimation);
+            var factory = new FakeViewFactory(view);
+            var service = new ViewService(factory, new FakeViewAnimator());
+
+            var show = service.ShowAsync<FirstViewModel>();
+            var hidden = await service.HideViewAsync<FirstViewModel>();
+            showAnimation.TrySetResult();
+
+            Assert.That(hidden, Is.True);
+            Assert.That(show.Status, Is.EqualTo(UniTaskStatus.Canceled));
+            Assert.That(service.CurrentView, Is.Null);
+            Assert.That(factory.Destroyed, Is.EqualTo(new[] { view }));
+        }
+
         private sealed class FirstViewModel : DisposableObject
         {
         }
@@ -77,17 +95,20 @@ namespace Core.Tests.Infrastructure.MVVM
 
         private sealed class FakeView : IView, IShowable, IHideable
         {
+            private readonly UniTaskCompletionSource _showAnimation;
+
             public bool IsPersistent { get; }
             public IViewModel ViewModel { get; }
             public int HideCount { get; private set; }
 
-            public FakeView(IViewModel viewModel, bool isPersistent = false)
+            public FakeView(IViewModel viewModel, bool isPersistent = false, UniTaskCompletionSource showAnimation = null)
             {
                 ViewModel = viewModel;
                 IsPersistent = isPersistent;
+                _showAnimation = showAnimation;
             }
 
-            public UniTask ShowAsync() => UniTask.CompletedTask;
+            public UniTask ShowAsync() => _showAnimation?.Task ?? UniTask.CompletedTask;
 
             public UniTask HideAsync()
             {
