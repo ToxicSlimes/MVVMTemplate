@@ -8,6 +8,7 @@ using Core.Abstractions.MVVM.Views;
 using Core.Presentation.MVVM.Services;
 using Cysharp.Threading.Tasks;
 using NUnit.Framework;
+using R3;
 using UnityEngine;
 
 namespace Core.Tests.Infrastructure.MVVM
@@ -85,6 +86,29 @@ namespace Core.Tests.Infrastructure.MVVM
             Assert.That(factory.Destroyed, Is.EqualTo(new[] { view }));
         }
 
+        [Test]
+        public async Task ShowAsync_TypedViewAfterHide_CreatesNewViewTrackedByViewModelType()
+        {
+            var hidden = CreateBindableView();
+            var shown = CreateBindableView();
+            var service = new ViewService(new FakeViewFactory(hidden, shown), new FakeViewAnimator());
+
+            await service.ShowAsync<FakeBindableView, FirstViewModel>();
+            await service.HideAsync(hidden);
+            var view = await service.ShowAsync<FakeBindableView, FirstViewModel>();
+
+            Assert.That(view, Is.SameAs(shown));
+            Assert.That(service.GetViewModel<FirstViewModel>(), Is.SameAs(shown.ViewModel));
+            Assert.That(await service.HideViewAsync<FirstViewModel>(), Is.True);
+        }
+
+        private static FakeBindableView CreateBindableView()
+        {
+            var view = new GameObject(nameof(FakeBindableView)).AddComponent<FakeBindableView>();
+            view.BindTo(new FirstViewModel());
+            return view;
+        }
+
         private sealed class FirstViewModel : DisposableObject
         {
         }
@@ -121,6 +145,13 @@ namespace Core.Tests.Infrastructure.MVVM
             }
         }
 
+        private sealed class FakeBindableView : BindableView<FirstViewModel>
+        {
+            protected override void OnBind(ref DisposableBag disposables)
+            {
+            }
+        }
+
         private sealed class FakeViewFactory : IViewFactory
         {
             private readonly Queue<IView> _views;
@@ -137,7 +168,7 @@ namespace Core.Tests.Infrastructure.MVVM
 
             public UniTask<TView> CreateAsync<TView, TViewModel>(Transform parent = null)
                 where TView : BindableView<TViewModel>
-                where TViewModel : DisposableObject => throw new NotSupportedException();
+                where TViewModel : DisposableObject => UniTask.FromResult((TView)_views.Dequeue());
 
             public UniTask<TView> CreateAsync<TView, TViewModel>(string address, Transform parent = null)
                 where TView : BindableView<TViewModel>
@@ -147,7 +178,14 @@ namespace Core.Tests.Infrastructure.MVVM
                 where TView : BindableView<TViewModel>
                 where TViewModel : DisposableObject => throw new NotSupportedException();
 
-            public void Destroy(IView view) => Destroyed.Add(view);
+            public void Destroy(IView view)
+            {
+                Destroyed.Add(view);
+                if (view is Component component)
+                {
+                    UnityEngine.Object.DestroyImmediate(component.gameObject);
+                }
+            }
         }
 
         private sealed class FakeViewAnimator : IViewAnimator

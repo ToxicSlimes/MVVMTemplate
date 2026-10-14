@@ -21,6 +21,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
+        "R3.dll",
         "Newtonsoft.Json.dll"
     ],
     "autoReferenced": false,

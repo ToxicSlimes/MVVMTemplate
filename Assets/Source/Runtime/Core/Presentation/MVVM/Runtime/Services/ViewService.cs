@@ -52,7 +52,7 @@ namespace Core.Presentation.MVVM.Services
 
         public async UniTask<TView> ShowAsync<TView, TViewModel>(bool hideCurrentView = true) where TView : BindableView<TViewModel> where TViewModel : DisposableObject
         {
-            var viewType = typeof(TView);
+            var viewModelType = typeof(TViewModel);
 
             if (hideCurrentView && _currentView != null && !_currentView.IsPersistent)
             {
@@ -60,14 +60,14 @@ namespace Core.Presentation.MVVM.Services
             }
 
             TView view;
-            if (_viewCache.TryGetValue(viewType, out var cachedView))
+            if (_viewCache.TryGetValue(viewModelType, out var cachedView))
             {
                 view = (TView)cachedView;
             }
             else
             {
                 view = await _viewFactory.CreateAsync<TView, TViewModel>();
-                _viewCache[viewType] = view;
+                _viewCache[viewModelType] = view;
             }
             AssignSortingOrder(view);
 
@@ -165,7 +165,7 @@ namespace Core.Presentation.MVVM.Services
                 throw new ArgumentNullException(nameof(showParams));
             }
 
-            var viewType = typeof(TView);
+            var viewModelType = typeof(TViewModel);
 
             switch (showParams.DisplayMode)
             {
@@ -246,14 +246,14 @@ namespace Core.Presentation.MVVM.Services
             }
 
             TView view;
-            if (_viewCache.TryGetValue(viewType, out var cachedView))
+            if (_viewCache.TryGetValue(viewModelType, out var cachedView))
             {
                 view = (TView)cachedView;
             }
             else
             {
                 view = await _viewFactory.CreateAsync<TView, TViewModel>(showParams);
-                _viewCache[viewType] = view;
+                _viewCache[viewModelType] = view;
             }
 
             AssignSortingOrder(view);
@@ -325,13 +325,9 @@ namespace Core.Presentation.MVVM.Services
                 var newCurrent = _activeViews.Count > 0 ? _activeViews.Peek() : null;
                 Interlocked.Exchange(ref _currentView, newCurrent);
 
-                if (!view.IsPersistent)
+                if (!view.IsPersistent && view.ViewModel != null)
                 {
-                    var viewModelType = view.ViewModel?.GetType();
-                    if (viewModelType != null)
-                        _viewCache.TryRemove(viewModelType, out _);
-                    else
-                        _viewCache.TryRemove(view.GetType(), out _);
+                    _viewCache.TryRemove(view.ViewModel.GetType(), out _);
                 }
             }
 
