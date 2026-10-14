@@ -293,31 +293,17 @@ namespace Core.Presentation.MVVM.Services
             {
                 return;
             }
-            bool wasActive;
-            ViewShowParams viewParams = null;
+            ViewShowParams viewParams;
 
             lock (_sync)
             {
-                wasActive = _activeViews.Contains(view);
+                if (!_activeViews.Contains(view))
+                {
+                    return;
+                }
+
                 _viewParams.TryGetValue(view, out viewParams);
-            }
 
-            if (!wasActive)
-            {
-                return;
-            }
-
-            if (viewParams != null)
-            {
-                await HideViewInternalWithParams(view, false, viewParams);
-            }
-            else
-            {
-                await HideViewInternal(view, false);
-            }
-
-            lock (_sync)
-            {
                 var buffer = new Stack<IView>();
                 while (_activeViews.Count > 0)
                 {
@@ -337,18 +323,30 @@ namespace Core.Presentation.MVVM.Services
 
                 var newCurrent = _activeViews.Count > 0 ? _activeViews.Peek() : null;
                 Interlocked.Exchange(ref _currentView, newCurrent);
+
+                if (!view.IsPersistent)
+                {
+                    var viewModelType = view.ViewModel?.GetType();
+                    if (viewModelType != null)
+                        _viewCache.TryRemove(viewModelType, out _);
+                    else
+                        _viewCache.TryRemove(view.GetType(), out _);
+                }
+            }
+
+            if (viewParams != null)
+            {
+                await HideViewInternalWithParams(view, false, viewParams);
+            }
+            else
+            {
+                await HideViewInternal(view, false);
             }
 
             ReleaseSortingOrder(view);
             ViewHidden?.Invoke(view);
             if (!view.IsPersistent)
             {
-                var viewModelType = view.ViewModel?.GetType();
-                if (viewModelType != null)
-                    _viewCache.TryRemove(viewModelType, out _);
-                else
-                    _viewCache.TryRemove(view.GetType(), out _);
-
                 _viewFactory.Destroy(view);
             }
         }

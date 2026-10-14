@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Abstractions.MVVM.Animation;
 using Core.Abstractions.MVVM.Factory;
@@ -26,6 +27,27 @@ namespace Core.Tests.Infrastructure.MVVM
 
             Assert.That(second.HideCount, Is.EqualTo(1));
             Assert.That(service.CurrentView, Is.SameAs(first));
+        }
+
+        [Test]
+        public async Task ShowAsync_WhileSameViewIsHiding_KeepsNewViewAndDestroysOldOnce()
+        {
+            var hiding = new FakeView(new FirstViewModel());
+            var shown = new FakeView(new FirstViewModel());
+            var factory = new FakeViewFactory(hiding, shown);
+            var hideAnimation = new UniTaskCompletionSource();
+            var service = new ViewService(factory, new FakeViewAnimator(hideAnimation));
+
+            await service.ShowAsync<FirstViewModel>();
+            var firstHide = service.HideViewAsync<FirstViewModel>();
+            var secondHide = service.HideViewAsync<FirstViewModel>();
+            await service.ShowAsync<FirstViewModel>();
+            hideAnimation.TrySetResult();
+            await UniTask.WhenAll(firstHide, secondHide);
+
+            Assert.That(service.CurrentView, Is.SameAs(shown));
+            Assert.That(service.ActiveViews, Is.EquivalentTo(new[] { shown }));
+            Assert.That(factory.Destroyed, Is.EqualTo(new[] { hiding }));
         }
 
         private sealed class FirstViewModel : DisposableObject
@@ -62,20 +84,17 @@ namespace Core.Tests.Infrastructure.MVVM
 
         private sealed class FakeViewFactory : IViewFactory
         {
-            private readonly IView _first;
-            private readonly IView _second;
+            private readonly Queue<IView> _views;
 
-            public FakeViewFactory(IView first, IView second)
+            public List<IView> Destroyed { get; } = new();
+
+            public FakeViewFactory(params IView[] views)
             {
-                _first = first;
-                _second = second;
+                _views = new Queue<IView>(views);
             }
 
-            public UniTask<IView> CreateAsync(Type viewModelType, ViewShowParams showParams = null)
-            {
-                var view = viewModelType == typeof(FirstViewModel) ? _first : _second;
-                return UniTask.FromResult(view);
-            }
+            public UniTask<IView> CreateAsync(Type viewModelType, ViewShowParams showParams = null) =>
+                UniTask.FromResult(_views.Dequeue());
 
             public UniTask<TView> CreateAsync<TView, TViewModel>(Transform parent = null)
                 where TView : BindableView<TViewModel>
@@ -89,13 +108,18 @@ namespace Core.Tests.Infrastructure.MVVM
                 where TView : BindableView<TViewModel>
                 where TViewModel : DisposableObject => throw new NotSupportedException();
 
-            public void Destroy(IView view)
-            {
-            }
+            public void Destroy(IView view) => Destroyed.Add(view);
         }
 
         private sealed class FakeViewAnimator : IViewAnimator
         {
+            private readonly UniTaskCompletionSource _hideAnimation;
+
+            public FakeViewAnimator(UniTaskCompletionSource hideAnimation = null)
+            {
+                _hideAnimation = hideAnimation;
+            }
+
             public UniTask AnimateShowAsync(
                 IView view,
                 ViewTransitionStyle transitionStyle,
@@ -104,7 +128,7 @@ namespace Core.Tests.Infrastructure.MVVM
             public UniTask AnimateHideAsync(
                 IView view,
                 ViewTransitionStyle transitionStyle,
-                float? duration = null) => UniTask.CompletedTask;
+                float? duration = null) => _hideAnimation?.Task ?? UniTask.CompletedTask;
 
             public void StopAnimation(IView view)
             {
