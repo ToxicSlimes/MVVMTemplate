@@ -537,8 +537,10 @@ namespace Core.Presentation.MVVM.Services
             }
         }
 
-        private static async UniTask ShowViewInternal(IView view)
+        private async UniTask ShowViewInternal(IView view)
         {
+            _viewAnimator.StopAnimation(view);
+
             switch (view)
             {
                 case IShowable showable:
@@ -588,6 +590,7 @@ namespace Core.Presentation.MVVM.Services
 
         private async UniTask ShowViewInternalWithParams(IView view, ViewShowParams showParams)
         {
+            _viewAnimator.StopAnimation(view);
             await _viewAnimator.AnimateShowAsync(view, showParams.TransitionStyle, showParams.AnimationDuration);
 
             switch (view)

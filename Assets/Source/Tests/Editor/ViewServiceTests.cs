@@ -50,6 +50,23 @@ namespace Core.Tests.Infrastructure.MVVM
             Assert.That(factory.Destroyed, Is.EqualTo(new[] { hiding }));
         }
 
+        [Test]
+        public async Task ShowAsync_WhilePersistentViewIsHiding_CancelsTheHide()
+        {
+            var view = new FakeView(new FirstViewModel(), isPersistent: true);
+            var hideAnimation = new UniTaskCompletionSource();
+            var service = new ViewService(new FakeViewFactory(view), new FakeViewAnimator(hideAnimation));
+
+            await service.ShowAsync<FirstViewModel>();
+            var hide = service.HideViewAsync<FirstViewModel>();
+            await service.ShowAsync<FirstViewModel>();
+            hideAnimation.TrySetResult();
+
+            Assert.That(hide.Status, Is.EqualTo(UniTaskStatus.Canceled));
+            Assert.That(view.HideCount, Is.Zero);
+            Assert.That(service.CurrentView, Is.SameAs(view));
+        }
+
         private sealed class FirstViewModel : DisposableObject
         {
         }
@@ -60,13 +77,14 @@ namespace Core.Tests.Infrastructure.MVVM
 
         private sealed class FakeView : IView, IShowable, IHideable
         {
-            public bool IsPersistent => false;
+            public bool IsPersistent { get; }
             public IViewModel ViewModel { get; }
             public int HideCount { get; private set; }
 
-            public FakeView(IViewModel viewModel)
+            public FakeView(IViewModel viewModel, bool isPersistent = false)
             {
                 ViewModel = viewModel;
+                IsPersistent = isPersistent;
             }
 
             public UniTask ShowAsync() => UniTask.CompletedTask;
@@ -114,6 +132,7 @@ namespace Core.Tests.Infrastructure.MVVM
         private sealed class FakeViewAnimator : IViewAnimator
         {
             private readonly UniTaskCompletionSource _hideAnimation;
+            private IView _hidingView;
 
             public FakeViewAnimator(UniTaskCompletionSource hideAnimation = null)
             {
@@ -128,10 +147,18 @@ namespace Core.Tests.Infrastructure.MVVM
             public UniTask AnimateHideAsync(
                 IView view,
                 ViewTransitionStyle transitionStyle,
-                float? duration = null) => _hideAnimation?.Task ?? UniTask.CompletedTask;
+                float? duration = null)
+            {
+                _hidingView = view;
+                return _hideAnimation?.Task ?? UniTask.CompletedTask;
+            }
 
             public void StopAnimation(IView view)
             {
+                if (ReferenceEquals(view, _hidingView))
+                {
+                    _hideAnimation?.TrySetCanceled();
+                }
             }
         }
     }
