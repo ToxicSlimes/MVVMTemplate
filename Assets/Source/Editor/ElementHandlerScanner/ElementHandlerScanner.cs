@@ -5,8 +5,10 @@ using System.IO;
 using System.Linq;
 using Core.Abstractions.MVVM.Elements;
 using Core.Domain.Models.Elements;
+using Core.Editor.CodeGenPipeline;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assemblies;
 
 namespace Core.Editor.ElementHandlerScanner
 {
@@ -26,13 +28,19 @@ namespace Core.Editor.ElementHandlerScanner
         {
             var elements = DiscoverElements();
 
-            if (elements.Count == 0)
+            if (elements.Count == 0 && !ConsumerCodeGenContext.IsPackageInstallation)
             {
                 Debug.LogWarning("[ElementScanner] No BindableElement<TData> classes found.");
                 return false;
             }
 
             var code = GenerateRegistrationCode(elements);
+
+            if (ConsumerCodeGenContext.IsPackageInstallation)
+            {
+                return ConsumerCodeGenContext.WriteConsumerPart(
+                    "ElementHandlers", code, "RegisterElementHandlers", "RegisterElementHandlers", "MediatorBuilder");
+            }
 
             EnsureDirectoryExists(Path.GetDirectoryName(OutputPath));
 
@@ -49,13 +57,14 @@ namespace Core.Editor.ElementHandlerScanner
         private static List<ElementInfo> DiscoverElements()
         {
             var result = new List<ElementInfo>();
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = CurrentAssemblies.GetLoadedAssemblies();
             var bindableElementType = typeof(BindableElement<>);
 
             foreach (var assembly in assemblies)
             {
                 if (assembly.IsDynamic) continue;
                 if (IsTestAssembly(assembly)) continue;
+                if (!ConsumerCodeGenContext.ShouldScanAssembly(assembly)) continue;
 
                 try
                 {
@@ -167,9 +176,12 @@ namespace Core.Editor.ElementHandlerScanner
             sb.AppendLine("        public static MediatorBuilder RegisterElementHandlers(this MediatorBuilder builder)");
             sb.AppendLine("        {");
 
-            sb.AppendLine("            builder.AddHandler<DestroyElementCommand, Nothing, DestroyElementHandler>();");
-            sb.AppendLine("            builder.AddHandler<ClearContainerCommand, Nothing, ClearContainerHandler>();");
-            sb.AppendLine();
+            if (!ConsumerCodeGenContext.IsPackageInstallation)
+            {
+                sb.AppendLine("            builder.AddHandler<DestroyElementCommand, Nothing, DestroyElementHandler>();");
+                sb.AppendLine("            builder.AddHandler<ClearContainerCommand, Nothing, ClearContainerHandler>();");
+                sb.AppendLine();
+            }
 
             foreach (var e in elements)
             {

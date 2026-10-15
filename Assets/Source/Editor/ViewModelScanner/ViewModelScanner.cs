@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Core.Editor.CodeGenPipeline;
 using UnityEditor;
 using UnityEngine;
 
@@ -28,13 +29,19 @@ namespace Core.Editor.ViewModelScanner
         {
             var viewModels = DiscoverViewModels();
 
-            if (viewModels.Count == 0)
+            if (viewModels.Count == 0 && !ConsumerCodeGenContext.IsPackageInstallation)
             {
                 Debug.LogWarning("[ViewModelScanner] No classes with [GenerateViewCommands] found.");
                 return false;
             }
 
             var code = GenerateRegistrationCode(viewModels);
+
+            if (ConsumerCodeGenContext.IsPackageInstallation)
+            {
+                return ConsumerCodeGenContext.WriteConsumerPart(
+                    "ViewModels", code, "RegisterViewModels", "RegisterViewModels", "ContainerBuilder");
+            }
 
             EnsureDirectoryExists(Path.GetDirectoryName(OutputPath));
 
@@ -57,6 +64,7 @@ namespace Core.Editor.ViewModelScanner
             {
                 if (assembly.IsDynamic) continue;
                 if (IsTestAssembly(assembly)) continue;
+                if (!ConsumerCodeGenContext.ShouldScanAssembly(assembly)) continue;
 
                 Type[] types;
                 try
@@ -160,6 +168,7 @@ namespace Core.Editor.ViewModelScanner
             {
                 if (assembly.IsDynamic) continue;
                 if (IsTestAssembly(assembly)) continue;
+                if (!ConsumerCodeGenContext.ShouldScanAssembly(assembly)) continue;
 
                 Type[] types;
                 try

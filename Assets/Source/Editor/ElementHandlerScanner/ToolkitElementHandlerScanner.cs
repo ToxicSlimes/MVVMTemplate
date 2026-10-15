@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using Core.Abstractions.MVVM.Elements;
 using Core.Domain.Models.Elements;
+using Core.Editor.CodeGenPipeline;
 using Core.UI.Toolkit.Elements;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assemblies;
 
 namespace Core.Editor.ElementHandlerScanner
 {
@@ -20,13 +22,20 @@ namespace Core.Editor.ElementHandlerScanner
         {
             var elements = DiscoverElements();
 
-            if (elements.Count == 0)
+            if (elements.Count == 0 && !ConsumerCodeGenContext.IsPackageInstallation)
             {
                 Debug.LogWarning("[ToolkitElementScanner] No ToolkitBindableElement<TData> classes found.");
                 return false;
             }
 
             var code = GenerateRegistrationCode(elements);
+
+            if (ConsumerCodeGenContext.IsPackageInstallation)
+            {
+                return ConsumerCodeGenContext.WriteConsumerPart(
+                    "ToolkitElementHandlers", code, "RegisterToolkitElementHandlers", "RegisterToolkitElementHandlers", "MediatorBuilder");
+            }
+
             EnsureDirectoryExists(Path.GetDirectoryName(OutputPath));
 
             if (!WriteIfChanged(OutputPath, code))
@@ -44,10 +53,11 @@ namespace Core.Editor.ElementHandlerScanner
             var result = new List<ElementInfo>();
             var bindableElementType = typeof(ToolkitBindableElement<>);
 
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in CurrentAssemblies.GetLoadedAssemblies())
             {
                 if (assembly.IsDynamic) continue;
                 if (IsTestAssembly(assembly)) continue;
+                if (!ConsumerCodeGenContext.ShouldScanAssembly(assembly)) continue;
 
                 try
                 {

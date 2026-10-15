@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Core.Editor.CodeGenPipeline;
 using UnityEditor;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace Core.Editor.ViewHandlerScanner
 
         public static bool Generate()
         {
-            var sourceDir = Path.Combine(Application.dataPath, "Source/Runtime");
+            var sourceDir = ConsumerCodeGenContext.SourceRoot;
             if (!Directory.Exists(sourceDir))
             {
                 Debug.LogWarning("[ViewHandlerScanner] Source/Runtime directory not found.");
@@ -41,6 +42,7 @@ namespace Core.Editor.ViewHandlerScanner
 
             var csFiles = Directory.GetFiles(sourceDir, "*.cs", SearchOption.AllDirectories)
                 .Where(f => !f.Contains("/Generated/") && !f.Contains("\\Generated\\") &&
+                            !f.Contains("/MVVMTemplate.Generated/") && !f.Contains("\\MVVMTemplate.Generated\\") &&
                             !f.Contains("/Tests/") && !f.Contains("\\Tests\\"))
                 .ToList();
 
@@ -65,7 +67,8 @@ namespace Core.Editor.ViewHandlerScanner
                 }
             }
 
-            if (embeddedViewModels.Count == 0 && modalViews.Count == 0)
+            if (embeddedViewModels.Count == 0 && modalViews.Count == 0 &&
+                !ConsumerCodeGenContext.IsPackageInstallation)
             {
                 Debug.LogWarning("[ViewHandlerScanner] No view handler usages found.");
                 return false;
@@ -75,6 +78,12 @@ namespace Core.Editor.ViewHandlerScanner
             var resolvedModal = ResolveModalTypes(modalViews);
 
             var code = GenerateCode(resolvedEmbedded, resolvedModal);
+
+            if (ConsumerCodeGenContext.IsPackageInstallation)
+            {
+                return ConsumerCodeGenContext.WriteConsumerPart(
+                    "ViewHandlers", code, "RegisterViewHandlers", "RegisterViewHandlers", "MediatorBuilder");
+            }
 
             EnsureDirectoryExists(Path.GetDirectoryName(OutputPath));
 
@@ -150,7 +159,11 @@ namespace Core.Editor.ViewHandlerScanner
                 {
                     if (type.Name != typeName) continue;
 
-                    if (IsProjectAssembly(asmName))
+                    if (ConsumerCodeGenContext.IsPackageInstallation &&
+                        ConsumerCodeGenContext.ShouldScanAssembly(assembly))
+                        return type;
+
+                    if (!ConsumerCodeGenContext.IsPackageInstallation && IsProjectAssembly(asmName))
                         return type;
 
                     fallback ??= type;

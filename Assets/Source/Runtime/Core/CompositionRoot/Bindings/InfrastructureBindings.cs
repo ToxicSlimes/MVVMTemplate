@@ -10,6 +10,7 @@ using Core.Abstractions.Services;
 using Core.Abstractions.AssetManagement;
 using Core.Abstractions.Config;
 using Core.DependencyInjection.Bindings;
+using Core.DependencyInjection;
 using Core.DependencyInjection.Extensions;
 using Core.Abstractions.MVVM.Animation;
 using Core.Abstractions.MVVM.Canvas;
@@ -59,6 +60,8 @@ public static class InfrastructureBindings
 {
   public static ContainerBuilder AddCore(this ContainerBuilder builder, bool networkEnabled = true)
   {
+    var contributors = CoreRegistrationContributors.Discover();
+
     builder.AddMorpehEcs();
     builder.AddCoreStates();
     builder.AddModels();
@@ -68,12 +71,13 @@ public static class InfrastructureBindings
     builder.AddInfrastructure();
     builder.AddSaveServices();
     builder.AddNetwork(networkEnabled);
-    builder.AddMediatorServices();
+    builder.AddMediatorServices(contributors);
     builder.AddSingleton(container => new PauseInputPublisher(
       container.Resolve<IInputService>(),
       container.Resolve<IMediator>(),
       container.Resolve<INetworkRunnerController>()));
     builder.AddViewModels();
+    CoreRegistrationContributors.ApplyBindings(builder, contributors);
     builder.AddElementServices();
 
     return builder;
@@ -96,7 +100,9 @@ public static class InfrastructureBindings
     return builder;
   }
 
-  private static ContainerBuilder AddMediatorServices(this ContainerBuilder builder)
+  private static ContainerBuilder AddMediatorServices(
+    this ContainerBuilder builder,
+    IReadOnlyList<ICoreRegistrationContributor> contributors)
   {
     builder.AddMediator(mediator =>
     {
@@ -106,6 +112,8 @@ public static class InfrastructureBindings
         .RegisterAllHandlers()
         .RegisterElementHandlers()
         .RegisterToolkitElementHandlers();
+
+      CoreRegistrationContributors.ApplyMediator(mediator, contributors);
     });
 
     return builder;

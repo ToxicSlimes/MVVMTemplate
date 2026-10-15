@@ -2,7 +2,8 @@
     "name": "Core.Editor.Mediator",
     "rootNamespace": "Core.Editor.Mediator",
     "references": [
-        "Core.Mediator.Contracts"
+        "Core.Mediator.Contracts",
+        "CodeGenPipeline.Editor"
     ],
     "includePlatforms": [
         "Editor"

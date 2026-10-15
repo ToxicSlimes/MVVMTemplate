@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Core.Abstractions.Services.GameData;
+using Core.Editor.CodeGenPipeline;
 using UnityEditor;
 using UnityEngine;
 
@@ -32,6 +33,12 @@ namespace Core.Editor.StorageMapperScanner
 
             var code = GenerateRegistrationCode(mappers);
 
+            if (ConsumerCodeGenContext.IsPackageInstallation)
+            {
+                return ConsumerCodeGenContext.WriteConsumerPart(
+                    "StorageMappers", code, "RegisterStorageMappers", "RegisterStorageMappers", "ContainerBuilder");
+            }
+
             EnsureDirectoryExists(Path.GetDirectoryName(OutputPath));
 
             if (!WriteIfChanged(OutputPath, code))
@@ -54,6 +61,7 @@ namespace Core.Editor.StorageMapperScanner
             {
                 if (assembly.IsDynamic) continue;
                 if (IsTestAssembly(assembly)) continue;
+                if (!ConsumerCodeGenContext.ShouldScanAssembly(assembly)) continue;
 
                 try
                 {

@@ -10,6 +10,7 @@ namespace Core.Editor.Mediator
     using Core.Mediator.Abstractions;
     using Core.Mediator.Attributes;
     using Core.Mediator.Handlers;
+    using Core.Editor.CodeGenPipeline;
     using UnityEditor;
     using UnityEngine;
 
@@ -30,6 +31,12 @@ namespace Core.Editor.Mediator
         {
             var scanResult = ScanAllHandlers();
             var code = GenerateRegistrationCode(scanResult);
+
+            if (ConsumerCodeGenContext.IsPackageInstallation)
+            {
+                return ConsumerCodeGenContext.WriteConsumerPart(
+                    "MediatorHandlers", code, "RegisterAllHandlers", "RegisterMediatorHandlers", "MediatorBuilder");
+            }
 
             if (!WriteIfChanged(code))
             {
@@ -77,7 +84,7 @@ namespace Core.Editor.Mediator
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(a => !a.IsDynamic && !a.FullName.StartsWith("Unity") &&
                             !a.FullName.StartsWith("System") && !a.FullName.StartsWith("mscorlib") &&
-                            !IsTestAssembly(a))
+                            !IsTestAssembly(a) && ConsumerCodeGenContext.ShouldScanAssembly(a))
                 .ToList();
 
             foreach (var assembly in assemblies)
@@ -188,7 +195,7 @@ namespace Core.Editor.Mediator
 
         private static void ScanGenericHandlerUsages(ScanResult result)
         {
-            var sourceDir = Path.Combine(Application.dataPath, "Source/Runtime");
+            var sourceDir = ConsumerCodeGenContext.SourceRoot;
             if (!Directory.Exists(sourceDir))
             {
                 Debug.LogWarning("[MediatorScanner] Source/Runtime directory not found");
@@ -205,6 +212,7 @@ namespace Core.Editor.Mediator
 
             var csFiles = Directory.GetFiles(sourceDir, "*.cs", SearchOption.AllDirectories)
                 .Where(f => !f.Contains("/Generated/") && !f.Contains("\\Generated\\") &&
+                            !f.Contains("/MVVMTemplate.Generated/") && !f.Contains("\\MVVMTemplate.Generated\\") &&
                             !f.Contains("/Tests/") && !f.Contains("\\Tests\\"))
                 .ToList();
 

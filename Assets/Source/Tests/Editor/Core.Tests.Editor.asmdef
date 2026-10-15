@@ -13,7 +13,9 @@
         "Core.Infrastructure.Morpeh.SourceGeneration",
         "Reflex",
         "UniTask",
-        "Core.Infrastructure.Morpeh"
+        "Core.Infrastructure.Morpeh",
+        "Core.Mediator.Reflex",
+        "CodeGenPipeline.Editor"
     ],
     "includePlatforms": [
         "Editor"

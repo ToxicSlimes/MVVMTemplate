@@ -42,16 +42,27 @@ namespace Core.Editor.CodeGenPipeline
         {
             var issues = 0;
 
-            if (!System.IO.File.Exists("Assets/Source/Runtime/Core/CompositionRoot/Generated/ViewModelRegistration.generated.cs"))
+            if (ConsumerCodeGenContext.IsPackageInstallation)
             {
-                Debug.LogError("[Template] Missing ViewModelRegistration.generated.cs — run Tools → MVVM → Scan & Generate All.");
-                issues++;
+                if (!System.IO.File.Exists(ConsumerCodeGenContext.RegistrationPath))
+                {
+                    Debug.LogError("[Template] Missing consumer registration — run Tools → MVVM → Scan & Generate All.");
+                    issues++;
+                }
             }
-
-            if (!System.IO.File.Exists("Assets/Source/Runtime/Core/CompositionRoot/Generated/MediatorHandlerRegistration.generated.cs"))
+            else
             {
-                Debug.LogError("[Template] Missing MediatorHandlerRegistration.generated.cs — run Tools → Mediator → Scan & Generate Handler Registration.");
-                issues++;
+                if (!System.IO.File.Exists("Assets/Source/Runtime/Core/CompositionRoot/Generated/ViewModelRegistration.generated.cs"))
+                {
+                    Debug.LogError("[Template] Missing ViewModelRegistration.generated.cs — run Tools → MVVM → Scan & Generate All.");
+                    issues++;
+                }
+
+                if (!System.IO.File.Exists("Assets/Source/Runtime/Core/CompositionRoot/Generated/MediatorHandlerRegistration.generated.cs"))
+                {
+                    Debug.LogError("[Template] Missing MediatorHandlerRegistration.generated.cs — run Tools → Mediator → Scan & Generate Handler Registration.");
+                    issues++;
+                }
             }
 
             var bootstrapScene = AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/Source/Assets/Scenes/BootstrapScene.unity");
@@ -248,9 +259,15 @@ namespace Core.Editor.CodeGenPipeline
                 var result = method.Invoke(null, null);
                 return result is true;
             }
+            catch (TargetInvocationException ex)
+            {
+                var cause = ex.InnerException ?? ex;
+                Debug.LogError($"[CodeGenPipeline] Error invoking {fullTypeName}: {cause}");
+                return false;
+            }
             catch (Exception ex)
             {
-                Debug.LogError($"[CodeGenPipeline] Error invoking {fullTypeName}: {ex.Message}");
+                Debug.LogError($"[CodeGenPipeline] Error invoking {fullTypeName}: {ex}");
                 return false;
             }
         }

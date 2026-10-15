@@ -4,7 +4,8 @@
     "references": [
         "Core.Infrastructure",
         "Core.Domain",
-        "Core.Abstractions"
+        "Core.Abstractions",
+        "CodeGenPipeline.Editor"
     ],
     "includePlatforms": [
         "Editor"

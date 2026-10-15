@@ -9,7 +9,8 @@
         "Unity.TextMeshPro",
         "UniTask.TextMeshPro",
         "Core.Presentation.UI.Toolkit.Elements",
-        "Core.Presentation.UI.Toolkit"
+        "Core.Presentation.UI.Toolkit",
+        "CodeGenPipeline.Editor"
     ],
     "includePlatforms": [
         "Editor"

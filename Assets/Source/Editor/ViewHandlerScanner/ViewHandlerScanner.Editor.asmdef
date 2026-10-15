@@ -1,7 +1,9 @@
 {
     "name": "ViewHandlerScanner.Editor",
     "rootNamespace": "Core.Editor.ViewHandlerScanner",
-    "references": [],
+    "references": [
+        "CodeGenPipeline.Editor"
+    ],
     "includePlatforms": [
         "Editor"
     ],
