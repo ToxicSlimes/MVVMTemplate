@@ -325,9 +325,15 @@ namespace Core.Presentation.MVVM.Services
                 var newCurrent = _activeViews.Count > 0 ? _activeViews.Peek() : null;
                 Interlocked.Exchange(ref _currentView, newCurrent);
 
-                if (!view.IsPersistent && view.ViewModel != null)
+                if (!view.IsPersistent)
                 {
-                    _viewCache.TryRemove(view.ViewModel.GetType(), out _);
+                    foreach (var cached in _viewCache)
+                    {
+                        if (ReferenceEquals(cached.Value, view))
+                        {
+                            _viewCache.TryRemove(cached.Key, out _);
+                        }
+                    }
                 }
             }
 
