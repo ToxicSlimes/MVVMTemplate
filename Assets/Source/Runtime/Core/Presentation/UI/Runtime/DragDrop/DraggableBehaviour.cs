@@ -121,11 +121,13 @@ namespace Core.Presentation.UI.DragDrop
             _ghostRect.localScale = Vector3.one * 0.9f;
             CancelMotion();
             _activeMotion = LMotion.Create(0.9f, 1f, 0.15f)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(Ease.OutBack)
                 .BindToLocalScaleX(_ghostRect)
                 .AddTo(_ghost);
 
             LMotion.Create(0.9f, 1f, 0.15f)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(Ease.OutBack)
                 .BindToLocalScaleY(_ghostRect)
                 .AddTo(_ghost);
@@ -138,6 +140,7 @@ namespace Core.Presentation.UI.DragDrop
 
             CancelMotion();
             _activeMotion = LMotion.Create(startPos, endPos, 0.25f)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(Ease.OutCubic)
                 .WithOnComplete(() =>
                 {

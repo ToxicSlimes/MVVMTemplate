@@ -133,6 +133,7 @@ namespace Core.Presentation.MVVM.Animation
             canvasGroup.blocksRaycasts = to > 0.5f;
 
             return LMotion.Create(from, to, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(ease)
                 .WithOnComplete(() =>
                 {
@@ -156,6 +157,7 @@ namespace Core.Presentation.MVVM.Animation
             transform.localScale = Vector3.one * from;
 
             return LMotion.Create(from, to, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(ease)
                 .WithOnComplete(() => transform.localScale = Vector3.one * to)
                 .Bind(s => transform.localScale = Vector3.one * s);
@@ -175,6 +177,7 @@ namespace Core.Presentation.MVVM.Animation
             var ease = useBounce ? Ease.OutBack : Ease.OutCubic;
 
             return LMotion.Create(startPosition, endPosition, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(ease)
                 .WithOnComplete(() => rectTransform.anchoredPosition = endPosition)
                 .Bind(pos => rectTransform.anchoredPosition = pos);
@@ -192,6 +195,7 @@ namespace Core.Presentation.MVVM.Animation
             var ease = useBounce ? Ease.InBack : Ease.InCubic;
 
             return LMotion.Create(startPosition, endPosition, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(ease)
                 .WithOnComplete(() => rectTransform.anchoredPosition = endPosition)
                 .Bind(pos => rectTransform.anchoredPosition = pos);

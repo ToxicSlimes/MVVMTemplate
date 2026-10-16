@@ -31,6 +31,7 @@ namespace Core.UI.Controls
 
             var txt = this;
             _activeHandle = LMotion.Create(0, length, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .Bind(txt, static (charCount, target) => target.maxVisibleCharacters = charCount);
 
             await _activeHandle.ToUniTask(ct);
@@ -48,6 +49,7 @@ namespace Core.UI.Controls
 
             var txt = this;
             _activeHandle = LMotion.Create(from, to, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(Ease.OutQuad)
                 .Bind(txt, static (val, target) => target.SetText("{0}", val));
 

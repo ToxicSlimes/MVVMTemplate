@@ -78,6 +78,7 @@ namespace Core.UI.Controls
             var from = _checkmark.localScale.x;
             var to = on ? 1f : 0f;
             _checkmarkHandle = LMotion.Create(from, to, 0.15f)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(on ? Ease.OutBack : Ease.InQuad)
                 .Bind(_checkmark, static (s, target) => target.localScale = new Vector3(s, s, 1f));
         }

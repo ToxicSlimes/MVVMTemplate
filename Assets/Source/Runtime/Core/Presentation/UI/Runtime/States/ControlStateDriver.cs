@@ -54,6 +54,7 @@ namespace Core.Presentation.UI.States
                 var currentScale = _rectTransform.localScale.x;
                 var rt = _rectTransform;
                 _scaleHandle = LMotion.Create(currentScale, targetScale, duration)
+                    .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                     .WithEase(Ease.OutQuad)
                     .Bind(rt, static (s, target) => target.localScale = new Vector3(s, s, 1f));
             }
@@ -63,6 +64,7 @@ namespace Core.Presentation.UI.States
                 var currentAlpha = _canvasGroup.alpha;
                 var cg = _canvasGroup;
                 _alphaHandle = LMotion.Create(currentAlpha, targetAlpha, duration)
+                    .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                     .WithEase(Ease.OutQuad)
                     .Bind(cg, static (a, target) => target.alpha = a);
             }
@@ -72,6 +74,7 @@ namespace Core.Presentation.UI.States
                 var currentColor = _graphic.color;
                 var g = _graphic;
                 _colorHandle = LMotion.Create(currentColor, targetColor, duration)
+                    .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                     .WithEase(Ease.OutQuad)
                     .Bind(g, static (c, target) => target.color = c);
             }

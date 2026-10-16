@@ -193,6 +193,7 @@ namespace Core.Presentation.MVVM.Animation
         {
             _canvasGroup.alpha = from;
             var handle = LMotion.Create(from, to, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(ease)
                 .Bind(a => { if (_canvasGroup != null) _canvasGroup.alpha = a; });
             _activeHandles.Add(handle);
@@ -203,6 +204,7 @@ namespace Core.Presentation.MVVM.Animation
         {
             transform.localScale = Vector3.one * from;
             var handle = LMotion.Create(from, to, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(ease)
                 .Bind(s => transform.localScale = Vector3.one * s);
             _activeHandles.Add(handle);
@@ -217,6 +219,7 @@ namespace Core.Presentation.MVVM.Animation
             _rect.anchoredPosition = _originalPosition + offset;
 
             var handle = LMotion.Create(_rect.anchoredPosition, _originalPosition, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(ease)
                 .Bind(p => { if (_rect != null) _rect.anchoredPosition = p; });
             _activeHandles.Add(handle);
@@ -230,6 +233,7 @@ namespace Core.Presentation.MVVM.Animation
             var target = _originalPosition + GetSlideOffset(style);
 
             var handle = LMotion.Create(_rect.anchoredPosition, target, duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(ease)
                 .Bind(p => { if (_rect != null) _rect.anchoredPosition = p; });
             _activeHandles.Add(handle);

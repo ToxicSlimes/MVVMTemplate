@@ -49,6 +49,7 @@ namespace Core.Infrastructure.Popup
                 if (canvasGroup == null) return default;
                 canvasGroup.alpha = from;
                 return LMotion.Create(from, to, duration)
+                    .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                     .WithEase(ease)
                     .WithDelay(_globalDelay)
                     .Bind(alpha =>
@@ -70,6 +71,7 @@ namespace Core.Infrastructure.Popup
                 if (rectTransform == null) return default;
                 rectTransform.localScale = Vector3.one * from;
                 return LMotion.Create(from, to, duration)
+                    .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                     .WithEase(ease)
                     .WithDelay(_globalDelay)
                     .Bind(s =>
@@ -102,6 +104,7 @@ namespace Core.Infrastructure.Popup
             {
                 if (rectTransform == null) return default;
                 return LMotion.Create(from, to, duration)
+                    .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                     .WithEase(ease)
                     .WithDelay(_globalDelay)
                     .Bind(offset =>

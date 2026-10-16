@@ -54,6 +54,7 @@ namespace Core.Presentation.UI.Effects
             var rt = _rectTransform;
 
             _activeHandle = LMotion.Create(1f, target, effect.Duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(effect.Easing)
                 .WithLoops(2, LoopType.Yoyo)
                 .Bind(rt, static (s, t) => t.localScale = new Vector3(s, s, 1f));
@@ -83,6 +84,7 @@ namespace Core.Presentation.UI.Effects
         {
             if (_canvasGroup == null) return;
             _activeHandle = LMotion.Create(1f, 0f, effect.Duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(effect.Easing)
                 .WithLoops(2, LoopType.Yoyo)
                 .BindToAlpha(_canvasGroup);
@@ -95,6 +97,7 @@ namespace Core.Presentation.UI.Effects
             var original = graphic.color;
             var flash = Color.white;
             _activeHandle = LMotion.Create(original, flash, effect.Duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithEase(effect.Easing)
                 .WithLoops(2, LoopType.Yoyo)
                 .BindToColor(graphic);
