@@ -132,7 +132,7 @@ namespace Core.Presentation.MVVM.Animation
                     {
                         var groupTasks = group.Select(action).ToList();
                         UniTask.WhenAll(groupTasks).Forget();
-                        await UniTask.Delay(TimeSpan.FromSeconds(_staggerDelay), cancellationToken: destroyCancellationToken);
+                        await UniTask.Delay(TimeSpan.FromSeconds(_staggerDelay), ignoreTimeScale: true, cancellationToken: destroyCancellationToken);
                     }
                     // ждём последнюю группу
                     await UniTask.WaitWhile(() => panels.Any(p => p.IsAnimating), cancellationToken: destroyCancellationToken);

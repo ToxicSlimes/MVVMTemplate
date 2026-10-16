@@ -86,7 +86,7 @@ namespace Core.Presentation.MVVM.Animation
             await RunHooksAsync(AnimationPhase.BeforeShow);
 
             if (ShowDelay > 0)
-                await UniTask.Delay(TimeSpan.FromSeconds(ShowDelay), cancellationToken: destroyCancellationToken);
+                await UniTask.Delay(TimeSpan.FromSeconds(ShowDelay), ignoreTimeScale: true, cancellationToken: destroyCancellationToken);
 
             var tasks = new List<UniTask>();
 
@@ -122,7 +122,7 @@ namespace Core.Presentation.MVVM.Animation
             await RunHooksAsync(AnimationPhase.BeforeHide);
 
             if (HideDelay > 0)
-                await UniTask.Delay(TimeSpan.FromSeconds(HideDelay), cancellationToken: destroyCancellationToken);
+                await UniTask.Delay(TimeSpan.FromSeconds(HideDelay), ignoreTimeScale: true, cancellationToken: destroyCancellationToken);
 
             _canvasGroup.interactable = false;
 

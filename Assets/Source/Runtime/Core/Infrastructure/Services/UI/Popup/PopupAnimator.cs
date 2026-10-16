@@ -131,6 +131,7 @@ namespace Core.Infrastructure.Popup
             {
                 if (rectTransform == null) return default;
                 return LMotion.Punch.Create(Vector3.zero, strength, duration)
+                    .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                     .WithFrequency(frequency)
                     .WithDampingRatio(dampingRatio)
                     .WithDelay(_globalDelay)
@@ -148,6 +149,7 @@ namespace Core.Infrastructure.Popup
             {
                 if (rectTransform == null) return default;
                 return LMotion.Shake.Create(Vector3.zero, strength, duration)
+                    .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                     .WithFrequency(frequency)
                     .WithDampingRatio(dampingRatio)
                     .WithDelay(_globalDelay)

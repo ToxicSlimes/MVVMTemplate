@@ -169,7 +169,7 @@ namespace Core.Abstractions.Popup
             try
             {
                 if (_showDelay > 0)
-                    await UniTask.Delay(TimeSpan.FromSeconds(_showDelay), cancellationToken: token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(_showDelay), ignoreTimeScale: true, cancellationToken: token);
 
                 if (_isPointerOver)
                     await ShowAsync();
@@ -185,7 +185,7 @@ namespace Core.Abstractions.Popup
             try
             {
                 if (_hideDelay > 0)
-                    await UniTask.Delay(TimeSpan.FromSeconds(_hideDelay), cancellationToken: token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(_hideDelay), ignoreTimeScale: true, cancellationToken: token);
 
                 if (!_isPointerOver)
                     await HideAsync();

@@ -65,6 +65,7 @@ namespace Core.Presentation.UI.Effects
             if (_rectTransform == null) return;
             var strength = Vector3.one * effect.Strength;
             _activeHandle = LMotion.Shake.Create(Vector3.zero, strength, effect.Duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithFrequency(effect.Frequency)
                 .WithDampingRatio(effect.DampingRatio)
                 .BindToLocalPosition(_rectTransform);
@@ -75,6 +76,7 @@ namespace Core.Presentation.UI.Effects
             if (_rectTransform == null) return;
             var strength = Vector3.one * effect.Strength;
             _activeHandle = LMotion.Punch.Create(Vector3.zero, strength, effect.Duration)
+                .WithScheduler(MotionScheduler.UpdateIgnoreTimeScale)
                 .WithFrequency(effect.Frequency)
                 .WithDampingRatio(effect.DampingRatio)
                 .BindToLocalPosition(_rectTransform);

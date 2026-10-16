@@ -229,7 +229,7 @@ namespace Core.Infrastructure.Popup
             }
 
             if (showParams.ShowDelay > 0)
-                await UniTask.Delay(TimeSpan.FromSeconds(showParams.ShowDelay));
+                await UniTask.Delay(TimeSpan.FromSeconds(showParams.ShowDelay), ignoreTimeScale: true);
 
             _activePopups.Add(popup);
             _popupPoolMap[popup] = pool;
