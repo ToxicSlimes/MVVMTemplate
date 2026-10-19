@@ -1,4 +1,4 @@
-using Core.Abstractions.Services.Input;
+﻿using Core.Abstractions.Services.Input;
 using R3;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -145,11 +145,13 @@ namespace Core.Infrastructure.Services.Input
         /// Курсор прячется вместе с включением игрового ввода, а не отдельным вызовом: обзор
         /// поворачивается мышью, и видимый курсор в этот момент упирался бы в край экрана,
         /// обрывая поворот. Оба состояния меняются в одном месте, чтобы не разъезжались.
+        /// На мобильных курсор не блокируется: стилус и мышь Android приходят в UI указателем,
+        /// и заблокированный курсор прибил бы каждое их нажатие к центру экрана.
         /// </remarks>
         public void EnablePlayerActions()
         {
             _actions.Player.Enable();
-            SetCursorLocked(true);
+            SetCursorLocked(!UnityEngine.Application.isMobilePlatform);
         }
 
         public void DisablePlayerActions() => _actions.Player.Disable();
