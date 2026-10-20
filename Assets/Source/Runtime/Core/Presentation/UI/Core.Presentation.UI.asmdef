@@ -13,7 +13,9 @@
         "Core.Application",
         "Core.Mediator.Contracts",
         "Reflex",
-        "TriInspector"
+        "TriInspector",
+        "Unity.InputSystem",
+        "Unity.Localization"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
