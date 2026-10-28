@@ -112,6 +112,11 @@ namespace Core.Presentation.MVVM.Models.Settings
             QualitySettings.SetQualityLevel((int)Video.Quality);
             QualitySettings.vSyncCount = Video.IsVSync ? 1 : 0;
             UnityEngine.Application.targetFrameRate = (int)Video.TargetFps;
+            if (UnityEngine.Application.isMobilePlatform)
+            {
+                return;
+            }
+
             Screen.fullScreen = Video.IsFullscreen;
 
             if (Video.ResolutionIndex >= 0 && Video.ResolutionIndex < Screen.resolutions.Length)
