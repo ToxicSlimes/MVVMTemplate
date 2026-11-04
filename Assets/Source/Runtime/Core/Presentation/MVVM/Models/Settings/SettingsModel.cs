@@ -111,7 +111,9 @@ namespace Core.Presentation.MVVM.Models.Settings
         {
             QualitySettings.SetQualityLevel((int)Video.Quality);
             QualitySettings.vSyncCount = Video.IsVSync ? 1 : 0;
+#if !UNITY_WEBGL || UNITY_EDITOR
             UnityEngine.Application.targetFrameRate = (int)Video.TargetFps;
+#endif
             if (UnityEngine.Application.isMobilePlatform)
             {
                 return;

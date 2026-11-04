@@ -23,29 +23,10 @@ namespace Core.Infrastructure.AssetManagement
             return result;
         }
 
-        public T LoadSync<T>(string address) where T : class
-        {
-            var handle = Addressables.LoadAssetAsync<T>(address);
-            var result = handle.WaitForCompletion();
-            TrackHandle(result, handle);
-            return result;
-        }
-
         public async UniTask<IList<T>> LoadAllAsync<T>(string label) where T : class
         {
             var handle = Addressables.LoadAssetsAsync<T>(label, null);
             var result = await handle.ToUniTask();
-            foreach (var asset in result)
-            {
-                TrackHandle(asset, handle);
-            }
-            return result;
-        }
-
-        public IList<T> LoadAllSync<T>(string label) where T : class
-        {
-            var handle = Addressables.LoadAssetsAsync<T>(label, null);
-            var result = handle.WaitForCompletion();
             foreach (var asset in result)
             {
                 TrackHandle(asset, handle);

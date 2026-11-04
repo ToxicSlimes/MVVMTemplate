@@ -287,12 +287,7 @@ public static class InfrastructureBindings
     builder.AddSingleton<ILogInterceptor>(container => new UnityLogInterceptor(container.Resolve<ILogFormatter>()));
     builder.AddSingleton<ILogger>(container => new ColorLogger(container.Resolve<ILogFormatter>(), container.Resolve<ILogInterceptor>()));
     builder.AddSingleton<IAssetProvider>(_ => new AssetProvider());
-    builder.AddSingleton<IConfigProvider>(c =>
-    {
-      var configProvider = new ConfigProvider(c.Resolve<IAssetProvider>(), c.Resolve<ILogger>());
-      configProvider.PreloadAllConfigsAsync().Forget();
-      return configProvider;
-    });
+    builder.AddSingleton<IConfigProvider>(c => new ConfigProvider(c.Resolve<IAssetProvider>(), c.Resolve<ILogger>()));
     builder.AddSingleton<INetworkSessionOptionsProvider>(container =>
       new NetworkSessionOptionsProvider(container.Resolve<IConfigProvider>()));
     builder.AddSingleton<ICanvasProvider>(_ => new CanvasProvider());
@@ -316,7 +311,9 @@ public static class InfrastructureBindings
     builder.AddSingleton<IUIControlService>(container =>
     {
       var configProvider = container.Resolve<IConfigProvider>();
-      var designSystem = configProvider.GetConfig<DesignSystemSettings>();
+      var designSystem = configProvider.IsConfigLoaded<DesignSystemSettings>()
+        ? configProvider.GetConfig<DesignSystemSettings>()
+        : null;
       return new UIControlService(
         container.Resolve<IAudioService>(),
         container.Resolve<IMediator>(),

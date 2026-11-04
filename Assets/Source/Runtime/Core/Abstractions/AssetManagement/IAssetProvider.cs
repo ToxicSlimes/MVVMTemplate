@@ -8,7 +8,6 @@ namespace Core.Abstractions.AssetManagement
     public interface IAssetProvider
     {
         UniTask<T> LoadAsync<T>(string address) where T : class;
-        T LoadSync<T>(string address) where T : class;
         UniTask<IList<T>> LoadAllAsync<T>(string label) where T : class;
         UniTask<IList<T>> LoadAllAsync<T>(IEnumerable<string> keys) where T : class;
         UniTask<T> LoadAsync<T>(AssetReference reference) where T : class;
@@ -22,7 +21,5 @@ namespace Core.Abstractions.AssetManagement
         void ReleaseAllByLabel(string label);
         UniTask PreloadAsync<T>(string address) where T : class;
         UniTask PreloadAsync<T>(IEnumerable<string> addresses) where T : class;
-
-        IList<T> LoadAllSync<T>(string label) where T : class;
     }
 }

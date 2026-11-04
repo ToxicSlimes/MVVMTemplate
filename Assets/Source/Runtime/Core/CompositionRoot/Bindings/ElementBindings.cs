@@ -79,7 +79,8 @@ namespace Core.DependencyInjection.Bindings
                 if (config == null)
                 {
                     var configProvider = container.Resolve<IConfigProvider>();
-                    config = configProvider.GetConfig<ToolkitElementConfig>();
+                    if (configProvider.IsConfigLoaded<ToolkitElementConfig>())
+                        config = configProvider.GetConfig<ToolkitElementConfig>();
                 }
 
                 if (config == null)

@@ -2,6 +2,8 @@ using Core.Abstractions.StateMachines;
 using Core.Network.Abstractions.Gateway.Transport;
 using Core.DependencyInjection.Bindings;
 using Core.Infrastructure.Morpeh;
+using Core.Infrastructure.Services.Config;
+using Cysharp.Threading.Tasks;
 using Reflex.Core;
 using Reflex.Exceptions;
 using UnityEngine;
@@ -12,8 +14,12 @@ public class ProjectInstaller : MonoBehaviour, IInstaller
 
   private Container _ownedFallbackContainer;
 
-  private void Start()
+  private void Start() => BootAsync().Forget();
+
+  private async UniTaskVoid BootAsync()
   {
+    await ConfigPreloader.PreloadAsync();
+
     var container = Container.ProjectContainer ?? BuildProjectContainer();
 
     try
