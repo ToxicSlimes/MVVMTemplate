@@ -13,7 +13,8 @@ namespace Core.Infrastructure.Services.Platform
             RuntimePlatform.Android => GamePlatform.Android,
             RuntimePlatform.IPhonePlayer => GamePlatform.IOS,
             RuntimePlatform.WebGLPlayer => GamePlatform.WebGL,
-            _ => GamePlatform.Editor
+            RuntimePlatform.WindowsEditor or RuntimePlatform.OSXEditor or RuntimePlatform.LinuxEditor => GamePlatform.Editor,
+            _ => GamePlatform.Standalone
         };
 
         public DeviceKind Device => SystemInfo.deviceType switch
