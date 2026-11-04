@@ -62,6 +62,15 @@ namespace Core.Infrastructure.Services.Config
         return cachedConfig as T;
       }
 
+      if (ConfigPreloader.IsReady)
+      {
+        AdoptPreloaded();
+        if (_loadedConfigs.TryGetValue(cacheKey, out cachedConfig))
+        {
+          return cachedConfig as T;
+        }
+      }
+
       throw new InvalidOperationException(ConfigPreloader.IsReady
         ? $"Config '{configName}' is not in the preloaded '{GlobalConfigLabel}' set"
         : $"Config '{configName}' requested before configs were preloaded");
@@ -70,6 +79,11 @@ namespace Core.Infrastructure.Services.Config
     public bool IsConfigLoaded<T>() where T : ConfigBase
     {
       var cacheKey = GetCacheKey<T>(typeof(T).Name);
+      if (!_loadedConfigs.ContainsKey(cacheKey) && ConfigPreloader.IsReady)
+      {
+        AdoptPreloaded();
+      }
+
       return _loadedConfigs.ContainsKey(cacheKey);
     }
 
