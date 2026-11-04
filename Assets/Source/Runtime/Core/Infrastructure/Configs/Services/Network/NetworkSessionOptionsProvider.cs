@@ -14,13 +14,13 @@ namespace Core.Infrastructure.Configs.Services
 
         public bool TryGet(out NetworkSessionOptions options)
         {
-            var config = _configProvider.GetConfig<NetworkConfig>();
-            if (config == null)
+            if (!_configProvider.IsConfigLoaded<NetworkConfig>())
             {
                 options = default;
                 return false;
             }
 
+            var config = _configProvider.GetConfig<NetworkConfig>();
             options = new NetworkSessionOptions(
                 config.DefaultPlayerCount,
                 config.SessionVisible,

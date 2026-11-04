@@ -11,6 +11,7 @@
 | `IClipboardService` | Буфер обмена |
 | `IDialogService` | Системные диалоговые окна |
 | `IResourceService` | Доступ к Unity Resources |
+| `IPlatformService` | Платформа (`GamePlatform`), тип устройства (`DeviceKind`), язык, сигналы ready/gameplay |
 
 ## IFileDialogService
 
@@ -70,6 +71,21 @@ public interface IResourceService
     UniTask<T> LoadAsync<T>(string path) where T : Object;
 }
 ```
+
+## IPlatformService
+
+```csharp
+public interface IPlatformService
+{
+    GamePlatform Platform { get; }
+    DeviceKind Device { get; }
+    string Language { get; }
+    void MarkReady();
+    void SetGameplayActive(bool active);
+}
+```
+
+`UnityPlatformService` (Infrastructure) не зарегистрирован по умолчанию: игра регистрирует реализацию сама. `IAdsService` (`Services/Ads`) по умолчанию `NullAdsService`, игра переопределяет.
 
 ## Использование
 

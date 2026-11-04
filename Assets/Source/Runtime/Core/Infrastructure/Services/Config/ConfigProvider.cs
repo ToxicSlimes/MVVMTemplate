@@ -10,7 +10,7 @@ namespace Core.Infrastructure.Services.Config
 {
   public class ConfigProvider : IConfigProvider
   {
-    private const string GlobalConfigLabel = "Configs";
+    private const string GlobalConfigLabel = ConfigPreloader.Label;
     
     private readonly IAssetProvider _assetProvider;
     private readonly ILogger _logger;
@@ -20,6 +20,11 @@ namespace Core.Infrastructure.Services.Config
     {
       _assetProvider = assetProvider;
       _logger = logger;
+
+      if (ConfigPreloader.IsReady)
+      {
+        AdoptPreloaded();
+      }
     }
 
     public async UniTask<T> GetConfigAsync<T>() where T : ConfigBase
@@ -57,21 +62,28 @@ namespace Core.Infrastructure.Services.Config
         return cachedConfig as T;
       }
 
-      var config = LoadConfig<T>(configName);
-      if (config == null)
+      if (ConfigPreloader.IsReady)
       {
-        _logger.Error($"[ConfigProvider] Failed to load config '{configName}' synchronously");
-        return null;
+        AdoptPreloaded();
+        if (_loadedConfigs.TryGetValue(cacheKey, out cachedConfig))
+        {
+          return cachedConfig as T;
+        }
       }
 
-      _loadedConfigs[cacheKey] = config;
-      _logger.Info($"[ConfigProvider] Config '{configName}' loaded synchronously");
-      return config;
+      throw new InvalidOperationException(ConfigPreloader.IsReady
+        ? $"Config '{configName}' is not in the preloaded '{GlobalConfigLabel}' set"
+        : $"Config '{configName}' requested before configs were preloaded");
     }
 
     public bool IsConfigLoaded<T>() where T : ConfigBase
     {
       var cacheKey = GetCacheKey<T>(typeof(T).Name);
+      if (!_loadedConfigs.ContainsKey(cacheKey) && ConfigPreloader.IsReady)
+      {
+        AdoptPreloaded();
+      }
+
       return _loadedConfigs.ContainsKey(cacheKey);
     }
 
@@ -79,23 +91,19 @@ namespace Core.Infrastructure.Services.Config
     {
       _logger.Info("[ConfigProvider] Preloading all configs...");
 
-      try
-      {
-        var configs = await _assetProvider.LoadAllAsync<ConfigBase>(GlobalConfigLabel);
-
-        foreach (var config in configs)
-        {
-          var type = config.GetType();
-          var cacheKey = $"{type.Name}_{type.Name}";
-          _loadedConfigs[cacheKey] = config;
-        }
-      }
-      catch (Exception ex)
-      {
-        _logger.Error($"[ConfigProvider] Failed to preload configs by label '{GlobalConfigLabel}': {ex.Message}");
-      }
+      await ConfigPreloader.PreloadAsync();
+      AdoptPreloaded();
 
       _logger.Info($"[ConfigProvider] Preloaded {_loadedConfigs.Count} configs");
+    }
+
+    private void AdoptPreloaded()
+    {
+      foreach (var config in ConfigPreloader.Configs)
+      {
+        var type = config.GetType();
+        _loadedConfigs[$"{type.Name}_{type.Name}"] = config;
+      }
     }
 
     public void ReleaseConfig<T>() where T : ConfigBase
@@ -149,27 +157,6 @@ namespace Core.Infrastructure.Services.Config
       catch (Exception ex)
       {
         _logger.Error($"[ConfigProvider] Async load failed for '{configName}' by label '{GlobalConfigLabel}': {ex.GetType().Name}");
-      }
-
-      return null;
-    }
-
-    private T LoadConfig<T>(string configName) where T : ConfigBase
-    {
-      _logger.Info($"[ConfigProvider] Loading config '{configName}' synchronously from Addressables by global label '{GlobalConfigLabel}'...");
-
-      try
-      {
-        var configs = _assetProvider.LoadAllSync<ConfigBase>(GlobalConfigLabel);
-        var typedConfig = configs.OfType<T>().FirstOrDefault();
-        if (typedConfig != null)
-        {
-          return typedConfig;
-        }
-      }
-      catch (Exception ex)
-      {
-        _logger.Error($"[ConfigProvider] Sync load failed for '{configName}' by label '{GlobalConfigLabel}': {ex.GetType().Name}");
       }
 
       return null;

@@ -17,9 +17,11 @@ using Core.Abstractions.MVVM.Canvas;
 using Core.Abstractions.MVVM.Config;
 using Core.Abstractions.MVVM.Factory;
 using Core.Abstractions.MVVM.Services;
+using Core.Abstractions.Services.Ads;
 using Core.Abstractions.Services.Platform;
 using Core.Infrastructure.Configs.Services;
 using Core.Infrastructure.AssetManagement;
+using Core.Infrastructure.Services.Ads;
 using Core.Infrastructure.Services.Audio;
 using Core.Infrastructure.Services.Localization;
 using Core.Infrastructure.Services.Network;
@@ -164,6 +166,7 @@ public static class InfrastructureBindings
     builder.AddSingleton(typeof(PrefsService), typeof(IPrefsService));
     builder.AddSingleton(typeof(LoadSceneService), typeof(ILoadSceneService));
     builder.AddSingleton(typeof(DataPreloadService), typeof(IDataPreloadService));
+    builder.AddSingleton<IAdsService>(_ => new NullAdsService());
     builder.AddSingleton<IClipboardService>(_ => new ClipboardService());
     builder.AddSingleton(_ => ResolveEditorOverride<IFileDialogService>(new FileDialogService(), "Core.Editor.Services.Platform.EditorFileDialogService"));
     builder.AddSingleton<IFileSystemService>(_ => new FileSystemService());
@@ -291,12 +294,7 @@ public static class InfrastructureBindings
     builder.AddSingleton<ILogInterceptor>(container => new UnityLogInterceptor(container.Resolve<ILogFormatter>()));
     builder.AddSingleton<ILogger>(container => new ColorLogger(container.Resolve<ILogFormatter>(), container.Resolve<ILogInterceptor>()));
     builder.AddSingleton<IAssetProvider>(_ => new AssetProvider());
-    builder.AddSingleton<IConfigProvider>(c =>
-    {
-      var configProvider = new ConfigProvider(c.Resolve<IAssetProvider>(), c.Resolve<ILogger>());
-      configProvider.PreloadAllConfigsAsync().Forget();
-      return configProvider;
-    });
+    builder.AddSingleton<IConfigProvider>(c => new ConfigProvider(c.Resolve<IAssetProvider>(), c.Resolve<ILogger>()));
     builder.AddSingleton<INetworkSessionOptionsProvider>(container =>
       new NetworkSessionOptionsProvider(container.Resolve<IConfigProvider>()));
     builder.AddSingleton<ICanvasProvider>(_ => new CanvasProvider());
@@ -320,7 +318,9 @@ public static class InfrastructureBindings
     builder.AddSingleton<IUIControlService>(container =>
     {
       var configProvider = container.Resolve<IConfigProvider>();
-      var designSystem = configProvider.GetConfig<DesignSystemSettings>();
+      var designSystem = configProvider.IsConfigLoaded<DesignSystemSettings>()
+        ? configProvider.GetConfig<DesignSystemSettings>()
+        : null;
       return new UIControlService(
         container.Resolve<IAudioService>(),
         container.Resolve<IMediator>(),
