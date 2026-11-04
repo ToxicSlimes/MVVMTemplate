@@ -3,7 +3,9 @@
     "rootNamespace": "Core.Infrastructure.Morpeh",
     "references": [
         "Scellecs.Morpeh",
-        "Reflex"
+        "Reflex",
+        "Core.Mediator.Reflex",
+        "Core.Mediator.Contracts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -11,7 +13,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "MORPEH"
+    ],
     "versionDefines": [],
     "noEngineReferences": false,
     "useGUIDs": false

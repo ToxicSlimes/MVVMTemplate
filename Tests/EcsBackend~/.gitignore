@@ -1,0 +1,3 @@
+bin/
+obj/
+!EcsBackend.Tests.csproj

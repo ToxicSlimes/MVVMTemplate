@@ -37,6 +37,20 @@ namespace Core.Tests.CompositionRoot
         }
 
         [Test]
+        public void Contributor_RegistersAndEagerlyInitializesDefaultWorldProvider()
+        {
+            var world = World.Create();
+            var contributor = new MorpehRegistrationContributor();
+            var builder = new ContainerBuilder();
+            contributor.RegisterBindings(builder);
+            using (var container = builder.Build())
+            {
+                contributor.Initialize(container);
+                Assert.That(container.Resolve<MorpehWorldProvider>().World, Is.SameAs(world));
+            }
+        }
+
+        [Test]
         public void Repository_ProvidesNamedAccessToWorldData()
         {
             World.Create();

@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Reflection;
+using Core.Abstractions.StateMachines;
+using Core.Abstractions.StateMachines.States;
 using Core.DependencyInjection;
 using Core.Editor.CodeGenPipeline;
 using Core.Mediator.Registration;
@@ -26,6 +29,47 @@ namespace Core.Tests
             Assert.That(first.MediatorCalls, Is.EqualTo(1));
             Assert.That(second.BindingCalls, Is.EqualTo(1));
             Assert.That(second.MediatorCalls, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void AddCore_BootUsesSameContributorsInRegistrationOrder()
+        {
+            var calls = new List<string>();
+            var first = new LifecycleContributor("first", calls);
+            var second = new LifecycleContributor("second", calls);
+            var builder = new ContainerBuilder();
+            builder.AddCore(false, new ICoreRegistrationContributor[] { first, second });
+            builder.AddSingleton<IGameStateMachine>(_ => new RecordingStateMachine(calls));
+            using (var container = builder.Build())
+            {
+                typeof(ProjectInstaller).GetMethod("Boot", BindingFlags.NonPublic | BindingFlags.Static)
+                    .Invoke(null, new object[] { container });
+            }
+            CollectionAssert.AreEqual(new[] { "mediator:first", "mediator:second", "binding:first", "binding:second", "startup:first", "startup:second", "state" }, calls);
+        }
+
+        private sealed class LifecycleContributor : ICoreRegistrationContributor, ICoreStartupContributor
+        {
+            private readonly string _name;
+            private readonly List<string> _calls;
+            private bool _mediator;
+            private bool _binding;
+            public LifecycleContributor(string name, List<string> calls) { _name = name; _calls = calls; }
+            public void RegisterMediator(MediatorBuilder builder) { _mediator = true; _calls.Add("mediator:" + _name); }
+            public void RegisterBindings(ContainerBuilder builder) { _binding = true; _calls.Add("binding:" + _name); }
+            public void Initialize(Container container)
+            {
+                Assert.That(_mediator && _binding, Is.True, "startup must use the registered instance");
+                _calls.Add("startup:" + _name);
+            }
+        }
+
+        private sealed class RecordingStateMachine : IGameStateMachine
+        {
+            private readonly List<string> _calls;
+            public RecordingStateMachine(List<string> calls) { _calls = calls; }
+            public void Enter<TState>() where TState : class, IEnterState { _calls.Add("state"); }
+            public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadState<TPayload> { _calls.Add("state"); }
         }
 
         [Test]

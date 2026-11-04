@@ -3,7 +3,6 @@
     "rootNamespace": "",
     "references": [
         "Reflex",
-        "Scellecs.Morpeh",
         "Core.Abstractions",
         "Core.Infrastructure",
         "Core.Presentation.MVVM",
@@ -18,8 +17,7 @@
         "Core.Network.FusionAdapter",
         "Core.Presentation.UI.Toolkit",
         "Core.Presentation.UI.Toolkit.Elements",
-        "Core.Presentation.UI",
-        "Core.Infrastructure.Morpeh"
+        "Core.Presentation.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

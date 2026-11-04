@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using Core.Abstractions.StateMachines;
 using Core.Network.Abstractions.Gateway.Transport;
 using Core.DependencyInjection.Bindings;
 using Core.Infrastructure.Morpeh;
 using Core.Infrastructure.Services.Config;
 using Cysharp.Threading.Tasks;
+using Core.DependencyInjection;
 using Reflex.Core;
 using Reflex.Exceptions;
 using UnityEngine;
@@ -41,7 +43,14 @@ public class ProjectInstaller : MonoBehaviour, IInstaller
 
   private static void Boot(Container container)
   {
-    container.Resolve<MorpehWorldProvider>();
+    if (container.HasBinding<IReadOnlyList<ICoreRegistrationContributor>>())
+    {
+      foreach (var contributor in container.Resolve<IReadOnlyList<ICoreRegistrationContributor>>())
+      {
+        if (contributor is ICoreStartupContributor startup)
+          startup.Initialize(container);
+      }
+    }
 
     if (container.HasBinding<GatewayServerIngress>())
     {

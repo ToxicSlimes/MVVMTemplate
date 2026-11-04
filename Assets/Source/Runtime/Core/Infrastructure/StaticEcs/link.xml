@@ -1,0 +1,6 @@
+<linker>
+  <assembly fullname="Core.Infrastructure.StaticEcs">
+    <type fullname="Core.Infrastructure.StaticEcs.StaticEcsRegistrationContributor" preserve="all" />
+    <type fullname="Core.Infrastructure.StaticEcs.StaticEcsRunner" preserve="all" />
+  </assembly>
+</linker>

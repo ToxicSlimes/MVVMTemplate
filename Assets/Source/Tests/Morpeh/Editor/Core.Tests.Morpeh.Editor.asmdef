@@ -1,0 +1,41 @@
+{
+    "name": "Core.Tests.Morpeh.Editor",
+    "rootNamespace": "Core.Tests",
+    "references": [
+        "Core.Presentation.MVVM",
+        "Core.Abstractions",
+        "Core.Application",
+        "Core.Infrastructure",
+        "Core.Network.Abstractions",
+        "Core.Network.FusionAdapter",
+        "Core.CompositionRoot",
+        "Reflex",
+        "UniTask",
+        "Core.Mediator.Reflex",
+        "CodeGenPipeline.Editor",
+        "Scellecs.Morpeh",
+        "Core.Infrastructure.Morpeh.SourceGeneration",
+        "Core.Infrastructure.Morpeh"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "R3.dll",
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS",
+        "MORPEH"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "useGUIDs": false
+}
