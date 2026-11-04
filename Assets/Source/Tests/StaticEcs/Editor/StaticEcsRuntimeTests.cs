@@ -9,6 +9,27 @@ namespace Core.Tests.StaticEcs
     {
         private struct TestWorld : IWorldType { }
         private struct TestSystems : ISystemsType { }
+
+        [Test]
+        public void DebugWorld_IsRegisteredForOwnerLifetimeAndRemovedOnDispose()
+        {
+            var debug = typeof(FFS.Libraries.StaticEcs.Unity.EcsDebug<TestWorld>);
+            var property = debug.GetProperty("DebugViewSystem");
+            if (property == null) Assert.Ignore("StaticEcs debug support is disabled in this editor.");
+            Assert.That(property.GetValue(null), Is.Null);
+            var runtime = new StaticEcsRuntime<TestWorld, TestSystems>();
+            try
+            {
+                Assert.That(property.GetValue(null), Is.Not.Null);
+                runtime.Initialize();
+                runtime.Update();
+            }
+            finally { runtime.Dispose(); }
+            Assert.That(property.GetValue(null), Is.Null);
+            using (var retry = new StaticEcsRuntime<TestWorld, TestSystems>())
+                Assert.That(property.GetValue(null), Is.Not.Null);
+            Assert.That(property.GetValue(null), Is.Null);
+        }
         private sealed class Counter : ISystem
         {
             public int InitCount, UpdateCount, DestroyCount;

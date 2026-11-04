@@ -1,7 +1,7 @@
 {
   "name": "Core.Infrastructure.StaticEcs",
   "rootNamespace": "Core.Infrastructure.StaticEcs",
-  "references": ["FFS.StaticEcs", "Reflex", "Core.Mediator.Reflex", "Core.Mediator.Contracts"],
+  "references": ["FFS.StaticEcs", "FFS.StaticEcs.Unity", "Reflex", "Core.Mediator.Reflex", "Core.Mediator.Contracts"],
   "defineConstraints": ["STATIC_ECS"],
   "autoReferenced": true
 }
