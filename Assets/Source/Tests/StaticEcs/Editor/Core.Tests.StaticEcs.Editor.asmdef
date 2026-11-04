@@ -1,0 +1,9 @@
+{
+  "name": "Core.Tests.StaticEcs.Editor",
+  "rootNamespace": "Core.Tests.StaticEcs",
+  "references": ["Core.Infrastructure.StaticEcs", "FFS.StaticEcs", "Reflex", "Core.Mediator.Reflex", "Core.Mediator.Contracts"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS", "STATIC_ECS"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

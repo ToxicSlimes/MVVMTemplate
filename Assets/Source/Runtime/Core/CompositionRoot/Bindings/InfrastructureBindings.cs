@@ -60,9 +60,16 @@ public static class InfrastructureBindings
 {
   public static ContainerBuilder AddCore(this ContainerBuilder builder, bool networkEnabled = true)
   {
-    var contributors = CoreRegistrationContributors.Discover();
+    return builder.AddCore(networkEnabled, CoreRegistrationContributors.Discover());
+  }
 
-    builder.AddMorpehEcs();
+  public static ContainerBuilder AddCore(this ContainerBuilder builder, bool networkEnabled,
+    IReadOnlyList<ICoreRegistrationContributor> contributors)
+  {
+    if (contributors == null) throw new System.ArgumentNullException(nameof(contributors));
+    contributors = new List<ICoreRegistrationContributor>(contributors).AsReadOnly();
+    builder.AddSingleton(contributors, typeof(IReadOnlyList<ICoreRegistrationContributor>));
+
     builder.AddCoreStates();
     builder.AddModels();
     builder.AddCoreServices();

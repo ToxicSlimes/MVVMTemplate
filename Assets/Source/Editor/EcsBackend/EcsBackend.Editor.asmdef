@@ -1,0 +1,5 @@
+{
+  "name": "EcsBackend.Editor",
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

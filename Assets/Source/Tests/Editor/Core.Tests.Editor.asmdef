@@ -9,11 +9,8 @@
         "Core.Network.Abstractions",
         "Core.Network.FusionAdapter",
         "Core.CompositionRoot",
-        "Scellecs.Morpeh",
-        "Core.Infrastructure.Morpeh.SourceGeneration",
         "Reflex",
         "UniTask",
-        "Core.Infrastructure.Morpeh",
         "Core.Mediator.Reflex",
         "CodeGenPipeline.Editor"
     ],
