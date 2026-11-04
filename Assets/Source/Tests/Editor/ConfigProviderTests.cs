@@ -5,6 +5,7 @@ using Core.Infrastructure.Services.Config;
 using Core.Presentation.MVVM.Config;
 using NUnit.Framework;
 using UnityEngine;
+using ILogger = Core.Abstractions.Services.ILogger;
 
 namespace Core.Tests.Infrastructure.Config
 {

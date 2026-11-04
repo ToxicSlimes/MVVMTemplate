@@ -15,3 +15,9 @@ Consumer asmdefs need `Core.Infrastructure.StaticEcs`, `FFS.StaticEcs`, `Reflex`
 Use a unique world marker and a unique systems marker for every simultaneously live runtime, even across different worlds: upstream pipeline resources are shared by systems marker. Both markers remain reserved after cleanup failure. These guards cannot detect pipelines created directly through upstream APIs; do not mix direct and managed ownership.
 
 A failed system initialization is not transactional in the upstream pipeline: previously initialized systems may not receive Destroy. Cleanup failure retains the world reservation until domain reload. All calls are main-thread only. Do not manipulate the same static world outside its owner.
+
+## Template contracts
+
+- `StaticEcsRepository<TWorld>`: base for repositories (`CreateEntity`, `RemoveEntity`, `AddComponent`/`GetComponent`/`HasComponent`); construct after the runtime creates the world, e.g. inside `IStaticEcsFeature.Configure`. Component types must be registered via `World<TWorld>.Types()` before initialization.
+- `EventBridgeSystem<TWorld, TEvent>`: register the event type, add the bridge system, events sent after `Initialize` are delivered once per `Update`.
+- `StaticEcsFeature` + `container.CreateFeature<TFeature>()`: Reflex-constructed (constructor and `[Inject]`) group of systems added in the feature constructor with `AddSystem`. StaticEcs cannot add systems after initialization, so register the feature (singleton in Reflex, `runtime.Add(feature, order)` in `Configure`) before startup and call `Enable()` in state Enter and `Disable()` in Exit; a disabled feature skips Update but still runs Init/Destroy with the pipeline.

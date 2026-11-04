@@ -66,6 +66,22 @@ namespace Core.Infrastructure.StaticEcs
                 // The pipeline may have been partially created; retain the reservation.
                 throw;
             }
+#if UNITY_EDITOR
+            try { FFS.Libraries.StaticEcs.Unity.EcsDebug<TWorld>.AddWorld<TSystems>(); }
+            catch
+            {
+                // AddWorld publishes global data and a listener before it adds the system.
+                // Remove even on partial registration, while the world is still alive.
+                try { FFS.Libraries.StaticEcs.Unity.EcsDebug<TWorld>.RemoveWorld(); }
+                finally
+                {
+                    try { World<TWorld>.Systems<TSystems>.Destroy(); }
+                    finally { World<TWorld>.Destroy(); }
+                }
+                // The pipeline may be partially modified; retain both reservations.
+                throw;
+            }
+#endif
         }
 
         /// <summary>Adds a system before initialization, ordered by ascending priority.</summary>
@@ -110,7 +126,15 @@ namespace Core.Infrastructure.StaticEcs
             if (_state == State.Disposed) return;
             _state = State.Disposed;
             try { World<TWorld>.Systems<TSystems>.Destroy(); }
-            finally { World<TWorld>.Destroy(); }
+            finally
+            {
+#if UNITY_EDITOR
+                try { FFS.Libraries.StaticEcs.Unity.EcsDebug<TWorld>.RemoveWorld(); }
+                finally { World<TWorld>.Destroy(); }
+#else
+                World<TWorld>.Destroy();
+#endif
+            }
             WorldOwnership<TWorld>.Reserved = false;
             SystemsOwnership<TSystems>.Reserved = false;
         }
