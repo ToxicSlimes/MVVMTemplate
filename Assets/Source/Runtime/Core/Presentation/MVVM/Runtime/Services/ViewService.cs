@@ -481,6 +481,22 @@ namespace Core.Presentation.MVVM.Services
                 return;
             }
 
+#if UNITY_6000_5_OR_NEWER
+            var panelRenderer = component.GetComponent<UnityEngine.UIElements.PanelRenderer>();
+            if (panelRenderer != null)
+            {
+                _currentMaxSortingOrder++;
+                panelRenderer.sortingOrder = _currentMaxSortingOrder;
+
+                lock (_sync)
+                {
+                    _viewSortingOrders[view] = _currentMaxSortingOrder;
+                }
+
+                return;
+            }
+#endif
+
             var canvas = component.GetComponent<UnityEngine.Canvas>();
             if (canvas == null)
             {

@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace Core.UI.Toolkit
 {
-    public sealed class ToolkitConfirmOverlay
+    public sealed class ToolkitConfirmOverlay : IDisposable
     {
         private readonly VisualElement _overlay;
         private readonly Label _titleLabel;
@@ -56,6 +56,15 @@ namespace Core.UI.Toolkit
 
             _onConfirm = null;
             _overlay.style.display = DisplayStyle.None;
+        }
+
+        public void Dispose()
+        {
+            Hide();
+            if (_confirmButton != null)
+                _confirmButton.clicked -= OnConfirmClicked;
+            if (_cancelButton != null)
+                _cancelButton.clicked -= Hide;
         }
 
         private void OnConfirmClicked()

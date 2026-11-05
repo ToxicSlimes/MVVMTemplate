@@ -86,6 +86,98 @@ namespace Core.Tests.StaticEcs
             Assert.That(feature.Counter.DestroyCount, Is.EqualTo(1));
         }
 
+        private sealed class FailingInitSystem : ISystem
+        {
+            public void Init() => throw new InvalidOperationException("init failed");
+        }
+
+        private sealed class PartialInitFeature : StaticEcsFeature
+        {
+            public readonly CountingSystem First = new CountingSystem();
+            public readonly CountingSystem Last = new CountingSystem();
+            public PartialInitFeature()
+            {
+                AddSystem(First);
+                AddSystem(new FailingInitSystem());
+                AddSystem(Last);
+            }
+        }
+
+        [Test]
+        public void InitFailure_DestroysSuccessfullyInitializedChildren()
+        {
+            var feature = new PartialInitFeature();
+            var error = Assert.Throws<InvalidOperationException>(() => feature.Init());
+            Assert.That(error.Message, Is.EqualTo("init failed"));
+            Assert.That(feature.First.DestroyCount, Is.EqualTo(1));
+            Assert.That(feature.Last.InitCount, Is.EqualTo(0));
+            feature.Destroy();
+            Assert.That(feature.First.DestroyCount, Is.EqualTo(1));
+        }
+
+        private sealed class FailingDestroySystem : ISystem
+        {
+            public void Destroy() => throw new InvalidOperationException("destroy failed");
+        }
+
+        private sealed class DestroyFailureFeature : StaticEcsFeature
+        {
+            public readonly CountingSystem Last = new CountingSystem();
+            public DestroyFailureFeature()
+            {
+                AddSystem(new FailingDestroySystem());
+                AddSystem(Last);
+            }
+        }
+
+        [Test]
+        public void DestroyFailure_StillDestroysRemainingChildren()
+        {
+            var feature = new DestroyFailureFeature();
+            feature.Init();
+            Assert.Catch(() => feature.Destroy());
+            Assert.That(feature.Last.DestroyCount, Is.EqualTo(1));
+            feature.Destroy();
+            Assert.That(feature.Last.DestroyCount, Is.EqualTo(1));
+        }
+
+        private sealed class InitAndCleanupFailureFeature : StaticEcsFeature
+        {
+            public readonly CountingSystem Second = new CountingSystem();
+            public InitAndCleanupFailureFeature()
+            {
+                AddSystem(new FailingDestroySystem());
+                AddSystem(Second);
+                AddSystem(new FailingInitSystem());
+            }
+        }
+
+        [Test]
+        public void InitFailure_WithCleanupFailure_PreservesErrorsAndContinuesCleanup()
+        {
+            var feature = new InitAndCleanupFailureFeature();
+            var error = Assert.Throws<AggregateException>(() => feature.Init());
+            Assert.That(error.InnerExceptions.Count, Is.EqualTo(2));
+            Assert.That(error.InnerExceptions[0].Message, Is.EqualTo("init failed"));
+            Assert.That(error.InnerExceptions[1].Message, Is.EqualTo("destroy failed"));
+            Assert.That(feature.Second.DestroyCount, Is.EqualTo(1));
+            feature.Destroy();
+            Assert.That(feature.Second.DestroyCount, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void InitFailure_InRuntime_CleansInitializedChildren()
+        {
+            var feature = new PartialInitFeature();
+            using (var runtime = new StaticEcsRuntime<FeatureWorld, FeatureSystems>())
+            {
+                runtime.Add(feature);
+                Assert.Throws<InvalidOperationException>(() => runtime.Initialize());
+                Assert.That(feature.First.DestroyCount, Is.EqualTo(1));
+            }
+            Assert.That(feature.First.DestroyCount, Is.EqualTo(1));
+        }
+
         [Test]
         public void Init_Twice_Throws()
         {

@@ -12,7 +12,7 @@ namespace Core.Application.Handlers.Lobby
         private readonly INetworkRunnerController _controller;
         private readonly INetworkSpawner _spawner;
         private readonly INetworkSpawnPoints _spawnPoints;
-        private readonly HashSet<int> _spawned = new();
+        private HashSet<int> _spawned = new();
 
         public PlayerAvatarSpawner(
             INetworkRunnerController controller,
@@ -24,7 +24,7 @@ namespace Core.Application.Handlers.Lobby
             _spawnPoints = spawnPoints;
         }
 
-        public void Reset() => _spawned.Clear();
+        public void Reset() => _spawned = new HashSet<int>();
 
         public async UniTask SpawnAllAsync(CancellationToken cancellationToken)
         {
@@ -38,19 +38,28 @@ namespace Core.Application.Handlers.Lobby
 
         public async UniTask SpawnAsync(NetworkPlayerId player, CancellationToken cancellationToken)
         {
-            if (!_controller.IsStateAuthority || !player.IsValid || !_spawned.Add(player.Raw))
+            var spawned = _spawned;
+            if (!_controller.IsStateAuthority || !player.IsValid || !spawned.Add(player.Raw))
             {
                 return;
             }
 
-            ResolvePose(player, out var position, out var rotation);
+            try
+            {
+                ResolvePose(player, out var position, out var rotation);
 
-            await _spawner.SpawnAsync(
-                NetworkPrefabKeys.PlayerAvatar,
-                position,
-                rotation,
-                player,
-                cancellationToken: cancellationToken);
+                await _spawner.SpawnAsync(
+                    NetworkPrefabKeys.PlayerAvatar,
+                    position,
+                    rotation,
+                    player,
+                    cancellationToken: cancellationToken);
+            }
+            catch
+            {
+                spawned.Remove(player.Raw);
+                throw;
+            }
         }
 
         private void ResolvePose(NetworkPlayerId player, out Vector3 position, out Quaternion rotation)

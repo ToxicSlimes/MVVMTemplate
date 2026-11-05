@@ -90,9 +90,18 @@ namespace Core.Network.FusionAdapter.Runner
 
             try
             {
-                CreateRunnerObject();
+                StartGameArgs args;
+                try
+                {
+                    CreateRunnerObject();
+                    args = BuildStartGameArgs(request, cancellationToken);
+                }
+                catch
+                {
+                    DestroyRunnerObject();
+                    throw;
+                }
 
-                var args = BuildStartGameArgs(request, cancellationToken);
                 var result = (await _runner.StartGame(args)).ToCore();
 
                 if (!result.IsOk)

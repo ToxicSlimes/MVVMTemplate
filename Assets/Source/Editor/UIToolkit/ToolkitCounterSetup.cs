@@ -1,4 +1,4 @@
-#if UNITY_EDITOR && !UNITY_6000_3_OR_NEWER
+#if UNITY_EDITOR
 
 using System.IO;
 
@@ -215,7 +215,11 @@ namespace Core.Editor.UIToolkit
 
             var go = new GameObject("CounterToolkitEdit");
 
+#if UNITY_6000_5_OR_NEWER
+            var document = go.AddComponent<PanelRenderer>();
+#else
             var document = go.AddComponent<UIDocument>();
+#endif
 
             document.panelSettings = AssetDatabase.LoadAssetAtPath<PanelSettings>(ToolkitViewSetupUtility.PanelSettingsPath);
 

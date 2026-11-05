@@ -35,11 +35,20 @@ namespace Core.Presentation.MVVM.Views.Counter
 
         private ToolkitConfirmOverlay _confirmOverlay;
         private bool _galleryPopulated;
+        private VisualElement _cachedRoot;
 
         protected override void BindPanel(ref DisposableBag disposables)
         {
+            if (!ReferenceEquals(_cachedRoot, Root))
+            {
+                _cachedRoot = Root;
+                _confirmOverlay = null;
+                _galleryPopulated = false;
+            }
             QueryElements();
-            _confirmOverlay ??= Root != null ? new ToolkitConfirmOverlay(Root) : null;
+            _confirmOverlay = Root != null ? new ToolkitConfirmOverlay(Root) : null;
+            if (_confirmOverlay != null)
+                disposables.Add(_confirmOverlay);
 
             Bind(_closeButton, ViewModel.BackCommand, ref disposables);
             BindCounterMode(ref disposables);
@@ -120,8 +129,9 @@ namespace Core.Presentation.MVVM.Views.Counter
                     () => vm.ResetCommand.Execute(Unit.Default));
             }
 
-            _resetButton.clicked += OnResetClicked;
-            disposables.Add(Disposable.Create(() => _resetButton.clicked -= OnResetClicked));
+            var resetButton = _resetButton;
+            resetButton.clicked += OnResetClicked;
+            disposables.Add(Disposable.Create(() => resetButton.clicked -= OnResetClicked));
         }
 
         private void PopulateGallery()

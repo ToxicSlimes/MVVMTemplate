@@ -12,8 +12,10 @@ namespace Core.Infrastructure.StaticEcs
     /// <remarks>
     /// Add child systems from the derived constructor with <see cref="AddSystem"/>; they run in insertion order
     /// while the feature is enabled. Child Init and Destroy run with the pipeline regardless of the enabled state.
-    /// Change tracking of a
-    /// child is relative to the feature's last run, so a long-disabled feature sees all tracked changes it missed.
+    /// Tracking belongs to the feature as a whole, not to each child. When disabled, the feature's
+    /// last tick does not advance; missed history is limited by WorldConfig.TrackingBufferSize.
+    /// A child skipped by UpdateIsActive does not have an independent tracking cursor.
+    /// Child snapshot hooks are not registered with the native pipeline and are not forwarded.
     /// </remarks>
     public abstract class StaticEcsFeature : ISystem
     {
@@ -33,7 +35,31 @@ namespace Core.Infrastructure.StaticEcs
         {
             if (_initialized) throw new InvalidOperationException("The feature is already initialized.");
             _initialized = true;
-            foreach (var system in _systems) system.Init();
+            var initializedCount = 0;
+            try
+            {
+                foreach (var system in _systems)
+                {
+                    system.Init();
+                    initializedCount++;
+                }
+            }
+            catch (Exception initError)
+            {
+                _initialized = false;
+                List<Exception> errors = null;
+                for (var i = 0; i < initializedCount; i++)
+                {
+                    try { _systems[i].Destroy(); }
+                    catch (Exception error)
+                    {
+                        if (errors == null) errors = new List<Exception> { initError };
+                        errors.Add(error);
+                    }
+                }
+                if (errors != null) throw new AggregateException(errors);
+                throw;
+            }
         }
 
         public void Update()
@@ -46,7 +72,17 @@ namespace Core.Infrastructure.StaticEcs
         {
             if (!_initialized) return;
             _initialized = false;
-            foreach (var system in _systems) system.Destroy();
+            List<Exception> errors = null;
+            foreach (var system in _systems)
+            {
+                try { system.Destroy(); }
+                catch (Exception error)
+                {
+                    if (errors == null) errors = new List<Exception>();
+                    errors.Add(error);
+                }
+            }
+            if (errors != null) throw new AggregateException(errors);
         }
 
         protected void AddSystem(ISystem system)

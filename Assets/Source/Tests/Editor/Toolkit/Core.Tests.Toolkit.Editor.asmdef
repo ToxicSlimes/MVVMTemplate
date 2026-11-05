@@ -1,0 +1,10 @@
+{
+  "name": "Core.Tests.Toolkit.Editor",
+  "references": ["Core.Abstractions", "Core.Presentation.UI.Toolkit", "UniTask"],
+  "includePlatforms": ["Editor"],
+  "overrideReferences": true,
+  "precompiledReferences": ["R3.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

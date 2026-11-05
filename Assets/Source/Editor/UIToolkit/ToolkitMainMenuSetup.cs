@@ -45,7 +45,11 @@ namespace Core.Editor.UIToolkit
             EnsureAssets();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var go = new GameObject("MainMenuToolkitEdit");
+#if UNITY_6000_5_OR_NEWER
+            var document = go.AddComponent<UnityEngine.UIElements.PanelRenderer>();
+#else
             var document = go.AddComponent<UnityEngine.UIElements.UIDocument>();
+#endif
             document.panelSettings = AssetDatabase.LoadAssetAtPath<UnityEngine.UIElements.PanelSettings>(ToolkitViewSetupUtility.PanelSettingsPath);
             document.visualTreeAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.UIElements.VisualTreeAsset>(MainMenuUxmlPath);
             EditorSceneManager.SaveScene(scene, EditScenePath);

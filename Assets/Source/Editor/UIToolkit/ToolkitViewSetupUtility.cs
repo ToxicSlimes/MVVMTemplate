@@ -59,6 +59,14 @@ namespace Core.Editor.UIToolkit
             if (existing != null)
             {
                 var view = existing.GetComponent<TView>();
+#if UNITY_6000_5_OR_NEWER
+                var renderer = existing.GetComponent<PanelRenderer>();
+                if (renderer != null)
+                {
+                    renderer.panelSettings = panelSettings;
+                    renderer.visualTreeAsset = uxml;
+                }
+#endif
                 var document = existing.GetComponent<UIDocument>();
                 if (document != null)
                 {
@@ -85,9 +93,15 @@ namespace Core.Editor.UIToolkit
             }
 
             var go = new GameObject(Path.GetFileNameWithoutExtension(prefabPath));
+#if UNITY_6000_5_OR_NEWER
+            var newRenderer = go.AddComponent<PanelRenderer>();
+            newRenderer.panelSettings = panelSettings;
+            newRenderer.visualTreeAsset = uxml;
+#else
             var newDocument = go.AddComponent<UIDocument>();
             newDocument.panelSettings = panelSettings;
             newDocument.visualTreeAsset = uxml;
+#endif
             var newView = go.AddComponent<TView>();
             var serializedNewView = new SerializedObject(newView);
             serializedNewView.FindProperty("_layout").objectReferenceValue = uxml;

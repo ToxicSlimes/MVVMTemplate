@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Network.Abstractions.Services;
@@ -60,30 +61,46 @@ namespace Core.Application.Handlers.Matchmaking
 
             _model.SetStatus(busyStatus, true);
 
-            await _lobby.LeaveAsync(cancellationToken);
-
-            var request = new NetworkStartRequest(
-                mode,
-                sessionName,
-                options.DefaultPlayerCount,
-                scenePath: null,
-                options.SessionVisible,
-                options.SessionOpen);
-
-            var result = await _controller.StartAsync(request, cancellationToken);
-
-            if (!result.IsOk)
+            try
             {
-                ReportRejected(result.ErrorMessage ?? result.ShutdownReason.ToString());
+                await _lobby.LeaveAsync(cancellationToken);
+
+                var request = new NetworkStartRequest(
+                    mode,
+                    sessionName,
+                    options.DefaultPlayerCount,
+                    scenePath: null,
+                    options.SessionVisible,
+                    options.SessionOpen);
+
+                var result = await _controller.StartAsync(request, cancellationToken);
+
+                if (!result.IsOk)
+                {
+                    ReportRejected(result.ErrorMessage ?? result.ShutdownReason.ToString());
+                    return result;
+                }
+
+                if (mode == NetworkMode.Host)
+                {
+                    await _spawner.SpawnAsync(NetworkPrefabKeys.GameSession, cancellationToken: cancellationToken);
+                }
+
                 return result;
             }
-
-            if (mode == NetworkMode.Host)
+            catch (Exception error)
             {
-                await _spawner.SpawnAsync(NetworkPrefabKeys.GameSession, cancellationToken: cancellationToken);
-            }
+                try
+                {
+                    ReportRejected(error.Message);
+                }
+                catch (Exception resetError)
+                {
+                    error.Data["RoomLaunchStatusResetException"] = resetError;
+                }
 
-            return result;
+                throw;
+            }
         }
     }
 }

@@ -18,6 +18,18 @@ namespace Core.UI.Toolkit
                 document.panelSettings = settings;
         }
 
+#if UNITY_6000_5_OR_NEWER
+        public static void Apply(PanelRenderer renderer)
+        {
+            if (renderer == null || renderer.panelSettings != null)
+                return;
+
+            var settings = ResolveSettings();
+            if (settings != null)
+                renderer.panelSettings = settings;
+        }
+#endif
+
         private static PanelSettings ResolveSettings()
         {
             if (_cachedSettings != null)

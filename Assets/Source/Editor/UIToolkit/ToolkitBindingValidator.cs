@@ -171,12 +171,16 @@ namespace Core.Editor.UIToolkit
                 return;
             }
 
-            if (prefab.GetComponent<UIDocument>() == null)
+            var hasHost = prefab.GetComponent<UIDocument>() != null;
+#if UNITY_6000_5_OR_NEWER
+            hasHost |= prefab.GetComponent<PanelRenderer>() != null;
+#endif
+            if (!hasHost)
             {
                 report.Add(new ToolkitBindingIssue(
                     ToolkitBindingSeverity.Error,
                     viewType.Name,
-                    $"Prefab '{prefab.name}' is missing UIDocument."));
+                    $"Prefab '{prefab.name}' is missing a UI Toolkit host component."));
             }
 
             if (prefab.GetComponent(viewType) == null)
@@ -254,6 +258,11 @@ namespace Core.Editor.UIToolkit
             if (document?.visualTreeAsset != null)
                 return AssetDatabase.GetAssetPath(document.visualTreeAsset);
 
+#if UNITY_6000_5_OR_NEWER
+            var renderer = prefab.GetComponent<PanelRenderer>();
+            if (renderer != null && renderer.visualTreeAsset != null)
+                return AssetDatabase.GetAssetPath(renderer.visualTreeAsset);
+#endif
             var view = prefab.GetComponent(viewType);
             if (view == null)
                 return null;
