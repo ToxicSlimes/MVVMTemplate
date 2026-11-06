@@ -15,7 +15,7 @@ namespace Core.UI.Controls
 
         private void Awake()
         {
-            _hint.SetActive(UnityEngine.Application.isEditor);
+            _hint.SetActive(!UnityEngine.Application.isMobilePlatform);
             _hint.GetComponentInChildren<BaseText>(true).SetText(Label(_key));
         }
 
