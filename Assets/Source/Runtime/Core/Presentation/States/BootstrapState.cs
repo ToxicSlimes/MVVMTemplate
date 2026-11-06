@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class BootstrapState : GameStateBase<BootstrapState>, IEnterState
 {
-  private const string BootstrapSceneName = "BootstrapScene";
+  public const string BootstrapSceneName = "BootstrapScene";
   private readonly ILogger _logger;
   private readonly ICacheService _cache;
 

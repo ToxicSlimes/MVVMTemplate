@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Core.Abstractions.StateMachines;
 using Core.Network.Abstractions.Gateway.Transport;
@@ -6,33 +7,26 @@ using Core.Infrastructure.Services.Config;
 using Cysharp.Threading.Tasks;
 using Core.DependencyInjection;
 using Reflex.Core;
-using Reflex.Exceptions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProjectInstaller : MonoBehaviour, IInstaller
 {
   [SerializeField] private bool _networkEnabled = true;
 
-  private Container _ownedFallbackContainer;
-
   private void Start() => BootAsync().Forget();
 
   private async UniTaskVoid BootAsync()
   {
+    DontDestroyOnLoad(this);
+
     await ConfigPreloader.PreloadAsync();
 
-    var container = Container.ProjectContainer ?? BuildProjectContainer();
+    if (Container.ProjectContainer == null)
+      await SceneManager.LoadSceneAsync(BootstrapState.BootstrapSceneName);
 
-    try
-    {
-      Boot(container);
-    }
-    catch (UnknownContractException)
-    {
-      Boot(BuildProjectContainer());
-    }
-
-    DontDestroyOnLoad(this);
+    Boot(Container.ProjectContainer ?? throw new InvalidOperationException(
+      $"Reflex ProjectContainer was not built: {BootstrapState.BootstrapSceneName} must contain a SceneScope"));
   }
 
   public void InstallBindings(ContainerBuilder containerBuilder)
@@ -57,25 +51,5 @@ public class ProjectInstaller : MonoBehaviour, IInstaller
     }
 
     container.Resolve<IGameStateMachine>().Enter<BootstrapState>();
-  }
-
-  private void OnDestroy()
-  {
-    _ownedFallbackContainer?.Dispose();
-    _ownedFallbackContainer = null;
-  }
-
-  private Container BuildProjectContainer()
-  {
-    _ownedFallbackContainer?.Dispose();
-
-    var builder = new ContainerBuilder();
-    foreach (var installer in GetComponentsInChildren<IInstaller>())
-    {
-      installer.InstallBindings(builder);
-    }
-
-    _ownedFallbackContainer = builder.Build();
-    return _ownedFallbackContainer;
   }
 }
