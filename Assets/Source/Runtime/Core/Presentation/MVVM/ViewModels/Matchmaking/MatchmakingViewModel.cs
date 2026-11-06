@@ -4,6 +4,7 @@ using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Abstractions.MVVM.ViewModels;
 using Core.Application.Commands.Common;
 using Core.Application.Commands.Matchmaking;
+using Core.Application.Handlers.Matchmaking;
 using Core.Application.Requests.Views;
 using Core.Domain.Models.Lobby;
 using Core.Presentation.MVVM.ViewModels.LobbyRoom;
@@ -28,6 +29,7 @@ namespace Core.Presentation.MVVM.ViewModels.Matchmaking
         private readonly Subject<Unit> _sessionsUpdated = new();
 
         private bool _navigatedToRoom;
+        private bool _refreshInProgress;
 
         public ReactiveProperty<string> Nickname { get; }
         public ReactiveProperty<string> RoomCodeInput { get; }
@@ -137,14 +139,15 @@ namespace Core.Presentation.MVVM.ViewModels.Matchmaking
         /// и получая два тела на матч. Нижний слой такой повтор теперь отвергает исключением, но
         /// доводить до него нельзя — обычный двойной клик не должен выглядеть как сбой.
         /// </remarks>
-        private bool IsLaunching()
+        private bool IsLaunching(bool updateStatus = true)
         {
             if (!IsBusy.Value)
             {
                 return false;
             }
 
-            StatusText.Value = BusyStatus;
+            if (updateStatus)
+                StatusText.Value = BusyStatus;
             return true;
         }
 
@@ -191,8 +194,40 @@ namespace Core.Presentation.MVVM.ViewModels.Matchmaking
 
         private async UniTaskVoid OnRefresh()
         {
-            StatusText.Value = RefreshingStatus;
-            await _mediator.Send(new RefreshSessionListCommand());
+            if (_refreshInProgress || IsLaunching(updateStatus: false))
+                return;
+
+            // UI callbacks run on the main thread; reserve before notifying observers or awaiting.
+            _refreshInProgress = true;
+            var succeeded = false;
+            var cancelled = false;
+            try
+            {
+                StatusText.Value = RefreshingStatus;
+                await _mediator.Send(new RefreshSessionListCommand());
+                succeeded = true;
+            }
+            catch (OperationCanceledException)
+            {
+                cancelled = true;
+                throw;
+            }
+            catch (RefreshSessionListHandler.LobbyJoinFailedException)
+            {
+                // An unsuccessful join is an expected result; unexpected exceptions still propagate.
+            }
+            finally
+            {
+                try
+                {
+                    if (StatusText.Value == RefreshingStatus)
+                        StatusText.Value = succeeded || cancelled ? _model.StatusText : "Could not refresh sessions";
+                }
+                finally
+                {
+                    _refreshInProgress = false;
+                }
+            }
         }
 
         private async UniTaskVoid OnBack()

@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Core.Application.Commands.Matchmaking;
 using Core.Mediator.Abstractions;
@@ -16,9 +17,17 @@ namespace Core.Application.Handlers.Matchmaking
             _lobby = lobby;
         }
 
+        public sealed class LobbyJoinFailedException : InvalidOperationException
+        {
+            public LobbyJoinFailedException() : base("Could not refresh sessions") { }
+        }
+
         public async UniTask<Nothing> Handle(RefreshSessionListCommand command, CancellationToken ct)
         {
-            await _lobby.JoinAsync(cancellationToken: ct);
+            var result = await _lobby.JoinAsync(cancellationToken: ct);
+            if (!result.IsOk)
+                throw new LobbyJoinFailedException();
+
             return Nothing.Value;
         }
     }

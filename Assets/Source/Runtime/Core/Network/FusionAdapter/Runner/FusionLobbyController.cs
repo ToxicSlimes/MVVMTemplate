@@ -29,6 +29,7 @@ namespace Core.Network.FusionAdapter.Runner
         private GameObject _runnerObject;
         private NetworkRunner _runner;
         private bool _disposed;
+        private int _joining;
 
         public FusionLobbyController(IMediator mediator, ILogger logger)
         {
@@ -46,28 +47,40 @@ namespace Core.Network.FusionAdapter.Runner
         {
             ThrowIfDisposed();
 
-            if (IsInLobby)
+            if (Interlocked.CompareExchange(ref _joining, 1, 0) != 0)
             {
-                return NetworkStartResult.Success;
+                throw new InvalidOperationException("A lobby join is already in progress.");
             }
 
-            CreateRunnerObject();
-
-            var result = (await _runner.JoinSessionLobby(
-                SessionLobby.ClientServer,
-                lobbyName,
-                cancellationToken: cancellationToken)).ToCore();
-
-            if (!result.IsOk)
+            try
             {
-                _logger.Error("[Lobby] Вход в лобби провален: {0} ({1})", result.ShutdownReason, result.ErrorMessage);
-                DestroyRunnerObject();
+                if (IsInLobby)
+                {
+                    return NetworkStartResult.Success;
+                }
+
+                CreateRunnerObject();
+
+                var result = (await _runner.JoinSessionLobby(
+                    SessionLobby.ClientServer,
+                    lobbyName,
+                    cancellationToken: cancellationToken)).ToCore();
+
+                if (!result.IsOk)
+                {
+                    _logger.Error("[Lobby] Вход в лобби провален: {0} ({1})", result.ShutdownReason, result.ErrorMessage);
+                    DestroyRunnerObject();
+                    return result;
+                }
+
+                _logger.Info("[Lobby] В лобби '{0}', регион {1}", _runner.LobbyInfo.Name, _runner.LobbyInfo.Region);
+
                 return result;
             }
-
-            _logger.Info("[Lobby] В лобби '{0}', регион {1}", _runner.LobbyInfo.Name, _runner.LobbyInfo.Region);
-
-            return result;
+            finally
+            {
+                Interlocked.Exchange(ref _joining, 0);
+            }
         }
 
         public async UniTask LeaveAsync(CancellationToken cancellationToken = default)

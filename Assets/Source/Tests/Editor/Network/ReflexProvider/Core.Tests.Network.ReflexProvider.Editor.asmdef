@@ -1,0 +1,10 @@
+{
+  "name": "Core.Tests.Network.ReflexProvider.Editor",
+  "references": ["Core.Network.FusionAdapter", "Fusion.Unity", "Reflex"],
+  "includePlatforms": ["Editor"],
+  "overrideReferences": true,
+  "precompiledReferences": ["Fusion.Runtime.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

@@ -14,7 +14,9 @@ namespace Core.Network.FusionAdapter.Spawning
     /// </summary>
     public sealed class ReflexNetworkObjectProvider : NetworkObjectProviderDefault
     {
+        // IDs are reserved before injection to prevent reentrant duplicate Inject calls.
         private readonly HashSet<int> _injected = new();
+        private readonly Dictionary<int, Exception> _injectionFailures = new();
 
         private Container _container;
 
@@ -51,12 +53,28 @@ namespace Core.Network.FusionAdapter.Spawning
                 return;
             }
 
-            if (!_injected.Add(instance.gameObject.GetEntityId().GetHashCode()))
+            var instanceId = instance.gameObject.GetEntityId().GetHashCode();
+            if (_injectionFailures.TryGetValue(instanceId, out var failure))
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(ReflexNetworkObjectProvider)}: предыдущая инъекция объекта с ID {instanceId} завершилась ошибкой", failure);
+            }
+
+            if (!_injected.Add(instanceId))
             {
                 return;
             }
 
-            GameObjectInjector.InjectRecursive(instance.gameObject, _container);
+            try
+            {
+                GameObjectInjector.InjectRecursive(instance.gameObject, _container);
+            }
+            catch (Exception exception)
+            {
+                // A partial injection cannot safely be retried on a live object.
+                _injectionFailures.Add(instanceId, exception);
+                throw;
+            }
         }
 
         private void RequireContainer(NetworkObject prefab)
