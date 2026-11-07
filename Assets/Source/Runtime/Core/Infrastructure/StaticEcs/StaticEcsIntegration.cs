@@ -8,13 +8,21 @@ using UnityEngine.Scripting;
 
 namespace Core.Infrastructure.StaticEcs
 {
-    [Preserve] public struct DefaultStaticEcsWorld : IWorldType { }
-    [Preserve] public struct DefaultStaticEcsSystems : ISystemsType { }
+    [Preserve] public struct NetworkWorld : IWorldType { }
+    [Preserve] public struct NetworkSystems : ISystemsType { }
+    [Preserve] public struct ViewWorld : IWorldType { }
+    [Preserve] public struct ViewSystems : ISystemsType { }
 
-    /// <summary>Register implementations with Reflex as IStaticEcsFeature. Configure runs in binding order before world initialization.</summary>
-    public interface IStaticEcsFeature
+    /// <summary>Register implementations with Reflex as INetworkStaticEcsFeature. Configure runs in binding order before world initialization.</summary>
+    public interface INetworkStaticEcsFeature
     {
-        void Configure(StaticEcsRuntime<DefaultStaticEcsWorld, DefaultStaticEcsSystems> runtime, Container container);
+        void Configure(StaticEcsRuntime<NetworkWorld, NetworkSystems> runtime, Container container);
+    }
+
+    /// <summary>Register implementations with Reflex as IViewStaticEcsFeature. Configure runs in binding order before world initialization.</summary>
+    public interface IViewStaticEcsFeature
+    {
+        void Configure(StaticEcsRuntime<ViewWorld, ViewSystems> runtime, Container container);
     }
 
     [Preserve]
@@ -29,7 +37,8 @@ namespace Core.Infrastructure.StaticEcs
     [Preserve]
     public sealed class StaticEcsOwner : IDisposable
     {
-        private StaticEcsRuntime<DefaultStaticEcsWorld, DefaultStaticEcsSystems> _runtime;
+        private StaticEcsRuntime<NetworkWorld, NetworkSystems> _network;
+        private StaticEcsRuntime<ViewWorld, ViewSystems> _view;
         private StaticEcsRunner _runner;
         private bool _disposed;
         private bool _started;
@@ -42,9 +51,12 @@ namespace Core.Infrastructure.StaticEcs
             _started = true;
             try
             {
-                _runtime = new StaticEcsRuntime<DefaultStaticEcsWorld, DefaultStaticEcsSystems>();
-                foreach (var feature in container.All<IStaticEcsFeature>()) feature.Configure(_runtime, container);
-                _runtime.Initialize();
+                _network = new StaticEcsRuntime<NetworkWorld, NetworkSystems>();
+                foreach (var feature in container.All<INetworkStaticEcsFeature>()) feature.Configure(_network, container);
+                _view = new StaticEcsRuntime<ViewWorld, ViewSystems>();
+                foreach (var feature in container.All<IViewStaticEcsFeature>()) feature.Configure(_view, container);
+                _network.Initialize();
+                _view.Initialize();
                 if (startRunner) StartRunner();
             }
             catch { Dispose(); throw; }
@@ -60,11 +72,25 @@ namespace Core.Infrastructure.StaticEcs
             _runner.Attach(this);
         }
 
+        public bool NetworkUpdateExternal { get; set; }
+
         public void Update()
         {
+            Ensure();
+            if (!NetworkUpdateExternal) _network.Update();
+            _view.Update();
+        }
+
+        public void UpdateNetwork()
+        {
+            Ensure();
+            _network.Update();
+        }
+
+        private void Ensure()
+        {
             if (_disposed) throw new ObjectDisposedException(nameof(StaticEcsOwner));
-            if (_runtime == null) throw new InvalidOperationException("StaticEcs owner is not initialized.");
-            _runtime.Update();
+            if (_network == null || _view == null) throw new InvalidOperationException("StaticEcs owner is not initialized.");
         }
 
         public void Dispose()
@@ -78,8 +104,13 @@ namespace Core.Infrastructure.StaticEcs
                 runner.Detach();
                 UnityEngine.Object.Destroy(runner.gameObject);
             }
-            _runtime?.Dispose();
-            _runtime = null;
+            try { _view?.Dispose(); }
+            finally
+            {
+                _view = null;
+                try { _network?.Dispose(); }
+                finally { _network = null; }
+            }
         }
     }
 

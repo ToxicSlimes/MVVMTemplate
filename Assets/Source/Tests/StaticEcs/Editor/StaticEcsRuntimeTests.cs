@@ -115,10 +115,10 @@ namespace Core.Tests.StaticEcs
 
         private struct CreateFailureWorld : IWorldType { }
 
-        private sealed class Feature : IStaticEcsFeature
+        private sealed class Feature : INetworkStaticEcsFeature
         {
             public readonly Counter System = new Counter();
-            public void Configure(StaticEcsRuntime<DefaultStaticEcsWorld, DefaultStaticEcsSystems> runtime, Reflex.Core.Container container)
+            public void Configure(StaticEcsRuntime<NetworkWorld, NetworkSystems> runtime, Reflex.Core.Container container)
                 => runtime.Add(System);
         }
 
@@ -127,7 +127,7 @@ namespace Core.Tests.StaticEcs
         {
             var feature = new Feature();
             var builder = new Reflex.Core.ContainerBuilder();
-            builder.AddSingleton(feature, typeof(IStaticEcsFeature));
+            builder.AddSingleton(feature, typeof(INetworkStaticEcsFeature));
             var contributor = new StaticEcsRegistrationContributor();
             contributor.RegisterBindings(builder);
             using (var container = builder.Build())
@@ -152,9 +152,9 @@ namespace Core.Tests.StaticEcs
                 var owner = container.Resolve<StaticEcsOwner>();
                 Assert.That(container.Resolve<StaticEcsOwner>(), Is.SameAs(owner));
                 contributor.Initialize(container);
-                Assert.That(World<DefaultStaticEcsWorld>.Status, Is.EqualTo(WorldStatus.Initialized));
+                Assert.That(World<NetworkWorld>.Status, Is.EqualTo(WorldStatus.Initialized));
             }
-            Assert.That(World<DefaultStaticEcsWorld>.Status, Is.EqualTo(WorldStatus.NotCreated));
+            Assert.That(World<NetworkWorld>.Status, Is.EqualTo(WorldStatus.NotCreated));
         }
 
         [Test]

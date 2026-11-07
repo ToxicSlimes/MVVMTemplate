@@ -1,0 +1,8 @@
+{
+  "name": "Core.Infrastructure.StaticEcs.Editor",
+  "rootNamespace": "Core.Infrastructure.StaticEcs.Editor",
+  "references": ["Core.Infrastructure.StaticEcs", "FFS.StaticEcs", "FFS.StaticEcs.Unity", "FFS.StaticEcs.Unity.Editor"],
+  "includePlatforms": ["Editor"],
+  "defineConstraints": ["STATIC_ECS"],
+  "autoReferenced": false
+}

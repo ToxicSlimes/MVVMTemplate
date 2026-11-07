@@ -78,6 +78,7 @@ namespace Core.Tests.Network
             public bool IsInLobby => true;
             public IReadOnlyList<NetworkSessionInfo> Sessions => Array.Empty<NetworkSessionInfo>();
             public bool IsRunning => true;
+            public long SessionGeneration { get; set; }
             public NetworkMode Mode => NetworkMode.Host;
             public NetworkPlayerId LocalPlayer => default;
             public IReadOnlyList<NetworkPlayerId> ActivePlayers => Array.Empty<NetworkPlayerId>();

@@ -34,6 +34,8 @@ namespace Core.Network.FusionAdapter.Runner
         private ReflexNetworkObjectProvider _objectProvider;
         private bool _disposed;
         private bool _isStarting;
+        private bool _generationValid;
+        public long SessionGeneration { get; private set; }
 
         public FusionRunnerController(Container container, IMediator mediator, ILogger logger)
         {
@@ -130,6 +132,7 @@ namespace Core.Network.FusionAdapter.Runner
                 return;
             }
 
+            InvalidateGeneration();
             _runner.Shutdown();
             ReleaseRunnerReferences();
             _activePlayers.Clear();
@@ -142,6 +145,7 @@ namespace Core.Network.FusionAdapter.Runner
                 return;
             }
 
+            InvalidateGeneration();
             await _runner.Shutdown().AsUniTask().AttachExternalCancellation(cancellationToken);
             DestroyRunnerObject();
             _activePlayers.Clear();
@@ -175,9 +179,10 @@ namespace Core.Network.FusionAdapter.Runner
 
         protected override void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
+            if (runner == null || !ReferenceEquals(runner, _runner) || !_generationValid) return;
             RebuildActivePlayers();
             var id = player.ToCore();
-            _mediator.Publish(new NetworkPlayerJoinedNotification(id, player == runner.LocalPlayer)).Forget();
+            _mediator.Publish(new NetworkPlayerJoinedNotification(id, player == runner.LocalPlayer, SessionGeneration)).Forget();
         }
 
         protected override void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -205,6 +210,8 @@ namespace Core.Network.FusionAdapter.Runner
 
         protected override void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
+            if (runner == null || !ReferenceEquals(runner, _runner)) return;
+            InvalidateGeneration();
             _logger.Info("[Network] Сессия остановлена: {0}", shutdownReason);
             _activePlayers.Clear();
             _mediator.Publish(new NetworkShutdownNotification(shutdownReason.ToCore())).Forget();
@@ -270,6 +277,8 @@ namespace Core.Network.FusionAdapter.Runner
             UnityEngine.Object.DontDestroyOnLoad(_runnerObject);
 
             _runner = _runnerObject.AddComponent<NetworkRunner>();
+            SessionGeneration++;
+            _generationValid = true;
             _runner.ProvideInput = true;
 
             _sceneManager = _runnerObject.AddComponent<NetworkSceneManagerDefault>();
@@ -278,6 +287,8 @@ namespace Core.Network.FusionAdapter.Runner
             _objectProvider.SetContainer(_container);
 
             _container.Resolve<INetworkInputSource>();
+
+            _runnerObject.AddComponent<NetworkTickRelay>().Bind(_container.Resolve<NetworkTickSource>());
 
             _runner.AddCallbacks(this);
             for (var i = 0; i < _pendingCallbacks.Count; i++)
@@ -298,10 +309,18 @@ namespace Core.Network.FusionAdapter.Runner
 
         private void ReleaseRunnerReferences()
         {
+            InvalidateGeneration();
             _runnerObject = null;
             _runner = null;
             _sceneManager = null;
             _objectProvider = null;
+        }
+
+        private void InvalidateGeneration()
+        {
+            if (!_generationValid) return;
+            _generationValid = false;
+            SessionGeneration++;
         }
 
         private void ValidateSceneLoad(string scenePath)

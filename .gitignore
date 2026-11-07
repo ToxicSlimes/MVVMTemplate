@@ -6,6 +6,8 @@
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
 *.csproj
+!/Tests/Network~/LobbyInitializationHarness.csproj
+!/Tests/Network~/LobbySessionList/LobbySessionListHarness.csproj
 *.unityproj
 *.sln
 *.suo

@@ -26,6 +26,10 @@ namespace Core.Network.FusionAdapter.DependencyInjection
 
             builder.AddSingleton(container => (INetworkRunnerAccessor)container.Resolve<INetworkRunnerController>());
 
+            builder.AddSingleton(_ => new NetworkTickSource());
+
+            builder.AddSingleton(container => (INetworkTickSource)container.Resolve<NetworkTickSource>());
+
             builder.AddSingleton<INetworkLobby>(container => new FusionLobbyController(
                 container.Resolve<IMediator>(),
                 container.Resolve<ILogger>()

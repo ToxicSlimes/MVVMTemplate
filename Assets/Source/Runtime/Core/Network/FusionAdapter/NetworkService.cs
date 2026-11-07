@@ -35,6 +35,7 @@ namespace Core.Network.FusionAdapter
         }
 
         public bool IsRunning => _controller.IsRunning;
+        public long SessionGeneration => _controller.SessionGeneration;
 
         public NetworkMode Mode => _controller.Mode;
 

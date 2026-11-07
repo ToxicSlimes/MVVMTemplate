@@ -7,7 +7,7 @@ namespace Core.Infrastructure.StaticEcs
     /// Base for feature repositories that expose named access to StaticEcs data of one world.
     /// Systems and services should depend on concrete repositories instead of the static world.
     /// </summary>
-    /// <remarks>Construct after the world is created, for example from <see cref="IStaticEcsFeature.Configure"/>.</remarks>
+    /// <remarks>Construct after the world is created, for example from <see cref="INetworkStaticEcsFeature.Configure"/>.</remarks>
     public abstract class StaticEcsRepository<TWorld> where TWorld : struct, IWorldType
     {
         protected StaticEcsRepository()

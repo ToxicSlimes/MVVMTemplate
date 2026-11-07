@@ -67,6 +67,7 @@ namespace Core.Tests.Network
             public Exception Failure;
             public UniTaskCompletionSource<INetworkEntity> Pending;
             public bool IsRunning => true;
+            public long SessionGeneration { get; set; }
             public NetworkMode Mode => NetworkMode.Host;
             public NetworkPlayerId LocalPlayer => Player;
             public IReadOnlyList<NetworkPlayerId> ActivePlayers => new[] { Player };

@@ -13,6 +13,7 @@ namespace Core.Application.Handlers.Lobby
         private readonly INetworkSpawner _spawner;
         private readonly INetworkSpawnPoints _spawnPoints;
         private HashSet<int> _spawned = new();
+        private long _spawnGeneration;
 
         public PlayerAvatarSpawner(
             INetworkRunnerController controller,
@@ -28,16 +29,24 @@ namespace Core.Application.Handlers.Lobby
 
         public async UniTask SpawnAllAsync(CancellationToken cancellationToken)
         {
+            var generation = _controller.SessionGeneration;
             var players = _controller.ActivePlayers;
 
             for (var i = 0; i < players.Count; i++)
             {
+                if (generation != _controller.SessionGeneration) return;
                 await SpawnAsync(players[i], cancellationToken);
             }
         }
 
         public async UniTask SpawnAsync(NetworkPlayerId player, CancellationToken cancellationToken)
         {
+            var generation = _controller.SessionGeneration;
+            if (_spawnGeneration != generation)
+            {
+                _spawnGeneration = generation;
+                _spawned = new HashSet<int>();
+            }
             var spawned = _spawned;
             if (!_controller.IsStateAuthority || !player.IsValid || !spawned.Add(player.Raw))
             {

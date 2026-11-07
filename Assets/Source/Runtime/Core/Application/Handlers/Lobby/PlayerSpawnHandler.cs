@@ -20,7 +20,7 @@ namespace Core.Application.Handlers.Lobby
 
         public async UniTask Handle(NetworkPlayerJoinedNotification notification, CancellationToken ct)
         {
-            if (!_controller.IsStateAuthority)
+            if (!_controller.IsStateAuthority || notification.SessionGeneration != _controller.SessionGeneration)
             {
                 return;
             }

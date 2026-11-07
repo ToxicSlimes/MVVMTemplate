@@ -135,11 +135,20 @@ namespace Core.Network.FusionAdapter.Runner
             DestroyRunnerObject();
 
             _runnerObject = new GameObject(LobbyRunnerObjectName);
-            UnityEngine.Object.DontDestroyOnLoad(_runnerObject);
+            try
+            {
+                UnityEngine.Object.DontDestroyOnLoad(_runnerObject);
 
-            _runner = _runnerObject.AddComponent<NetworkRunner>();
-            _runner.ProvideInput = false;
-            _runner.AddCallbacks(this);
+                _runner = _runnerObject.AddComponent<NetworkRunner>();
+                _runner.ProvideInput = false;
+                _runner.AddCallbacks(this);
+            }
+            catch
+            {
+                // Join has not started, so this newly created runner cannot be active yet.
+                DestroyRunnerObject();
+                throw;
+            }
         }
 
         private void DestroyRunnerObject()

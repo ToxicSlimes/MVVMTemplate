@@ -12,6 +12,7 @@ namespace Core.Infrastructure.Services.Network
         private const string NetworkDisabled = "Сеть выключена: включи её флагом Network Enabled на ProjectInstaller";
 
         public bool IsRunning => false;
+        public long SessionGeneration => 0;
         public NetworkMode Mode => NetworkMode.None;
         public NetworkPlayerId LocalPlayer => NetworkPlayerId.None;
         public IReadOnlyList<NetworkPlayerId> ActivePlayers => Array.Empty<NetworkPlayerId>();

@@ -11,6 +11,20 @@ using UnityEngine;
 
 namespace Core.Network.FusionAdapter.Spawning
 {
+    /// <summary>Retains the original runner and object when stale-spawn cleanup fails.</summary>
+    public sealed class FusionSpawnCleanupException : InvalidOperationException
+    {
+        public NetworkRunner Origin { get; }
+        public NetworkObject SpawnedObject { get; }
+
+        public FusionSpawnCleanupException(NetworkRunner origin, NetworkObject spawnedObject, Exception cause)
+            : base("Fusion spawn cleanup failed; the original runner and object are retained for diagnosis or recovery", cause)
+        {
+            Origin = origin;
+            SpawnedObject = spawnedObject;
+        }
+    }
+
     public sealed class FusionSpawner : INetworkSpawner
     {
         private readonly INetworkRunnerAccessor _accessor;
@@ -50,14 +64,51 @@ namespace Core.Network.FusionAdapter.Spawning
             ValidateSpawn(prefab);
             cancellationToken.ThrowIfCancellationRequested();
 
-            var spawned = await _accessor.Runner.SpawnAsync(
-                prefab.Value,
-                position,
-                rotation,
-                inputAuthority?.ToFusion(),
-                WrapBeforeSpawned(beforeSpawned));
+            var origin = _accessor.Runner;
+            var callbackActive = true;
+            NetworkObject spawned;
+            try
+            {
+                spawned = await origin.SpawnAsync(
+                    prefab.Value,
+                    position,
+                    rotation,
+                    inputAuthority?.ToFusion(),
+                    beforeSpawned == null ? null : (runner, networkObject) =>
+                    {
+                        if (callbackActive && runner == origin && _accessor.IsRunning && _accessor.Runner == origin && origin.IsRunning)
+                        {
+                            beforeSpawned(NetworkEntityAdapter.Wrap(networkObject));
+                        }
+                    });
+            }
+            finally
+            {
+                callbackActive = false;
+            }
 
-            cancellationToken.ThrowIfCancellationRequested();
+            if (!_accessor.IsRunning || _accessor.Runner != origin || origin == null || !origin.IsRunning)
+            {
+                if (spawned != null)
+                {
+                    try
+                    {
+                        if (origin == null || !origin.IsRunning || spawned.Runner != origin || !spawned.HasStateAuthority)
+                        {
+                            throw new InvalidOperationException("Fusion spawn cleanup невозможен: исходный runner недоступен, не владеет объектом или отсутствует state authority");
+                        }
+
+                        origin.Despawn(spawned);
+                    }
+                    catch (Exception error)
+                    {
+                        throw new FusionSpawnCleanupException(origin, spawned, error);
+                    }
+                }
+
+                throw new OperationCanceledException("Сетевая сессия сменилась во время spawn", cancellationToken);
+            }
+
             return RequireSpawned(spawned, prefab);
         }
 
@@ -68,18 +119,19 @@ namespace Core.Network.FusionAdapter.Spawning
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            if (!_accessor.IsRunning)
-            {
-                throw new InvalidOperationException("Despawn невозможен: сетевая сессия не запущена");
-            }
-
             var networkObject = NetworkEntityAdapter.Unwrap(entity);
             if (networkObject == null)
             {
-                throw new ArgumentException($"Сущность {entity.Id} не является Fusion-объектом", nameof(entity));
+                throw new ArgumentException("Сущность не является действительным Fusion-объектом", nameof(entity));
             }
 
-            _accessor.Runner.Despawn(networkObject);
+            var owner = networkObject.Runner;
+            if (owner == null || !owner.IsRunning || !networkObject.IsValid || !owner.Exists(networkObject) || !networkObject.HasStateAuthority)
+            {
+                throw new InvalidOperationException("Despawn невозможен: объект недействителен, не принадлежит активному runner или отсутствует state authority");
+            }
+
+            owner.Despawn(networkObject);
         }
 
         public bool TryGetEntity(NetworkEntityId id, out INetworkEntity entity)

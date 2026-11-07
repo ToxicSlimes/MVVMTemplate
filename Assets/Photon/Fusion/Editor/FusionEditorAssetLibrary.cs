@@ -10,7 +10,7 @@ namespace Fusion.Editor {
     /// <summary>
     /// This has to always point at the correct created asset.
     /// </summary>
-    private static readonly string _assetPath = new("Assets/Photon/Fusion/Editor/EditorResources/FusionEditorAssetLibrary.asset");
+    private static readonly string _assetPath = new("Packages/com.exitgames.photonfusion/Editor/EditorResources/FusionEditorAssetLibrary.asset");
 
     [Header("Textures & Icons")] public Texture2D NetworkPropertyIcon;
 
@@ -20,7 +20,6 @@ namespace Fusion.Editor {
       get {
         if (_instance == null && _hasTriedToLoad == false) {
           _instance = AssetDatabase.LoadAssetAtPath<FusionEditorAssetLibrary>(_assetPath);
-
           if (_instance == null) {
             Debug.LogError($"FusionEditorAssetLibrary asset is missing, provide the asset and restart the project. (Expected Path: {_assetPath})");
           }

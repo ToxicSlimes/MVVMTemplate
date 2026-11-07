@@ -9,6 +9,7 @@ namespace Core.Network.Abstractions.Services
     public interface INetworkRunnerController : IDisposable
     {
         bool IsRunning { get; }
+        long SessionGeneration { get; }
         NetworkMode Mode { get; }
         NetworkPlayerId LocalPlayer { get; }
         IReadOnlyList<NetworkPlayerId> ActivePlayers { get; }
