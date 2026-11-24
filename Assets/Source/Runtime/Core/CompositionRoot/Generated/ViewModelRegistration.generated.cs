@@ -10,6 +10,7 @@ using Core.Abstractions.MVVM.Models.Inventory;
 using Core.Abstractions.MVVM.Models.Lobby;
 using Core.Abstractions.MVVM.Models.MainMenu;
 using Core.Abstractions.MVVM.Models.Settings;
+using Core.Abstractions.MVVM.Services;
 using Core.Abstractions.Services;
 using Core.Abstractions.Services.Input;
 using Core.Mediator.Abstractions;
@@ -61,7 +62,9 @@ namespace Core.DependencyInjection.Generated
                 container.Resolve<IMediator>()));
             builder.AddSingleton(container => new PauseViewModel(
                 container.Resolve<IMediator>(),
-                container.Resolve<IInputService>()));
+                container.Resolve<IInputService>(),
+                container.Resolve<ILobbyModel>(),
+                container.Resolve<IViewService>()));
             builder.AddSingleton(container => new SettingsViewModel(
                 container.Resolve<ISettingsModel>(),
                 container.Resolve<IMediator>()));
